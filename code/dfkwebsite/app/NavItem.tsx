@@ -7,7 +7,9 @@ type MyProps = {
 export default function NavItem(props: MyProps) {
   return (
     <li>
-      <Link href={"/" + props.href}>{props.href}</Link>
+      {/* uppcare first letter of link href  */}
+
+      <Link href={"/" + props.href} className="capitalize">{props.href}</Link>
     </li>
   );
 }
