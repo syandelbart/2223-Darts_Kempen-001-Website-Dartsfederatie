@@ -1,17 +1,3 @@
-<<<<<<< Updated upstream
-import Link from "next/link";
-
-type MyProps = {
-    href: string;
-}
-
-export default function NavItem(props: MyProps) {
-  return (
-    <li>
-      {/* uppcare first letter of link href  */}
-
-      <Link href={"/" + props.href} className="capitalize">{props.href}</Link>
-=======
 'use client';
 
 import Link from "next/link";
@@ -29,7 +15,6 @@ export default function NavItem(props: MyProps) {
         {props.href}
         {props.dropdown ? <Icon icon="ic:baseline-arrow-drop-down" className="text-3xl" /> : null}
       </Link>
->>>>>>> Stashed changes
     </li>
   );
 }
