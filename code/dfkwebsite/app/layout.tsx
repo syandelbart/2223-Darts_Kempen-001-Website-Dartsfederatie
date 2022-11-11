@@ -15,9 +15,11 @@ export default function RootLayout({ children }: {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className="container mx-auto bg-background">
+      <body className='bg-background'>
         <Navbar />
-        {children}
+        <main className="container mx-auto">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
