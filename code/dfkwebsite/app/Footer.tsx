@@ -39,7 +39,7 @@ export default function Footer() {
 
       <div className="w-100 flex justify-between text-1xl mt-16 font-medium">
         <p>Darts Federatie Kempen &copy; {new Date().getFullYear()}</p>
-        <p>Gemaakt door Barry en Dekkers</p>
+        <p>Gemaakt door <Link href={"/"} className="hover:text-accent">Barry</Link> en <Link href={"/"} className="hover:text-accent">Dekkers</Link></p>
       </div>
     </footer>
   );
