@@ -7,6 +7,15 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 
+const dropDown = [
+  {
+    href: "selectie",
+  },
+  {
+    href: "overzicht",
+  },
+]
+
 // Functionaliteit toevoegen van dropdown optie
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,10 +26,10 @@ export default function Navbar() {
       </Link>
       <Icon icon="mdi:hamburger-menu" className="w-1/4 mt-10 lg:hidden text-6xl text-white" onClick={ () => setIsOpen(!isOpen) } />
       <ul className={`${isOpen ? "flex" : "hidden"} mt-10 lg:mt-0 lg:flex flex-col lg:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center`}>
-        <NavItem href="overzicht" dropdown={true} />
-        <NavItem href="info" dropdown={true} />
-        <NavItem href="wedstrijden" dropdown={true} />
-        <NavItem href="uitslagen" dropdown={true} />
+        <NavItem href="overzicht" dropdown={dropDown} />
+        <NavItem href="info" dropdown={dropDown} />
+        <NavItem href="wedstrijden" dropdown={dropDown} />
+        <NavItem href="uitslagen" dropdown={dropDown} />
         <NavItem href="contact" />
         <Icon icon="healthicons:ui-user-profile-outline" className="text-5xl text-white cursor-pointer" />
       </ul>
