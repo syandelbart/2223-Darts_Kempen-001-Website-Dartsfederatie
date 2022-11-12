@@ -7,7 +7,7 @@ type MyProps = {
 
 export default function ImageRead(props: MyProps) {
   return (
-    <div className="h-96 flex ">
+    <div className="h-96 flex">
       <div className="w-[800px] h-[500px] relative flex-grow">
         <Image src={dfkLogo} alt="test" className="bg-[#676767] object-cover" fill/>
       </div>

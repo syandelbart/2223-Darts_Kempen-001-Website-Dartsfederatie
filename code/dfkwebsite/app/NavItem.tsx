@@ -10,7 +10,7 @@ type MyProps = {
 
 export default function NavItem(props: MyProps) {
   return (
-    <li className="hover:underline hover:underline-offset-[7px] hover:decoration-[3px] hover:decoration-white text-[#fff] text-xl">
+    <li className="hover:underline hover:underline-offset-[7px] hover:decoration-[3px] hover:decoration-white text-[#fff] xl:text-xl">
       <Link href={"/" + props.href} className="capitalize flex items-center">
         {props.href}
         {props.dropdown ? <Icon icon="ic:baseline-arrow-drop-down" className="text-4xl" /> : null}
