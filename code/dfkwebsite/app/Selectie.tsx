@@ -9,9 +9,10 @@ type MyProps = {
 
 export default function Selectie(props: MyProps) {
     const pathname = usePathname();
+    let path = pathname + "/" + props.title;
   return (
     <div className="bg-gray-300 rounded-xl p-12">
-        <Link href={pathname + "/" + props.title}><p className="capitalize">{props.title}</p></Link>
+        <Link href={path} className="capitalize">{props.title}</Link>
     </div>
   );
 }
