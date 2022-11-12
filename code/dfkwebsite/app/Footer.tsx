@@ -7,7 +7,7 @@ import FooterLink from "./FooterLink";
 export default function Footer() {
   return (
     <footer className="bg-footer-background flex flex-col p-5 text-white">
-      <div className="flex justify-between items-top">
+      <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-0 justify-between items-top">
         <div>
           <h1 className="text-2xl mb-1">Navigatie</h1>
           <ul>
@@ -37,7 +37,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="w-100 flex justify-between text-1xl mt-16 font-medium">
+      <div className="flex flex-col md:flex-row items-center justify-between text-1xl mt-16 font-medium">
         <p>Darts Federatie Kempen &copy; {new Date().getFullYear()}</p>
         <p>Gemaakt door <Link href={"/"} className="hover:text-accent">Barry</Link> en <Link href={"/"} className="hover:text-accent">Dekkers</Link></p>
       </div>
