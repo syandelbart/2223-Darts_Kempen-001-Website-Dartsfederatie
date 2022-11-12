@@ -1,4 +1,4 @@
-import OverzichtSelectie from "./OverzichtSelectie";
+import Selectie from "../Selectie";
 
 export default function Page() {
   return (
@@ -7,9 +7,9 @@ export default function Page() {
         Overzicht pagina
       </h1>
       <div className="flex gap-10">
-        <OverzichtSelectie title="clubs" />
-        <OverzichtSelectie title="teams" />
-        <OverzichtSelectie title="spelers" />
+        <Selectie title="clubs" />
+        <Selectie title="teams" />
+        <Selectie title="spelers" />
       </div>
     </div>
   );
