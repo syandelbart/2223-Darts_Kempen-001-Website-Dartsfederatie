@@ -7,9 +7,9 @@ export default function Page() {
         Uitslagen pagina
       </h1>
       <div className="flex gap-10">
-        <Selectie title="competitie" />
-        <Selectie title="beker" />
-        <Selectie title="archief" />
+        <Selectie href="/uitslagen/competitie" title="Competitie" />
+        <Selectie href="/uitslagen/beker" title="Beker"/>
+        <Selectie href="/uitslagen/archief" title="Archief"/>
       </div>
     </div>
   );

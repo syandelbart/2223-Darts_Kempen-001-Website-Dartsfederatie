@@ -7,9 +7,9 @@ export default function Page() {
         Overzicht pagina
       </h1>
       <div className="flex gap-10">
-        <Selectie title="clubs" />
-        <Selectie title="teams" />
-        <Selectie title="spelers" />
+        <Selectie href="/overzicht/clubs" title="Clubs"/>
+        <Selectie href="/overzicht/teams" title="Teams"/>
+        <Selectie href="/overzicht/spelers" title="Spelers"/>
       </div>
     </div>
   );
