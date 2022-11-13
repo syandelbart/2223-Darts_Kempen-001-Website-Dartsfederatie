@@ -6,7 +6,7 @@ import FooterLink from "./FooterLink";
 // Functionaliteit toevoegen van dropdown optie
 export default function Footer() {
   return (
-    <footer className="bg-footer-background flex flex-col p-5 text-white">
+    <footer className="bg-footer-background flex flex-col px-10 lg:px-20 py-10 text-white">
       <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-0 justify-between items-top">
         <div>
           <h1 className="text-2xl mb-1">Navigatie</h1>
@@ -25,11 +25,12 @@ export default function Footer() {
           alt="dfk logo"
           width={250}
           height={250}
+          loading="eager"
         />
 
         <div>
-          <h1 className="text-2xl text-right mb-1">Nuttige links</h1>
-          <ul className="text-right">
+          <h1 className="text-2xl md:text-right mb-1">Nuttige links</h1>
+          <ul className="md:text-right">
             <FooterLink href="privacyverklaring"  />
             <FooterLink href="privacyverklaring"  />
             <FooterLink href="privacyverklaring"  />
