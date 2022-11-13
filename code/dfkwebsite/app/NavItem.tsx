@@ -33,8 +33,9 @@ export default function NavItem(props: MyProps) {
               <Link
                 href={"/" + item.href}
                 className="capitalize hover:text-accent"
+                key={item.title}
               >
-                {item.href}
+                {item.title}
               </Link>
             );
           })}
