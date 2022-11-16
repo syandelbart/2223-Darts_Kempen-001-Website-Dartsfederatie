@@ -30,7 +30,6 @@ export default function Navbar() {
       <ul className={`${isOpen ? "flex" : "hidden"} mt-10 lg:mt-0 lg:flex flex-col lg:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center`}>
         <NavItem href="overzicht" dropdown={dropDown} />
         <NavItem href="info" dropdown={dropDown} />
-        <NavItem href="wedstrijden" dropdown={dropDown} />
         <NavItem href="uitslagen" dropdown={dropDown} />
         <NavItem href="contact" />
         <Icon icon="healthicons:ui-user-profile-outline" className="text-5xl text-white cursor-pointer" />
