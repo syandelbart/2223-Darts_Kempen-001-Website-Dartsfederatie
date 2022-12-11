@@ -27,7 +27,11 @@ export default function NavItem(props: MyProps) {
         ) : null}
       </Link>
       {props.dropdown ? (
-        <div className={`${isOpen ? "" : "hidden"} flex flex-col gap-2 mt-5`}>
+        <div
+          className={`${
+            isOpen ? "" : "hidden"
+          } absolute flex flex-col gap-2 mt-2`}
+        >
           {props.dropdown.map((item: any) => {
             return (
               <Link
