@@ -45,7 +45,7 @@ export default function Navbar() {
       >
         <NavItem href="overzicht" dropdown={dropDown} />
         <NavItem href="info" dropdown={dropDown} />
-        <NavItem href="uitslagen" dropdown={dropDown} />
+        <NavItem href="competitie" dropdown={dropDown} />
         <NavItem href="contact" />
         <ProfileMenu />
       </ul>

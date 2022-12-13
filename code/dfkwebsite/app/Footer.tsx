@@ -3,7 +3,6 @@ import dfkLogo from "../public/dfklogo.png";
 import Link from "next/link";
 import FooterLink from "./FooterLink";
 
-// Functionaliteit toevoegen van dropdown optie
 export default function Footer() {
   return (
     <footer className="bg-footer-background flex flex-col px-10 lg:px-20 py-10 text-white">
@@ -13,8 +12,7 @@ export default function Footer() {
           <ul>
             <FooterLink href="overzicht"  />
             <FooterLink href="info"  />
-            <FooterLink href="wedstrijden"  />
-            <FooterLink href="uitslagen"  />
+            <FooterLink href="competitie"  />
             <FooterLink href="contact"  />
           </ul>
         </div>
