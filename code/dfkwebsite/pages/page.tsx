@@ -1,4 +1,4 @@
-import ImageRead from './ImageRead';
+import ImageRead from '../components/ImageRead';
 
 export default function Page() {
   return (

@@ -1,4 +1,4 @@
-import Selectie from "../Selectie";
+import Selectie from "../../components/Selectie";
 
 export default function Page() {
   return (
