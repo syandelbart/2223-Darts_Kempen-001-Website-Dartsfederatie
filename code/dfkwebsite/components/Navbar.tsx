@@ -8,16 +8,48 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 
-const dropDown = [
-  {
-    href: "selectie",
-    title: "Selectie",
-  },
+const routes = [
   {
     href: "overzicht",
     title: "Overzicht",
+    dropdown: [
+      {
+        href: "clubs",
+        title: "Clubs",
+      },
+      {
+        href: "teams",
+        title: "Teams",
+      },
+      {
+        href: "spelers",
+        title: "Spelers",
+      }
+    ]
   },
-];
+  {
+    href: "info",
+    title: "Info",
+    dropdown: [
+      {
+        href: "nieuws",
+        title: "Nieuws",
+      },
+      {
+        href: "kalender",
+        title: "Kalender",
+      }
+    ]
+  }, 
+  {
+    href: "competitie",
+    title: "Competitie",
+  },
+  {
+    href: "contact",
+    title: "Contact",
+  },
+]
 
 // Functionaliteit toevoegen van dropdown optie
 export default function Navbar() {
@@ -43,10 +75,12 @@ export default function Navbar() {
           isOpen ? "flex" : "hidden"
         } mt-10 lg:mt-0 lg:flex flex-col lg:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center`}
       >
-        <NavItem href="overzicht" dropdown={dropDown} />
-        <NavItem href="info" dropdown={dropDown} />
-        <NavItem href="competitie" dropdown={dropDown} />
-        <NavItem href="contact" />
+        {
+          routes.map((route, index) => {
+            return <NavItem href={route.href} title={route.title} dropdown = {route.dropdown} key = {index} /> 
+
+          })
+        }
         <ProfileMenu />
       </ul>
     </nav>
