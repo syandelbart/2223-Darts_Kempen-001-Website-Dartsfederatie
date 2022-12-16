@@ -6,7 +6,7 @@ import FooterLink from "./FooterLink";
 export default function Footer() {
   return (
     <footer className="bg-footer-background flex flex-col px-10 lg:px-20 py-10 text-white">
-      <div className="flex flex-col md:flex-row items-center gap-10 lg:gap-0 justify-between items-top">
+      <div className="flex flex-col md:flex-row items-top gap-10 lg:gap-0 justify-between items-top">
         <div>
           <h1 className="text-2xl mb-1">Navigatie</h1>
           <ul>
@@ -29,8 +29,6 @@ export default function Footer() {
         <div>
           <h1 className="text-2xl md:text-right mb-1">Nuttige links</h1>
           <ul className="md:text-right">
-            <FooterLink href="privacyverklaring"  />
-            <FooterLink href="privacyverklaring"  />
             <FooterLink href="privacyverklaring"  />
           </ul>
         </div>
