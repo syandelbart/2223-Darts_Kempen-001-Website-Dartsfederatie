@@ -29,13 +29,13 @@ export default function NavItem(props: MyProps) {
       </Link>
       {props.dropdown ? (
         <div
-          className={`absolute top-[100%] flex flex-col ${isOpen ? "visible" : "invisible"}`}
+          className={`absolute top-[100%] rounded flex flex-col ${isOpen ? "visible" : "invisible"}`}
         >
-          {props.dropdown.map((item: any) => {
+          {props.dropdown.map((item: any, i: number, row) => {
             return (
               <Link
                 href={"/" + item.href}
-                className="capitalize hover:text-accent p-4 bg-gray-500 border-b border-blue-100"
+                className={`capitalize hover:text-accent py-4 px-6 bg-background ${ i+1 === row.length ? "" : "border-b border-nav-background" }`}
                 key={item.title}
               >
                 {item.title}

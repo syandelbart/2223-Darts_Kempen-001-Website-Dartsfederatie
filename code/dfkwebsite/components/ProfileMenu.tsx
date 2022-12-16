@@ -15,19 +15,19 @@ export default function ProfileMenu() {
         className="text-5xl bg-white rounded-[50%] text-black cursor-pointer "
       />
       <div
-        className={`absolute top-[100%] right-0 flex flex-col p-4 bg-gray-500 ${isOpen ? "visible" : "invisible"}`}
+        className={`absolute top-[100%] right-0 flex flex-col ${isOpen ? "visible" : "invisible"} hover:children:text-accent hover:children:cursor-pointer`}
       >
-        <div className="flex cursor-pointer">
+        <div className="flex p-4 bg-background border-b border-nav-background">
           <Icon icon="mdi:account" className="text-3xl" />
           <p>Profiel</p>
         </div>
-        <div className="flex cursor-pointer">
+        <div className="flex p-4 bg-background border-b border-nav-background">
           <Icon icon="mdi:logout" className="text-3xl" />
           <p>Uitloggen</p>
         </div>
-        <div className="flex cursor-pointer">
+        <div className="flex p-4 bg-background">
           <Icon icon="mdi:weather-night" className="text-3xl" />
-          <p>Dark mode</p>
+          <p>Dark&nbsp;mode</p>
         </div>
       </div>
     </li>
