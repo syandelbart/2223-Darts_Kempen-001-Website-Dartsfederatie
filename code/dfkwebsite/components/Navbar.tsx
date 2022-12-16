@@ -14,15 +14,15 @@ const routes = [
     title: "Overzicht",
     dropdown: [
       {
-        href: "clubs",
+        href: "overzicht/clubs",
         title: "Clubs",
       },
       {
-        href: "teams",
+        href: "overzicht/teams",
         title: "Teams",
       },
       {
-        href: "spelers",
+        href: "overzicht/spelers",
         title: "Spelers",
       }
     ]
@@ -32,11 +32,11 @@ const routes = [
     title: "Info",
     dropdown: [
       {
-        href: "nieuws",
+        href: "info/nieuws",
         title: "Nieuws",
       },
       {
-        href: "kalender",
+        href: "info/kalender",
         title: "Kalender",
       }
     ]
@@ -44,6 +44,20 @@ const routes = [
   {
     href: "competitie",
     title: "Competitie",
+    dropdown: [
+      {
+        href: "competitie/speeldagen",
+        title: "Speeldagen",
+      },
+      {
+        href: "competitie/klassement",
+        title: "Klassement",
+      },
+      {
+        href: "competitie/individueleranking",
+        title: "Individuele ranking",
+      }
+    ]
   },
   {
     href: "contact",
