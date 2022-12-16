@@ -17,17 +17,17 @@ export default function ProfileMenu() {
       <div
         className={`absolute top-[100%] right-0 flex flex-col ${isOpen ? "visible" : "invisible"} hover:children:text-accent hover:children:cursor-pointer`}
       >
-        <div className="flex p-4 bg-background border-b border-nav-background">
+        <div className="flex p-4 bg-background border-b border-gray-500">
           <Icon icon="mdi:account" className="text-3xl" />
           <p>Profiel</p>
         </div>
-        <div className="flex p-4 bg-background border-b border-nav-background">
-          <Icon icon="mdi:logout" className="text-3xl" />
-          <p>Uitloggen</p>
-        </div>
-        <div className="flex p-4 bg-background">
+        <div className="flex p-4 bg-background border-b border-gray-500">
           <Icon icon="mdi:weather-night" className="text-3xl" />
           <p>Dark&nbsp;mode</p>
+        </div>
+        <div className="flex p-4 bg-background">
+          <Icon icon="mdi:logout" className="text-3xl" />
+          <p>Uitloggen</p>
         </div>
       </div>
     </li>
