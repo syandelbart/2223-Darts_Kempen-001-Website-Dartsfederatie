@@ -1,5 +1,5 @@
 export default function Competitie() {
   return (
-    <h1 className="text-3xl font-bold underline text-blue-500">Competitie pagina</h1>
+    <h1 className="text-6xl font-extrabold text-white mb-5">Competitie pagina</h1>
   );
 }
