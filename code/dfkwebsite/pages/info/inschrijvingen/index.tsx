@@ -1,5 +1,5 @@
 export default function Page() {
   return (
-    <h1 className="text-3xl font-bold underline text-blue-500">Inschrijvingen pagina</h1>
+    <h1 className="text-6xl font-extrabold text-white mb-5">Inschrijvingen pagina</h1>
   );
 }
