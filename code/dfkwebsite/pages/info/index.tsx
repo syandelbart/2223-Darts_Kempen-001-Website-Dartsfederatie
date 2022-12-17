@@ -3,7 +3,7 @@ import Selectie from "../../components/Selectie";
 export default function Inschrijvingen() {
   return (
     <div>
-      <h1 className="text-5xl mb-20 text-white font-bold">
+      <h1 className="text-6xl mb-20 text-white font-bold">
         Info
       </h1>
       <div className="flex gap-20">
