@@ -1,5 +1,17 @@
+import Selectie from "../../components/Selectie";
+
 export default function Inschrijvingen() {
   return (
-    <h1 className="text-3xl font-bold underline text-blue-500">Info pagina</h1>
+    <div>
+      <h1 className="text-5xl mb-20 text-white font-bold">
+        Info
+      </h1>
+      <div className="flex gap-20">
+        <Selectie href="/info/nieuws" title="nieuws" icon="fluent:news-16-regular" />
+        <Selectie href="/info/kalender" title="kalender" icon="uil:calender" />
+        <Selectie href="/info/documenten" title="documenten" icon="mingcute:documents-line" />
+        <Selectie href="/info/inschrijvingen" title="inschrijvingen" icon="mdi:file-document-edit-outline" />
+      </div>
+    </div>
   );
 }
