@@ -10,7 +10,7 @@ export default function Layout({ children }: any) {
   return (
     <>
       <Navbar />
-      <main className="bg-background container mx-auto">
+      <main className="bg-background py-32 container mx-auto">
         {children}
       </main>
       <Footer />
