@@ -35,7 +35,7 @@ export default function NavItem(props: MyProps) {
             return (
               <Link
                 href={"/" + item.href}
-                className={`capitalize hover:text-accent py-4 px-6 bg-background ${ i+1 === row.length ? "" : "border-b border-gray-500" }`}
+                className={`capitalize hover:text-gray-500 py-4 px-6 bg-background ${ i+1 === row.length ? "" : "border-b border-gray-500" }`}
                 key={item.title}
               >
                 {item.title}
