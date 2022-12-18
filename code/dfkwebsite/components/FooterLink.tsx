@@ -6,7 +6,7 @@ type MyProps = {
 
 export default function FooterLink(props: MyProps) {
   return (
-    <li className="hover:text-accent">
+    <li className="hover:text-gray-500">
       <Link href={"/" + props.href} className="capitalize">
         {props.href}
       </Link>
