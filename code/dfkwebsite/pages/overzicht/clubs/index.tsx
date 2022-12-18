@@ -1,4 +1,5 @@
 import Club from "../../../components/overzicht/club/Club";
+import Search from "../../../components/overzicht/Search";
 
 let clubs = [
   {
@@ -50,11 +51,7 @@ export default function Clubs() {
     <div>
       <div className="flex justify-between items-center mb-10">
         <h1 className="text-6xl font-extrabold text-white">Clubs</h1>
-        <input
-          type="text"
-          placeholder="Zoeken..."
-          className="px-5 py-3 rounded bg-[#D9D9D9]"
-        />
+        <Search />
       </div>
       <div className="grid grid-cols-3 gap-5">
         {
