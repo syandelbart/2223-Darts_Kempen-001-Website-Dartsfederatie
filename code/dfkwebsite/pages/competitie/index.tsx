@@ -8,18 +8,17 @@ export default function Competitie() {
         <Selectie
           href="/competitie/speeldagen"
           title="speeldagen"
-          icon="fluent:news-16-regular"
+          icon="mdi:calendar-today"
         />
-        <Selectie href="/info/kalender" title="kalender" icon="uil:calender" />
         <Selectie
           href="/competitie/klassement"
           title="klassement"
-          icon="mingcute:documents-line"
+          icon="mdi:podium"
         />
         <Selectie
           href="/competitie/individueleranking"
-          title="individueleranking"
-          icon="mdi:file-document-edit-outline"
+          title="individuele ranking"
+          icon="mdi:trophy"
         />
       </div>
     </div>

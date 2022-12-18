@@ -10,11 +10,11 @@ export default function Info() {
           title="nieuws"
           icon="fluent:news-16-regular"
         />
-        <Selectie href="/info/kalender" title="kalender" icon="uil:calender" />
+        <Selectie href="/info/kalender" title="kalender" icon="mdi:calendar-month" />
         <Selectie
           href="/info/documenten"
           title="documenten"
-          icon="mingcute:documents-line"
+          icon="mdi:file-document-outline"
         />
         <Selectie
           href="/info/inschrijvingen"
