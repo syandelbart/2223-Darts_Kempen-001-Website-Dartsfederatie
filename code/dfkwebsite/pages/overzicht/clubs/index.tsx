@@ -1,4 +1,4 @@
-import Club from "../../../components/overzicht/Club";
+import Club from "../../../components/overzicht/club/Club";
 
 let clubs = [
   {
