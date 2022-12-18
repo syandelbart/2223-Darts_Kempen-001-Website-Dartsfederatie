@@ -21,8 +21,8 @@ export default function ImageRead(props: MyProps) {
         <h6 className="text-white text-sm mb-6">{(new Date(props.date)).toLocaleDateString()}</h6>
         <p className="text-2xl" >{props.summary}</p>
 
-        <Link className="text-black w-fit text-2xl py-6 px-10 mt-12 bg-blue-50" href={`/info/nieuws/${props.title.toLowerCase().replace(" ","-")}`}>
-                Lees meer
+        <Link className="text-black w-fit text-2xl py-6 px-10 mt-12 bg-blue-50 hover:bg-gray-300" href={`/info/nieuws/${props.title.toLowerCase().replace(" ","-")}`}>
+          Lees meer
         </Link>
       </div>
     </div>

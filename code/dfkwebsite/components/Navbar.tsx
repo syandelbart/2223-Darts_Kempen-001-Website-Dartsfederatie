@@ -69,13 +69,13 @@ const routes = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="px-10 lg:px-20 py-10 flex flex-wrap justify-center lg:justify-between items-center bg-nav-background">
+    <nav className="px-10 lg:px-20 py-5 flex flex-wrap justify-center lg:justify-between items-center bg-nav-background">
       <Link href={"/"} className="w-3/4 lg:w-auto">
         <Image
           src={dfkLogo}
           alt="dfk logo"
-          width="150"
-          height="150"
+          width="100"
+          height="100"
           loading="eager"
         />
       </Link>
