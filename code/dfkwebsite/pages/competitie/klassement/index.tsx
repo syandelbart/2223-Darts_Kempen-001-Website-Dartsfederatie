@@ -71,7 +71,7 @@ const provinciaal = [
 
 export default function Klassement() {
   return (
-    <div className="text-white ">
+    <div className="text-white">
       <div className="flex justify-between items-center">
         <h1 className="text-6xl font-extrabold mb-5">Klassement ranking</h1>
         <GewestFilter />
@@ -96,7 +96,10 @@ export default function Klassement() {
           </thead>
 
           <tbody>
-            <Klassement provinciaal={provinciaal} />
+          {provinciaal.map((item: any, i: number) => {
+            return <Klassement key={i} data={item} i={i} />;
+          })}
+
           </tbody>
         </table>
       </div>

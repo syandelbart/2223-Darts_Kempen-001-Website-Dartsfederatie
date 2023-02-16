@@ -60,7 +60,7 @@ const provinciaal = [
 
 export default function Individueleranking() {
   return (
-    <div className="text-white ">
+    <div className="text-white">
       <div className="flex justify-between items-center">
         <h1 className="text-6xl font-extrabold mb-5">Individuele ranking</h1>
         <GewestFilter />
@@ -83,7 +83,10 @@ export default function Individueleranking() {
           </thead>
 
           <tbody>
-            <IndividueleRanking provinciaal={provinciaal} />
+           {provinciaal.map((item: any, i: number) => {
+              return <IndividueleRanking key={i} data={item} i={i}  />;
+            })
+           }
           </tbody>
         </table>
       </div>
