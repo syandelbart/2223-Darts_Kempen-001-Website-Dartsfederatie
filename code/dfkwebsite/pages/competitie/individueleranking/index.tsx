@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import GewestFilter from "../../../components/GewestFilter";
 
 const provinciaal = [
   {
@@ -62,9 +63,7 @@ export default function Individueleranking() {
     <div className="text-white ">
       <div className="flex justify-between items-center">
         <h1 className="text-6xl font-extrabold mb-5">Individuele ranking</h1>
-        <div>
-          <p>Alle gewesten</p>
-        </div>
+        <GewestFilter />
       </div>
 
       <div className="my-5">
@@ -91,33 +90,33 @@ export default function Individueleranking() {
                     <td>
                       <Icon
                         icon="mdi:trophy-variant"
-                        className="text-[#AE8625] text-3xl ml-2"
+                        className="text-[#AE8625] text-3xl ml-2 my-2"
                       />
                     </td>
                   ) : i === 1 ? (
                     <td>
                       <Icon
                         icon="mdi:trophy-variant"
-                        className="text-[#8B8B8B] text-3xl ml-2"
+                        className="text-[#8B8B8B] text-3xl ml-2 my-2"
                       />
                     </td>
                   ) : i === 2 ? (
                     <td>
                       <Icon
                         icon="mdi:trophy-variant"
-                        className="text-[#967444] text-3xl ml-2"
+                        className="text-[#967444] text-3xl ml-2 my-2"
                       />
                     </td>
                   ) : (
                     <td></td>
                   )}
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.ploeg}</td>
-                  <td>{item.punten}</td>
-                  <td>{item["180"]}</td>
-                  <td>{item.shot}</td>
-                  <td>{item.k_leg}</td>
+                  <td className="py-2">{item.id}</td>
+                  <td className="py-2">{item.name}</td>
+                  <td className="py-2">{item.ploeg}</td>
+                  <td className="py-2">{item.punten}</td>
+                  <td className="py-2">{item["180"]}</td>
+                  <td className="py-2">{item.shot}</td>
+                  <td className="py-2">{item.k_leg}</td>
                 </tr>
               );
             })}
