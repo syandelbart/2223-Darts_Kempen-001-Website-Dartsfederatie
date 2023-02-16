@@ -1,3 +1,5 @@
+import { Icon } from "@iconify/react";
+
 type MyProps = {
     provinciaal: any;
 };

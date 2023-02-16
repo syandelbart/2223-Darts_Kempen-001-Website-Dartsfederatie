@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import GewestFilter from "../../../components/GewestFilter";
 import IndividueleRanking from "../../../components/IndividueleRanking";
 
