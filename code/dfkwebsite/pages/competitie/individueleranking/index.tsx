@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import GewestFilter from "../../../components/GewestFilter";
+import IndividueleRanking from "../../../components/IndividueleRanking";
 
 const provinciaal = [
   {
@@ -83,43 +84,7 @@ export default function Individueleranking() {
           </thead>
 
           <tbody>
-            {provinciaal.map((item, i) => {
-              return (
-                <tr className="even:bg-[#BDBBBB] odd:bg-[#D9D9D9] border-t border-[#313131]">
-                  {i === 0 ? (
-                    <td>
-                      <Icon
-                        icon="mdi:trophy-variant"
-                        className="text-[#AE8625] text-3xl ml-2 my-2"
-                      />
-                    </td>
-                  ) : i === 1 ? (
-                    <td>
-                      <Icon
-                        icon="mdi:trophy-variant"
-                        className="text-[#8B8B8B] text-3xl ml-2 my-2"
-                      />
-                    </td>
-                  ) : i === 2 ? (
-                    <td>
-                      <Icon
-                        icon="mdi:trophy-variant"
-                        className="text-[#967444] text-3xl ml-2 my-2"
-                      />
-                    </td>
-                  ) : (
-                    <td></td>
-                  )}
-                  <td className="py-2">{item.id}</td>
-                  <td className="py-2">{item.name}</td>
-                  <td className="py-2">{item.ploeg}</td>
-                  <td className="py-2">{item.punten}</td>
-                  <td className="py-2">{item["180"]}</td>
-                  <td className="py-2">{item.shot}</td>
-                  <td className="py-2">{item.k_leg}</td>
-                </tr>
-              );
-            })}
+            <IndividueleRanking provinciaal={provinciaal} />
           </tbody>
         </table>
       </div>
