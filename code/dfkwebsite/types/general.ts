@@ -6,6 +6,7 @@ export type PersonRanking = {
     "180": number;
     shot: number;
     k_leg: number;
+    trophy?: TROPHY;
   }
 
 export type TeamRanking = {
