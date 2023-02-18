@@ -2,11 +2,6 @@ import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
 import { TeamRanking } from "../types/general";
 
-type MyProps = {
-  data: TeamRanking;
-  index: number;
-};
-
 interface klassementTableInterface {
   teamData: TeamRanking;
   index: number;
