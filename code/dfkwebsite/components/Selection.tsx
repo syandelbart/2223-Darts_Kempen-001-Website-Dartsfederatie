@@ -24,3 +24,5 @@ const Selectie : FunctionComponent<selectionData> = (props: selectionData) => {
     </Link>
   );
 }
+
+export default Selectie;

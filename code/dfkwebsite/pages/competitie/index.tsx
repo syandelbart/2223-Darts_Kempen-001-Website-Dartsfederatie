@@ -1,4 +1,5 @@
-import Selectie from "../../components/Selectie";
+import Selectie from "../../components/Selection";
+
 
 export default function Competitie() {
   return (
