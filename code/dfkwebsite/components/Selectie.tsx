@@ -1,13 +1,14 @@
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { FunctionComponent } from "react";
 
-type MyProps = {
+type selectionData = {
   href: string;
   title: string;
   icon: string;
 };
 
-export default function Selectie(props: MyProps) {
+const Selectie : FunctionComponent<selectionData> = (props: selectionData) => {
   return (
     <Link href={props.href} className="w-1/6">
       <div className="bg-nav-background rounded-xl p-3 h-full flex flex-col">

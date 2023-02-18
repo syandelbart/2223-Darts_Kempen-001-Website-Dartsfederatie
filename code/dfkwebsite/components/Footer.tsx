@@ -2,8 +2,9 @@ import Image from "next/image";
 import dfkLogo from "../public/dfklogo.png";
 import Link from "next/link";
 import FooterLink from "./FooterLink";
+import { FunctionComponent } from "react";
 
-export default function Footer() {
+const Footer: FunctionComponent = () => {
   return (
     <footer className="bg-footer-background flex flex-col px-10 lg:px-20 py-10 text-white">
       <div className="flex flex-col md:flex-row items-top gap-10 lg:gap-0 justify-between items-top">
@@ -41,3 +42,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default Footer;

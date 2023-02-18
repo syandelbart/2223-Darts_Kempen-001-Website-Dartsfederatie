@@ -1,4 +1,6 @@
-export default function GewestFilter() {
+import { FunctionComponent } from "react";
+
+const GewestFilter : FunctionComponent = () => {
   return (
     <select className="text-black" id="gewestfilter" name="gewestfilter">
       <option value="all" selected>
@@ -10,3 +12,5 @@ export default function GewestFilter() {
     </select>
   );
 }
+
+export default GewestFilter;

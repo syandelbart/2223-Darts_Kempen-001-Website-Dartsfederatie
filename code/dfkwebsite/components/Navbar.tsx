@@ -5,7 +5,7 @@ import NavItem from "./NavItem";
 import dfkLogo from "../public/dfklogo.png";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { FunctionComponent, useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 
 const routes = [
@@ -70,7 +70,7 @@ const routes = [
 ]
 
 // Functionaliteit toevoegen van dropdown optie
-export default function Navbar() {
+const Navbar : FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <nav className="px-10 lg:px-20 py-5 flex flex-wrap justify-center lg:justify-between items-center bg-nav-background">
@@ -104,3 +104,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
+export default Navbar;

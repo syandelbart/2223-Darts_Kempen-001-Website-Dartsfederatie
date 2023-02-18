@@ -3,10 +3,11 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 
 import { Montserrat } from '@next/font/google';
+import { FunctionComponent } from 'react';
 
 const montserrat = Montserrat();
 
-export default function Layout({ children }: any) {
+const Layout: FunctionComponent = ({ children }: any) => {
   return (
     <>
       <Navbar />
@@ -17,3 +18,5 @@ export default function Layout({ children }: any) {
     </>
   )
 }
+
+export default Layout;

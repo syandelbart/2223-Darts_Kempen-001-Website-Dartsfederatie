@@ -1,11 +1,12 @@
 import { Icon } from "@iconify/react";
+import { FunctionComponent } from "react";
 
-type MyProps = {
+type LoginModalData = {
     isOpen: boolean;
     setIsOpen: any;
 }
 
-export default function LoginModal(props: MyProps) {
+const LoginModal : FunctionComponent<LoginModalData> = (props: LoginModalData) => {
   return (
     <div className={`${props.isOpen ? "" : "hidden"}`}>
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50"></div>
@@ -48,3 +49,5 @@ export default function LoginModal(props: MyProps) {
     </div>
   );
 }
+
+export default LoginModal;
