@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Club from "../../../components/overzicht/club/Club";
+import ClubModal from "../../../components/overzicht/club/ClubModal";
 import Search from "../../../components/overzicht/Search";
 
 let clubs = [
@@ -49,6 +50,7 @@ let clubs = [
 
 export default function Clubs() {
   const [search, setSearch] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   let results = 0;
   return (
     <div>
@@ -61,6 +63,7 @@ export default function Clubs() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
+      <ClubModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <div className="grid grid-cols-3 gap-5">
         {clubs.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
@@ -84,6 +87,7 @@ export default function Clubs() {
                 clubplek={club.clubplek}
                 straatnaam={club.straatnaam}
                 postcode={club.postcode}
+                setIsOpen={setIsOpen}
               />
             ))
         )}
