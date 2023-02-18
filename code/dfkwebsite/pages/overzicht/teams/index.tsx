@@ -22,7 +22,7 @@ export default function Teams() {
   return (
     <div>
       <div className="flex justify-between items-center mb-10">
-        <h1 className="text-6xl font-extrabold text-white">Clubs</h1>
+        <h1 className="text-6xl font-extrabold text-white">Teams</h1>
         <input
           type="text"
           placeholder="Zoeken..."
