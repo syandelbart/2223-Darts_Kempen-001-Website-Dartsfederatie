@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import GewestFilter from "../../../components/GewestFilter";
 import IndividueleRankingTable from "../../../components/IndividueleRankingTable";
-import IndividueleRanking from "../../../components/IndividueleRankingTable";
 import { PersonRanking, TROPHY } from "../../../types/general";
 
 const provinciaal : Array<PersonRanking> = [
@@ -64,7 +63,7 @@ const provinciaal : Array<PersonRanking> = [
   },
 ];
 
-const Individueleranking : NextPage = () => {
+const IndividueleRanking : NextPage = () => {
   return (
     <div className="text-white">
       <div className="flex justify-between items-center">
