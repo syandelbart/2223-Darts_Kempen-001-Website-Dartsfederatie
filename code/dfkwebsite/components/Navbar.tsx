@@ -24,7 +24,11 @@ const routes = [
       {
         href: "overzicht/spelers",
         title: "Spelers",
-      }
+      },
+      {
+        href: "overzicht/bestuur",
+        title: "Bestuur",
+      },
     ]
   },
   {

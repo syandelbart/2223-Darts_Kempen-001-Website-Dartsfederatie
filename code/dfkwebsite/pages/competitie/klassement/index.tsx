@@ -96,10 +96,9 @@ export default function Klassement() {
           </thead>
 
           <tbody>
-          {provinciaal.map((item: any, i: number) => {
-            return <Klassement key={i} data={item} i={i} />;
-          })}
-
+            {provinciaal.map((item: any, i: number) => {
+              return <Klassement key={i} data={item} i={i} />;
+            })}
           </tbody>
         </table>
       </div>
