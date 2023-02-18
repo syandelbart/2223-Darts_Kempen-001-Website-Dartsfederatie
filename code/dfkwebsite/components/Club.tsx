@@ -1,11 +1,14 @@
-type MyProps = {
+import { FunctionComponent } from "react";
+
+type clubData = {
     clubnaam: string;
     clubplek: string;
     straatnaam: string;
     postcode: string;
     setIsOpen: any;
 };
-export default function Club(props: MyProps) {
+
+const Club : FunctionComponent<clubData> = (props: clubData) => {
   return (
     <div className="bg-nav-background py-2 px-3 rounded-lg text-white">
       <p className="mb-4 text-3xl font-bold">{props.clubnaam}</p>
@@ -21,3 +24,5 @@ export default function Club(props: MyProps) {
     </div>
   );
 }
+
+export default Club;

@@ -1,12 +1,13 @@
 import { Icon } from "@iconify/react";
+import { FunctionComponent } from "react";
 
-type MyProps = {
+type teamData = {
     teamnaam: string;
     kapitein: string;
     telefoonnummer: string;
     setIsOpen: any;
 };
-export default function Team(props: MyProps) {
+const Team : FunctionComponent<teamData> = (props: teamData) => {
   return (
     <div className="bg-nav-background py-2 px-3 rounded-lg text-white">
       <p className="mb-4 text-3xl font-bold">{props.teamnaam}</p>
@@ -27,3 +28,5 @@ export default function Team(props: MyProps) {
     </div>
   );
 }
+
+export default Team;

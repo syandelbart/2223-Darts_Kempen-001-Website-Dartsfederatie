@@ -1,12 +1,14 @@
 import { Icon } from "@iconify/react";
+import { FunctionComponent } from "react";
 
-type MyProps = {
+type managementData = {
   naam: string;
   functie: string;
   mail: string;
   telefoonnummer: string;
 };
-export default function Bestuur(props: MyProps) {
+
+const ManagementCard : FunctionComponent<managementData> = (props: managementData) => {
   return (
     <div className="bg-nav-background py-2 px-3 rounded-lg text-white">
       <div className="flex items-center justify-between">
@@ -40,3 +42,5 @@ export default function Bestuur(props: MyProps) {
     </div>
   );
 }
+
+export default ManagementCard;

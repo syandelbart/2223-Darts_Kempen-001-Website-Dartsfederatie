@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Team from "../../../components/overzicht/team/Team";
-import TeamModal from "../../../components/overzicht/team/TeamModal";
+import Team from "../../../components/Team";
+import TeamModal from "../../../components/TeamModal";
 
 let teams = [
   {

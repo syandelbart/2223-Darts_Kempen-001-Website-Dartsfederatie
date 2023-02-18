@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Bestuur from "../../../components/overzicht/bestuur/Bestuur";
+import ManagementCard from "../../../components/ManagementCard";
 
 let bestuur = [
   {
@@ -48,7 +48,7 @@ export default function Bestuur() {
               results++;
             })
             .map((bestuurslid) => (
-              <Bestuur
+              <ManagementCard
                 naam={bestuurslid.naam}
                 functie={bestuurslid.functie}
                 mail={bestuurslid.mail}
