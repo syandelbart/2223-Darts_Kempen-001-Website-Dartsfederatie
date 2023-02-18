@@ -1,6 +1,8 @@
 import GewestFilter from "../../../components/GewestFilter";
+import KlassementTable from "../../../components/KlassementTable";
+import { TeamRanking, TROPHY } from "../../../types/general";
 
-const provinciaal = [
+const provinciaal : Array<TeamRanking> = [
   {
     id: 1,
     ploegnaam: "Dartsclub De Kruisboog",
@@ -11,6 +13,7 @@ const provinciaal = [
     voor: 0,
     tegen: 0,
     punten: 0,
+    trophy: TROPHY.GOLD
   },
   {
     id: 2,
@@ -22,6 +25,7 @@ const provinciaal = [
     voor: 0,
     tegen: 0,
     punten: 0,
+    trophy: TROPHY.SILVER
   },
   {
     id: 3,
@@ -33,6 +37,7 @@ const provinciaal = [
     voor: 0,
     tegen: 0,
     punten: 0,
+    trophy: TROPHY.BRONZE
   },
   {
     id: 4,
@@ -96,8 +101,8 @@ export default function Klassement() {
           </thead>
 
           <tbody>
-            {provinciaal.map((item: any, i: number) => {
-              return <Klassement key={i} data={item} i={i} />;
+            {provinciaal.map((item, i) => {
+              return <KlassementTable key={i} data={item} index={i} />;
             })}
           </tbody>
         </table>

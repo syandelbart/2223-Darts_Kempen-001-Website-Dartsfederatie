@@ -18,4 +18,11 @@ export type TeamRanking = {
     voor: number;
     tegen: number;
     punten: number;
+    trophy?: TROPHY;
+}
+
+export enum TROPHY {
+    GOLD = 0,
+    SILVER = 1,
+    BRONZE = 2
 }
