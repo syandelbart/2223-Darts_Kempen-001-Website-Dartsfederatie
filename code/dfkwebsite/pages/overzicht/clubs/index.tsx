@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Club from "../../../components/overzicht/club/Club";
 import ClubModal from "../../../components/overzicht/club/ClubModal";
-import Search from "../../../components/overzicht/Search";
 
 let clubs = [
   {
