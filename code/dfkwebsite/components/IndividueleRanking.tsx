@@ -1,14 +1,5 @@
 import { Icon } from "@iconify/react";
-
-type PersonRanking = {
-  id: number;
-  name: string;
-  ploeg: string;
-  punten: number;
-  "180": number;
-  shot: number;
-  k_leg: number;
-}
+import { PersonRanking } from "../types/general";
 
 type MyProps = {
   data: PersonRanking;

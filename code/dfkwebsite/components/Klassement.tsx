@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react";
+import { TeamRanking } from "../types/general";
 
 type MyProps = {
-  data: any[];
+  data: TeamRanking;
   i: number;
 };
 
@@ -44,5 +45,4 @@ export default function Klassement(props: MyProps) {
         <td className="py-2">{props.data.punten}</td>
       </tr>
     );
-  });
-}
+};
