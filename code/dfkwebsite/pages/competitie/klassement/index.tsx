@@ -101,8 +101,8 @@ export default function Klassement() {
           </thead>
 
           <tbody>
-            {provinciaal.map((item, i) => {
-              return <KlassementTable key={i} data={item} index={i} />;
+            {provinciaal.map((team, i) => {
+              return <KlassementTable key={i} teamData={team} index={i} />;
             })}
           </tbody>
         </table>

@@ -88,8 +88,8 @@ export default function Individueleranking() {
           </thead>
 
           <tbody>
-           {provinciaal.map((item, i) => {
-              return <IndividueleRankingTable key={i} data={item} index={i}  />;
+           {provinciaal.map((person, i) => {
+              return <IndividueleRankingTable  key={i} personData={person} index={i}  />;
             })
            }
           </tbody>
