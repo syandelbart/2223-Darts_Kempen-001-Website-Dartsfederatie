@@ -1,7 +1,8 @@
+import { NextPage } from "next";
 import Selectie from "../../components/Selection";
 
 
-export default function Competitie() {
+const Competitie : NextPage = () => {
   return (
     <div>
       <h1 className="text-6xl mb-20 text-white font-bold">Competitie</h1>
@@ -25,3 +26,5 @@ export default function Competitie() {
     </div>
   );
 }
+
+export default Competitie;

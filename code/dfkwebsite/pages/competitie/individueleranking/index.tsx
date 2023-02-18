@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import GewestFilter from "../../../components/GewestFilter";
 import IndividueleRankingTable from "../../../components/IndividueleRankingTable";
 import IndividueleRanking from "../../../components/IndividueleRankingTable";
@@ -63,7 +64,7 @@ const provinciaal : Array<PersonRanking> = [
   },
 ];
 
-export default function Individueleranking() {
+const Individueleranking : NextPage = () => {
   return (
     <div className="text-white">
       <div className="flex justify-between items-center">
@@ -98,3 +99,5 @@ export default function Individueleranking() {
     </div>
   );
 }
+
+export default IndividueleRanking;

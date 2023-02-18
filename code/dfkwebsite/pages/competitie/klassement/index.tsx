@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import GewestFilter from "../../../components/GewestFilter";
 import KlassementTable from "../../../components/KlassementTable";
 import { TeamRanking, TROPHY } from "../../../types/general";
@@ -74,7 +75,7 @@ const provinciaal : Array<TeamRanking> = [
   },
 ];
 
-export default function Klassement() {
+const Klassement : NextPage = () => {
   return (
     <div className="text-white">
       <div className="flex justify-between items-center">
@@ -110,3 +111,5 @@ export default function Klassement() {
     </div>
   );
 }
+
+export default Klassement;
