@@ -42,6 +42,14 @@ const routes = [
       {
         href: "info/kalender",
         title: "Kalender",
+      },
+      {
+        href: "info/documenten",
+        title: "Documenten",
+      },
+      {
+        href: "info/inschrijvingen",
+        title: "Inschrijvingen",
       }
     ]
   }, 
