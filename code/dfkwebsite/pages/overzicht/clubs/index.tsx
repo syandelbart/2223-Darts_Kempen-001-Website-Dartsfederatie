@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NextPage } from "next";
 import Club from "../../../components/Club";
 import ClubModal from "../../../components/ClubModal";
 
@@ -47,7 +48,7 @@ let clubs = [
   },
 ];
 
-export default function Clubs() {
+const Clubs: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   let results = 0;
@@ -98,4 +99,6 @@ export default function Clubs() {
       </div>
     </div>
   );
-}
+};
+
+export default Clubs;

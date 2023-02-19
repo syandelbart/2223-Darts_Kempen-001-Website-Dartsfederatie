@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import { useState } from "react";
 import ManagementCard from "../../../components/ManagementCard";
 
@@ -14,9 +15,9 @@ let bestuur = [
     mail: "Mail",
     telefoonnummer: "Telefoonnummer",
   },
-]
+];
 
-export default function Bestuur() {
+const Bestuur: NextPage = () => {
   const [search, setSearch] = useState("");
   let results = 0;
   return (
@@ -41,7 +42,7 @@ export default function Bestuur() {
               if (search == "") {
                 return bestuurslid;
               } else if (
-                bestuurslid.naam.toLowerCase().includes(search.toLowerCase())               
+                bestuurslid.naam.toLowerCase().includes(search.toLowerCase())
               ) {
                 return bestuurslid;
               }
@@ -64,4 +65,6 @@ export default function Bestuur() {
       </div>
     </div>
   );
-}
+};
+
+export default Bestuur;

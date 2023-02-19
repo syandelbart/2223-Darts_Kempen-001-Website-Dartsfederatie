@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NextPage } from "next";
 import Team from "../../../components/Team";
 import TeamModal from "../../../components/TeamModal";
 
@@ -15,7 +16,7 @@ let teams = [
   },
 ];
 
-export default function Teams() {
+const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   let results = 0;
@@ -65,4 +66,6 @@ export default function Teams() {
       </div>
     </div>
   );
-}
+};
+
+export default Teams;

@@ -9,7 +9,6 @@ interface klassementTableInterface {
 
 
 const KlassementTable : FunctionComponent<klassementTableInterface> = ({teamData,index}) => {
-
     return (
       <tr className="even:bg-[#BDBBBB] odd:bg-[#D9D9D9] border-t border-[#313131]">
         <td>

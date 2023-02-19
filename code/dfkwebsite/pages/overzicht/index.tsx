@@ -1,6 +1,7 @@
 import Selectie from "../../components/Selection";
+import { NextPage } from "next";
 
-export default function Overzicht() {
+const Overzicht: NextPage = () => {
   return (
     <div>
       <h1 className="text-6xl mb-20 text-white font-bold">Overzicht</h1>
@@ -28,4 +29,6 @@ export default function Overzicht() {
       </div>
     </div>
   );
-}
+};
+
+export default Overzicht;
