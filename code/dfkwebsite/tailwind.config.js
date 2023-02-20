@@ -12,9 +12,17 @@ module.exports = {
         "nav-background": "#4A4A4A",
         "footer-background": "#4A4A4A",
         "accent": "#174DAF",
+        "trophy-0": "#AE8625",
+        "trophy-1": "#8B8B8B",
+        "trophy-2": "#967444"
       },
     },
   },
+  safelist: [
+    {
+      pattern: /text-trophy-[0-9]+/
+    }
+  ],
   plugins: [
     require('tailwind-children'),
   ],

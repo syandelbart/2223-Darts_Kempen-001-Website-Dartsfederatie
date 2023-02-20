@@ -1,15 +1,18 @@
 import Link from "next/link";
+import { FunctionComponent } from "react";
 
 type MyProps = {
   href: string;
 };
 
-export default function FooterLink(props: MyProps) {
+const FooterLink: FunctionComponent<MyProps> = ({ href }) => {
   return (
     <li className="hover:text-gray-500">
-      <Link href={"/" + props.href} className="capitalize">
-        {props.href}
+      <Link href={"/" + href} className="capitalize">
+        {href}
       </Link>
     </li>
   );
 }
+
+export default FooterLink;

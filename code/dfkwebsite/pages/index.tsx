@@ -1,6 +1,7 @@
 import ImageRead from '../components/ImageRead';
+import { NextPage } from "next";
 
-export default function Homepage() {
+const HomePage: NextPage = () => {
   return (
     <div>
       <ImageRead title="This is a title" summary="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. " date={1}/>
@@ -8,3 +9,5 @@ export default function Homepage() {
     </div>
   );
 }
+
+export default HomePage;

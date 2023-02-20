@@ -1,6 +1,7 @@
-import Selectie from "../../components/Selectie";
+import Selectie from "../../components/Selection";
+import { NextPage } from "next";
 
-export default function Info() {
+const Info: NextPage = () => {
   return (
     <div>
       <h1 className="text-6xl mb-20 text-white font-bold">Info</h1>
@@ -10,7 +11,11 @@ export default function Info() {
           title="nieuws"
           icon="fluent:news-16-regular"
         />
-        <Selectie href="/info/kalender" title="kalender" icon="mdi:calendar-month" />
+        <Selectie
+          href="/info/kalender"
+          title="kalender"
+          icon="mdi:calendar-month"
+        />
         <Selectie
           href="/info/documenten"
           title="documenten"
@@ -24,4 +29,6 @@ export default function Info() {
       </div>
     </div>
   );
-}
+};
+
+export default Info;
