@@ -75,7 +75,7 @@ const IndividueleRanking : NextPage = () => {
         <h2 className="text-4xl font-semibold my-10">Provinciaal</h2>
         <table className="w-full text-center text-[#313131]">
           <thead>
-            <tr className="bg-[#313131] text-white">
+            <tr className="bg-[#313131] text-white h-12">
               <th className="w-5"></th>
               <th>Nr.</th>
               <th>Naam</th>
