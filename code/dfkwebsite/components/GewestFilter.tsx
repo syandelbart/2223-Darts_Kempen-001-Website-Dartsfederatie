@@ -2,7 +2,7 @@ import { FunctionComponent } from "react";
 
 const GewestFilter : FunctionComponent = () => {
   return (
-    <select className="text-black" id="gewestfilter" name="gewestfilter">
+    <select className="text-black pl-5 pr-2 py-2" id="gewestfilter" name="gewestfilter">
       <option value="all" selected>
         Alle gewesten
       </option>
