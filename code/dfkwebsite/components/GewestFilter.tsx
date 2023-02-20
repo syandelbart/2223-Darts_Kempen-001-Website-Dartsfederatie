@@ -4,7 +4,7 @@ const GewestFilter : FunctionComponent = () => {
   return (
     <select className="text-black" id="gewestfilter" name="gewestfilter">
       <option value="all" selected>
-        Alle
+        Alle gewesten
       </option>
       <option value="provinciaal">Provinciaal</option>
       <option value="gewest1">1e Gewest</option>
