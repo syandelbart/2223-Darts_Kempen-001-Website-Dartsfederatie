@@ -18,6 +18,11 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    {
+      pattern: /text-trophy-[0-9]+/
+    }
+  ],
   plugins: [
     require('tailwind-children'),
   ],
