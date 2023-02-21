@@ -5,38 +5,7 @@ import TeamModal from "../../../components/TeamModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 
-let teams = [
-  {
-    teamnaam: "Team 1",
-    kapitein: "Kapitein",
-    telefoonnummer: "Telefoonnummer",
-  },
-  {
-    teamnaam: "Team 2",
-    kapitein: "Kapitein",
-    telefoonnummer: "Telefoonnummer",
-  },
-  {
-    teamnaam: "Team 3",
-    kapitein: "Kapitein",
-    telefoonnummer: "Telefoonnummer",
-  },
-  {
-    teamnaam: "Team 4",
-    kapitein: "Kapitein",
-    telefoonnummer: "Telefoonnummer",
-  },
-  {
-    teamnaam: "Team 5",
-    kapitein: "Kapitein",
-    telefoonnummer: "Telefoonnummer",
-  },
-  {
-    teamnaam: "Team 6",
-    kapitein: "Kapitein",
-    telefoonnummer: "Telefoonnummer",
-  },
-];
+import teams from "../../../data";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -68,9 +37,7 @@ const Teams: NextPage = () => {
             .map((team) => (
               <Card>
                 <Team
-                  teamnaam={team.teamnaam}
-                  kapitein={team.kapitein}
-                  telefoonnummer={team.telefoonnummer}
+                  teamData={team}
                   setIsOpen={setIsOpen}
                 />
               </Card>
