@@ -40,10 +40,6 @@ const routes = [
         title: "Nieuws",
       },
       {
-        href: "info/kalender",
-        title: "Kalender",
-      },
-      {
         href: "info/documenten",
         title: "Documenten",
       },
