@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useState } from "react";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
-import ManagementCard from "../../../components/ManagementCard";
+import ManagementCard, { managementData } from "../../../components/ManagementCard";
 
 let bestuur : Array<managementData> = [
   {
@@ -82,13 +82,7 @@ const Bestuur: NextPage = () => {
         ) : (
           bestuur
             .filter((bestuurslid) => {
-              if (search == "") {
-                return bestuurslid;
-              } else if (
-                bestuurslid.naam.toLowerCase().includes(search.toLowerCase())
-              ) {
-                return bestuurslid;
-              }
+              if(search == "" || bestuurslid.naam.toLowerCase().includes(search.toLowerCase())) return bestuurslid;
               results++;
             })
             .map((bestuurslid) => (

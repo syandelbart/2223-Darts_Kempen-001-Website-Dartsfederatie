@@ -62,13 +62,7 @@ const Teams: NextPage = () => {
         ) : (
           teams
             .filter((team) => {
-              if (search == "") {
-                return team;
-              } else if (
-                team.teamnaam.toLowerCase().includes(search.toLowerCase())
-              ) {
-                return team;
-              }
+              if(search == "" || team.teamnaam.toLowerCase().includes(search.toLowerCase())) return team;
               results++;
             })
             .map((team) => (

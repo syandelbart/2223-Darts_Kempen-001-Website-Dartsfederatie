@@ -74,13 +74,7 @@ const Clubs: NextPage = () => {
         ) : (
           clubs
             .filter((club) => {
-              if (search == "") {
-                return club;
-              } else if (
-                club.clubnaam.toLowerCase().includes(search.toLowerCase())
-              ) {
-                return club;
-              }
+              if(search == "" || club.clubnaam.toLowerCase().includes(search.toLowerCase())) return club;
               results++;
             })
             .map((club) => (
