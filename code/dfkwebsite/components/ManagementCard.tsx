@@ -2,11 +2,11 @@ import { FunctionComponent } from "react";
 import CardButton from "./CardButton";
 import CardIcon from "./CardIcon";
 
-type managementData = {
+export type managementData = {
   naam: string;
-  functie: string;
-  mail: string;
-  telefoonnummer: string;
+  functie?: string;
+  mail?: string;
+  telefoonnummer?: string;
 };
 
 const ManagementCard : FunctionComponent<managementData> = (props: managementData) => {
@@ -19,9 +19,9 @@ const ManagementCard : FunctionComponent<managementData> = (props: managementDat
         </CardButton>
       </div>
       <div className="my-3">
-        <CardIcon icon={"ph:pen-nib"} text={props.functie} />
-        <CardIcon icon={"ph:envelope-open-light"} text={props.mail} />
-        <CardIcon icon={"ph:phone"} text={props.telefoonnummer} />
+        {props.functie ? <CardIcon icon={"ph:pen-nib"} text={props.functie} /> : null}
+        {props.mail ? <CardIcon icon={"ph:envelope-open-light"} text={props.mail} /> : null}
+        {props.telefoonnummer ? <CardIcon icon={"ph:phone"} text={props.telefoonnummer} /> : null}
       </div>
     </div>
   );
