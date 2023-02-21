@@ -13,7 +13,7 @@ const Team : FunctionComponent<teamData> = (props: teamData) => {
       <p className="mb-4 text-3xl font-bold">{props.teamnaam}</p>
       <div className="flex gap-8 children:hover:cursor-pointer">
         <p className="rounded-2xl px-8 py-1 bg-[#676767]" onClick={() => props.setIsOpen(true)}>Spelers</p>
-        <p className="rounded-2xl px-10 py-1 bg-[#95A4F3]">Edit</p>
+        <p className="rounded-2xl px-10 py-1 bg-edit-button">Edit</p>
       </div>
       <div className="my-3">
         <div className="flex mb-3 items-center">
