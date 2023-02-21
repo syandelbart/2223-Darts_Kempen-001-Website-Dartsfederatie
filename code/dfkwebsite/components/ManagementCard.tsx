@@ -20,9 +20,9 @@ const ManagementCard : FunctionComponent<managementData> = (props: managementDat
         </CardButton>
       </div>
       <div className="my-3">
-        {props.functie ? <CardIcon icon={"ph:pen-nib"} text={props.functie} /> : null}
-        {props.mail ? <CardIcon icon={"ph:envelope-open-light"} text={props.mail} /> : null}
-        {props.telefoonnummer ? <CardIcon icon={"ph:phone"} text={props.telefoonnummer} /> : null}
+        {props.functie ? <CardIcon icon={"ph:pen-nib"}>{props.functie}</CardIcon> : null}
+        {props.mail ? <CardIcon icon={"ph:envelope-open-light"}>{props.mail}</CardIcon> : null}
+        {props.telefoonnummer ? <CardIcon icon={"ph:phone"}>{props.telefoonnummer}</CardIcon> : null}
       </div>
     </div>
   );

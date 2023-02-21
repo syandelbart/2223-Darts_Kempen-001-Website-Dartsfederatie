@@ -32,8 +32,12 @@ const Player : FunctionComponent<playerDataInterface> = ({playerData,setIsOpen})
         
       </CardButtonRow>
       <div className="my-3">
-        <CardIcon icon={"ph:envelope-open-light"} text={playerData.email} />
-        <CardIcon icon={"ph:phone"} text={playerData.phone} />
+        <CardIcon icon={"ph:envelope-open-light"}>
+          {playerData.email}
+        </CardIcon>
+        <CardIcon icon={"ph:phone"}>
+          {playerData.phone}
+        </CardIcon>
       </div>
     </div>
   );

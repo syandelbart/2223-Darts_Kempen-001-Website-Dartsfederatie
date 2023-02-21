@@ -6,7 +6,7 @@ type buttonRowData = {
 
 const CardButtonRow : FunctionComponent<buttonRowData> = ({children}) => {
   return (
-    <div className="flex gap-x-8 gap-y-2 children:hover:cursor-pointer flex-wrap">
+    <div className="flex gap-x-4 gap-y-2 children:hover:cursor-pointer flex-wrap mt-3">
         {children}
     </div>
   );
