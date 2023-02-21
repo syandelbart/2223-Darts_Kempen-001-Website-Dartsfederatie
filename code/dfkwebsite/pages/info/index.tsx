@@ -12,11 +12,6 @@ const Info: NextPage = () => {
           icon="fluent:news-16-regular"
         />
         <Selectie
-          href="/info/kalender"
-          title="kalender"
-          icon="mdi:calendar-month"
-        />
-        <Selectie
           href="/info/documenten"
           title="documenten"
           icon="mdi:file-document-outline"
