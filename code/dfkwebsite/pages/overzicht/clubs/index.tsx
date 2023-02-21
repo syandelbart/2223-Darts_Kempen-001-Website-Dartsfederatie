@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NextPage } from "next";
 import Club from "../../../components/Club";
 import ClubModal from "../../../components/ClubModal";
+import Card from "../../../components/Card";
 
 let clubs = [
   {
@@ -64,7 +65,7 @@ const Clubs: NextPage = () => {
         />
       </div>
       <ClubModal isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-[95vw] mx-auto">
         {clubs.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
             Geen clubs gevonden
@@ -82,13 +83,15 @@ const Clubs: NextPage = () => {
               results++;
             })
             .map((club) => (
-              <Club
+              <Card>
+                <Club
                 clubnaam={club.clubnaam}
                 clubplek={club.clubplek}
                 straatnaam={club.straatnaam}
                 postcode={club.postcode}
                 setIsOpen={setIsOpen}
-              />
+                />
+              </Card>
             ))
         )}
         {results === clubs.length && (

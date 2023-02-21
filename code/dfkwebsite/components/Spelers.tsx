@@ -1,5 +1,5 @@
+import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
-import CardButton from "./CardButton";
 import CardIcon from "./CardIcon";
 
 type teamData = {
@@ -9,17 +9,13 @@ type teamData = {
     setIsOpen: any;
 };
 
-const Team : FunctionComponent<teamData> = (props: teamData) => {
+const Spelers : FunctionComponent<teamData> = (props: teamData) => {
   return (
     <div>
       <p className="mb-4 text-3xl font-bold">{props.teamnaam}</p>
       <div className="flex gap-8 children:hover:cursor-pointer">
-        <CardButton onClick={() => props.setIsOpen(true)}>
-          Spelers
-        </CardButton>
-        <CardButton bg={"bg-[#95A4F3]"}>
-          Edit
-        </CardButton>
+        <p className="rounded-2xl px-8 py-1 bg-[#676767]" onClick={() => props.setIsOpen(true)}>Spelers</p>
+        
       </div>
       <div className="my-3">
         <CardIcon icon={"game-icons:captain-hat-profile"} text={props.kapitein} />
@@ -29,4 +25,4 @@ const Team : FunctionComponent<teamData> = (props: teamData) => {
   );
 }
 
-export default Team;
+export default Spelers;
