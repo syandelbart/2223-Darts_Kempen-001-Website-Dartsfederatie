@@ -14,7 +14,9 @@ module.exports = {
         "accent": "#174DAF",
         "trophy-0": "#AE8625",
         "trophy-1": "#8B8B8B",
-        "trophy-2": "#967444"
+        "trophy-2": "#967444",
+        "edit-button": "#95A4F3",
+        "delete-button": "#FF4E4E",
       },
     },
   },
