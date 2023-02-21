@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useState } from "react";
 import Card from "../../../components/Card";
+import CardGrid from "../../../components/CardGrid";
 import ManagementCard from "../../../components/ManagementCard";
 
 let bestuur = [
@@ -32,7 +33,7 @@ const Bestuur: NextPage = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-      <div className="grid grid-cols-3 gap-5">
+      <CardGrid>
         {bestuur.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
             Geen bestuurslid gevonden
@@ -65,7 +66,7 @@ const Bestuur: NextPage = () => {
             Geen bestuurslid gevonden
           </h1>
         )}
-      </div>
+      </CardGrid>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Club from "../../../components/Club";
 import ClubModal from "../../../components/ClubModal";
 import Card from "../../../components/Card";
+import CardGrid from "../../../components/CardGrid";
 
 let clubs = [
   {
@@ -65,7 +66,7 @@ const Clubs: NextPage = () => {
         />
       </div>
       <ClubModal isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-[95vw] mx-auto">
+      <CardGrid>
         {clubs.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
             Geen clubs gevonden
@@ -99,7 +100,7 @@ const Clubs: NextPage = () => {
             Geen clubs gevonden
           </h1>
         )}
-      </div>
+      </CardGrid>
     </div>
   );
 };
