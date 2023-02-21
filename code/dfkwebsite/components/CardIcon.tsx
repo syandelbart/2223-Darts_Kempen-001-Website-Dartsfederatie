@@ -6,7 +6,7 @@ type MyProps = {
     text: string;
 };
 
-const IconRow: FunctionComponent<MyProps> = ({ icon,text }) => {
+const CardIcon: FunctionComponent<MyProps> = ({ icon,text }) => {
   return (
     <div className="flex mb-3 items-center">
         <Icon
@@ -18,4 +18,4 @@ const IconRow: FunctionComponent<MyProps> = ({ icon,text }) => {
   );
 }
 
-export default IconRow;
+export default CardIcon;

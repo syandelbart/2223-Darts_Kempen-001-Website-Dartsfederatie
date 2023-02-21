@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
 import CardButton from "./CardButton";
-import IconRow from "./IconRow";
+import CardIcon from "./CardIcon";
 
 type managementData = {
   naam: string;
@@ -19,11 +19,10 @@ const ManagementCard : FunctionComponent<managementData> = (props: managementDat
           Edit
         </CardButton>
       </div>
-
       <div className="my-3">
-        <IconRow icon={"game-icons:captain-hat-profile"} text={props.functie}        />
-        <IconRow icon={"game-icons:captain-hat-profile"} text={props.mail}        />
-        <IconRow icon={"ph:phone"} text={props.telefoonnummer}        />
+        <CardIcon icon={"game-icons:captain-hat-profile"} text={props.functie}        />
+        <CardIcon icon={"game-icons:captain-hat-profile"} text={props.mail}        />
+        <CardIcon icon={"ph:phone"} text={props.telefoonnummer}        />
       </div>
     </div>
   );

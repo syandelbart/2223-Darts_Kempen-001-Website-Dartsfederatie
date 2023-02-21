@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
-import IconRow from "./IconRow";
+import CardIcon from "./CardIcon";
 
 type teamData = {
     teamnaam: string;
@@ -18,8 +18,8 @@ const Spelers : FunctionComponent<teamData> = (props: teamData) => {
         
       </div>
       <div className="my-3">
-        <IconRow icon={"game-icons:captain-hat-profile"} text={props.kapitein} />
-        <IconRow icon={"ph:phone"} text={props.telefoonnummer} />
+        <CardIcon icon={"game-icons:captain-hat-profile"} text={props.kapitein} />
+        <CardIcon icon={"ph:phone"} text={props.telefoonnummer} />
       </div>
     </div>
   );
