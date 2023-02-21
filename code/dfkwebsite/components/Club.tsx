@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
+import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 
 type clubData = {
@@ -24,9 +25,12 @@ const Club : FunctionComponent<clubData> = (props: clubData) => {
           </CardButton>
         </CardButtonRow>
       <div className="my-3">
-        <p>{props.clubplek}</p>
-        <p>{props.straatnaam}</p>
-        <p>{props.postcode}</p>
+        <CardIcon icon="mdi:address-marker"
+        >
+          <p>{props.clubplek}</p>
+          <p>{props.straatnaam}</p>
+          <p>{props.postcode}</p>
+        </CardIcon>
       </div>
     </div>
   );
