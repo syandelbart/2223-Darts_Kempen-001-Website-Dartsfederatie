@@ -82,13 +82,7 @@ const Bestuur: NextPage = () => {
         ) : (
           bestuur
             .filter((bestuurslid) => {
-              if (search == "") {
-                return bestuurslid;
-              } else if (
-                bestuurslid.naam.toLowerCase().includes(search.toLowerCase())
-              ) {
-                return bestuurslid;
-              }
+              if(search == "" || bestuurslid.naam.toLowerCase().includes(search.toLowerCase())) return bestuurslid;
               results++;
             })
             .map((bestuurslid) => (
