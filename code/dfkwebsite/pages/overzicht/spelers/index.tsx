@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useState } from "react";
 import Card from "../../../components/Card";
+import CardGrid from "../../../components/CardGrid";
 import ClubModal from "../../../components/ClubModal";
 import ManagementCard from "../../../components/ManagementCard";
 import Player, { playerData } from "../../../components/Player";
@@ -125,7 +126,7 @@ const Players: NextPage = () => {
         />
       </div>
       <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-[95vw] mx-auto">
+      <CardGrid>
         {players.length === 0 || results === players.length ? (
           <h1 className="text-4xl font-extrabold text-white">
             Geen clubs gevonden
@@ -145,7 +146,7 @@ const Players: NextPage = () => {
               </Card>
             ))
         )}
-      </div>
+      </CardGrid>
     </div>
   );
 };

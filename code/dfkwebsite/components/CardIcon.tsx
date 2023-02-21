@@ -11,7 +11,7 @@ const CardIcon: FunctionComponent<MyProps> = ({ icon,text }) => {
     <div className="flex mb-3 items-center">
         <Icon
         icon={icon}
-        className="text-3xl mr-3 text-black p-1 bg-[#B9B9B9] rounded-full"
+        className="text-3xl mr-3 text-black p-1 bg-[#B9B9B9] rounded-full min-w-[30px]"
         />
         <p>{text}</p>
     </div>

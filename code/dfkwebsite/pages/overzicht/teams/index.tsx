@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import Team from "../../../components/Team";
 import TeamModal from "../../../components/TeamModal";
 import Card from "../../../components/Card";
+import CardGrid from "../../../components/CardGrid";
 
 let teams = [
   {
@@ -12,6 +13,26 @@ let teams = [
   },
   {
     teamnaam: "Team 2",
+    kapitein: "Kapitein",
+    telefoonnummer: "Telefoonnummer",
+  },
+  {
+    teamnaam: "Team 3",
+    kapitein: "Kapitein",
+    telefoonnummer: "Telefoonnummer",
+  },
+  {
+    teamnaam: "Team 4",
+    kapitein: "Kapitein",
+    telefoonnummer: "Telefoonnummer",
+  },
+  {
+    teamnaam: "Team 5",
+    kapitein: "Kapitein",
+    telefoonnummer: "Telefoonnummer",
+  },
+  {
+    teamnaam: "Team 6",
     kapitein: "Kapitein",
     telefoonnummer: "Telefoonnummer",
   },
@@ -33,7 +54,7 @@ const Teams: NextPage = () => {
         />
       </div>
       <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="grid grid-cols-3 gap-5">
+      <CardGrid>
         {teams.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
             Geen teams gevonden
@@ -66,7 +87,7 @@ const Teams: NextPage = () => {
             Geen teams gevonden
           </h1>
         )}
-      </div>
+      </CardGrid>
     </div>
   );
 };
