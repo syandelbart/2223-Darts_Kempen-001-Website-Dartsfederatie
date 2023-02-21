@@ -4,20 +4,24 @@ import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 
-type clubData = {
+export type clubData = {
     clubnaam: string;
     clubplek: string;
     straatnaam: string;
     postcode: string;
-    setIsOpen: any;
 };
 
-const Club : FunctionComponent<clubData> = (props: clubData) => {
+interface clubDataInterface {
+  clubData: clubData;
+  setIsOpen: any;
+}
+
+const Club : FunctionComponent<clubDataInterface> = ({clubData,setIsOpen}) => {
   return (
     <div>
-      <CardTitle>{props.clubnaam}</CardTitle>
+      <CardTitle>{clubData.clubnaam}</CardTitle>
         <CardButtonRow>
-          <CardButton onClick={() => props.setIsOpen(true)}>
+          <CardButton onClick={() => setIsOpen(true)}>
             Spelers
           </CardButton>
           <CardButton bg={"bg-edit-button"}>
@@ -27,9 +31,9 @@ const Club : FunctionComponent<clubData> = (props: clubData) => {
       <div className="my-3">
         <CardIcon icon="mdi:address-marker"
         >
-          <p>{props.clubplek}</p>
-          <p>{props.straatnaam}</p>
-          <p>{props.postcode}</p>
+          <p>{clubData.clubplek}</p>
+          <p>{clubData.straatnaam}</p>
+          <p>{clubData.postcode}</p>
         </CardIcon>
       </div>
     </div>
