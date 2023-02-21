@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
+import CardTitle from "./CardTitle";
 
 type teamData = {
     teamnaam: string;
@@ -13,7 +14,7 @@ type teamData = {
 const Team : FunctionComponent<teamData> = (props: teamData) => {
   return (
     <div>
-      <p className="mb-4 text-3xl font-bold">{props.teamnaam}</p>
+      <CardTitle>{props.teamnaam}</CardTitle>
       <CardButtonRow>
         <CardButton onClick={() => props.setIsOpen(true)}>
           Spelers

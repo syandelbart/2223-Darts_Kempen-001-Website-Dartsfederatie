@@ -3,6 +3,7 @@ import { Dispatch, FunctionComponent, SetStateAction } from "react";
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
+import CardTitle from "./CardTitle";
 
 export type playerData = {
   name: string;
@@ -18,7 +19,7 @@ interface playerDataInterface {
 const Player : FunctionComponent<playerDataInterface> = ({playerData,setIsOpen}) => {
   return (
     <div>
-      <p className="mb-4 text-3xl font-bold">{playerData.name}</p>
+      <CardTitle>{playerData.name}</CardTitle>
       <CardButtonRow>
         <CardButton
           onClick={() => setIsOpen(true)}

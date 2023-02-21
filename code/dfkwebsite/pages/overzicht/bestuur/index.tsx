@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import { useState } from "react";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
-import ManagementCard from "../../../components/ManagementCard";
+import ManagementCard, { managementData } from "../../../components/ManagementCard";
 
 let bestuur : Array<managementData> = [
   {
