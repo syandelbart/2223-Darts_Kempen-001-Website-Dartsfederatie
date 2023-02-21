@@ -1,6 +1,7 @@
 import { FunctionComponent } from "react";
 import CardButton from "./CardButton";
 import CardIcon from "./CardIcon";
+import CardTitle from "./CardTitle";
 
 export type managementData = {
   naam: string;
@@ -12,9 +13,9 @@ export type managementData = {
 const ManagementCard : FunctionComponent<managementData> = (props: managementData) => {
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <p className="mb-4 text-3xl font-bold">{props.naam}</p>
-        <CardButton bg={"bg-[#95A4F3]"}>
+      <div className="flex items-center justify-between mb-4">
+        <CardTitle>{props.naam}</CardTitle>
+        <CardButton bg={"bg-[#95A4F3]"} font={"text-[12px]"}>
           Edit
         </CardButton>
       </div>
