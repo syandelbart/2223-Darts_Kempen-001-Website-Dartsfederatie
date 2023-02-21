@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
 import CardButton from "./CardButton";
 import CardIcon from "./CardIcon";

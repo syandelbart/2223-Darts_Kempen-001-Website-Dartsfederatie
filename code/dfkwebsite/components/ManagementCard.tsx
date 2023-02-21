@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
 import CardButton from "./CardButton";
 import CardIcon from "./CardIcon";
@@ -20,9 +19,9 @@ const ManagementCard : FunctionComponent<managementData> = (props: managementDat
         </CardButton>
       </div>
       <div className="my-3">
-        <CardIcon icon={"game-icons:captain-hat-profile"} text={props.functie}        />
-        <CardIcon icon={"game-icons:captain-hat-profile"} text={props.mail}        />
-        <CardIcon icon={"ph:phone"} text={props.telefoonnummer}        />
+        <CardIcon icon={"ph:pen-nib"} text={props.functie} />
+        <CardIcon icon={"ph:envelope-open-light"} text={props.mail} />
+        <CardIcon icon={"ph:phone"} text={props.telefoonnummer} />
       </div>
     </div>
   );
