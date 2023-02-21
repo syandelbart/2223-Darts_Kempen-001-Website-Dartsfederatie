@@ -1,21 +1,62 @@
 import { NextPage } from "next";
 import { useState } from "react";
 import Card from "../../../components/Card";
-import ManagementCard from "../../../components/ManagementCard";
+import ManagementCard, { managementData } from "../../../components/ManagementCard";
 
-let bestuur = [
+let bestuur : Array<managementData> = [
   {
-    naam: "Naam",
-    functie: "Functie",
-    mail: "Mail",
-    telefoonnummer: "Telefoonnummer",
+    naam: "Wim Oeyen",
+    functie: "Voorzitter",
+    mail: "wim.oeyen@dfk.be",
+    telefoonnummer: "(+32) 00 123 45 67 89",
   },
   {
-    naam: "Naam",
-    functie: "Functie",
-    mail: "Mail",
-    telefoonnummer: "Telefoonnummer",
+    naam: "Pieter Fransen",
+    functie: "Secretaris",
+    mail: "pieter.fransen@dfk.be",
+    telefoonnummer: "(+32) 00 123 45 67 89",
   },
+  {
+    naam: "Annelies Cox",
+    functie: "Penningmeester",
+    mail: "annelies.cox@dfk.be",
+    telefoonnummer: "(+32) 00 123 45 67 89"
+  },
+  {
+    naam: "Kurt Schepers",
+    functie: "Wedstrijdleiding",
+    mail: "kurt.schepers@dfk.be",
+    telefoonnummer: "(+32) 00 123 45 67 89"
+  },
+  {
+    naam: "Mario Vangeel",
+    functie: "Competitieopmaak",
+    mail:"mario.vangeel@dfk.be",
+    telefoonnummer:"(+32) 00 123 45 67 89"
+  },
+  {
+    naam: "Willy Cremers",
+    functie: "Sportieve cel/standenkeuring",
+    mail: "willy.cremers@dfk.be",
+    telefoonnummer: "(+32) 00 123 45 67 89",
+  },
+  {
+    naam: "Barry Zander",
+    functie: "Sporiteve cel/standenkeuring",
+    mail: "barry.zander@dfk.be",
+    telefoonnummer: "+31 652/71.59.60"
+  },
+  {
+    naam: "Cafe 't Centrum",
+    functie: "Ledenbeweging",
+    telefoonnummer: "014/54.97.08"
+  },
+  {
+    naam: "Jos Vanbergen",
+    functie:"Toernooileiding & sportieve cel/standkeuring",
+    mail:"jos.vanbergen@dfk.be",
+    telefoonnummer: "(+32) 00 123 45 67 89"
+  }
 ];
 
 const Bestuur: NextPage = () => {
