@@ -4,19 +4,23 @@ import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 
-type teamData = {
+export type teamData = {
     teamnaam: string;
     kapitein: string;
     telefoonnummer: string;
-    setIsOpen: any;
 };
 
-const Team : FunctionComponent<teamData> = (props: teamData) => {
+interface teamDataInterface {
+  teamData: teamData;
+  setIsOpen: any;
+}
+
+const Team : FunctionComponent<teamDataInterface> = ({teamData,setIsOpen}) => {
   return (
     <div>
-      <CardTitle>{props.teamnaam}</CardTitle>
+      <CardTitle>{teamData.teamnaam}</CardTitle>
       <CardButtonRow>
-        <CardButton onClick={() => props.setIsOpen(true)}>
+        <CardButton onClick={() => setIsOpen(true)}>
           Spelers
         </CardButton>
         <CardButton bg={"bg-[#95A4F3]"}>
@@ -24,8 +28,12 @@ const Team : FunctionComponent<teamData> = (props: teamData) => {
         </CardButton>
       </CardButtonRow>
       <div className="my-3">
-        <CardIcon icon={"game-icons:captain-hat-profile"} text={props.kapitein} />
-        <CardIcon icon={"ph:phone"} text={props.telefoonnummer} />
+        <CardIcon icon={"game-icons:captain-hat-profile"}>
+          {teamData.kapitein}
+        </CardIcon>
+        <CardIcon icon={"ph:phone"}>
+          {teamData.telefoonnummer}
+          </CardIcon>
       </div>
     </div>
   );

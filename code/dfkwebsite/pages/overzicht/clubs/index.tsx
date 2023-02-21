@@ -5,50 +5,7 @@ import ClubModal from "../../../components/ClubModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 
-let clubs = [
-  {
-    clubnaam: "Club 1",
-    clubplek: "Clubplek",
-    straatnaam: "Straatnaam",
-    postcode: "1234",
-  },
-  {
-    clubnaam: "Club 2",
-    clubplek: "Clubplek",
-    straatnaam: "Straatnaam",
-    postcode: "1234",
-  },
-  {
-    clubnaam: "Club 3",
-    clubplek: "Clubplek",
-    straatnaam: "Straatnaam",
-    postcode: "1234",
-  },
-  {
-    clubnaam: "Club 4",
-    clubplek: "Clubplek",
-    straatnaam: "Straatnaam",
-    postcode: "1234",
-  },
-  {
-    clubnaam: "Club 5",
-    clubplek: "Clubplek",
-    straatnaam: "Straatnaam",
-    postcode: "1234",
-  },
-  {
-    clubnaam: "Club 6",
-    clubplek: "Clubplek",
-    straatnaam: "Straatnaam",
-    postcode: "1234",
-  },
-  {
-    clubnaam: "Club 7",
-    clubplek: "Clubplek",
-    straatnaam: "Straatnaam",
-    postcode: "1234",
-  },
-];
+import { clubs } from "../../../data";
 
 const Clubs: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -80,11 +37,8 @@ const Clubs: NextPage = () => {
             .map((club) => (
               <Card>
                 <Club
-                clubnaam={club.clubnaam}
-                clubplek={club.clubplek}
-                straatnaam={club.straatnaam}
-                postcode={club.postcode}
-                setIsOpen={setIsOpen}
+                  clubData={club}
+                  setIsOpen={setIsOpen}
                 />
               </Card>
             ))
