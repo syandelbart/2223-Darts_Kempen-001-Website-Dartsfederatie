@@ -144,20 +144,10 @@ const Wedstrijdblad: NextPage = () => {
                 <p className="col-span-2">EINDUITSLAG</p>
                 <p className="col-span-5 border-b-0">Notities</p>
 
-                <p className="col-span-5 border-y-0"></p>
+                <p className="col-span-5 py-10 border-y-0"></p>
                 <p className="col-span-1">4</p>
                 <p className="col-span-1">6</p>
                 <p className="col-span-5 border-y-0"></p>
-
-                <p className="col-span-5 border-y-0"></p>
-                <p className="col-span-1">4</p>
-                <p className="col-span-1">6</p>
-                <p className="col-span-5 border-y-0"></p>
-
-                <p className="col-span-5 border-t-0"></p>
-                <p className="col-span-1">4</p>
-                <p className="col-span-1">6</p>
-                <p className="col-span-5 border-t-0"></p>
 
                 <div className="col-span-12">
                     <p>Definitief Opslaan</p>
