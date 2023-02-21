@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useState } from "react";
+import Card from "../../../components/Card";
 import ManagementCard from "../../../components/ManagementCard";
 
 let bestuur = [
@@ -49,12 +50,14 @@ const Bestuur: NextPage = () => {
               results++;
             })
             .map((bestuurslid) => (
-              <ManagementCard
-                naam={bestuurslid.naam}
-                functie={bestuurslid.functie}
-                mail={bestuurslid.mail}
-                telefoonnummer={bestuurslid.telefoonnummer}
-              />
+              <Card>
+                <ManagementCard
+                  naam={bestuurslid.naam}
+                  functie={bestuurslid.functie}
+                  mail={bestuurslid.mail}
+                  telefoonnummer={bestuurslid.telefoonnummer}
+                />
+              </Card>
             ))
         )}
         {results === bestuur.length && (

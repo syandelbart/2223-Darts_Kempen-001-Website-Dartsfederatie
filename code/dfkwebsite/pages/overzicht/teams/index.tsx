@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NextPage } from "next";
 import Team from "../../../components/Team";
 import TeamModal from "../../../components/TeamModal";
+import Card from "../../../components/Card";
 
 let teams = [
   {
@@ -50,12 +51,14 @@ const Teams: NextPage = () => {
               results++;
             })
             .map((team) => (
-              <Team
-                teamnaam={team.teamnaam}
-                kapitein={team.kapitein}
-                telefoonnummer={team.telefoonnummer}
-                setIsOpen={setIsOpen}
-              />
+              <Card>
+                <Team
+                  teamnaam={team.teamnaam}
+                  kapitein={team.kapitein}
+                  telefoonnummer={team.telefoonnummer}
+                  setIsOpen={setIsOpen}
+                />
+              </Card>
             ))
         )}
         {results === teams.length && (

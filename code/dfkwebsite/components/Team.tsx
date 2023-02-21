@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
+import IconRow from "./IconRow";
 
 type teamData = {
     teamnaam: string;
@@ -7,23 +8,18 @@ type teamData = {
     telefoonnummer: string;
     setIsOpen: any;
 };
+
 const Team : FunctionComponent<teamData> = (props: teamData) => {
   return (
-    <div className="bg-nav-background py-2 px-3 rounded-lg text-white">
+    <div>
       <p className="mb-4 text-3xl font-bold">{props.teamnaam}</p>
       <div className="flex gap-8 children:hover:cursor-pointer">
         <p className="rounded-2xl px-8 py-1 bg-[#676767]" onClick={() => props.setIsOpen(true)}>Spelers</p>
         <p className="rounded-2xl px-10 py-1 bg-[#95A4F3]">Edit</p>
       </div>
       <div className="my-3">
-        <div className="flex mb-3 items-center">
-            <Icon icon="game-icons:captain-hat-profile" className="text-3xl mr-3 text-black p-1 bg-[#B9B9B9] rounded-full" />
-            <p>{props.kapitein}</p>
-        </div>
-        <div className="flex items-center">
-            <Icon icon="ph:phone" className="text-3xl mr-3 text-black p-1 bg-[#B9B9B9] rounded-full" />
-            <p>{props.telefoonnummer}</p>
-        </div>
+        <IconRow icon={"game-icons:captain-hat-profile"} text={props.kapitein} />
+        <IconRow icon={"ph:phone"} text={props.telefoonnummer} />
       </div>
     </div>
   );
