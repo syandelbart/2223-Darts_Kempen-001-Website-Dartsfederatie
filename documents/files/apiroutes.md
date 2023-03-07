@@ -117,3 +117,15 @@
 | /api/posts/id | / | gets document with id | updates document with id | removes document with id |
 | /api/documents/types | creates new document type | gets all document types | / | / |
 | /api/documents/types/id | / | gets document type with id | updates document type with id | removes document type with id
+
+## Tournaments
+
+- /api/tournaments?limit=20&cursor=20
+- /api/tournaments/id
+- /api/tournaments/current
+
+| Resource | POST | GET | PUT | DELETE |
+| --- | --- | --- | --- | --- |
+| /api/tournaments | / | gets all tournaments | bulk update of all tournaments | / |
+| /api/tournaments/id | / | gets tournament with id | updates tournament with id | removes tournament with id |
+| /api/tournaments/current | / | gets current tournament | / | removes current tournament
