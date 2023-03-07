@@ -72,3 +72,15 @@
 | --- | --- | --- | --- | --- |
 | /api/matches | creates new match | gets all matches | bulk update of all matches | / |
 | /api/matches/id | / | gets match with id | updates match with id | removes match with id |
+
+## Users
+
+- /api/users?limit=20&cursor=20
+- /api/users/id
+- /api/users/activation/id
+
+| Resource | POST | GET | PUT | DELETE |
+| --- | --- | --- | --- | --- |
+| /api/users | creates new user | gets all users | bulk update of all users | / |
+| /api/users/id | / | gets user with id | updates user with id | removes user with id |
+| /api/users/activation/id | activate user | get activation state of user | / | / |
