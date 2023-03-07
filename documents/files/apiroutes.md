@@ -26,7 +26,6 @@
 | /api/clubs/id/teams | / | gets all teams for club with id | / | /
 | /api/clubs/id/matches | / | gets all matches for club with id | / | / |
 
-
 ## Team
 
 - /api/teams?limit=20&cursor=20
