@@ -94,3 +94,13 @@
 | --- | --- | --- | --- | --- |
 | /api/management | / | gets all users from management | / | / |
 | /api/management/id | / | gets board member info with id | / | / |
+
+## Posts
+
+- /api/posts?limit=20&cursor=20
+- /api/posts/id
+
+| Resource | POST | GET | PUT | DELETE |
+| --- | --- | --- | --- | --- |
+| /api/posts | / | gets all posts | bulk update of all posts | / |
+| /api/posts/id | / | gets post with id | updates post with id | removes post with id |
