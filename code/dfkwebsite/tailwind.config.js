@@ -17,6 +17,8 @@ module.exports = {
         "trophy-2": "#967444",
         "edit-button": "#95A4F3",
         "delete-button": "#FF4E4E",
+        "add-button": "#4EFF4E",
+        "light-gray": "#676767",
       },
     },
   },

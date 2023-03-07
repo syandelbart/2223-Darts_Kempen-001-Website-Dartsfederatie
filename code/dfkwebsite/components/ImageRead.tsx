@@ -15,7 +15,7 @@ const ImageRead : FunctionComponent<imageData> = (imageData : imageData) => {
   return (
     <div className="h-[400px] flex flex-row w-full gap-20 mb-10">
       <div className={`w-[700px] min-w-[700px] max-w-[700px] h-full flex-grow relative overflow-hidden ${imageData.order ? 'order-1': 'order-0'}`}>
-        <Image src={dfkLogo} alt="test" className="bg-[#676767] object-cover" fill/>
+        <Image src={dfkLogo} alt="test" className="bg-light-gray object-cover" fill/>
       </div>
       <div className={`flex flex-col flex-grow text-white ${imageData.order ? 'order-0': 'order-1 text-left' }`}>
         <h1 className=" font-extrabold text-5xl mb-1">{imageData.title}</h1>

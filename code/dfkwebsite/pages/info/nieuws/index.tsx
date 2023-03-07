@@ -69,7 +69,7 @@ const Nieuws: NextPage = () => {
           <div className="w-full relative">
             <div className="w-full h-[250px] relative">
               <Image
-                className="bg-[#676767] object-contain"
+                className="bg-light-gray object-contain"
                 src={post.src}
                 alt={post.srcAlt}
                 fill
