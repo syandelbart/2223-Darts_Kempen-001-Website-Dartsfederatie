@@ -84,3 +84,13 @@
 | /api/users | creates new user | gets all users | bulk update of all users | / |
 | /api/users/id | / | gets user with id | updates user with id | removes user with id |
 | /api/users/activation/id | activate user | get activation state of user | / | / |
+
+## Management
+
+- /api/management?limit=20&cursor=20
+- /api/management/id
+
+| Resource | POST | GET | PUT | DELETE |
+| --- | --- | --- | --- | --- |
+| /api/management | / | gets all users from management | / | / |
+| /api/management/id | / | gets board member info with id | / | / |
