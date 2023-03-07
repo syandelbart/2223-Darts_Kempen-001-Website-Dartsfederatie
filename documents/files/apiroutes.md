@@ -104,3 +104,16 @@
 | --- | --- | --- | --- | --- |
 | /api/posts | / | gets all posts | bulk update of all posts | / |
 | /api/posts/id | / | gets post with id | updates post with id | removes post with id |
+
+## Documents
+
+- /api/documents?limit=20&cursor=20?type=general
+- /api/documents/id
+- /api/documents/types
+
+| Resource | POST | GET | PUT | DELETE |
+| --- | --- | --- | --- | --- |
+| /api/documents | / | gets all documents | bulk update of all documents | / |
+| /api/posts/id | / | gets document with id | updates document with id | removes document with id |
+| /api/documents/types | creates new document type | gets all document types | / | / |
+| /api/documents/types/id | / | gets document type with id | updates document type with id | removes document type with id
