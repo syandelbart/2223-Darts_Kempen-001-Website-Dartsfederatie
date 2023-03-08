@@ -16,7 +16,6 @@ export default function ProfileMenu() {
     }
   }
 
-  // localstorage init
   useEffect(() => {
     if (localStorage.getItem("darkMode") === "true") {
       document.documentElement.classList.add("dark");
