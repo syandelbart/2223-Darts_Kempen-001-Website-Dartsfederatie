@@ -2,10 +2,11 @@
 
 ## Antwoorden
 
-- Speler geen telefoonnummer
 - Toevoegen knop bij alle overzicht paginas
-- Permissies
 - documenten -> reglementen
+
+- Speler geen telefoonnummer
+- Permissies
 - inschrijvingen heeft documenten van het inschrijven
 - document ook zeker kunnen uploaden
 - deel knop bij klassement, individuele ranking, wedstrijdblad
@@ -22,7 +23,7 @@
 - mogelijkheid om eventueel verschuiven van datums van wedstrijden
 - kapitein is niet per se contactpersoon
 - apart blad voor sponsers, bestuur kan zelf toevoegen
-- sponsers op wedstrijdblad
+- sponsers op wedstrijdblad/footer
 
 ## Algemeen
 - Opmerkingen
