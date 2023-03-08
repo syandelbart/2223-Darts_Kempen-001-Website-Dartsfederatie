@@ -40,8 +40,8 @@ const routes = [
         title: "Nieuws",
       },
       {
-        href: "info/documenten",
-        title: "Documenten",
+        href: "info/reglementen",
+        title: "Reglementen",
       },
       {
         href: "info/inschrijvingen",

@@ -1,11 +1,11 @@
 import { NextPage } from "next";
 
-const Documenten: NextPage = () => {
+const Reglementen: NextPage = () => {
   return (
     <h1 className="text-6xl font-extrabold text-white mb-5">
-      Documenten pagina
+      Reglementen pagina
     </h1>
   );
 };
 
-export default Documenten;
+export default Reglementen;
