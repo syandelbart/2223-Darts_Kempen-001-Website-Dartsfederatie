@@ -2,6 +2,10 @@ import { NextPage } from "next";
 import GewestFilter from "../../../components/GewestFilter";
 import KlassementTable from "../../../components/KlassementTable";
 import { TeamRanking, TROPHY } from "../../../types/general";
+import React, { useCallback, useRef, useState } from 'react';
+import { toPng } from 'html-to-image';
+import { FacebookShareButton, TwitterShareButton } from "react-share";
+
 
 const provinciaal : Array<TeamRanking> = [
   {
@@ -76,6 +80,27 @@ const provinciaal : Array<TeamRanking> = [
 ];
 
 const Klassement : NextPage = () => {
+  const ref = useRef<HTMLTableElement>(null)
+  const [url, setUrl] = useState<string>("")
+
+  const onButtonClick = useCallback(() => {
+    if (ref.current === null) {
+      return
+    }
+
+    toPng(ref.current, { cacheBust: true, })
+      .then((dataUrl) => {
+        setUrl(dataUrl)
+        // const link = document.createElement('a')
+        // link.download = 'my-image-name.png'
+        // link.href = dataUrl
+        // link.click()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [ref])
+
   return (
     <div className="text-white">
       <div className="flex justify-between items-center">
@@ -83,9 +108,21 @@ const Klassement : NextPage = () => {
         <GewestFilter />
       </div>
 
+      <button onClick={onButtonClick}>Create Shareable Image</button>
+        <div>
+          <h2>Shareable Image:</h2>
+          <img src={url} alt="Shareable Image" />
+          <FacebookShareButton url={url}>
+            Share on Facebook
+          </FacebookShareButton>
+          <TwitterShareButton url={url}>
+            Share on Twitter
+          </TwitterShareButton>
+        </div>
+
       <div className="my-5">
         <h2 className="text-4xl font-semibold my-10">Provinciaal</h2>
-        <table className="table-auto w-full text-center text-[#313131]">
+        <table className="table-auto w-full text-center text-[#313131]" ref={ref}>
           <thead>
             <tr className="bg-[#313131] text-white h-12">
               <th className="w-5"></th>
