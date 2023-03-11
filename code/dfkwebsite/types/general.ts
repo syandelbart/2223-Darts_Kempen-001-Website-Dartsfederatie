@@ -113,3 +113,40 @@ export type Account = {
 export interface AccountData extends Account {
     player: Player;
 }
+
+export type Competition = {
+    id: number;
+    name: string;
+    competitionTypeId: CompetitionType;
+    competitionSeasonId: CompetitionSeason;
+    teams: Team[];
+}
+
+export type Playday = {
+    id: number;
+    name: string;
+    date: number;
+    competitionId: number;
+}
+
+export type TeamClub = {
+    teamId: number;
+    clubId: number;
+    competitionId: number;
+}
+
+export enum CompetitionType {
+    COMPETITIE = 1,
+    BEKER = 2,
+}
+
+export type CompetitionSeason = {
+    competitionSeasonId: number;
+    startDate: number;
+    endDate: number;
+}
+
+interface CompetitionData extends Competition {
+    playdays: Playday[];
+    teamClubs: TeamClub[];
+}
