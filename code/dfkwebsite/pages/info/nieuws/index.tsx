@@ -2,6 +2,7 @@ import ImageRead from "../../../components/ImageRead";
 import Image from "next/image";
 import Link from "next/link";
 import { NextPage } from "next";
+import { useEffect } from "react";
 
 let posts = [
   {
@@ -54,6 +55,11 @@ let posts = [
 posts.sort((a, b) => b.date - a.date);
 
 const Nieuws: NextPage = () => {
+  useEffect(() => {
+    fetch("https://renarti.dev.syandelbart.com/api/projects/get")
+      .then((projects) => projects.json())
+      .then((parsedProjects) => setProjects(parsedProjects));
+  }, []);
   return (
     <div>
       <h1 className="text-6xl font-extrabold text-white mb-5">Nieuws</h1>

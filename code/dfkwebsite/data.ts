@@ -389,3 +389,19 @@ export let clubs : Array<clubData> = [
       "postcode": "1624"
     }
   ]
+
+const news = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    title: `Project ${i}`,
+    description: `Description ${i}`,
+    date: i,
+    text: `Text ${i}`,
+}));
+
+export type news = {
+  id: number,
+  title: string,
+  description?: string,
+  date?: number,
+  text?: string,
+}

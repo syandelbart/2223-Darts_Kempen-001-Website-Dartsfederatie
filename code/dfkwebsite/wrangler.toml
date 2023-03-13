@@ -2,3 +2,6 @@ name = "dfkwebsite"
 main = "src/index.ts"
 compatibility_date = "2023-03-13"
 
+kv_namespaces = [
+    { binding = "news", id = "86cdd1ce931747f897b9328306e0b30a" }
+]
