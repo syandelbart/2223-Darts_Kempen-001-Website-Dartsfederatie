@@ -1,4 +1,4 @@
-import { PagesEnv } from "../../env";
+import { PagesEnv } from "../../env"
 
 export const onRequest: PagesFunction<PagesEnv> = async ({
   request,
@@ -6,9 +6,10 @@ export const onRequest: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const news = await env.NEWS.list({limit: 100});
+    console.log(news);
 
     let newsMapped = news.keys.map(async (news) => {
-      return JSON.parse(await env.PROJECTS.get(news.name));
+      return JSON.parse(await env.NEWS.get(news.name));
     });
 
     return new Response(JSON.stringify(await Promise.all(newsMapped)), {

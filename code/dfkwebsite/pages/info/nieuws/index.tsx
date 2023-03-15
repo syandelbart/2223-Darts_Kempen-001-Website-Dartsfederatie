@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { NextPage } from "next";
 import { useEffect } from "react";
+import news, { News } from "../../../data";
 
 let posts = [
   {
@@ -54,12 +55,35 @@ let posts = [
 
 posts.sort((a, b) => b.date - a.date);
 
+export async function getStaticPaths() {
+  // Call an external API endpoint to get posts
+  const res = await fetch(
+    `
+    ${process.env.HOST}/api/news/get`
+  );
+  const news: Array<News> = await res.json();
+
+  // Get the paths we want to pre-render based on posts
+  const paths = news.map((news) => ({
+    params: {
+      name: news.title.toLowerCase().replace(/ /g, "-"),
+      slug: news.title.toLowerCase().replace(/ /g, "-"),
+    },
+  }));
+  // Set fallback to blocking. Now any new post added post build will SSR
+  // to ensure SEO. It will then be static for all subsequent requests
+  return { paths, fallback: "blocking" };
+}
+
+export async function getStaticProps() {
+  return {
+    props: {
+      news,
+    },
+  };
+}
+
 const Nieuws: NextPage = () => {
-  useEffect(() => {
-    fetch("https://renarti.dev.syandelbart.com/api/projects/get")
-      .then((projects) => projects.json())
-      .then((parsedProjects) => setProjects(parsedProjects));
-  }, []);
   return (
     <div>
       <h1 className="text-6xl font-extrabold text-white mb-5">Nieuws</h1>

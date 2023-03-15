@@ -398,7 +398,20 @@ const news = Array.from({ length: 20 }, (_, i) => ({
     text: `Text ${i}`,
 }));
 
-export type news = {
+news.forEach((item: News) => {
+  let data = new FormData();
+
+
+  data.append("newsinfo",JSON.stringify(item));
+  fetch("/api/news/add",{
+      headers: {
+          "content-type": "multipart/form-data"
+      },
+      body: data
+  }).then(response => console.log(response));
+});
+
+export type News = {
   id: number,
   title: string,
   description?: string,
