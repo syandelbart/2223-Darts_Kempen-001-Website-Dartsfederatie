@@ -2,8 +2,7 @@ import ImageRead from "../../../components/ImageRead";
 import Image from "next/image";
 import Link from "next/link";
 import { NextPage } from "next";
-import { useEffect } from "react";
-import news, { News } from "../../../data";
+import news, { createNews, News } from "../../../data";
 
 let posts = [
   {
@@ -86,7 +85,7 @@ export async function getStaticProps() {
 const Nieuws: NextPage = () => {
   return (
     <div>
-      <h1 className="text-6xl font-extrabold text-white mb-5">Nieuws</h1>
+      <h1 className="text-6xl font-extrabold text-white mb-5" onClick={() => createNews()}>Nieuws</h1>
       <ImageRead
         title={posts[0].title}
         summary={posts[0].summary}
