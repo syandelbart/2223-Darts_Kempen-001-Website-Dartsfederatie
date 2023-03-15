@@ -6,7 +6,6 @@ export const onRequest: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const news = await env.NEWS.list({limit: 100});
-    console.log(news);
 
     let newsMapped = news.keys.map(async (news) => {
       return JSON.parse(await env.NEWS.get(news.name));

@@ -408,9 +408,10 @@ export function createNews() {
 
   fetch("/api/news/add",{
       headers: {
-          "content-type": "multipart/form-data"
+          "content-type": "application/x-www-form-urlencoded"
       },
-      body: data
+      body: data,
+      method: "POST",
   }).then(response => console.log(response));
 });
 }
