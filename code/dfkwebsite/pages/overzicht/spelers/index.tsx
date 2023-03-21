@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useState } from "react";
+import AddSpelerModal from "../../../components/AddSpelerModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 import ClubModal from "../../../components/ClubModal";
@@ -14,10 +15,12 @@ import { players } from "../../../data";
 const Players: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
   return (
     <div>
-      <OverzichtTopBar titleName="Spelers" search={search} setSearch={setSearch} addButtonName="speler" addButtonLink="" />
+      <AddSpelerModal addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
+      <OverzichtTopBar titleName="Spelers" search={search} setSearch={setSearch} addButtonName="speler" addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
       <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <CardGrid>
         {players.length === 0 || results === players.length ? (

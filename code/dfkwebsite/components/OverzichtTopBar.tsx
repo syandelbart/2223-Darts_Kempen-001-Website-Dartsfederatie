@@ -3,18 +3,19 @@ import AddButton from "./AddButton";
 
 type topBarData = {
     titleName: string;
-    search: string;
+    search: string
     setSearch: Function;
     addButtonName: string;
-    addButtonLink: string;
+    addModalOpen: boolean;
+    setAddModalOpen: any;
 }
 
-const OverzichtTopBar: FunctionComponent<topBarData> = ({ titleName, search, setSearch, addButtonName, addButtonLink }: any) => {
+const OverzichtTopBar: FunctionComponent<topBarData> = ({ titleName, search, setSearch, addButtonName, addModalOpen, setAddModalOpen }: any) => {
     return (
         <div className="flex justify-between items-center mb-10">
             <h1 className="text-6xl font-extrabold text-white">{titleName}</h1>
             <div className="flex gap-10 items-center">
-                <AddButton name={addButtonName} link={addButtonLink} />
+                <AddButton name={addButtonName} addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
                 <input
                     type="text"
                     placeholder="Zoeken..."
