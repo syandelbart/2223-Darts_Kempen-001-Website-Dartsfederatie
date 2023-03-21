@@ -6,6 +6,7 @@ import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 
 import teams from "../../../data";
+import OverzichtTopBar from "../../../components/OverzichtTopBar";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -13,15 +14,7 @@ const Teams: NextPage = () => {
   let results = 0;
   return (
     <div>
-      <div className="flex justify-between items-center mb-10">
-        <h1 className="text-6xl font-extrabold text-white">Teams</h1>
-        <input
-          type="text"
-          placeholder="Zoeken..."
-          className="px-5 py-3 rounded bg-[#D9D9D9]"
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
+      <OverzichtTopBar titleName="Teams" search={search} setSearch={setSearch} addButtonName="team" addButtonLink="" />
       <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <CardGrid>
         {teams.length === 0 ? (
