@@ -14,7 +14,7 @@ const LoginModal : FunctionComponent<LoginModalData> = (props: LoginModalData) =
         <div className="bg-background w-1/4 rounded-2xl p-10">
           <div className="flex justify-between items-center text-white">
             <h1 className="text-4xl font-semibold">Inloggen</h1>
-            <Icon icon="mdi:close" className="text-3xl hover:text-red-500" onClick={() => props.setIsOpen(!props.isOpen)} />
+            <Icon icon="mdi:close" className="text-3xl hover:text-red-500 hover:cursor-pointer" onClick={() => props.setIsOpen(!props.isOpen)} />
           </div>
           <div className="flex flex-col">
             <label htmlFor="email" className="text-xl text-white mt-16 mb-2">
