@@ -1,11 +1,29 @@
 import { Icon } from "@iconify/react";
-import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal";
 
 export default function ProfileMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  function toggleDarkMode() {
+    if (document.documentElement.classList.contains("dark")) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+    }
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem("darkMode") === "true") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
   return (
     <div>
       <li
@@ -29,7 +47,7 @@ export default function ProfileMenu() {
           <p>Profiel</p>
         </div>
         
-        <div className="flex p-4 bg-background border-b border-gray-500">
+        <div className="flex p-4 bg-background border-b border-gray-500" onClick={() => toggleDarkMode()}>
           <Icon icon="mdi:weather-night" className="text-3xl" />
           <p>Dark&nbsp;mode</p>
         </div>

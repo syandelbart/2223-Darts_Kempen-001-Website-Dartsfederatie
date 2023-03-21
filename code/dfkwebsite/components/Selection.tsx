@@ -17,7 +17,7 @@ const Selectie : FunctionComponent<selectionData> = (props: selectionData) => {
         </div>
         <p className="capitalize text-gray-200 mt-2 text-4xl">{props.title}</p>
         <p className="my-5 text-gray-200">Hier vind je een overzicht van {props.title}</p>
-        <p className="bg-[#676767] text-gray-200 rounded-md text-center py-2 mt-auto">
+        <p className="bg-light-gray text-gray-200 rounded-md text-center py-2 mt-auto">
           Ga naar {props.title}
         </p>
       </div>

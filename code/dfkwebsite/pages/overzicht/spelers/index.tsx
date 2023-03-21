@@ -4,6 +4,7 @@ import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 import ClubModal from "../../../components/ClubModal";
 import ManagementCard from "../../../components/ManagementCard";
+import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import Player, { playerData } from "../../../components/Player";
 import TeamModal from "../../../components/TeamModal";
 
@@ -16,15 +17,7 @@ const Players: NextPage = () => {
   let results = 0;
   return (
     <div>
-      <div className="flex justify-between items-center mb-10">
-        <h1 className="text-6xl font-extrabold text-white">Spelers</h1>
-        <input
-          type="text"
-          placeholder="Zoeken..."
-          className="px-5 py-3 rounded bg-[#D9D9D9]"
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
+      <OverzichtTopBar titleName="Spelers" search={search} setSearch={setSearch} addButtonName="speler" addButtonLink="" />
       <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <CardGrid>
         {players.length === 0 || results === players.length ? (
