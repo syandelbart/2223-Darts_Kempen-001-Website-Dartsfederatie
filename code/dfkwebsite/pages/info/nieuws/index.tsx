@@ -4,8 +4,8 @@ import { createNews } from "../../../data";
 const Nieuws: NextPage = () => {
   return (
     <div>
-      <h1 className="text-6xl font-extrabold text-white mb-5">Nieuws</h1>
-      <ImageRead
+      <h1 className="text-6xl font-extrabold text-white mb-5" onClick={() => createNews()}>Nieuws</h1>
+      {/* <ImageRead
         title={posts[0].title}
         summary={posts[0].summary}
         src={posts[0].src}
@@ -39,7 +39,7 @@ const Nieuws: NextPage = () => {
             </Link>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
