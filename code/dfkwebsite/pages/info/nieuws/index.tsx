@@ -1,63 +1,11 @@
-import ImageRead from "../../../components/ImageRead";
-import Image from "next/image";
-import Link from "next/link";
 import { NextPage } from "next";
-
-let posts = [
-  {
-    title: "Post 1",
-    summary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-    src: "/dfklogo.png",
-    srcAlt: "test",
-    date: 1,
-    key: 1,
-  },
-  {
-    title: "Post 2",
-    summary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-    src: "/dfklogo.png",
-    srcAlt: "test",
-    date: 2,
-    key: 2,
-  },
-  {
-    title: "Post 3",
-    summary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-    src: "/dfklogo.png",
-    srcAlt: "test",
-    date: 3,
-    key: 3,
-  },
-  {
-    title: "Post 4",
-    summary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-    src: "/dfklogo.png",
-    srcAlt: "test",
-    date: 4,
-    key: 4,
-  },
-  {
-    title: "Post 5",
-    summary:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.",
-    src: "/dfklogo.png",
-    srcAlt: "test",
-    date: 5,
-    key: 5,
-  },
-];
-
-posts.sort((a, b) => b.date - a.date);
+import { createNews } from "../../../data";
 
 const Nieuws: NextPage = () => {
   return (
     <div>
-      <h1 className="text-6xl font-extrabold text-white mb-5">Nieuws</h1>
-      <ImageRead
+      <h1 className="text-6xl font-extrabold text-white mb-5" onClick={() => createNews()}>Nieuws</h1>
+      {/* <ImageRead
         title={posts[0].title}
         summary={posts[0].summary}
         src={posts[0].src}
@@ -91,7 +39,7 @@ const Nieuws: NextPage = () => {
             </Link>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

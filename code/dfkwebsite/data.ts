@@ -389,3 +389,34 @@ export let clubs : Array<clubData> = [
       "postcode": "1624"
     }
   ]
+
+const news = Array.from({ length: 20 }, (_, i) => ({
+    id: `${i}`,
+    title: `Project ${i}`,
+    description: `Description ${i}`,
+    date: i,
+    text: `Text ${i}`,
+}));
+
+export function createNews() {
+  news.forEach((item: News) => {
+  let data = new FormData();
+  data.append("title", item.title);
+  data.append("description", item.description);
+  data.append("date", item.date.toString());
+  data.append("text", item.text);
+
+  fetch("/api/news/add",{
+      body: data,
+      method: "POST",
+  }).then(response => console.log(response));
+});
+}
+
+export type News = {
+  id: string,
+  title: string,
+  description: string,
+  date: number,
+  text: string,
+}
