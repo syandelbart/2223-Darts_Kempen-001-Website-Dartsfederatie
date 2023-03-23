@@ -1,4 +1,4 @@
-import { Player } from "../../../../data";
+import { Players } from "../../../../data";
 import { PagesEnv } from "../../env";
 
 export enum PlayerSubmission {
@@ -13,6 +13,13 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   env,
 }) => {
   try {
+    if (
+      request.headers.get("Content-Type") &&
+      !request.headers.get("Content-Type").includes("multipart/form-data")
+    ) {
+      throw new Error("Content-Type must be multipart/form-data");
+    }
+
     const formData = await request.formData();
 
     const requiredFields = [
@@ -33,7 +40,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       .toLowerCase()
       .replace(/ /g, "-");
 
-    const data: Player = {
+    const data: Players = {
       id: id,
       firstname: formData.get(PlayerSubmission.FIRSTNAME),
       lastname: formData.get(PlayerSubmission.LASTNAME),
