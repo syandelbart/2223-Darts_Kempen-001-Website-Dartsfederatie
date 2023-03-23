@@ -420,3 +420,34 @@ export type News = {
   date: number,
   text: string,
 }
+
+export type Player = {
+  id: string,
+  firstname: string,
+  lastname: string,
+  phone: string,
+  allowed: boolean,
+}
+
+const playerslist = Array.from({ length: 20 }, (_, i) => ({
+    id: `${i}`,
+    firstname: `Firstname ${i}`,
+    lastname: `Lastname ${i}`,
+    phone: `Phone ${i}`,
+    allowed: i % 2 === 0,
+}));
+
+export function createPlayers() {
+  playerslist.forEach((item: Player) => {
+  let data = new FormData();
+  data.append("firstname", item.firstname);
+  data.append("lastname", item.lastname);
+  data.append("phone", item.phone);
+  data.append("allowed", item.allowed.toString());
+
+  fetch("/api/player/add",{
+      body: data,
+      method: "POST",
+  }).then(response => console.log(response));
+});
+}

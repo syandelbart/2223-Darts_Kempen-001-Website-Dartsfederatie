@@ -9,7 +9,7 @@ import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import Player, { playerData } from "../../../components/Player";
 import TeamModal from "../../../components/TeamModal";
 
-import { players } from "../../../data";
+import { createPlayers, players } from "../../../data";
 
 
 const Players: NextPage = () => {
@@ -19,6 +19,7 @@ const Players: NextPage = () => {
   let results = 0;
   return (
     <div>
+      <p onClick={() => createPlayers()}>test</p>
       <AddSpelerModal addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
       <OverzichtTopBar titleName="Spelers" search={search} setSearch={setSearch} addButtonName="speler" addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
       <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
