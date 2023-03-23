@@ -95,7 +95,7 @@ const Nieuws: NextPage = () => {
 
       <div className="grid grid-cols-4 gap-8">
         {posts.slice(1).map((post) => (
-          <div className="w-full relative">
+          <div className="w-full relative" key={post.key}>
             <div className="w-full h-[250px] relative">
               <Image
                 className="bg-[#676767] object-contain"
