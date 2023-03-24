@@ -56,11 +56,10 @@ posts.sort((a, b) => b.date - a.date);
 
 export async function getStaticPaths() {
   // Call an external API endpoint to get posts
-  const res = await fetch(
+  const news: Array<News> = await fetch(
     `
     ${process.env.HOST}/api/news/get`
-  );
-  const news: Array<News> = await res.json();
+  ).then((res) => (res.status == 200 ? res.json() : posts));
 
   // Get the paths we want to pre-render based on posts
   const paths = news.map((news) => ({
@@ -69,8 +68,6 @@ export async function getStaticPaths() {
       slug: news.title.toLowerCase().replace(/ /g, "-"),
     },
   }));
-  // Set fallback to blocking. Now any new post added post build will SSR
-  // to ensure SEO. It will then be static for all subsequent requests
   return { paths, fallback: "blocking" };
 }
 
@@ -85,7 +82,12 @@ export async function getStaticProps() {
 const Nieuws: NextPage = () => {
   return (
     <div>
-      <h1 className="text-6xl font-extrabold text-white mb-5" onClick={() => createNews()}>Nieuws</h1>
+      <h1
+        className="text-6xl font-extrabold text-white mb-5"
+        onClick={() => createNews()}
+      >
+        Nieuws
+      </h1>
       <ImageRead
         title={posts[0].title}
         summary={posts[0].summary}
