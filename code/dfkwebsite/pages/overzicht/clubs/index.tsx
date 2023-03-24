@@ -7,14 +7,17 @@ import CardGrid from "../../../components/CardGrid";
 
 import { clubs } from "../../../data";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
+import AddClubModal from "../../../components/AddClubModal";
 
 const Clubs: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
   return (
     <div>
-      <OverzichtTopBar titleName="Clubs" search={search} setSearch={setSearch} addButtonName="club" addButtonLink="" />
+      <AddClubModal addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
+      <OverzichtTopBar titleName="Clubs" search={search} setSearch={setSearch} addButtonName="club" addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
       <ClubModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <CardGrid>
         {clubs.length === 0 ? (

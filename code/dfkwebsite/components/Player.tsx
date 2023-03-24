@@ -1,25 +1,19 @@
-import { Icon } from "@iconify/react";
 import { Dispatch, FunctionComponent, SetStateAction } from "react";
+import { Players } from "../data";
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 
-export type playerData = {
-  name: string;
-  email: string;
-  phone: string;
-};
-
 interface playerDataInterface {
-  playerData: playerData;
+  playerData: Players;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const Player : FunctionComponent<playerDataInterface> = ({playerData,setIsOpen}) => {
   return (
     <div>
-      <CardTitle>{playerData.name}</CardTitle>
+      <CardTitle>{playerData.firstname + " " + playerData.lastname}</CardTitle>
       <CardButtonRow>
         <CardButton
           onClick={() => setIsOpen(true)}
@@ -32,9 +26,6 @@ const Player : FunctionComponent<playerDataInterface> = ({playerData,setIsOpen})
         
       </CardButtonRow>
       <div className="my-3">
-        <CardIcon icon={"ph:envelope-open-light"}>
-          {playerData.email}
-        </CardIcon>
         <CardIcon icon={"ph:phone"}>
           {playerData.phone}
         </CardIcon>

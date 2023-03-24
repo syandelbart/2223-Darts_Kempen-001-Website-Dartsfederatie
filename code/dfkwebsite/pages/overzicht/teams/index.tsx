@@ -7,14 +7,17 @@ import CardGrid from "../../../components/CardGrid";
 
 import teams from "../../../data";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
+import AddTeamModal from "../../../components/AddTeamModal";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
   return (
     <div>
-      <OverzichtTopBar titleName="Teams" search={search} setSearch={setSearch} addButtonName="team" addButtonLink="" />
+      <AddTeamModal addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
+      <OverzichtTopBar titleName="Teams" search={search} setSearch={setSearch} addButtonName="team" addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
       <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <CardGrid>
         {teams.length === 0 ? (
