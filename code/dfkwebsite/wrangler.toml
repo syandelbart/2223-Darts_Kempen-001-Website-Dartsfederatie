@@ -3,13 +3,13 @@ main = "src/index.ts"
 compatibility_date = "2023-03-13"
 
 kv_namespaces = [
-  { binding = "NEWS", id = "86cdd1ce931747f897b9328306e0b30a", preview_id="86cdd1ce931747f897b9328306e0b30a" },
+  { binding = "NEWS", id = "b10d30b1f528496f897f6b5f4d4117ba", preview_id="b10d30b1f528496f897f6b5f4d4117ba" },
   { binding = "PLAYER", id = "49d9874c79cf4d07a6ea3a58770915ea", preview_id="49d9874c79cf4d07a6ea3a58770915ea" },
 ]
 
 [env.prod]
 name = "dfkwebsite-prod"
 kv_namespaces = [
-  { binding = "NEWS", id = "86cdd1ce931747f897b9328306e0b30a"},
+  { binding = "NEWS", id = "b10d30b1f528496f897f6b5f4d4117ba"},
   { binding = "PLAYER", id = "49d9874c79cf4d07a6ea3a58770915ea"},
 ]
