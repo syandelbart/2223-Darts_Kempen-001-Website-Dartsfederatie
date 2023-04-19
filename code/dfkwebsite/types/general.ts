@@ -39,6 +39,18 @@ type Club = {
   fines?: Fine[];
 };
 
+export type PlayerTeam = {
+  id: string;
+  playerID: string;
+  teamID: string;
+};
+
+export type TeamClub = {
+  id: string;
+  teamID: string;
+  clubID: string;
+};
+
 type Address = {
   street: string;
   city: string;
