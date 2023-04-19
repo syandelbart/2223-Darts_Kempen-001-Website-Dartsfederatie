@@ -1,152 +1,141 @@
-export type PersonRanking = {
-    id: number;
-    name: string;
-    ploeg: string;
-    punten: number;
-    "180": number;
-    shot: number;
-    k_leg: number;
-    trophy?: TROPHY;
-  }
+type Player = {
+  playerID: string;
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  allowedToPlay?: boolean;
+  teams?: Team[];
+  account?: Account;
+  fines?: Fine[];
+};
 
-export type TeamRanking = {
-    id: number;
-    ploegnaam: string;
-    gespeeld: number;
-    gewonnen: number;
-    gelijk: number;
-    verloren: number;
-    voor: number;
-    tegen: number;
-    punten: number;
-    trophy?: TROPHY;
+type Team = {
+  teamID: number;
+  name: string;
+  captainID?: number;
+  classification: CLASSIFICATION;
+  captain?: Player;
+  players?: Player[];
+  club: Club;
+  games?: Game[];
+  fines?: Fine[];
+};
+
+enum CLASSIFICATION {
+  PROVINCIAAL = "PROVINCIAAL",
+  GEWEST_1 = "GEWEST 1",
+  GEWEST_2 = "GEWEST 2",
+  GEWEST_3 = "GEWEST 3",
 }
 
-export enum TROPHY {
-    GOLD = 0,
-    SILVER = 1,
-    BRONZE = 2
+type Club = {
+  clubID: number;
+  name: string;
+  address?: Address;
+  contactPersonID: number;
+  locationName: string;
+  contactPerson: Player;
+  teams: Team[];
+  fines?: Fine[];
+};
+
+type Address = {
+  street: string;
+  city: string;
+  housenumber: string;
+  postalcode: string;
+};
+
+type Competition = {
+  competitionID: number;
+  name: string;
+  type: COMPETITION_TYPE;
+  season: CompetitionSeason;
+  playerTeams: PlayerTeam[];
+  teamClubs: TeamClub[];
+  playdays: Playday[];
+};
+
+enum COMPETITION_TYPE {
+  COMPETITION = "COMPETITION",
+  TROPHY = "TROPHY",
 }
 
-export enum ENTITY {
-    PLAYER = 0,
-    TEAM = 1,
-    CLUB = 2
+type CompetitionSeason = {
+  startdate: number;
+  enddate: number;
+};
+
+type Playday = {
+  playdayID: number;
+  name: string;
+  date: number;
+  competitionID: number;
+  competition: Competition;
+  games: Game[];
+};
+
+type Game = {
+  gameID: number;
+  playdayID: number;
+  homeTeam?: number;
+  awayTeam?: number;
+  notes: string;
+  filledDate: number;
+  permaSaved: boolean;
+  playday: Playday;
+  homeTeamEntity?: Team;
+  awayTeamEntity?: Team;
+  gameSeries: GameSeries;
+};
+
+type Account = {
+  accountID: number;
+  playerID: number;
+  username: string;
+  email: string;
+  password: string;
+  player: Player;
+};
+
+type GameSeries = {
+  seriesID: number;
+  gameID: number;
+  game: Game;
+  gameRows: GameRow[];
+};
+
+type GameRow = {
+  gameRowID: number;
+  seriesID: number;
+  bestA: number;
+  bestB: number;
+  series: GameSeries;
+  gameScores: GameScore[];
+};
+
+type GameScore = {
+  gameScoreID: number;
+  playerID: number;
+  gameRowID: number;
+  oneeighty: number;
+  kleg: number;
+  hu: number;
+  gameRow: GameRow;
+};
+
+enum ENTITY_TYPE {
+  PLAYER = "PLAYER",
+  TEAM = "TEAM",
+  CLUB = "CLUB",
 }
 
-export enum CLASSIFICATION {
-    PROVINCIAAL = 0
-}
-
-export type Address = {
-    street: string;
-    city: string;
-    housenumber: string;
-    postalcode: string;
-}
-
-interface AddressClub extends Address {
-    locationName: string;
-
-}
-
-
-
-export type Player = {
-    id: number;
-    firstName: string;
-    lastName: string;
-    phone?: string;
-    allowedToPlay?: boolean;
-
-}
-
-export type Team = {
-    id: number;
-    name: string;
-    captainId: number;
-    classification: CLASSIFICATION;
-    playerIds: Array<number>;
-}
-
-export interface TeamData extends Team {
-    captain : Player;
-    players : Array<Player>;
-}
-
-
-export type Club = {
-    id: number;
-    address: AddressClub;
-    contactPersonId: number;
-}
-
-export interface ClubData extends Club {
-    contactPerson: Player;
-}
-
-
-export type Fine = {
-    id: number;
-    entityId: number;
-    entityType: ENTITY;
-    amount: number;
-    paid: boolean;
-    dateCreated: number;
-    datePaid: number;
-    reason: string;
-}
-
-export interface FineData extends Fine  {
-    entity : Player | Team | Club;
-}
-
-
-export type Account = {
-    id: number;
-    playerid: number;
-    username: string;
-    email: string;
-    password: string;
-}
-
-export interface AccountData extends Account {
-    player: Player;
-}
-
-export type Competition = {
-    id: number;
-    name: string;
-    competitionTypeId: CompetitionType;
-    competitionSeasonId: CompetitionSeason;
-    teams: Team[];
-}
-
-export type Playday = {
-    id: number;
-    name: string;
-    date: number;
-    competitionId: number;
-}
-
-export type TeamClub = {
-    teamId: number;
-    clubId: number;
-    competitionId: number;
-}
-
-export enum CompetitionType {
-    COMPETITIE = 1,
-    BEKER = 2,
-}
-
-export type CompetitionSeason = {
-    competitionSeasonId: number;
-    startDate: number;
-    endDate: number;
-}
-
-interface CompetitionData extends Competition {
-    playdays: Playday[];
-    teamClubs: TeamClub[];
-}
+type Fine = {
+  fineID: number;
+  entityID: number;
+  entityType: ENTITY_TYPE;
+  amount: number;
+  date: number;
+  reason: string;
+  entity: Player | Team | Club;
+};
