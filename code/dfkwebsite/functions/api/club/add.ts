@@ -27,7 +27,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     const clubIdKey = `id:${Date.now()}`;
 
     let data: Club = {
-      id: clubIdKey,
+      club: clubIdKey,
       name: name,
       address: JSON.parse(address),
     };
@@ -54,3 +54,4 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     return new Response("Internal server error.", { status: 500 });
   }
+};

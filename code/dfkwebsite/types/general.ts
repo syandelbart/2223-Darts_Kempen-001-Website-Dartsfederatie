@@ -1,4 +1,4 @@
-type Player = {
+export type Player = {
   playerID: string;
   firstName: string;
   lastName: string;
@@ -9,7 +9,7 @@ type Player = {
   fines?: Fine[];
 };
 
-type Team = {
+export type Team = {
   teamID: number;
   name: string;
   captainID?: number;
@@ -21,14 +21,14 @@ type Team = {
   fines?: Fine[];
 };
 
-enum CLASSIFICATION {
+export enum CLASSIFICATION {
   PROVINCIAAL = "PROVINCIAAL",
   GEWEST_1 = "GEWEST 1",
   GEWEST_2 = "GEWEST 2",
   GEWEST_3 = "GEWEST 3",
 }
 
-type Club = {
+export type Club = {
   clubID: number;
   name: string;
   address?: Address;
@@ -51,14 +51,14 @@ export type TeamClub = {
   clubID: string;
 };
 
-type Address = {
+export type Address = {
   street: string;
   city: string;
   housenumber: string;
   postalcode: string;
 };
 
-type Competition = {
+export type Competition = {
   competitionID: number;
   name: string;
   type: COMPETITION_TYPE;
@@ -68,17 +68,17 @@ type Competition = {
   playdays: Playday[];
 };
 
-enum COMPETITION_TYPE {
+export enum COMPETITION_TYPE {
   COMPETITION = "COMPETITION",
   TROPHY = "TROPHY",
 }
 
-type CompetitionSeason = {
+export type CompetitionSeason = {
   startdate: number;
   enddate: number;
 };
 
-type Playday = {
+export type Playday = {
   playdayID: number;
   name: string;
   date: number;
@@ -87,7 +87,7 @@ type Playday = {
   games: Game[];
 };
 
-type Game = {
+export type Game = {
   gameID: number;
   playdayID: number;
   homeTeam?: number;
@@ -101,7 +101,7 @@ type Game = {
   gameSeries: GameSeries;
 };
 
-type Account = {
+export type Account = {
   accountID: number;
   playerID: number;
   username: string;
@@ -110,14 +110,14 @@ type Account = {
   player: Player;
 };
 
-type GameSeries = {
+export type GameSeries = {
   seriesID: number;
   gameID: number;
   game: Game;
   gameRows: GameRow[];
 };
 
-type GameRow = {
+export type GameRow = {
   gameRowID: number;
   seriesID: number;
   bestA: number;
@@ -126,7 +126,7 @@ type GameRow = {
   gameScores: GameScore[];
 };
 
-type GameScore = {
+export type GameScore = {
   gameScoreID: number;
   playerID: number;
   gameRowID: number;
@@ -136,13 +136,13 @@ type GameScore = {
   gameRow: GameRow;
 };
 
-enum ENTITY_TYPE {
+export enum ENTITY_TYPE {
   PLAYER = "PLAYER",
   TEAM = "TEAM",
   CLUB = "CLUB",
 }
 
-type Fine = {
+export type Fine = {
   fineID: number;
   entityID: number;
   entityType: ENTITY_TYPE;

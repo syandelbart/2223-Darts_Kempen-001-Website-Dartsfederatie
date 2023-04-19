@@ -1,4 +1,4 @@
-import { Team } from "../../../types/general-old";
+import { Team } from "../../../types/general";
 import { PagesEnv } from "../env";
 
 enum TeamSubmission {

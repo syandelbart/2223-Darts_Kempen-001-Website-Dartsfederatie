@@ -57,4 +57,12 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       await env.FINE.put(indexKey, JSON.stringify(existingValue));
     }
 
-    return new Response("Fine added successfully.",
+    return new Response("Fine added successfully.");
+  } catch (e) {
+    if (e instanceof Error) {
+      return new Response(e.message);
+    }
+
+    return new Response("Internal server error.", { status: 500 });
+  }
+};
