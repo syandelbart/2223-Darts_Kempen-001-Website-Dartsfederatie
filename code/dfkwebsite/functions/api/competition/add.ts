@@ -1,4 +1,4 @@
-import { Competition } from "../../../types/general";
+import { Competition, COMPETITION_TYPE } from "../../../types/general";
 import { PagesEnv } from "../env";
 
 enum CompetitionSubmission {
@@ -27,12 +27,24 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     let name = formData.get(CompetitionSubmission.NAME);
     let type = formData.get(CompetitionSubmission.TYPE);
 
+    if (!(type in COMPETITION_TYPE)) {
+      throw new Error(`Invalid competition type: ${type}`);
+    }
+
     const competitionIdKey = `id:${Date.now()}`;
 
     let data: Competition = {
-      id: competitionIdKey,
+      competitionID: competitionIdKey,
       name: name,
-      type: type,
+      type: type as COMPETITION_TYPE,
+      // to be checked
+      season: {
+        startdate: 0,
+        enddate: 0
+      },
+      playerTeams: [],
+      teamClubs: [],
+      playdays: []
     };
 
     let indexKey = `name:${name}`;

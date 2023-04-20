@@ -1,3 +1,11 @@
+export type News = {
+  newsID: string,
+  title: string,
+  description: string,
+  date: number,
+  text: string,
+}
+
 export type Player = {
   playerID: string;
   firstName: string;
@@ -10,7 +18,7 @@ export type Player = {
 };
 
 export type Team = {
-  teamID: number;
+  teamID: string;
   name: string;
   captainID?: number;
   classification: CLASSIFICATION;
@@ -29,7 +37,7 @@ export enum CLASSIFICATION {
 }
 
 export type Club = {
-  clubID: number;
+  clubID: string;
   name: string;
   address?: Address;
   contactPersonID: number;
@@ -54,12 +62,12 @@ export type TeamClub = {
 export type Address = {
   street: string;
   city: string;
-  housenumber: string;
-  postalcode: string;
+  houseNumber: string;
+  postalCode: string;
 };
 
 export type Competition = {
-  competitionID: number;
+  competitionID: string;
   name: string;
   type: COMPETITION_TYPE;
   season: CompetitionSeason;
@@ -79,7 +87,7 @@ export type CompetitionSeason = {
 };
 
 export type Playday = {
-  playdayID: number;
+  playdayID: string;
   name: string;
   date: number;
   competitionID: number;
@@ -88,7 +96,7 @@ export type Playday = {
 };
 
 export type Game = {
-  gameID: number;
+  gameID: string;
   playdayID: number;
   homeTeam?: number;
   awayTeam?: number;
@@ -102,7 +110,7 @@ export type Game = {
 };
 
 export type Account = {
-  accountID: number;
+  accountID: string;
   playerID: number;
   username: string;
   email: string;
@@ -111,14 +119,14 @@ export type Account = {
 };
 
 export type GameSeries = {
-  seriesID: number;
+  gameSeriesID: string;
   gameID: number;
   game: Game;
   gameRows: GameRow[];
 };
 
 export type GameRow = {
-  gameRowID: number;
+  gameRowID: string;
   seriesID: number;
   bestA: number;
   bestB: number;
@@ -127,7 +135,7 @@ export type GameRow = {
 };
 
 export type GameScore = {
-  gameScoreID: number;
+  gameScoreID: string;
   playerID: number;
   gameRowID: number;
   oneeighty: number;
@@ -143,7 +151,7 @@ export enum ENTITY_TYPE {
 }
 
 export type Fine = {
-  fineID: number;
+  fineID: string;
   entityID: number;
   entityType: ENTITY_TYPE;
   amount: number;

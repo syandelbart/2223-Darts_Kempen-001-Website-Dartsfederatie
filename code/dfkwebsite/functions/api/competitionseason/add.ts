@@ -35,7 +35,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     const competitionSeasonIdKey = `id:${Date.now()}`;
 
     let data: CompetitionSeason = {
-      id: competitionSeasonIdKey,
+      id: competitionSeasonIdKey, // to be checked
       startDate: new Date(startDate),
       endDate: new Date(endDate),
       competitionId: competitionId,

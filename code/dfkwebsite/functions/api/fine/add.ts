@@ -1,4 +1,4 @@
-import { Fine } from "../../../types/general";
+import { Fine, ENTITY_TYPE } from "../../../types/general";
 import { PagesEnv } from "../env";
 
 enum FineSubmission {
@@ -36,11 +36,14 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     const fineIdKey = `id:${Date.now()}`;
 
     let data: Fine = {
-      id: fineIdKey,
-      entityId: entityId,
-      entityType: entityType,
+      fineID: fineIdKey,
+      entityID: Number(entityId),
+      entityType: entityType as ENTITY_TYPE,
       amount: Number(amount),
       reason: reason,
+      // to be checked
+      date: Date.now(),
+      entity: null,
     };
 
     let indexKey = `entityId:${entityId}`;

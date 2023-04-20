@@ -1,4 +1,4 @@
-import { Team } from "../../../types/general";
+import { Team, Club, CLASSIFICATION } from "../../../types/general";
 import { PagesEnv } from "../env";
 
 enum TeamSubmission {
@@ -27,16 +27,16 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     }
 
     let name = formData.get(TeamSubmission.NAME);
-    let club = formData.get(TeamSubmission.CLUB);
+    let club = JSON.parse(formData.get(TeamSubmission.CLUB));
     let classification = formData.get(TeamSubmission.CLASSIFICATION);
 
     const teamIdKey = `id:${Date.now()}`;
 
     let data: Team = {
-      id: teamIdKey,
+      teamID: teamIdKey,
       name: name,
-      club: club,
-      classification: classification,
+      club: club as Club,
+      classification: classification as CLASSIFICATION,
     };
 
     let indexKey = `name:${name}`;

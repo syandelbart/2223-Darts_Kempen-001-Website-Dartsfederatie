@@ -36,7 +36,6 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     const addressIdKey = `id:${Date.now()}`;
 
     let data: Address = {
-      id: addressIdKey,
       street: street,
       city: city,
       houseNumber: houseNumber,

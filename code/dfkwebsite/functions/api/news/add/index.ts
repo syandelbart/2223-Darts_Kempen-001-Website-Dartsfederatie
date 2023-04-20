@@ -1,5 +1,5 @@
+import { News } from "../../../../types/general";
 import { PagesEnv } from "../../env";
-import { News } from "../../../../data";
 
 export enum NewsSubmission {
   TITLE = "title",
@@ -34,7 +34,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       .replace(/ /g, "-");
 
     const data: News = {
-      id: id,
+      newsID: id,
       title: formData.get(NewsSubmission.TITLE),
       description: formData.get(NewsSubmission.DESCRIPTION),
       date: parseInt(formData.get(NewsSubmission.DATE)),

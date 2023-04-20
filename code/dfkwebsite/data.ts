@@ -1,6 +1,7 @@
 import { clubData } from "./components/Club";
 import { managementData } from "./components/ManagementCard";
 import { teamData } from "./components/Team";
+import { News, Player } from "./types/general";
 
 let teams : Array<teamData> = [
     {
@@ -286,64 +287,49 @@ export let clubs : Array<clubData> = [
     }
   ]
 
-const news = Array.from({ length: 20 }, (_, i) => ({
-    id: `${i}`,
-    title: `Project ${i}`,
-    description: `Description ${i}`,
-    date: i,
-    text: `Text ${i}`,
-}));
+// const news = Array.from({ length: 20 }, (_, i) => ({
+//     id: `${i}`,
+//     title: `Project ${i}`,
+//     description: `Description ${i}`,
+//     date: i,
+//     text: `Text ${i}`,
+// }));
 
-export function createNews() {
-  news.forEach((item: News) => {
-  let data = new FormData();
-  data.append("title", item.title);
-  data.append("description", item.description);
-  data.append("date", item.date.toString());
-  data.append("text", item.text);
+// export function createNews() {
+//   news.forEach((item: News) => {
+//   let data = new FormData();
+//   data.append("title", item.title);
+//   data.append("description", item.description);
+//   data.append("date", item.date.toString());
+//   data.append("text", item.text);
 
-  fetch("/api/news/add",{
-      body: data,
-      method: "POST",
-  }).then(response => console.log(response));
-});
-}
+//   fetch("/api/news/add",{
+//       body: data,
+//       method: "POST",
+//   }).then(response => console.log(response));
+// });
+// }
 
-export type News = {
-  id: string,
-  title: string,
-  description: string,
-  date: number,
-  text: string,
-}
 
-export type Players = {
-  id: string,
-  firstname: string,
-  lastname: string,
-  phone: string,
-  allowed: boolean,
-}
+// const playerslist = Array.from({ length: 20 }, (_, i) => ({
+//     id: `${i}`,
+//     firstname: `Firstname ${i}`,
+//     lastname: `Lastname ${i}`,
+//     phone: `Phone ${i}`,
+//     allowed: i % 2 === 0,
+// }));
 
-const playerslist = Array.from({ length: 20 }, (_, i) => ({
-    id: `${i}`,
-    firstname: `Firstname ${i}`,
-    lastname: `Lastname ${i}`,
-    phone: `Phone ${i}`,
-    allowed: i % 2 === 0,
-}));
+// export function createPlayers() {
+//   playerslist.forEach((item: Player) => {
+//   let data = new FormData();
+//   data.append("firstname", item.firstName);
+//   data.append("lastname", item.lastName);
+//   data.append("phone", item.phone);
+//   data.append("allowed", item.allowedToPlay.toString());
 
-export function createPlayers() {
-  playerslist.forEach((item: Players) => {
-  let data = new FormData();
-  data.append("firstname", item.firstname);
-  data.append("lastname", item.lastname);
-  data.append("phone", item.phone);
-  data.append("allowed", item.allowed.toString());
-
-  fetch("/api/player/add",{
-      body: data,
-      method: "POST",
-  }).then(response => console.log(response));
-});
-}
+//   fetch("/api/player/add",{
+//       body: data,
+//       method: "POST",
+//   }).then(response => console.log(response));
+// });
+// }
