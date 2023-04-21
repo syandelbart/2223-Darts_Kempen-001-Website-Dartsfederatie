@@ -27,9 +27,14 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     const clubIdKey = `id:${Date.now()}`;
 
     let data: Club = {
-      club: clubIdKey, // to be checked
+      clubID: clubIdKey,
       name: name,
       address: JSON.parse(address),
+      // to be checked
+      contactPerson: null,
+      locationName: null,
+      contactPersonID: null,
+      teams: []
     };
 
     let indexKey = `name:${name}`;
