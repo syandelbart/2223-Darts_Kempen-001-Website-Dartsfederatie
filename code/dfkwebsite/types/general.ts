@@ -82,8 +82,8 @@ export enum COMPETITION_TYPE {
 }
 
 export type CompetitionSeason = {
-  startdate: number;
-  enddate: number;
+  startDate: number;
+  endDate: number;
 };
 
 export type Playday = {

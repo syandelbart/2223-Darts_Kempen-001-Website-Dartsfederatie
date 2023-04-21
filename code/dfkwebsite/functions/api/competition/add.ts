@@ -39,8 +39,8 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       type: type as COMPETITION_TYPE,
       // to be checked
       season: {
-        startdate: 0,
-        enddate: 0
+        startDate: 0,
+        endDate: 0
       },
       playerTeams: [],
       teamClubs: [],
