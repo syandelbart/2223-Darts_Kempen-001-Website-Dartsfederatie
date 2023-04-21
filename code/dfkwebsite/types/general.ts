@@ -1,10 +1,22 @@
-export type News = {
-  newsID: string,
-  title: string,
-  description: string,
-  date: number,
-  text: string,
+export enum TROPHY {
+  GOLD = 0,
+  SILVER = 1,
+  BRONZE = 2,
 }
+
+export enum ENTITY {
+  PLAYER = 0,
+  TEAM = 1,
+  CLUB = 2,
+}
+
+export type News = {
+  newsID: string;
+  title: string;
+  description: string;
+  date: number;
+  text: string;
+};
 
 export type Player = {
   playerID: string;
@@ -158,4 +170,28 @@ export type Fine = {
   date: number;
   reason: string;
   entity: Player | Team | Club;
+};
+
+export type PersonRanking = {
+  id: number;
+  name: string;
+  ploeg: string;
+  punten: number;
+  "180": number;
+  shot: number;
+  k_leg: number;
+  trophy?: TROPHY;
+};
+
+export type TeamRanking = {
+  id: number;
+  ploegnaam: string;
+  gespeeld: number;
+  gewonnen: number;
+  gelijk: number;
+  verloren: number;
+  voor: number;
+  tegen: number;
+  punten: number;
+  trophy?: TROPHY;
 };

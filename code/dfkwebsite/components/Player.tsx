@@ -1,37 +1,32 @@
 import { Dispatch, FunctionComponent, SetStateAction } from "react";
-import { Players } from "../data";
+import { Player } from "../types/general";
+
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 
 interface playerDataInterface {
-  playerData: Players;
+  playerData: Player;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const Player : FunctionComponent<playerDataInterface> = ({playerData,setIsOpen}) => {
+const PlayerComponent: FunctionComponent<playerDataInterface> = ({
+  playerData,
+  setIsOpen,
+}) => {
   return (
     <div>
-      <CardTitle>{playerData.firstname + " " + playerData.lastname}</CardTitle>
+      <CardTitle>{playerData.firstName + " " + playerData.lastName}</CardTitle>
       <CardButtonRow>
-        <CardButton
-          onClick={() => setIsOpen(true)}
-        >
-          Team
-        </CardButton>
-        <CardButton bg={"bg-edit-button"}>
-          Edit
-        </CardButton>
-        
+        <CardButton onClick={() => setIsOpen(true)}>Team</CardButton>
+        <CardButton bg={"bg-edit-button"}>Edit</CardButton>
       </CardButtonRow>
       <div className="my-3">
-        <CardIcon icon={"ph:phone"}>
-          {playerData.phone}
-        </CardIcon>
+        <CardIcon icon={"ph:phone"}>{playerData.phone}</CardIcon>
       </div>
     </div>
   );
-}
+};
 
-export default Player;
+export default PlayerComponent;
