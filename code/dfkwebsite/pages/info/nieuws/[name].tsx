@@ -2,7 +2,8 @@ import ImageRead from "../../../components/ImageRead";
 import Image from "next/image";
 import Link from "next/link";
 import { NextPage } from "next";
-import news, { createNews, News } from "../../../data";
+import news from "../../../data";
+import { News } from "../../../types/general";
 
 let posts = [
   {
@@ -84,7 +85,7 @@ const Nieuws: NextPage = () => {
     <div>
       <h1
         className="text-6xl font-extrabold text-white mb-5"
-        onClick={() => createNews()}
+        // onClick={() => createNews()}
       >
         Nieuws
       </h1>

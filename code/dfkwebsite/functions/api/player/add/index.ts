@@ -1,4 +1,4 @@
-import { Players } from "../../../../data";
+import { Player } from "../../../../types/general";
 import { PagesEnv } from "../../env";
 
 export enum PlayerSubmission {
@@ -40,12 +40,12 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       .toLowerCase()
       .replace(/ /g, "-");
 
-    const data: Players = {
-      id: id,
-      firstname: formData.get(PlayerSubmission.FIRSTNAME),
-      lastname: formData.get(PlayerSubmission.LASTNAME),
+    const data: Player = {
+      playerID: id,
+      firstName: formData.get(PlayerSubmission.FIRSTNAME),
+      lastName: formData.get(PlayerSubmission.LASTNAME),
       phone: formData.get(PlayerSubmission.PHONE),
-      allowed: Boolean(formData.get(PlayerSubmission.ALLOWED)),
+      allowedToPlay: Boolean(formData.get(PlayerSubmission.ALLOWED)),
     };
 
     await env.PLAYER.put(id, JSON.stringify(data));
