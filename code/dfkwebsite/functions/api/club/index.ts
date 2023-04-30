@@ -6,6 +6,29 @@ enum ClubSubmission {
   ADDRESS = "address",
 }
 
+export const onRequestGet: PagesFunction<PagesEnv> = async ({
+  request,
+  env,
+}) => {
+  try {
+
+  } catch (e) {
+    if (e instanceof Error) {
+      return new Response(e.message);
+    }
+    return new Response("Internal server error.", { status: 500 });
+  }
+};
+
+/**
+ * @swagger
+ * /api/club:
+ *   post:
+ *     description: Returns the hello world
+ *     responses:
+ *       200:
+ *         description: hello world
+ */
 export const onRequestPost: PagesFunction<PagesEnv> = async ({
   request,
   env,
@@ -34,7 +57,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       contactPerson: null,
       locationName: null,
       contactPersonID: null,
-      teams: []
+      teams: [],
     };
 
     let indexKey = `name:${name}`;
