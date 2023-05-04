@@ -28,10 +28,10 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
       },
     });
   } catch (e) {
-    if (e instanceof Error) {
-      return new Response(e.message);
-    }
-    return new Response("Internal server error.", { status: 500 });
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
   }
 };
 
@@ -80,13 +80,15 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       await env.CLUBS.put(indexKey, JSON.stringify(existingValue));
     }
 
-    return new Response("Club added successfully.", { status: 200 });
+    return new Response(
+      JSON.stringify({ message: "Club added successfully." }),
+      { status: 200, headers: { "content-type": "application/json" } }
+    );
   } catch (e) {
-    if (e instanceof Error) {
-      return new Response(e.message);
-    }
-
-    return new Response("Internal server error.", { status: 500 });
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
   }
 };
 
@@ -124,11 +126,22 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     // Wait for all updates to complete
     await Promise.all(updates);
 
-    return new Response("Clubs updated successfully.", { status: 200 });
+    const responseBody = {
+      message: "Clubs updated successfully.",
+      status: 200,
+    };
+
+    return new Response(JSON.stringify(responseBody), {
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (e) {
-    if (e instanceof Error) {
-      return new Response(e.message);
-    }
-    return new Response("Internal server error.", { status: 500 });
+    const errorBody = {
+      message: e instanceof Error ? e.message : "Internal server error.",
+      status: e instanceof Error ? 500 : 400,
+    };
+
+    return new Response(JSON.stringify(errorBody), {
+      headers: { "Content-Type": "application/json" },
+    });
   }
 };
