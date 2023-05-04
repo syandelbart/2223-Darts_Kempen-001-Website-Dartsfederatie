@@ -1,7 +1,7 @@
 export interface PagesEnv {
     NEWS: KVNamespace;
     PLAYER: KVNamespace;
-    CLUB: KVNamespace;
+    CLUBS: KVNamespace;
     ADDRESS: KVNamespace;
     COMPETITION: KVNamespace;
     COMPETITION_SEASON: KVNamespace;

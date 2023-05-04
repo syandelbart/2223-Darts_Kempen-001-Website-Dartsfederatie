@@ -9,9 +9,20 @@ enum ClubSubmission {
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
   env,
+  params
 }) => {
   try {
+    const clubs = await env.CLUBS.list({limit: 100});
 
+    let clubsMapped = clubs.keys.map(async (clubs) => {
+      return JSON.parse(await env.CLUBS.get(clubs.name));
+    });
+
+    return new Response(JSON.stringify(await Promise.all(clubsMapped)), {
+      headers: {
+        "content-type": "application/json",
+      },
+    });
   } catch (e) {
     if (e instanceof Error) {
       return new Response(e.message);
@@ -20,18 +31,10 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
   }
 };
 
-/**
- * @swagger
- * /api/club:
- *   post:
- *     description: Returns the hello world
- *     responses:
- *       200:
- *         description: hello world
- */
 export const onRequestPost: PagesFunction<PagesEnv> = async ({
   request,
   env,
+  params
 }) => {
   try {
     let formData = await request.formData();
@@ -62,16 +65,16 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     let indexKey = `name:${name}`;
 
-    await env.CLUB.put(clubIdKey, JSON.stringify(data));
+    await env.CLUBS.put(clubIdKey, JSON.stringify(data));
 
-    const existingValue: Array<string> = await env.CLUB.get(indexKey, {
+    const existingValue: Array<string> = await env.CLUBS.get(indexKey, {
       type: "json",
     });
     if (!existingValue)
-      await env.CLUB.put(indexKey, JSON.stringify([clubIdKey]));
+      await env.CLUBS.put(indexKey, JSON.stringify([clubIdKey]));
     else {
       existingValue.push(clubIdKey);
-      await env.CLUB.put(indexKey, JSON.stringify(existingValue));
+      await env.CLUBS.put(indexKey, JSON.stringify(existingValue));
     }
 
     return new Response("Club added successfully.", { status: 200 });
@@ -80,6 +83,20 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       return new Response(e.message);
     }
 
+    return new Response("Internal server error.", { status: 500 });
+  }
+};
+
+export const onRequestPut: PagesFunction<PagesEnv> = async ({
+  request,
+  env,
+  params
+}) => {
+  try {
+  } catch (e) {
+    if (e instanceof Error) {
+      return new Response(e.message);
+    }
     return new Response("Internal server error.", { status: 500 });
   }
 };
