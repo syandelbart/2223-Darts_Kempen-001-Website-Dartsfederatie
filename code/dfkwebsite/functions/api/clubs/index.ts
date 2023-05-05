@@ -115,7 +115,6 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
         postalCode: formData.get(ClubSubmission.ADDRESS_POSTAL),
         houseNumber: formData.get(ClubSubmission.ADDRESS_HOUSENUMBER),
       },
-      // to be checked
       ...(formData.has(ClubSubmission.CONTACTPERSONID) && {
         contactPersonID: formData.get(ClubSubmission.CONTACTPERSONID),
       }),
@@ -173,7 +172,20 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
         contactPersonID: formData.has(ClubSubmission.CONTACTPERSONID)
           ? formData.get(ClubSubmission.CONTACTPERSONID)
           : clubData.contactPersonID,
-        address: clubData.address,
+        address: {
+          city: formData.has(ClubSubmission.ADDRESS_CITY)
+            ? formData.get(ClubSubmission.ADDRESS_CITY)
+            : clubData.address.city,
+          houseNumber: formData.has(ClubSubmission.ADDRESS_HOUSENUMBER)
+            ? formData.get(ClubSubmission.ADDRESS_HOUSENUMBER)
+            : clubData.address.houseNumber,
+          postalCode: formData.has(ClubSubmission.ADDRESS_POSTAL)
+            ? formData.get(ClubSubmission.ADDRESS_POSTAL)
+            : clubData.address.postalCode,
+          street: formData.has(ClubSubmission.ADDRESS_STREET)
+            ? formData.get(ClubSubmission.ADDRESS_STREET)
+            : clubData.address.street,
+        },
       };
 
       // Update the club data in the KV store
