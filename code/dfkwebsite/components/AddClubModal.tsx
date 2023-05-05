@@ -24,7 +24,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     // Do something with formValues, such as send it to a server
 
     const data = new FormData();
@@ -33,7 +33,15 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       data.append(formValueKey, formValues[formValueKey]);
     });
 
-    console.log(data);
+    await fetch("/api/clubs", {
+      body: data,
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then(async (response) => {
+        //dit is uw response doe er iets mee
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
