@@ -1,46 +1,52 @@
-import { Club } from "../../../types/general";
+import { Club } from "../../../types/club";
 import { PagesEnv } from "../env";
 
 enum ClubSubmission {
   NAME = "name",
-  ADDRESS = "address",
+  ADDRESS_STREET = "address_street",
+  ADDRESS_HOUSENUMBER = "address_housenumber",
+  ADDRESS_CITY = "address_city",
+  ADDRESS_POSTAL = "address_postal",
+  CONTACTPERSONID = "contactpersonid",
 }
 
 const availableParams = [
-  { name: "limit", regex: /^[0-9]+$/,castFunction: Number, default: 100 },
+  { name: "limit", regex: /^[0-9]+$/, castFunction: Number, default: 100 },
   { name: "cursor", regex: /^[a-zA-Z]*$/ },
 ];
 
 type urlParamsType = {
   limit?: number;
   cursor?: string;
-}
+};
 
 const getParams = (url: string) => {
   const urlObject = new URL(url);
-  const data : urlParamsType = {};
+  const data: urlParamsType = {};
   availableParams.forEach((availableParam) => {
     // If url does not include param, it shouldn't be tested nor included, except if it has a default value
     if (!urlObject.searchParams.has(availableParam.name)) {
-      if(availableParam.default) 
+      if (availableParam.default)
         data[availableParam.name] = availableParam.default;
-      return
+      return;
     }
 
     // Assign value from the url since the parameter does exist
     const value = urlObject.searchParams.get(availableParam.name);
-    
+
     // Could instead return an error if the regex does not match with the string
-    if(availableParam.regex && !value.match(availableParam.regex)) return;
+    if (availableParam.regex && !value.match(availableParam.regex)) return;
 
     // If value has a casting function, execute it first, otherwise add the raw (string) value
     try {
-      data[availableParam.name] = availableParam.castFunction ? availableParam.castFunction(value) : value;
-    } catch(e : Error) {
-      throw new Error(`The value ${value} could not be casted using the function ${availableParam.castFunction}`)
+      data[availableParam.name] = availableParam.castFunction
+        ? availableParam.castFunction(value)
+        : value;
+    } catch (e: any) {
+      throw new Error(
+        `The value ${value} could not be casted using the function ${availableParam.castFunction}`
+      );
     }
-
-
   });
 
   return data;
@@ -51,11 +57,12 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
   env,
 }) => {
   try {
-    const url = new URL(request.url);
-
     const params = getParams(request.url);
 
-    const clubs = await env.CLUBS.list({ limit: params.limit, cursor: params.cursor });
+    const clubs = await env.CLUBS.list({
+      limit: params.limit,
+      cursor: params.cursor,
+    });
 
     let clubsMapped = clubs.keys.map(async (clubs) => {
       return JSON.parse(await env.CLUBS.get(clubs.name));
@@ -81,7 +88,13 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
-    let requiredFields = [ClubSubmission.NAME, ClubSubmission.ADDRESS];
+    let requiredFields = [
+      ClubSubmission.NAME,
+      ClubSubmission.ADDRESS_CITY,
+      ClubSubmission.ADDRESS_HOUSENUMBER,
+      ClubSubmission.ADDRESS_POSTAL,
+      ClubSubmission.ADDRESS_STREET,
+    ];
 
     // Check if the required fields are filled in
     for (const requiredField in requiredFields) {
@@ -89,23 +102,26 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
         throw new Error("Required field is missing from submission.");
     }
 
-    let name = formData.get(ClubSubmission.NAME);
-    let address = formData.get(ClubSubmission.ADDRESS);
+    const name = formData.get(ClubSubmission.NAME);
 
     const clubIdKey = `id:${Date.now()}`;
 
     let data: Club = {
       clubID: clubIdKey,
       name: name,
-      address: JSON.parse(address),
+      address: {
+        street: formData.get(ClubSubmission.ADDRESS_STREET),
+        city: formData.get(ClubSubmission.ADDRESS_CITY),
+        postalCode: formData.get(ClubSubmission.ADDRESS_POSTAL),
+        houseNumber: formData.get(ClubSubmission.ADDRESS_HOUSENUMBER),
+      },
       // to be checked
-      contactPerson: null,
-      locationName: null,
-      contactPersonID: null,
-      teams: [],
+      ...(formData.has(ClubSubmission.CONTACTPERSONID) && {
+        contactPersonID: formData.get(ClubSubmission.CONTACTPERSONID),
+      }),
     };
 
-    0let indexKey = `name:${name}`;
+    let indexKey = `name:${name}`;
 
     await env.CLUBS.put(clubIdKey, JSON.stringify(data));
 
@@ -138,28 +154,30 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
-    // Check if limit and cursor are provided, and parse them as integers
-    const limit = formData.has("limit") ? parseInt(formData.get("limit")) : 100;
-    const cursor = formData.has("cursor") ? formData.get("cursor") : undefined;
+    const params = getParams(request.url);
 
-    // Get all clubs using the specified limit and cursor
     const clubs = await env.CLUBS.list({
-      limit,
-      cursor,
+      limit: params.limit,
+      cursor: params.cursor,
     });
 
     // Update each club using the form data
     const updates = clubs.keys.map(async (club) => {
-      const clubData = JSON.parse(await env.CLUBS.get(club.name));
-      // Update the club data with the form data
-      if (formData.has(ClubSubmission.NAME)) {
-        clubData.name = formData.get(ClubSubmission.NAME);
-      }
-      if (formData.has(ClubSubmission.ADDRESS)) {
-        clubData.address = JSON.parse(formData.get(ClubSubmission.ADDRESS));
-      }
+      const clubData: Club = JSON.parse(await env.CLUBS.get(club.name));
+
+      const data: Club = {
+        clubID: clubData.clubID,
+        name: formData.has(ClubSubmission.NAME)
+          ? formData.get(ClubSubmission.NAME)
+          : clubData.contactPersonID,
+        contactPersonID: formData.has(ClubSubmission.CONTACTPERSONID)
+          ? formData.get(ClubSubmission.CONTACTPERSONID)
+          : clubData.contactPersonID,
+        address: clubData.address,
+      };
+
       // Update the club data in the KV store
-      await env.CLUBS.put(club.name, JSON.stringify(clubData));
+      await env.CLUBS.put(club.name, JSON.stringify(data));
     });
 
     // Wait for all updates to complete
