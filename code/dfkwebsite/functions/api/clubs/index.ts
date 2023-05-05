@@ -6,6 +6,46 @@ enum ClubSubmission {
   ADDRESS = "address",
 }
 
+const availableParams = [
+  { name: "limit", regex: /^[0-9]+$/,castFunction: Number, default: 100 },
+  { name: "cursor", regex: /^[a-zA-Z]*$/ },
+];
+
+type urlParamsType = {
+  limit?: number;
+  cursor?: string;
+}
+
+const getParams = (url: string) => {
+  const urlObject = new URL(url);
+  const data : urlParamsType = {};
+  availableParams.forEach((availableParam) => {
+    // If url does not include param, it shouldn't be tested nor included, except if it has a default value
+    if (!urlObject.searchParams.has(availableParam.name)) {
+      if(availableParam.default) 
+        data[availableParam.name] = availableParam.default;
+      return
+    }
+
+    // Assign value from the url since the parameter does exist
+    const value = urlObject.searchParams.get(availableParam.name);
+    
+    // Could instead return an error if the regex does not match with the string
+    if(availableParam.regex && !value.match(availableParam.regex)) return;
+
+    // If value has a casting function, execute it first, otherwise add the raw (string) value
+    try {
+      data[availableParam.name] = availableParam.castFunction ? availableParam.castFunction(value) : value;
+    } catch(e : Error) {
+      throw new Error(`The value ${value} could not be casted using the function ${availableParam.castFunction}`)
+    }
+
+
+  });
+
+  return data;
+};
+
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
   env,
@@ -13,10 +53,9 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
   try {
     const url = new URL(request.url);
 
-    const limit = parseInt(url.searchParams.get("limit")) || 100; // default limit to 100 if not provided
-    const cursor = url.searchParams.get("cursor");
+    const params = getParams(request.url);
 
-    const clubs = await env.CLUBS.list({ limit, cursor });
+    const clubs = await env.CLUBS.list({ limit: params.limit, cursor: params.cursor });
 
     let clubsMapped = clubs.keys.map(async (clubs) => {
       return JSON.parse(await env.CLUBS.get(clubs.name));
@@ -66,7 +105,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       teams: [],
     };
 
-    let indexKey = `name:${name}`;
+    0let indexKey = `name:${name}`;
 
     await env.CLUBS.put(clubIdKey, JSON.stringify(data));
 
