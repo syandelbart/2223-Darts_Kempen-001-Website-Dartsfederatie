@@ -1,56 +1,8 @@
 import { Club } from "../../../types/club";
 import { PagesEnv } from "../env";
-
-enum ClubSubmission {
-  NAME = "name",
-  ADDRESS_STREET = "address_street",
-  ADDRESS_HOUSENUMBER = "address_housenumber",
-  ADDRESS_CITY = "address_city",
-  ADDRESS_POSTAL = "address_postal",
-  CONTACTPERSONID = "contactpersonid",
-}
-
-const availableParams = [
-  { name: "limit", regex: /^[0-9]+$/, castFunction: Number, default: 100 },
-  { name: "cursor", regex: /^[a-zA-Z]*$/ },
-];
-
-type urlParamsType = {
-  limit?: number;
-  cursor?: string;
-};
-
-const getParams = (url: string) => {
-  const urlObject = new URL(url);
-  const data: urlParamsType = {};
-  availableParams.forEach((availableParam) => {
-    // If url does not include param, it shouldn't be tested nor included, except if it has a default value
-    if (!urlObject.searchParams.has(availableParam.name)) {
-      if (availableParam.default)
-        data[availableParam.name] = availableParam.default;
-      return;
-    }
-
-    // Assign value from the url since the parameter does exist
-    const value = urlObject.searchParams.get(availableParam.name);
-
-    // Could instead return an error if the regex does not match with the string
-    if (availableParam.regex && !value.match(availableParam.regex)) return;
-
-    // If value has a casting function, execute it first, otherwise add the raw (string) value
-    try {
-      data[availableParam.name] = availableParam.castFunction
-        ? availableParam.castFunction(value)
-        : value;
-    } catch (e: any) {
-      throw new Error(
-        `The value ${value} could not be casted using the function ${availableParam.castFunction}`
-      );
-    }
-  });
-
-  return data;
-};
+import { getParams, searchKeyChecker } from "../../../modules/general";
+import { checkFields } from "../../../modules/fieldsCheck";
+import { ClubSubmission, clubRegexPatterns } from "../../../modules/club";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -89,21 +41,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
-    let requiredFields = [
-      ClubSubmission.NAME,
-      ClubSubmission.ADDRESS_CITY,
-      ClubSubmission.ADDRESS_HOUSENUMBER,
-      ClubSubmission.ADDRESS_POSTAL,
-      ClubSubmission.ADDRESS_STREET,
-    ];
-
-    // Check if the required fields are filled in
-    for (const requiredField of requiredFields) {
-      if (!formData.has(requiredField))
-        throw new Error(
-          `Required field: ${requiredField} is missing from submission.`
-        );
-    }
+    checkFields(formData, clubRegexPatterns);
 
     const name = formData.get(ClubSubmission.NAME);
 
@@ -123,19 +61,8 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       }),
     };
 
-    let indexKey = `name:${name}`;
-
     await env.CLUBS.put(clubIdKey, JSON.stringify(data));
-
-    const existingValue: Array<string> = await env.CLUBS.get(indexKey, {
-      type: "json",
-    });
-    if (!existingValue)
-      await env.CLUBS.put(indexKey, JSON.stringify([clubIdKey]));
-    else {
-      existingValue.push(clubIdKey);
-      await env.CLUBS.put(indexKey, JSON.stringify(existingValue));
-    }
+    await searchKeyChecker(env.CLUBS, clubIdKey, `name:${name}`);
 
     return new Response(
       JSON.stringify({ message: "Club added successfully." }),
