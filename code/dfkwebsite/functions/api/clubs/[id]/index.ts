@@ -32,7 +32,8 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
   params,
 }) => {
   try {
-    const club = JSON.parse(await getClubById(params, env));
+    const clubId = params.id.toString();
+    const club = JSON.parse(await getClubById(clubId, env));
 
     return new Response(JSON.stringify(club), {
       headers: {
@@ -54,10 +55,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
-    const clubId = await getClubById(params, env);
-    const clubRecord = JSON.parse(clubId);
+    
+    const clubId = params.id.toString();
+    const club = await getClubById(clubId, env);
 
-    const clubData: Club = JSON.parse(clubRecord);
+    const clubData: Club = JSON.parse(club);
 
     const data: Club = {
       clubID: clubData.clubID,
@@ -112,10 +114,10 @@ export const onRequestDelete: PagesFunction<PagesEnv> = async ({
   params,
 }) => {
   try {
-    const id = params.id.toString();
-    const clubId = await getClubById(id, env);
+    const clubId = params.id.toString();
+    const club = await getClubById(clubId, env);
 
-    const clubData: Club = JSON.parse(clubId);
+    const clubData: Club = JSON.parse(club);
 
     const data: Club = {
       ...clubData,
@@ -123,7 +125,7 @@ export const onRequestDelete: PagesFunction<PagesEnv> = async ({
     };
 
     // Update the club data in the KV store
-    await env.CLUBS.put(id, JSON.stringify(data));
+    await env.CLUBS.put(clubId, JSON.stringify(data));
 
     const responseBody = {
       message: "Club deleted successfully.",
