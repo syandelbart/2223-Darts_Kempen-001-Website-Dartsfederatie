@@ -1,4 +1,4 @@
-type fieldInformation = {
+export type fieldInformation = {
   regex?: RegExp;
   required?: boolean;
 };
