@@ -5,6 +5,7 @@ export type Club = {
   name: string;
   address?: Address;
   contactPersonID: string;
+  deleted?: boolean;
 };
 
 export interface ClubFront extends Club {

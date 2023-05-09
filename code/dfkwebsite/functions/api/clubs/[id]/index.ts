@@ -10,23 +10,29 @@ enum ClubSubmission {
   CONTACTPERSONID = "contactpersonid",
 }
 
+const getClubById = async (id, env) => {
+  const clubId = id;
+  const clubRecord = await env.CLUBS.get(clubId);
+
+  if (!clubRecord) {
+    return new Response(
+      JSON.stringify({ error: `Club with id ${clubId} not found` }),
+      {
+        status: 404,
+        headers: { "content-type": "application/json" },
+      }
+    );
+  }
+  return clubRecord;
+};
+
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
   env,
   params,
 }) => {
   try {
-    const clubId = params.id.toString();
-    const clubRecord = await env.CLUBS.get(clubId);
-
-    if (!clubRecord) {
-      return new Response(JSON.stringify({ error: `Club with id ${clubId} not found` }), {
-        status: 404,
-        headers: { "content-type": "application/json" },
-      });
-    }
-
-    const club = JSON.parse(clubRecord);
+    const club = JSON.parse(await getClubById(params, env));
 
     return new Response(JSON.stringify(club), {
       headers: {
@@ -48,16 +54,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
-    const clubId = params.id.toString();
-
-    const clubRecord = await env.CLUBS.get(clubId);
-
-    if (!clubRecord) {
-      return new Response(JSON.stringify({ error: `Club with id ${clubId} not found` }), {
-        status: 404,
-        headers: { "content-type": "application/json" },
-      });
-    }
+    const clubId = await getClubById(params, env);
+    const clubRecord = JSON.parse(clubId);
 
     const clubData: Club = JSON.parse(clubRecord);
 
@@ -108,17 +106,41 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   }
 };
 
-
 export const onRequestDelete: PagesFunction<PagesEnv> = async ({
   request,
   env,
   params,
 }) => {
   try {
+    const id = params.id.toString();
+    const clubId = await getClubById(id, env);
+
+    const clubData: Club = JSON.parse(clubId);
+
+    const data: Club = {
+      ...clubData,
+      deleted: true,
+    };
+
+    // Update the club data in the KV store
+    await env.CLUBS.put(id, JSON.stringify(data));
+
+    const responseBody = {
+      message: "Club deleted successfully.",
+      status: 200,
+    };
+
+    return new Response(JSON.stringify(responseBody), {
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (e) {
-    if (e instanceof Error) {
-      return new Response(e.message);
-    }
-    return new Response("Internal server error.", { status: 500 });
+    const errorBody = {
+      message: e instanceof Error ? e.message : "Internal server error.",
+      status: e instanceof Error ? 500 : 400,
+    };
+
+    return new Response(JSON.stringify(errorBody), {
+      headers: { "Content-Type": "application/json" },
+    });
   }
 };
