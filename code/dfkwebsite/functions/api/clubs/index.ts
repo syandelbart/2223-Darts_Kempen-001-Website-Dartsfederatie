@@ -62,6 +62,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const clubs = await env.CLUBS.list({
       limit: params.limit,
       cursor: params.cursor,
+      prefix: "id:",
     });
 
     let clubsMapped = clubs.keys.map(async (clubs) => {
@@ -98,9 +99,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     // Check if the required fields are filled in
     for (const requiredField of requiredFields) {
-      console.log(requiredField)
       if (!formData.has(requiredField))
-        throw new Error(`Required field: ${requiredFields[requiredField]} is missing from submission.`);
+        throw new Error(
+          `Required field: ${requiredField} is missing from submission.`
+        );
     }
 
     const name = formData.get(ClubSubmission.NAME);
