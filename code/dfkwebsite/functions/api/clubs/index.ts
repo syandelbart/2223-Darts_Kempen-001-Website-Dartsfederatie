@@ -97,9 +97,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     ];
 
     // Check if the required fields are filled in
-    for (const requiredField in requiredFields) {
+    for (const requiredField of requiredFields) {
+      console.log(requiredField)
       if (!formData.has(requiredField))
-        throw new Error("Required field is missing from submission.");
+        throw new Error(`Required field: ${requiredFields[requiredField]} is missing from submission.`);
     }
 
     const name = formData.get(ClubSubmission.NAME);
