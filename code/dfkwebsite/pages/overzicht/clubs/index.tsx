@@ -14,10 +14,21 @@ const Clubs: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
+
   return (
     <div>
-      <AddClubModal addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
-      <OverzichtTopBar titleName="Clubs" search={search} setSearch={setSearch} addButtonName="club" addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
+      <AddClubModal
+        addModalOpen={addModalOpen}
+        setAddModalOpen={setAddModalOpen}
+      />
+      <OverzichtTopBar
+        titleName="Clubs"
+        search={search}
+        setSearch={setSearch}
+        addButtonName="club"
+        addModalOpen={addModalOpen}
+        setAddModalOpen={setAddModalOpen}
+      />
       <ClubModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <CardGrid>
         {clubs.length === 0 ? (
@@ -27,15 +38,16 @@ const Clubs: NextPage = () => {
         ) : (
           clubs
             .filter((club) => {
-              if(search == "" || club.clubnaam.toLowerCase().includes(search.toLowerCase())) return club;
+              if (
+                search == "" ||
+                club.clubnaam.toLowerCase().includes(search.toLowerCase())
+              )
+                return club;
               results++;
             })
             .map((club) => (
               <Card>
-                <Club
-                  clubData={club}
-                  setIsOpen={setIsOpen}
-                />
+                <Club clubData={club} setIsOpen={setIsOpen} />
               </Card>
             ))
         )}
