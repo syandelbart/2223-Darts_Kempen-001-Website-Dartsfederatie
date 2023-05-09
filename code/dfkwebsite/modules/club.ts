@@ -26,3 +26,19 @@ export const clubRegexPatterns: { [key: string]: fieldInformation } = {
   },
   [ClubSubmission.CONTACTPERSONID]: { regex: /^[0-9]+$/, required: true },
 };
+
+export const getClubById = async (id: string, namespace: any) => { // TODO: namespace type
+  const clubId = id;
+  const clubRecord = await namespace.get(clubId);
+
+  if (!clubRecord) {
+    return new Response(
+      JSON.stringify({ error: `Club with id ${clubId} not found` }),
+      {
+        status: 404,
+        headers: { "content-type": "application/json" },
+      }
+    );
+  }
+  return clubRecord;
+};

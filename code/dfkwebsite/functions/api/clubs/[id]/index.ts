@@ -1,30 +1,6 @@
+import { getClubById, ClubSubmission } from "../../../../modules/club";
 import { Club } from "../../../../types/club";
 import { PagesEnv } from "../../env";
-
-enum ClubSubmission {
-  NAME = "name",
-  ADDRESS_STREET = "address_street",
-  ADDRESS_HOUSENUMBER = "address_housenumber",
-  ADDRESS_CITY = "address_city",
-  ADDRESS_POSTAL = "address_postal",
-  CONTACTPERSONID = "contactpersonid",
-}
-
-const getClubById = async (id, env) => {
-  const clubId = id;
-  const clubRecord = await env.CLUBS.get(clubId);
-
-  if (!clubRecord) {
-    return new Response(
-      JSON.stringify({ error: `Club with id ${clubId} not found` }),
-      {
-        status: 404,
-        headers: { "content-type": "application/json" },
-      }
-    );
-  }
-  return clubRecord;
-};
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -33,7 +9,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const clubId = params.id.toString();
-    const club = JSON.parse(await getClubById(clubId, env));
+    const club = JSON.parse(await getClubById(clubId, env.CLUBS));
 
     return new Response(JSON.stringify(club), {
       headers: {
@@ -57,7 +33,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const formData = await request.formData();
     
     const clubId = params.id.toString();
-    const club = await getClubById(clubId, env);
+    const club = await getClubById(clubId, env.CLUBS);
 
     const clubData: Club = JSON.parse(club);
 
@@ -115,7 +91,7 @@ export const onRequestDelete: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const clubId = params.id.toString();
-    const club = await getClubById(clubId, env);
+    const club = await getClubById(clubId, env.CLUBS);
 
     const clubData: Club = JSON.parse(club);
 
