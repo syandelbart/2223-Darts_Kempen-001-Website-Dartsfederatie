@@ -1,4 +1,3 @@
-import { clubData } from "./components/ClubCard";
 import { managementData } from "./components/ManagementCard";
 import { teamData } from "./components/Team";
 import { News, Player } from "./types/general";
@@ -164,128 +163,128 @@ export let bestuur: Array<managementData> = [
   },
 ];
 
-export let clubs: Array<clubData> = [
-  {
-    clubnaam: "cupidatat",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Madison Street",
-    postcode: "1871",
-  },
-  {
-    clubnaam: "aute",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Norwood Avenue",
-    postcode: "3526",
-  },
-  {
-    clubnaam: "adipisicing",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Schenck Avenue",
-    postcode: "2038",
-  },
-  {
-    clubnaam: "ea",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Berriman Street",
-    postcode: "3179",
-  },
-  {
-    clubnaam: "amet",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "George Street",
-    postcode: "2152",
-  },
-  {
-    clubnaam: "sint",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Clymer Street",
-    postcode: "1345",
-  },
-  {
-    clubnaam: "incididunt",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Love Lane",
-    postcode: "2421",
-  },
-  {
-    clubnaam: "elit",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Cadman Plaza",
-    postcode: "2075",
-  },
-  {
-    clubnaam: "dolor",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Wythe Avenue",
-    postcode: "1255",
-  },
-  {
-    clubnaam: "incididunt",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Gerritsen Avenue",
-    postcode: "2813",
-  },
-  {
-    clubnaam: "ipsum",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Heath Place",
-    postcode: "1427",
-  },
-  {
-    clubnaam: "magna",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Franklin Avenue",
-    postcode: "1156",
-  },
-  {
-    clubnaam: "aute",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "School Lane",
-    postcode: "1689",
-  },
-  {
-    clubnaam: "officia",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Porter Avenue",
-    postcode: "2299",
-  },
-  {
-    clubnaam: "enim",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Roder Avenue",
-    postcode: "1670",
-  },
-  {
-    clubnaam: "laboris",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Hubbard Place",
-    postcode: "2730",
-  },
-  {
-    clubnaam: "quis",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Provost Street",
-    postcode: "3427",
-  },
-  {
-    clubnaam: "non",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Pooles Lane",
-    postcode: "2946",
-  },
-  {
-    clubnaam: "veniam",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Cameron Court",
-    postcode: "2177",
-  },
-  {
-    clubnaam: "aute",
-    clubplek: "Cafe 't Centrum",
-    straatnaam: "Seaview Avenue",
-    postcode: "1624",
-  },
-];
+// export let clubs: Array<clubData> = [
+//   {
+//     clubnaam: "cupidatat",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Madison Street",
+//     postcode: "1871",
+//   },
+//   {
+//     clubnaam: "aute",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Norwood Avenue",
+//     postcode: "3526",
+//   },
+//   {
+//     clubnaam: "adipisicing",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Schenck Avenue",
+//     postcode: "2038",
+//   },
+//   {
+//     clubnaam: "ea",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Berriman Street",
+//     postcode: "3179",
+//   },
+//   {
+//     clubnaam: "amet",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "George Street",
+//     postcode: "2152",
+//   },
+//   {
+//     clubnaam: "sint",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Clymer Street",
+//     postcode: "1345",
+//   },
+//   {
+//     clubnaam: "incididunt",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Love Lane",
+//     postcode: "2421",
+//   },
+//   {
+//     clubnaam: "elit",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Cadman Plaza",
+//     postcode: "2075",
+//   },
+//   {
+//     clubnaam: "dolor",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Wythe Avenue",
+//     postcode: "1255",
+//   },
+//   {
+//     clubnaam: "incididunt",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Gerritsen Avenue",
+//     postcode: "2813",
+//   },
+//   {
+//     clubnaam: "ipsum",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Heath Place",
+//     postcode: "1427",
+//   },
+//   {
+//     clubnaam: "magna",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Franklin Avenue",
+//     postcode: "1156",
+//   },
+//   {
+//     clubnaam: "aute",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "School Lane",
+//     postcode: "1689",
+//   },
+//   {
+//     clubnaam: "officia",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Porter Avenue",
+//     postcode: "2299",
+//   },
+//   {
+//     clubnaam: "enim",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Roder Avenue",
+//     postcode: "1670",
+//   },
+//   {
+//     clubnaam: "laboris",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Hubbard Place",
+//     postcode: "2730",
+//   },
+//   {
+//     clubnaam: "quis",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Provost Street",
+//     postcode: "3427",
+//   },
+//   {
+//     clubnaam: "non",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Pooles Lane",
+//     postcode: "2946",
+//   },
+//   {
+//     clubnaam: "veniam",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Cameron Court",
+//     postcode: "2177",
+//   },
+//   {
+//     clubnaam: "aute",
+//     clubplek: "Cafe 't Centrum",
+//     straatnaam: "Seaview Avenue",
+//     postcode: "1624",
+//   },
+// ];
 
 // const news = Array.from({ length: 20 }, (_, i) => ({
 //     id: `${i}`,
