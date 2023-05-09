@@ -40,6 +40,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const clubs = await env.CLUBS.list({
       limit: params.limit,
       cursor: params.cursor,
+      prefix: "id:",
     });
 
     let clubsMapped = clubs.keys.map(async (clubs) => {

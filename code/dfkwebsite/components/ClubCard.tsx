@@ -3,23 +3,17 @@ import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
-
-export type clubData = {
-    clubnaam: string;
-    clubplek: string;
-    straatnaam: string;
-    postcode: string;
-};
+import { Club } from "../types/club";
 
 interface clubDataInterface {
-  clubData: clubData;
+  clubData: Club;
   setIsOpen: any;
 }
 
-const Club : FunctionComponent<clubDataInterface> = ({clubData,setIsOpen}) => {
+const ClubCard : FunctionComponent<clubDataInterface> = ({clubData,setIsOpen}) => {
   return (
     <div>
-      <CardTitle>{clubData.clubnaam}</CardTitle>
+      <CardTitle>{clubData.name}</CardTitle>
         <CardButtonRow>
           <CardButton onClick={() => setIsOpen(true)}>
             Spelers
@@ -31,13 +25,14 @@ const Club : FunctionComponent<clubDataInterface> = ({clubData,setIsOpen}) => {
       <div className="my-3">
         <CardIcon icon="mdi:address-marker"
         >
-          <p>{clubData.clubplek}</p>
-          <p>{clubData.straatnaam}</p>
-          <p>{clubData.postcode}</p>
+          <p>{clubData.address?.postalCode}</p>
+          <p>{clubData.address?.city}</p>
+          <p>{clubData.address?.street}</p>
+          <p>{clubData.address?.houseNumber}</p>
         </CardIcon>
       </div>
     </div>
   );
 }
 
-export default Club;
+export default ClubCard;

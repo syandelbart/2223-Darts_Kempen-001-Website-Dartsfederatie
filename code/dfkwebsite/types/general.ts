@@ -1,3 +1,5 @@
+import { Club } from "./club";
+
 export enum TROPHY {
   GOLD = 0,
   SILVER = 1,
@@ -47,17 +49,6 @@ export enum CLASSIFICATION {
   GEWEST_2 = "GEWEST 2",
   GEWEST_3 = "GEWEST 3",
 }
-
-export type Club = {
-  clubID: string;
-  name: string;
-  address?: Address;
-  contactPersonID: number;
-  locationName: string;
-  contactPerson: Player;
-  teams: Team[];
-  fines?: Fine[];
-};
 
 export type PlayerTeam = {
   id: string;
