@@ -10,7 +10,7 @@ type urlParamsType = {
 
 export const getParams = (url: string) => {
   const urlObject = new URL(url);
-  const data: urlParamsType = {};
+  const data: { [key: string]: any } = {};
   availableParams.forEach((availableParam) => {
     // If url does not include param, it shouldn't be tested nor included, except if it has a default value
     if (!urlObject.searchParams.has(availableParam.name)) {
@@ -21,7 +21,8 @@ export const getParams = (url: string) => {
 
     // Assign value from the url since the parameter does exist
     const value = urlObject.searchParams.get(availableParam.name);
-
+    
+    if (!value) return;
     // Could instead return an error if the regex does not match with the string
     if (availableParam.regex && !value.match(availableParam.regex)) return;
 
@@ -41,7 +42,7 @@ export const getParams = (url: string) => {
 };
 
 export const searchKeyChecker = async (
-  namespace: KVNamespace,
+  namespace: any, // todo: change to KVNamespace
   keyToPush: string,
   searchKeyToPushTo: string
 ) => {

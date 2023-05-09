@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent, useState } from "react";
-import { clubRegexPatterns } from "../functions/api/clubs/index";
+import { clubRegexPatterns } from "../modules/club";
 
 type AddClubModalData = {
   addModalOpen: boolean;

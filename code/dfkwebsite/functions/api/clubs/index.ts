@@ -1,34 +1,8 @@
 import { Club } from "../../../types/club";
 import { PagesEnv } from "../env";
 import { getParams, searchKeyChecker } from "../../../modules/general";
-import { checkFields, fieldInformation } from "../../../modules/fieldsCheck";
-
-enum ClubSubmission {
-  NAME = "name",
-  ADDRESS_STREET = "address_street",
-  ADDRESS_HOUSENUMBER = "address_housenumber",
-  ADDRESS_CITY = "address_city",
-  ADDRESS_POSTAL = "address_postal",
-  CONTACTPERSONID = "contactpersonid",
-}
-
-export const clubRegexPatterns: { [key: string]: fieldInformation } = {
-  [ClubSubmission.NAME]: { regex: /^[a-zA-Z ]+$/, required: true },
-  [ClubSubmission.ADDRESS_STREET]: {
-    regex: /^[a-zA-Z0-9\s,'-]*$/,
-    required: true,
-  },
-  [ClubSubmission.ADDRESS_HOUSENUMBER]: {
-    regex: /^[a-zA-Z0-9\s,'-]*$/,
-    required: true,
-  },
-  [ClubSubmission.ADDRESS_CITY]: { regex: /^[a-zA-Z ]+$/, required: true },
-  [ClubSubmission.ADDRESS_POSTAL]: {
-    regex: /^[a-zA-Z0-9 ]+$/,
-    required: true,
-  },
-  [ClubSubmission.CONTACTPERSONID]: { regex: /^[0-9]+$/, required: true },
-};
+import { checkFields } from "../../../modules/fieldsCheck";
+import { ClubSubmission, clubRegexPatterns } from "../../../modules/club";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -88,7 +62,6 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     };
 
     await env.CLUBS.put(clubIdKey, JSON.stringify(data));
-
     await searchKeyChecker(env.CLUBS, clubIdKey, `name:${name}`);
 
     return new Response(
