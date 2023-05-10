@@ -1,5 +1,6 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent, useState } from "react";
+import { clubRegexPatterns } from "../modules/club";
 
 type AddClubModalData = {
   addModalOpen: boolean;
@@ -31,6 +32,10 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
 
     Object.keys(formValues).forEach((formValueKey) => {
       data.append(formValueKey, formValues[formValueKey]);
+
+      const regexPattern = clubRegexPatterns[formValueKey].regex;
+      //TODO add error box handling
+      if (regexPattern && !formValues[formValueKey].match(regexPattern)) return;
     });
 
     await fetch("/api/clubs", {
