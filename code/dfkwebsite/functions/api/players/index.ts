@@ -1,5 +1,8 @@
 import { Player } from "../../../types/general";
 import { PagesEnv } from "../env";
+import { getParams, searchKeyChecker } from "../../../modules/general";
+import { checkFields } from "../../../modules/fieldsCheck";
+import { playerRegexPatterns } from "../../../modules/player";
 
 export enum PlayerSubmission {
   FIRSTNAME = "firstname",
@@ -13,10 +16,16 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
   env,
 }) => {
   try {
-    const players = await env.PLAYER.list({limit: 100});
+    const params = getParams(request.url);
+
+    const players = await env.PLAYERS.list({
+      limit: params.limit,
+      cursor: params.cursor,
+      prefix: "id:",
+    });
 
     let playersMapped = players.keys.map(async (players) => {
-      return JSON.parse(await env.PLAYER.get(players.name));
+      return JSON.parse(await env.PLAYERS.get(players.name));
     });
 
     return new Response(JSON.stringify(await Promise.all(playersMapped)), {
@@ -34,56 +43,96 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 };
 
 export const onRequestPost: PagesFunction<PagesEnv> = async ({
+    request,
+    env,
+  }) => {
+    try {
+      let formData = await request.formData();
+  
+      checkFields(formData, playerRegexPatterns);
+  
+      const firstname = formData.get(PlayerSubmission.FIRSTNAME);
+  
+      const playerIdKey = `id:${Date.now()}`;
+  
+      let data: Player = {
+        playerID: playerIdKey,
+        firstName: firstname,
+        lastName: formData.get(PlayerSubmission.LASTNAME),
+        ...(formData.has(PlayerSubmission.PHONE) && {
+            phone: formData.get(PlayerSubmission.PHONE),
+          }),
+        ...(formData.has(PlayerSubmission.ALLOWED) && {
+            allowedToPlay: Boolean(formData.get(PlayerSubmission.ALLOWED)),
+          }),
+      };
+  
+      await env.PLAYERS.put(playerIdKey, JSON.stringify(data));
+      await searchKeyChecker(env.PLAYERS, playerIdKey, `name:${firstname}`);
+  
+      return new Response(
+        JSON.stringify({ message: "Player added successfully." }),
+        { status: 200, headers: { "content-type": "application/json" } }
+      );
+    } catch (e) {
+      return new Response(JSON.stringify({ error: e.message }), {
+        status: 500,
+        headers: { "content-type": "application/json" },
+      });
+    }
+  };
+
+export const onRequestPut: PagesFunction<PagesEnv> = async ({
   request,
   env,
 }) => {
   try {
-    if (
-      request.headers.get("Content-Type") &&
-      !request.headers.get("Content-Type").includes("multipart/form-data")
-    ) {
-      throw new Error("Content-Type must be multipart/form-data");
-    }
-
     const formData = await request.formData();
 
-    const requiredFields = [
-      PlayerSubmission.FIRSTNAME,
-      PlayerSubmission.LASTNAME,
-      PlayerSubmission.PHONE,
-      PlayerSubmission.ALLOWED,
-    ];
+    const params = getParams(request.url);
 
-    for (const requiredField of requiredFields) {
-      if (!formData.has(requiredField)) {
-        throw new Error(`${requiredField} was not provided`);
-      }
-    }
+    const players = await env.PLAYERS.list({
+      limit: params.limit,
+      cursor: params.cursor,
+    });
 
-    const id = formData
-      .get(PlayerSubmission.FIRSTNAME)
-      .toLowerCase()
-      .replace(/ /g, "-");
+    // Update each player using the form data
+    const updates = players.keys.map(async (player) => {
+      const playerData: Player = JSON.parse(await env.PLAYERS.get(player.name));
 
-    const data: Player = {
-      playerID: id,
-      firstName: formData.get(PlayerSubmission.FIRSTNAME),
-      lastName: formData.get(PlayerSubmission.LASTNAME),
-      phone: formData.get(PlayerSubmission.PHONE),
-      allowedToPlay: Boolean(formData.get(PlayerSubmission.ALLOWED)),
+      const data: Player = {
+        playerID: playerData.playerID,
+        firstName: formData.has(PlayerSubmission.FIRSTNAME)
+          ? formData.get(PlayerSubmission.FIRSTNAME)
+          : playerData.firstName,
+        lastName: formData.has(PlayerSubmission.LASTNAME)
+          ? formData.get(PlayerSubmission.LASTNAME)
+          : playerData.lastName,
+      };
+
+      // Update the player data in the KV store
+      await env.PLAYERS.put(player.name, JSON.stringify(data));
+    });
+
+    // Wait for all updates to complete
+    await Promise.all(updates);
+
+    const responseBody = {
+      message: "Players updated successfully.",
+      status: 200,
     };
 
-    await env.PLAYER.put(id, JSON.stringify(data));
-
-    return new Response("Succesfully created player object", {
-      status: 201,
+    return new Response(JSON.stringify(responseBody), {
+      headers: { "Content-Type": "application/json" },
     });
   } catch (e) {
-    if (e instanceof Error) {
-      return new Response(e.message);
-    }
-    return new Response("Something went wrong", {
-      status: 500,
+    const errorBody = {
+      message: e instanceof Error ? e.message : "Internal server error.",
+      status: e instanceof Error ? 500 : 400,
+    };
+
+    return new Response(JSON.stringify(errorBody), {
+      headers: { "Content-Type": "application/json" },
     });
   }
 };
