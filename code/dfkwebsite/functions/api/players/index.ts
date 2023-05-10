@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { Player } from "../../../types/general";
 import { PagesEnv } from "../env";
 import { getParams, searchKeyChecker } from "../../../modules/general";
@@ -43,44 +44,48 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 };
 
 export const onRequestPost: PagesFunction<PagesEnv> = async ({
-    request,
-    env,
-  }) => {
-    try {
-      let formData = await request.formData();
-  
-      checkFields(formData, playerRegexPatterns);
-  
-      const firstname = formData.get(PlayerSubmission.FIRSTNAME);
-  
-      const playerIdKey = `id:${Date.now()}`;
-  
-      let data: Player = {
-        playerID: playerIdKey,
-        firstName: firstname,
-        lastName: formData.get(PlayerSubmission.LASTNAME),
-        ...(formData.has(PlayerSubmission.PHONE) && {
-            phone: formData.get(PlayerSubmission.PHONE),
-          }),
-        ...(formData.has(PlayerSubmission.ALLOWED) && {
-            allowedToPlay: Boolean(formData.get(PlayerSubmission.ALLOWED)),
-          }),
-      };
-  
-      await env.PLAYERS.put(playerIdKey, JSON.stringify(data));
-      await searchKeyChecker(env.PLAYERS, playerIdKey, `name:${firstname}`);
-  
-      return new Response(
-        JSON.stringify({ message: "Player added successfully." }),
-        { status: 200, headers: { "content-type": "application/json" } }
-      );
-    } catch (e) {
-      return new Response(JSON.stringify({ error: e.message }), {
-        status: 500,
-        headers: { "content-type": "application/json" },
-      });
-    }
-  };
+  request,
+  env,
+}) => {
+  try {
+    let formData = await request.formData();
+
+    checkFields(formData, playerRegexPatterns);
+
+    let firstName = formData.get(PlayerSubmission.FIRSTNAME);
+    let lastName = formData.get(PlayerSubmission.LASTNAME);
+
+    let indexKey = `name:${firstName}:${lastName}`;
+
+    // ID will be random, uuidv4() generates a random UUID
+    const playerIdKey = `id:${uuidv4()}`;
+
+    let data: Player = {
+      playerID: playerIdKey,
+      firstName: formData.get(PlayerSubmission.FIRSTNAME),
+      lastName: formData.get(PlayerSubmission.LASTNAME),
+      ...(formData.has(PlayerSubmission.PHONE) && {
+        phone: formData.get(PlayerSubmission.PHONE),
+      }),
+      ...(formData.has(PlayerSubmission.ALLOWED) && {
+        allowedToPlay: Boolean(formData.get(PlayerSubmission.ALLOWED)),
+      }),
+    };
+
+    await env.PLAYERS.put(playerIdKey, JSON.stringify(data));
+    await searchKeyChecker(env.PLAYERS, playerIdKey, indexKey);
+
+    return new Response(
+      JSON.stringify({ message: "Player added successfully." }),
+      { status: 200, headers: { "content-type": "application/json" } }
+    );
+  } catch (e) {
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
+  }
+};
 
 export const onRequestPut: PagesFunction<PagesEnv> = async ({
   request,
