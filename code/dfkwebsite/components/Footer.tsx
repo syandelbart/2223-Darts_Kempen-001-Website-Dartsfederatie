@@ -37,7 +37,7 @@ const Footer: FunctionComponent = () => {
 
       <div className="flex flex-col md:flex-row items-center justify-between text-1xl mt-16 font-medium">
         <p>Darts Federatie Kempen &copy; {new Date().getFullYear()}</p>
-        <p>Gemaakt door <Link href={"/"} className="hover:text-accent">Barry</Link> en <Link href={"/"} className="hover:text-accent">Dekkers</Link></p>
+        <p>Gemaakt door <Link href="https://syandelbart.be" className="hover:text-accent" target="_blank">Syan Delbart</Link> en <Link href="https://bryandeckers.com" className="hover:text-accent" target="_blank">Bryan Deckers</Link></p>
       </div>
     </footer>
   );
