@@ -1,6 +1,5 @@
 import { managementData } from "./components/ManagementCard";
 import { teamData } from "./components/Team";
-import { News, Player } from "./types/general";
 
 let teams: Array<teamData> = [
   {
