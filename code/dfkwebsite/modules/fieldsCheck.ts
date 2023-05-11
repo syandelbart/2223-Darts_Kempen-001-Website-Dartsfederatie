@@ -20,8 +20,7 @@ export const checkFields = (
     if (
       value.regex &&
       formData.has(field) &&
-      !formData.get(field)?.toString().match(value.regex) &&
-      formData.get(field)?.toString().length !== 0
+      !formData.get(field)?.toString().match(value.regex)
     )
       throw new Error(`Field "${field}" does not match the required pattern`);
   }
