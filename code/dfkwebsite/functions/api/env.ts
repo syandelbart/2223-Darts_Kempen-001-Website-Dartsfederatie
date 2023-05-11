@@ -6,6 +6,6 @@ export interface PagesEnv {
     COMPETITION: KVNamespace;
     COMPETITION_SEASON: KVNamespace;
     FINE: KVNamespace;
-    TEAM: KVNamespace;
+    TEAMS: KVNamespace;
     GAME: KVNamespace;
 }
