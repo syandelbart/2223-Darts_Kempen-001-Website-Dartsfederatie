@@ -21,8 +21,6 @@ export type News = {
   text: string;
 };
 
-
-
 export type Team = {
   teamID: string;
   name: string;
