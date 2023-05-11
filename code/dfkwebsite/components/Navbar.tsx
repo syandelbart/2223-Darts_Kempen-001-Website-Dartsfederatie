@@ -29,7 +29,7 @@ const routes = [
         href: "overzicht/bestuur",
         title: "Bestuur",
       },
-    ]
+    ],
   },
   {
     href: "info",
@@ -46,9 +46,9 @@ const routes = [
       {
         href: "info/inschrijvingen",
         title: "Inschrijvingen",
-      }
-    ]
-  }, 
+      },
+    ],
+  },
   {
     href: "competitie",
     title: "Competitie",
@@ -64,20 +64,20 @@ const routes = [
       {
         href: "competitie/individueleranking",
         title: "Individuele ranking",
-      }
-    ]
+      },
+    ],
   },
   {
     href: "contact",
     title: "Contact",
   },
-]
+];
 
 // Functionaliteit toevoegen van dropdown optie
-const Navbar : FunctionComponent = () => {
+const Navbar: FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="px-10 lg:px-20 py-5 flex flex-wrap justify-center lg:justify-between items-center bg-nav-background">
+    <nav className="px-10 lg:px-20 pt-5 flex flex-wrap justify-center lg:justify-between items-center">
       <Link href={"/"} className="w-3/4 lg:w-auto">
         <Image
           src={dfkLogo}
@@ -97,16 +97,20 @@ const Navbar : FunctionComponent = () => {
           isOpen ? "flex" : "hidden"
         } mt-10 lg:mt-0 lg:flex flex-col lg:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center`}
       >
-        {
-          routes.map((route, index) => {
-            return <NavItem href={route.href} title={route.title} dropdown = {route.dropdown} key = {index} /> 
-
-          })
-        }
+        {routes.map((route, index) => {
+          return (
+            <NavItem
+              href={route.href}
+              title={route.title}
+              dropdown={route.dropdown}
+              key={index}
+            />
+          );
+        })}
         <ProfileMenu />
       </ul>
     </nav>
   );
-}
+};
 
 export default Navbar;
