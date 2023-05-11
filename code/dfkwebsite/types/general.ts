@@ -29,6 +29,7 @@ export type Player = {
   teams?: Team[];
   account?: Account;
   fines?: Fine[];
+  deleted?: boolean;
 };
 
 export type Team = {
