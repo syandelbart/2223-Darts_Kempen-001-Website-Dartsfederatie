@@ -1,11 +1,7 @@
-import { Team, Club, CLASSIFICATION } from "../../../types/general";
 import { PagesEnv } from "../env";
+import { TeamSubmission } from "../../../modules/team";
 
-enum TeamSubmission {
-  NAME = "name",
-  CLUB = "club",
-  CLASSIFICATION = "classification",
-}
+
 
 export const onRequestPost: PagesFunction<PagesEnv> = async ({
   request,

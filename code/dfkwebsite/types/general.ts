@@ -1,4 +1,5 @@
 import { Club } from "./club";
+import { Team } from "./team";
 
 export enum TROPHY {
   GOLD = 0,
@@ -28,18 +29,6 @@ export type Player = {
   allowedToPlay?: boolean;
   teams?: Team[];
   account?: Account;
-  fines?: Fine[];
-};
-
-export type Team = {
-  teamID: string;
-  name: string;
-  captainID?: number;
-  classification: CLASSIFICATION;
-  captain?: Player;
-  players?: Player[];
-  club: Club;
-  games?: Game[];
   fines?: Fine[];
 };
 
