@@ -11,8 +11,8 @@ const Contact: NextPage = () => {
       <h2 className="text-4xl font-semibold text-white my-10">FAQ</h2>
 
       <div className="flex flex-col gap-5">
-        <Faq question="testquestion" answer="testanswer" />
-        <Faq question="testquestion" answer="testanswer" />
+        <Faq question="Vraag" answer="Antwoord" />
+        <Faq question="Vraag" answer="Antwoord" />
       </div>
 
       <div className="text-white my-20">
