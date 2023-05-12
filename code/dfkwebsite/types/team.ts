@@ -1,5 +1,5 @@
-import { Club } from "./club";
-import { CLASSIFICATION, Fine, Game, Player } from "./general";
+import { CLASSIFICATION, Fine, Game } from "./general";
+import { Player } from "./player";
 
 export type Team = {
   teamID: string;
@@ -8,9 +8,10 @@ export type Team = {
   classification: CLASSIFICATION;
   captain?: Player;
   players?: Player[];
-  club: Club;
+  clubID: number;
   games?: Game[];
   fines?: Fine[];
+  deleted?: boolean;
 };
 
 export interface TeamFront extends Team {}

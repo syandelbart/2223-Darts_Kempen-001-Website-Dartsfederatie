@@ -2,7 +2,7 @@ import { fieldInformation } from "./fieldsCheck";
 
 export enum TeamSubmission {
   NAME = "name",
-  CLUB = "club",
+  CLUB = "club", // TODO: change to clubID
   CLASSIFICATION = "classification",
 }
 
