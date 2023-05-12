@@ -1,4 +1,5 @@
-import { Address, Player, Team, Fine } from "./general";
+import { Address, Team, Fine } from "./general";
+import { Player } from "./player";
 
 export type Club = {
   clubID: string;

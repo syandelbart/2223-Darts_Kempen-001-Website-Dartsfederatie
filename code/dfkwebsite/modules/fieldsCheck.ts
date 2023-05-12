@@ -9,7 +9,7 @@ export const checkFields = (
 ) => {
   const fields = Object.keys(fieldsInformation);
 
-  for (const field in fields) {
+  for (const field of fields) {
     const value = fieldsInformation[field];
 
     // If value is required and formData does not contain the field, error
