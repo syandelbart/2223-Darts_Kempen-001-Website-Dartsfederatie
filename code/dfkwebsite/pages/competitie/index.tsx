@@ -1,12 +1,16 @@
 import { NextPage } from "next";
 import Selectie from "../../components/Selection";
 
-
-const Competitie : NextPage = () => {
+const Competitie: NextPage = () => {
   return (
     <div>
       <h1 className="text-6xl mb-20 text-white font-bold">Competitie</h1>
       <div className="flex gap-20">
+        <Selectie
+          href="/competitie/beheer"
+          title="beheer competities"
+          icon="mdi:calculator"
+        />
         <Selectie
           href="/competitie/speeldagen"
           title="speeldagen"
@@ -25,6 +29,6 @@ const Competitie : NextPage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Competitie;
