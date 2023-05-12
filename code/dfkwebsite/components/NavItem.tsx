@@ -14,7 +14,7 @@ export default function NavItem(props: MyProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <li
-      className=" text-[#fff] xl:text-xl relative hover:children:visible w-full py-1 px-10 md:px-0"
+      className=" text-[#fff] xl:text-xl relative hover:children:visible w-full py-1 px-10 lg:px-0"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >

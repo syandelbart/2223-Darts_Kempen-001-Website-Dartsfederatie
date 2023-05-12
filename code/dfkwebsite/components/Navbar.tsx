@@ -84,7 +84,7 @@ const Navbar: FunctionComponent = () => {
     <nav className="px-10 lg:px-20 py-5 flex flex-wrap justify-between items-center bg-nav-background relative">
       <Icon
         icon="mdi:hamburger-menu"
-        className="md:hidden text-6xl text-white order-0 md:order-1"
+        className="lg:hidden text-6xl text-white order-0 lg:order-1"
         onClick={() => setIsOpen(!isOpen)}
       />
       <Link href={"/"}>
@@ -93,7 +93,7 @@ const Navbar: FunctionComponent = () => {
           alt="dfk logo"
           width={100}
           height={100}
-          className="aspect-square h-16 sm:h-full object-contain order-1 md:order-0"
+          className="aspect-square h-16 sm:h-full object-contain order-1 lg:order-0"
           loading="eager"
         />
       </Link>
@@ -101,7 +101,7 @@ const Navbar: FunctionComponent = () => {
       <ul
         className={`${
           isOpen ? "flex" : "hidden"
-        } lg:flex flex-col md:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center absolute top-full left-0 py-5 z-10  bg-nav-background border-t-2 border-b-2 md:border-none md:relative`}
+        } lg:flex flex-col lg:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center absolute top-full left-0 py-5 z-10  bg-nav-background border-t-2 border-b-2 lg:border-none lg:relative`}
       >
         {routes.map((route, index) => {
           return (
