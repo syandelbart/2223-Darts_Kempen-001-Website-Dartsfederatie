@@ -1,5 +1,5 @@
 import { Club } from "./club";
-import { Team } from "./team";
+import { Competition, Game } from "./competition";
 import { Player } from "./player";
 
 export enum TROPHY {
@@ -20,6 +20,18 @@ export type News = {
   description: string;
   date: number;
   text: string;
+};
+
+export type Team = {
+  teamID: string;
+  name: string;
+  captainID?: number;
+  classification: CLASSIFICATION;
+  captain?: Player;
+  players?: Player[];
+  club: Club;
+  games?: Game[];
+  fines?: Fine[];
 };
 
 export enum CLASSIFICATION {
@@ -48,49 +60,6 @@ export type Address = {
   postalCode: string;
 };
 
-export type Competition = {
-  competitionID: string;
-  name: string;
-  type: COMPETITION_TYPE;
-  season: CompetitionSeason;
-  playerTeams: PlayerTeam[];
-  teamClubs: TeamClub[];
-  playdays: Playday[];
-};
-
-export enum COMPETITION_TYPE {
-  COMPETITION = "COMPETITION",
-  TROPHY = "TROPHY",
-}
-
-export type CompetitionSeason = {
-  startDate: number;
-  endDate: number;
-};
-
-export type Playday = {
-  playdayID: string;
-  name: string;
-  date: number;
-  competitionID: number;
-  competition: Competition;
-  games: Game[];
-};
-
-export type Game = {
-  gameID: string;
-  playdayID: number;
-  homeTeam?: number;
-  awayTeam?: number;
-  notes: string;
-  filledDate: number;
-  permaSaved: boolean;
-  playday: Playday;
-  homeTeamEntity?: Team;
-  awayTeamEntity?: Team;
-  gameSeries: GameSeries;
-};
-
 export type Account = {
   accountID: string;
   playerID: number;
@@ -98,32 +67,6 @@ export type Account = {
   email: string;
   password: string;
   player: Player;
-};
-
-export type GameSeries = {
-  gameSeriesID: string;
-  gameID: number;
-  game: Game;
-  gameRows: GameRow[];
-};
-
-export type GameRow = {
-  gameRowID: string;
-  seriesID: number;
-  bestA: number;
-  bestB: number;
-  series: GameSeries;
-  gameScores: GameScore[];
-};
-
-export type GameScore = {
-  gameScoreID: string;
-  playerID: number;
-  gameRowID: number;
-  oneeighty: number;
-  kleg: number;
-  hu: number;
-  gameRow: GameRow;
 };
 
 export enum ENTITY_TYPE {
