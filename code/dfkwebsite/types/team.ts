@@ -1,4 +1,5 @@
-import { CLASSIFICATION, Fine, Game } from "./general";
+import { Game } from "./competition";
+import { CLASSIFICATION, Fine } from "./general";
 import { Player } from "./player";
 
 export type Team = {
