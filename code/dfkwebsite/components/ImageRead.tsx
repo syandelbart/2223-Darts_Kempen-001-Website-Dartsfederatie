@@ -13,19 +13,19 @@ type imageData = {
 
 const ImageRead: FunctionComponent<imageData> = (imageData: imageData) => {
   return (
-    <div className="flex flex-row w-full flex-wrap gap-5 sm:gap-20 mb-10">
-      <Image
-        src={dfkLogo}
-        alt="test"
-        className={`bg-light-gray object-cover max-w-full  relative overflow-hidden aspect-video ${
-          imageData.order ? "md:order-1" : "md:order-0"
-        }`}
-        height={400}
-        width={700}
-      />
+    <div className="grid w-full grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-20 mb-10">
+      <div className={`${imageData.order ? "lg:order-1" : "lg:order-0"}`}>
+        <Image
+          src={dfkLogo}
+          alt="test"
+          className={`bg-light-gray object-cover max-w-full relative overflow-hidden aspect-video `}
+          height={400}
+          width={700}
+        />
+      </div>
       <div
-        className={`flex flex-col flex-grow text-white ${
-          imageData.order ? "order-0" : "order-1 text-left"
+        className={`flex flex-col text-white ${
+          imageData.order ? "lg:order-0" : "lg:order-1 lg:text-left"
         }`}
       >
         <h1 className=" font-extrabold text-4xl sm:text-5xl mb-1">
@@ -38,10 +38,10 @@ const ImageRead: FunctionComponent<imageData> = (imageData: imageData) => {
             year: "numeric",
           })}
         </h6>
-        <p className="text-xl sm:text-2xl">{imageData.summary}</p>
+        <p className="text-xl lg:text-2xl ">{imageData.summary}</p>
 
         <Link
-          className="text-black w-fit text-xl sm:text-2xl py-4 sm:py-6 px-6 sm:px-10 mt-4 sm:mt-12 bg-blue-50 hover:bg-gray-300"
+          className="text-black w-fit text-xl lg:text-2xl py-4 lg:py-6 px-6 lg:px-10 mt-4 lg:mt-12 bg-blue-50 hover:bg-gray-300"
           href={`/info/nieuws/${imageData.title
             .toLowerCase()
             .replace(" ", "-")}`}
