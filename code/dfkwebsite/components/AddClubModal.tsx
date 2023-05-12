@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent, useState } from "react";
 import { clubRegexPatterns } from "../modules/club";
+import * as formHandler from "../modules/formHandler";
 
 type AddClubModalData = {
   addModalOpen: boolean;
@@ -20,33 +21,16 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   });
 
   const handleChange = (event: any) => {
-    const { name, value } = event.target;
-
-    setFormValues({ ...formValues, [name]: value });
+    formHandler.handleChange(event, setFormValues, formValues);
   };
 
   const handleSubmit = async (event: any) => {
-    // Do something with formValues, such as send it to a server
-
-    const data = new FormData();
-
-    Object.keys(formValues).forEach((formValueKey) => {
-      data.append(formValueKey, formValues[formValueKey]);
-
-      const regexPattern = clubRegexPatterns[formValueKey].regex;
-      //TODO add error box handling
-      if (regexPattern && !formValues[formValueKey].match(regexPattern)) return;
-    });
-
-    await fetch("/api/clubs", {
-      body: data,
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then(async (response) => {
-        //dit is uw response doe er iets mee
-      })
-      .catch((err) => console.error(err));
+    formHandler.handleSubmit(
+      event,
+      formValues,
+      clubRegexPatterns,
+      "/api/clubs"
+    );
   };
 
   return (
