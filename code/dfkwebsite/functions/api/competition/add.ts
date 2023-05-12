@@ -42,9 +42,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
         startDate: 0,
         endDate: 0,
       },
-      playerTeams: [],
-      teamClubs: [],
-      playdays: [],
+      teamsID: formData.get("teams").split(","),
     };
 
     let indexKey = `name:${name}`;
