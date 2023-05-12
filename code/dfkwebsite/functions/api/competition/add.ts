@@ -1,4 +1,4 @@
-import { Competition, COMPETITION_TYPE } from "../../../types/general";
+import { COMPETITION_TYPE, Competition } from "../../../types/competition";
 import { PagesEnv } from "../env";
 
 enum CompetitionSubmission {
@@ -40,11 +40,11 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       // to be checked
       season: {
         startDate: 0,
-        endDate: 0
+        endDate: 0,
       },
       playerTeams: [],
       teamClubs: [],
-      playdays: []
+      playdays: [],
     };
 
     let indexKey = `name:${name}`;
