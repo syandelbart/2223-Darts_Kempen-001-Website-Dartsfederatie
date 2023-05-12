@@ -56,3 +56,18 @@ export const searchKeyChecker = async (
     await namespace.put(searchKeyToPushTo, JSON.stringify(existingValue));
   }
 };
+
+export const getRecordByIdOrError = async (id: string, namespace: any) => { // TODO: namespace type
+  const record = await namespace.get(id);
+
+  if (!record) {
+    return new Response(
+      JSON.stringify({ error: `Record with id: ${id} not found` }),
+      {
+        status: 404,
+        headers: { "content-type": "application/json" },
+      }
+    );
+  }
+  return record;
+};

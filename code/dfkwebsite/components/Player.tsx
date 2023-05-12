@@ -1,10 +1,10 @@
 import { Dispatch, FunctionComponent, SetStateAction } from "react";
-import { Player } from "../types/general";
 
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
+import { Player } from "../types/player";
 
 interface playerDataInterface {
   playerData: Player;

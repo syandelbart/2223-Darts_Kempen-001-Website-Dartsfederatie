@@ -1,6 +1,6 @@
 export interface PagesEnv {
     NEWS: KVNamespace;
-    PLAYER: KVNamespace;
+    PLAYERS: KVNamespace;
     CLUBS: KVNamespace;
     ADDRESS: KVNamespace;
     COMPETITION: KVNamespace;
