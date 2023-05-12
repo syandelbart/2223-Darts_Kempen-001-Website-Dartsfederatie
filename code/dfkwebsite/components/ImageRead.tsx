@@ -13,7 +13,7 @@ type imageData = {
 
 const ImageRead: FunctionComponent<imageData> = (imageData: imageData) => {
   return (
-    <div className="flex flex-row w-full flex-wrap gap-20 mb-10">
+    <div className="flex flex-row w-full flex-wrap gap-5 sm:gap-20 mb-10">
       <Image
         src={dfkLogo}
         alt="test"
@@ -28,14 +28,20 @@ const ImageRead: FunctionComponent<imageData> = (imageData: imageData) => {
           imageData.order ? "order-0" : "order-1 text-left"
         }`}
       >
-        <h1 className=" font-extrabold text-5xl mb-1">{imageData.title}</h1>
+        <h1 className=" font-extrabold text-4xl sm:text-5xl mb-1">
+          {imageData.title}
+        </h1>
         <h6 className="text-white text-sm mb-6">
-          {new Date(imageData.date).toLocaleDateString()}
+          {new Date(imageData.date).toLocaleDateString("nl-BE", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
         </h6>
-        <p className="text-2xl">{imageData.summary}</p>
+        <p className="text-xl sm:text-2xl">{imageData.summary}</p>
 
         <Link
-          className="text-black w-fit text-2xl py-6 px-10 mt-12 bg-blue-50 hover:bg-gray-300"
+          className="text-black w-fit text-xl sm:text-2xl py-4 sm:py-6 px-6 sm:px-10 mt-4 sm:mt-12 bg-blue-50 hover:bg-gray-300"
           href={`/info/nieuws/${imageData.title
             .toLowerCase()
             .replace(" ", "-")}`}
