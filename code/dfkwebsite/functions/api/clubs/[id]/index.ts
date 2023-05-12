@@ -1,4 +1,5 @@
-import { getClubById, ClubSubmission } from "../../../../modules/club";
+import { ClubSubmission } from "../../../../modules/club";
+import { getRecordByIdOrError } from "../../../../modules/general";
 import { Club } from "../../../../types/club";
 import { PagesEnv } from "../../env";
 
@@ -9,7 +10,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const clubId = params.id.toString();
-    const club = JSON.parse(await getClubById(clubId, env.CLUBS));
+    const club = JSON.parse(await getRecordByIdOrError(clubId, env.CLUBS));
 
     return new Response(JSON.stringify(club), {
       headers: {
@@ -31,9 +32,9 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
-    
+
     const clubId = params.id.toString();
-    const club = await getClubById(clubId, env.CLUBS);
+    const club = await getRecordByIdOrError(clubId, env.CLUBS);
 
     const clubData: Club = JSON.parse(club);
 
@@ -91,7 +92,7 @@ export const onRequestDelete: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const clubId = params.id.toString();
-    const club = await getClubById(clubId, env.CLUBS);
+    const club = await getRecordByIdOrError(clubId, env.CLUBS);
 
     const clubData: Club = JSON.parse(club);
 

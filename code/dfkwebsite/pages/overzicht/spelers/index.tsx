@@ -6,7 +6,7 @@ import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import PlayerComponent from "../../../components/Player";
 import TeamModal from "../../../components/TeamModal";
-import { Player } from "../../../types/general";
+import { Player } from "../../../types/player";
 
 const Spelers: NextPage = () => {
   const [players, setPlayers] = useState<Array<Player>>([]);
@@ -16,7 +16,7 @@ const Spelers: NextPage = () => {
   let results = 0;
 
   useEffect(() => {
-    fetch(`/api/player/get`)
+    fetch(`/api/players`)
       .then((players) => players.json())
       .then((parsedPlayers) => setPlayers(parsedPlayers));
   }, []);
