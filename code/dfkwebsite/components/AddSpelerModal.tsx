@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent, useState } from "react";
 import { playerRegexPatterns } from "../modules/player";
+import * as formHandler from "../modules/formHandler";
 
 type AddSpelerModalData = {
   addModalOpen: boolean;
@@ -11,43 +12,25 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
   props: AddSpelerModalData
 ) => {
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({
-    name: "",
-    address_city: "",
-    address_street: "",
-    address_housenumber: "",
-    address_postal: "",
-    contactpersonid: "",
+    firstname: "",
+    lastname: "",
+    phone: "",
+    allowed: "",
   });
 
   const handleChange = (event: any) => {
-    const { name, value } = event.target;
-
-    setFormValues({ ...formValues, [name]: value });
+    formHandler.handleChange(event, setFormValues, formValues);
   };
 
   const handleSubmit = async (event: any) => {
-    // Do something with formValues, such as send it to a server
-
-    const data = new FormData();
-
-    Object.keys(formValues).forEach((formValueKey) => {
-      data.append(formValueKey, formValues[formValueKey]);
-
-      const regexPattern = playerRegexPatterns[formValueKey].regex;
-      //TODO add error box handling
-      if (regexPattern && !formValues[formValueKey].match(regexPattern)) return;
-    });
-
-    await fetch("/api/players", {
-      body: data,
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then(async (response) => {
-        //dit is uw response doe er iets mee
-      })
-      .catch((err) => console.error(err));
+    formHandler.handleSubmit(
+      event,
+      formValues,
+      playerRegexPatterns,
+      "/api/players"
+    );
   };
+
   return (
     <div className={`${props.addModalOpen ? "" : "hidden"}`}>
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50"></div>
