@@ -23,10 +23,10 @@ export type News = {
 };
 
 export enum CLASSIFICATION {
-  PROVINCIAAL = "PROVINCIAAL",
-  GEWEST_1 = "GEWEST 1",
-  GEWEST_2 = "GEWEST 2",
-  GEWEST_3 = "GEWEST 3",
+    PROVINCIAAL = "PROVINCIAAL",
+    GEWEST_1 = "GEWEST 1",
+    GEWEST_2 = "GEWEST 2",
+    GEWEST_3 = "GEWEST 3",
 }
 
 export type PlayerTeam = {
