@@ -1,6 +1,6 @@
 import { getRecordByIdOrError } from "../../../../modules/general";
 import { PlayerSubmission } from "../../../../modules/player";
-import { Player } from "../../../../types/general";
+import { Player } from "../../../../types/player";
 import { PagesEnv } from "../../env";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
