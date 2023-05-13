@@ -5,11 +5,12 @@ export enum CompetitionSubmission {
   TYPE = "type",
   STARTDATE = "startdate",
   ENDDATE = "enddate",
+  AMOUNT_TEAMS = "amountteams",
   TEAMS = "teams",
 }
 
 export const competitionRegexPatterns: { [key: string]: fieldInformation } = {
-  [CompetitionSubmission.NAME]: { regex: /^[a-zA-Z ]+$/, required: true },
+  [CompetitionSubmission.NAME]: { regex: /^[a-zA-Z ]+$/, required: false },
   [CompetitionSubmission.TYPE]: {
     regex: /^\d+$/,
     required: true,
@@ -22,6 +23,6 @@ export const competitionRegexPatterns: { [key: string]: fieldInformation } = {
   },
   [CompetitionSubmission.TEAMS]: {
     regex: /^((id:(\d+)),)*(id:(\d+))$/,
-    required: true,
   },
+  [CompetitionSubmission.AMOUNT_TEAMS]: { regex: /^\d+$/ },
 };
