@@ -10,6 +10,10 @@ import ProfileMenu from "./ProfileMenu";
 
 const routes = [
   {
+    href: "/",
+    title: "Startpagina",
+  },
+  {
     href: "overzicht",
     title: "Overzicht",
     dropdown: [
@@ -29,7 +33,7 @@ const routes = [
         href: "overzicht/bestuur",
         title: "Bestuur",
       },
-    ]
+    ],
   },
   {
     href: "info",
@@ -46,9 +50,9 @@ const routes = [
       {
         href: "info/inschrijvingen",
         title: "Inschrijvingen",
-      }
-    ]
-  }, 
+      },
+    ],
+  },
   {
     href: "competitie",
     title: "Competitie",
@@ -64,49 +68,55 @@ const routes = [
       {
         href: "competitie/individueleranking",
         title: "Individuele ranking",
-      }
-    ]
+      },
+    ],
   },
   {
     href: "contact",
     title: "Contact",
   },
-]
+];
 
 // Functionaliteit toevoegen van dropdown optie
-const Navbar : FunctionComponent = () => {
+const Navbar: FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="px-10 lg:px-20 py-5 flex flex-wrap justify-center lg:justify-between items-center bg-nav-background">
-      <Link href={"/"} className="w-3/4 lg:w-auto">
+    <nav className="px-10 lg:px-20 py-5 flex flex-wrap justify-between items-center bg-nav-background relative">
+      <Icon
+        icon="mdi:hamburger-menu"
+        className="lg:hidden text-6xl text-white order-0 lg:order-1"
+        onClick={() => setIsOpen(!isOpen)}
+      />
+      <Link href={"/"}>
         <Image
           src={dfkLogo}
           alt="dfk logo"
-          width="100"
-          height="100"
+          width={100}
+          height={100}
+          className="aspect-square h-16 sm:h-full object-contain order-1 lg:order-0"
           loading="eager"
         />
       </Link>
-      <Icon
-        icon="mdi:hamburger-menu"
-        className="w-1/4 mt-10 lg:hidden text-6xl text-white"
-        onClick={() => setIsOpen(!isOpen)}
-      />
+
       <ul
         className={`${
           isOpen ? "flex" : "hidden"
-        } mt-10 lg:mt-0 lg:flex flex-col lg:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center`}
+        } lg:flex flex-col lg:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center absolute top-full left-0 py-5 z-10  bg-nav-background border-t-2 border-b-2 lg:border-none lg:relative`}
       >
-        {
-          routes.map((route, index) => {
-            return <NavItem href={route.href} title={route.title} dropdown = {route.dropdown} key = {index} /> 
-
-          })
-        }
-        <ProfileMenu />
+        {routes.map((route, index) => {
+          return (
+            <NavItem
+              href={route.href}
+              title={route.title}
+              dropdown={route.dropdown}
+              key={index}
+            />
+          );
+        })}
       </ul>
+      <ProfileMenu />
     </nav>
   );
-}
+};
 
 export default Navbar;
