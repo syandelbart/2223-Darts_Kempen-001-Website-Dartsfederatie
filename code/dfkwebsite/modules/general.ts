@@ -1,14 +1,20 @@
 const availableParams = [
   { name: "limit", regex: /^[0-9]+$/, castFunction: Number, default: 100 },
   { name: "cursor", regex: /^[a-zA-Z]*$/ },
+  { name: "competitionID" },
+  { name: "startdate" },
+  { name: "enddate" },
+  { name: "amountTeams", regex: /^[0-9]+$/, castFunction: Number },
 ];
-
 type urlParamsType = {
   limit?: number;
   cursor?: string;
+  competitionID?: string;
+  amountTeams?: number;
 };
 
 export const getParams = (url: string) => {
+  if (url[0] == "/") url = "https://www.placeholder.xyz/" + url;
   const urlObject = new URL(url);
   const data: { [key: string]: any } = {};
   availableParams.forEach((availableParam) => {
@@ -21,7 +27,7 @@ export const getParams = (url: string) => {
 
     // Assign value from the url since the parameter does exist
     const value = urlObject.searchParams.get(availableParam.name);
-    
+
     if (!value) return;
     // Could instead return an error if the regex does not match with the string
     if (availableParam.regex && !value.match(availableParam.regex)) return;
@@ -38,7 +44,7 @@ export const getParams = (url: string) => {
     }
   });
 
-  return data;
+  return data as urlParamsType;
 };
 
 export const searchKeyChecker = async (
@@ -57,7 +63,8 @@ export const searchKeyChecker = async (
   }
 };
 
-export const getRecordByIdOrError = async (id: string, namespace: any) => { // TODO: namespace type
+export const getRecordByIdOrError = async (id: string, namespace: any) => {
+  // TODO: namespace type
   const record = await namespace.get(id);
 
   if (!record) {
