@@ -1,5 +1,12 @@
 import { Team } from "./general";
 
+export enum CLASSIFICATION {
+  PROVINCIAAL = "PROVINCIAAL",
+  GEWEST_1 = "GEWEST 1",
+  GEWEST_2 = "GEWEST 2",
+  GEWEST_3 = "GEWEST 3",
+}
+
 export enum COMPETITION_TYPE {
   COMPETITION = "COMPETITION",
   TROPHY = "TROPHY",
@@ -9,6 +16,7 @@ export type Competition = {
   competitionID: string;
   name: string;
   type: COMPETITION_TYPE;
+  classification: CLASSIFICATION;
   season: {
     startDate: number;
     endDate: number;
