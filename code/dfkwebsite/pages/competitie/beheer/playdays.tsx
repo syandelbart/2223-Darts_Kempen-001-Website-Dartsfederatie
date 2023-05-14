@@ -1,12 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { NextPage } from "next";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
-import { Club } from "../../../types/club";
-import Modal from "../../../components/Modal";
-import DefaultInput from "../../../components/DefaultInput";
-import { CLASSIFICATION } from "../../../types/competition";
 import * as formHandler from "../../../modules/formHandler";
-import { competitionRegexPatterns } from "../../../modules/competition";
 import { useRouter } from "next/router";
 import { getParams } from "../../../modules/general";
 import teams from "../../../data";
