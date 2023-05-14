@@ -4,12 +4,12 @@ compatibility_date = "2023-03-13"
 
 kv_namespaces = [
   { binding = "NEWS", id = "86cdd1ce931747f897b9328306e0b30a", preview_id="86cdd1ce931747f897b9328306e0b30a" },
-  { binding = "PLAYER", id = "49d9874c79cf4d07a6ea3a58770915ea", preview_id="49d9874c79cf4d07a6ea3a58770915ea" },
+  { binding = "PLAYERS", id = "785bcbe5d8894158a0f2ea1b9877c694", preview_id="785bcbe5d8894158a0f2ea1b9877c694" },
 ]
 
 [env.prod]
 name = "dfkwebsite-prod"
 kv_namespaces = [
   { binding = "NEWS", id = "86cdd1ce931747f897b9328306e0b30a"},
-  { binding = "PLAYER", id = "49d9874c79cf4d07a6ea3a58770915ea"},
+  { binding = "PLAYERS", id = "785bcbe5d8894158a0f2ea1b9877c694"},
 ]

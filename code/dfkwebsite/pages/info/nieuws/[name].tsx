@@ -2,8 +2,6 @@ import ImageRead from "../../../components/ImageRead";
 import Image from "next/image";
 import Link from "next/link";
 import { NextPage } from "next";
-import news from "../../../data";
-import { News } from "../../../types/general";
 
 let posts = [
   {
@@ -55,37 +53,11 @@ let posts = [
 
 posts.sort((a, b) => b.date - a.date);
 
-export async function getStaticPaths() {
-  // Call an external API endpoint to get posts
-  const news: Array<News> = await fetch(
-    `
-    ${process.env.HOST}/api/news/get`
-  ).then((res) => (res.status == 200 ? res.json() : posts));
-
-  // Get the paths we want to pre-render based on posts
-  const paths = news.map((news) => ({
-    params: {
-      name: news.title.toLowerCase().replace(/ /g, "-"),
-      slug: news.title.toLowerCase().replace(/ /g, "-"),
-    },
-  }));
-  return { paths, fallback: "blocking" };
-}
-
-export async function getStaticProps() {
-  return {
-    props: {
-      news,
-    },
-  };
-}
-
 const Nieuws: NextPage = () => {
   return (
     <div>
       <h1
         className="text-6xl font-extrabold text-white mb-5"
-        // onClick={() => createNews()}
       >
         Nieuws
       </h1>

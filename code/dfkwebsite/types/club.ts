@@ -1,10 +1,13 @@
-import { Address, Player, Team, Fine } from "./general";
+import { Address, Fine } from "./general";
+import { Team } from "./team";
+import { Player } from "./player";
 
 export type Club = {
   clubID: string;
   name: string;
   address?: Address;
   contactPersonID: string;
+  deleted?: boolean;
 };
 
 export interface ClubFront extends Club {

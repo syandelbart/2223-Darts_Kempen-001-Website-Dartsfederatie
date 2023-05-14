@@ -1,23 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import Club from "../../../components/Club";
+import ClubCard from "../../../components/ClubCard";
 import ClubModal from "../../../components/ClubModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 
-import { clubs } from "../../../data";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
+import { Club } from "../../../types/club";
 
 const Clubs: NextPage = () => {
+  const [clubs, setClubs] = useState<Array<Club>>([]);
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
+
+  useEffect(() => {
+    fetch(`/api/clubs`)
+      .then((clubs) => clubs.json())
+      .then((parsedClubs) => setClubs(parsedClubs));
+  }, []);
   return (
     <div>
-      <AddClubModal addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
-      <OverzichtTopBar titleName="Clubs" search={search} setSearch={setSearch} addButtonName="club" addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
+      <AddClubModal
+        addModalOpen={addModalOpen}
+        setAddModalOpen={setAddModalOpen}
+      />
+      <OverzichtTopBar
+        titleName="Clubs"
+        search={search}
+        setSearch={setSearch}
+        addButtonName="club"
+        addModalOpen={addModalOpen}
+        setAddModalOpen={setAddModalOpen}
+      />
       <ClubModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <CardGrid>
         {clubs.length === 0 ? (
@@ -27,22 +44,18 @@ const Clubs: NextPage = () => {
         ) : (
           clubs
             .filter((club) => {
-              if(search == "" || club.clubnaam.toLowerCase().includes(search.toLowerCase())) return club;
+              if (
+                search == "" ||
+                club.name.toLowerCase().includes(search.toLowerCase())
+              )
+                return club;
               results++;
             })
             .map((club) => (
               <Card>
-                <Club
-                  clubData={club}
-                  setIsOpen={setIsOpen}
-                />
+                <ClubCard clubData={club} setIsOpen={setIsOpen} />
               </Card>
             ))
-        )}
-        {results === clubs.length && (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen clubs gevonden
-          </h1>
         )}
       </CardGrid>
     </div>

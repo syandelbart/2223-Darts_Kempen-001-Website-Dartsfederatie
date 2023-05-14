@@ -1,3 +1,7 @@
+import { Club } from "./club";
+import { Team } from "./team";
+import { Player } from "./player";
+
 export enum TROPHY {
   GOLD = 0,
   SILVER = 1,
@@ -18,46 +22,12 @@ export type News = {
   text: string;
 };
 
-export type Player = {
-  playerID: string;
-  firstName: string;
-  lastName: string;
-  phone?: string;
-  allowedToPlay?: boolean;
-  teams?: Team[];
-  account?: Account;
-  fines?: Fine[];
-};
-
-export type Team = {
-  teamID: string;
-  name: string;
-  captainID?: number;
-  classification: CLASSIFICATION;
-  captain?: Player;
-  players?: Player[];
-  club: Club;
-  games?: Game[];
-  fines?: Fine[];
-};
-
 export enum CLASSIFICATION {
-  PROVINCIAAL = "PROVINCIAAL",
-  GEWEST_1 = "GEWEST 1",
-  GEWEST_2 = "GEWEST 2",
-  GEWEST_3 = "GEWEST 3",
+    PROVINCIAAL = "PROVINCIAAL",
+    GEWEST_1 = "GEWEST 1",
+    GEWEST_2 = "GEWEST 2",
+    GEWEST_3 = "GEWEST 3",
 }
-
-export type Club = {
-  clubID: string;
-  name: string;
-  address?: Address;
-  contactPersonID: number;
-  locationName: string;
-  contactPerson: Player;
-  teams: Team[];
-  fines?: Fine[];
-};
 
 export type PlayerTeam = {
   id: string;
