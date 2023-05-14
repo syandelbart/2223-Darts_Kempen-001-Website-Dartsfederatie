@@ -22,18 +22,6 @@ export type News = {
   text: string;
 };
 
-export type Team = {
-  teamID: string;
-  name: string;
-  captainID?: number;
-  classification: CLASSIFICATION;
-  captain?: Player;
-  players?: Player[];
-  club: Club;
-  games?: Game[];
-  fines?: Fine[];
-};
-
 export type PlayerTeam = {
   id: string;
   playerID: string;
