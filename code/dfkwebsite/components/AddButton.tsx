@@ -1,10 +1,10 @@
 import { Icon } from "@iconify/react";
-import { FunctionComponent } from "react";
+import { Dispatch, FunctionComponent, SetStateAction } from "react";
 
 type buttonData = {
   name: string;
   addModalOpen?: boolean;
-  setAddModalOpen?: any;
+  setAddModalOpen?: Dispatch<SetStateAction<boolean>>;
 };
 
 const AddButton: FunctionComponent<buttonData> = ({
