@@ -18,6 +18,7 @@ const Clubs: NextPage = () => {
   const [search, setSearch] = useState("");
   const [addModalOpen, setAddModalOpen] = useState(false);
 
+  const [amountTeams, setAmountTeams] = useState<number>(0);
   const [tableData, setTableData] = useState<TableData[][]>([]);
 
   const handleAmountTeamsChange = (e: ChangeEvent<HTMLInputElement>): void => {
