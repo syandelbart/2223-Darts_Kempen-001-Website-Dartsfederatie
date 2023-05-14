@@ -1,6 +1,4 @@
-import { Icon } from "@iconify/react";
 import { ChangeEventHandler, FunctionComponent } from "react";
-import Modal from "./Modal";
 
 type DefaultInputData = {
   type?: string;
