@@ -8,4 +8,5 @@ export interface PagesEnv {
     FINE: KVNamespace;
     TEAMS: KVNamespace;
     GAME: KVNamespace;
+    MATCHES: KVNamespace;
 }
