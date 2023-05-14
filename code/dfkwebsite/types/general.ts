@@ -1,6 +1,6 @@
 import { Club } from "./club";
-import { CLASSIFICATION, Competition, Game } from "./competition";
 import { Player } from "./player";
+import { Team } from "./team";
 
 export enum TROPHY {
   GOLD = 0,
