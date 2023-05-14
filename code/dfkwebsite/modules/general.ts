@@ -11,6 +11,8 @@ type urlParamsType = {
   cursor?: string;
   competitionID?: string;
   amountTeams?: number;
+  startdate: string;
+  enddate: string;
 };
 
 export const getParams = (url: string) => {
