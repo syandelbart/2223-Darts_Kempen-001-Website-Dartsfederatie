@@ -5,7 +5,7 @@ const Overzicht: NextPage = () => {
   return (
     <div>
       <h1 className="text-6xl mb-20 text-white font-bold">Overzicht</h1>
-      <div className="flex gap-20">
+      <div className="grid grid-cols-2 lg:grid-cols-4 flew-wrap gap-20">
         <Selectie
           href="/overzicht/clubs"
           title="clubs"
