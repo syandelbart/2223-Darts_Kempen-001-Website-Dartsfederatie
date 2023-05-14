@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { NextPage } from "next";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
-import * as formHandler from "../../../modules/formHandler";
 import { useRouter } from "next/router";
 import { getParams } from "../../../modules/general";
 import teams from "../../../data";
@@ -9,7 +8,6 @@ import teams from "../../../data";
 interface TableData {
   team1: string;
   team2: string;
-  value: string;
 }
 
 const GeneratePlaydays: NextPage = () => {
@@ -46,7 +44,7 @@ const GeneratePlaydays: NextPage = () => {
   };
 
   const handleTableDataChange = (
-    e: ChangeEvent<HTMLInputElement>,
+    e: ChangeEvent<HTMLSelectElement>,
     rowIndex: number,
     columnIndex: number,
     field: "team1" | "team2"
@@ -59,12 +57,6 @@ const GeneratePlaydays: NextPage = () => {
 
     setTableData(tableD);
   };
-
-  const handleChange = (event: any) => {
-    formHandler.handleChange(event, setFormValues, formValues);
-  };
-
-  const handleSubmit = async (event: any) => {};
 
   useEffect(() => {
     setAmountTeams(Number(params.amountTeams));
