@@ -1,12 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import { NextPage } from "next";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
-import { Club } from "../../../types/club";
 import Modal from "../../../components/Modal";
 import DefaultInput from "../../../components/DefaultInput";
 import { CLASSIFICATION } from "../../../types/competition";
 import * as formHandler from "../../../modules/formHandler";
-import { competitionRegexPatterns } from "../../../modules/competition";
 import { useRouter } from "next/router";
 
 interface TableData {
@@ -18,7 +16,6 @@ interface TableData {
 const Clubs: NextPage = () => {
   const router = useRouter();
   const [search, setSearch] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
 
   const [tableData, setTableData] = useState<TableData[][]>([]);
