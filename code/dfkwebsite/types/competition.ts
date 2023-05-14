@@ -1,4 +1,4 @@
-import { Team } from "./general";
+import { Team } from "./team";
 
 export enum CLASSIFICATION {
   PROVINCIAAL = "PROVINCIAAL",
