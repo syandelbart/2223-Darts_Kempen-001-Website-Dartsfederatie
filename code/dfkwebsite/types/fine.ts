@@ -9,8 +9,12 @@ export type Fine = {
   amount: number;
   date: number;
   reason: string;
-  entity: Player | Team | Club;
+  paid?: boolean;
 };
+
+export interface FineFront extends Fine {
+  entity: Player | Team | Club;
+}
 
 export enum ENTITY_TYPE {
   PLAYER = "PLAYER",
