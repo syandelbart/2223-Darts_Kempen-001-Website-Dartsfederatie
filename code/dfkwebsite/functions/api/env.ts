@@ -10,4 +10,5 @@ export interface PagesEnv {
     GAME: KVNamespace;
     POSTS: KVNamespace;
     MATCHES: KVNamespace;
+    FINES: KVNamespace;
 }
