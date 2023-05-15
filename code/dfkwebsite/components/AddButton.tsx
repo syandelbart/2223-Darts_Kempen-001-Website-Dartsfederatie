@@ -21,7 +21,7 @@ const AddButton: FunctionComponent<buttonData> = ({
     >
       <Icon icon="fa6-solid:plus" className="text-2xl" />
       <p className="text-sm sm:text-lg whitespace-nowrap">Add {name}</p>
-    </p>
+    </div>
   );
 };
 
