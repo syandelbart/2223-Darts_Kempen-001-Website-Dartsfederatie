@@ -59,7 +59,7 @@ export const searchKeyChecker = async (
 
 export const getRecordByIdOrError = async (
   id: string,
-  namespace: KVNamespace
+  namespace: any
 ) => {
   // TODO: namespace type
   const record = await namespace.get(id);
