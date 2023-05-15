@@ -6,12 +6,15 @@ export type Team = {
   name: string;
   captainID?: number;
   classification: CLASSIFICATION;
-  captain?: Player;
-  players?: Player[];
+  playersID?: string[];
   clubID: number;
-  games?: Game[];
-  fines?: Fine[];
+  finesID?: string[];
   deleted?: boolean;
 };
 
-export interface TeamFront extends Team {}
+export interface TeamFront extends Team {
+  captain?: Player;
+  players?: Player[];
+  games?: Game[];
+  fines?: Fine[];
+}
