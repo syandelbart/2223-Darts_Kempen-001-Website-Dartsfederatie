@@ -8,18 +8,21 @@ import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
 import { Club } from "../../../types/club";
+import * as dummyData from "../../../data";
 
 const Clubs: NextPage = () => {
-  const [clubs, setClubs] = useState<Array<Club>>([]);
+  const [clubs, setClubs] = useState<Array<Club>>(dummyData.club);
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
 
   useEffect(() => {
-    fetch(`/api/clubs`)
-      .then((clubs) => clubs.json())
-      .then((parsedClubs) => setClubs(parsedClubs));
+    if (!process.env.NEXT_PUBLIC_NO_API) {
+      fetch(`/api/clubs`)
+        .then((clubs) => clubs.json())
+        .then((parsedClubs) => setClubs(parsedClubs));
+    }
   }, []);
   return (
     <div>
