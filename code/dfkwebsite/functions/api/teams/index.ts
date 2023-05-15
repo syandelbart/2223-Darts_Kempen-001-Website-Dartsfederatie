@@ -51,8 +51,13 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     let data: Team = {
       teamID: teamIdKey,
       name: name,
-      classification: formData.get(TeamSubmission.CLASSIFICATION) as CLASSIFICATION,
+      classification: formData.get(
+        TeamSubmission.CLASSIFICATION
+      ) as CLASSIFICATION,
       clubID: Number(formData.get(TeamSubmission.CLUB)),
+      ...(formData.has(TeamSubmission.PLAYERS) && {
+        playersID: formData.get(TeamSubmission.PLAYERS).split(","),
+      }),
     };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
