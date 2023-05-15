@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 interface TableData {
   team1: string;
   team2: string;
-  value: string;
 }
 
 const Clubs: NextPage = () => {
