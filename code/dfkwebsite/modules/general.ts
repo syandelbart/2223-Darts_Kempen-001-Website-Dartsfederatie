@@ -21,7 +21,7 @@ export const getParams = (url: string) => {
 
     // Assign value from the url since the parameter does exist
     const value = urlObject.searchParams.get(availableParam.name);
-    
+
     if (!value) return;
     // Could instead return an error if the regex does not match with the string
     if (availableParam.regex && !value.match(availableParam.regex)) return;
@@ -57,17 +57,14 @@ export const searchKeyChecker = async (
   }
 };
 
-export const getRecordByIdOrError = async (id: string, namespace: any) => { // TODO: namespace type
+export const getRecordByIdOrError = async (
+  id: string,
+  namespace: KVNamespace
+) => {
+  // TODO: namespace type
   const record = await namespace.get(id);
 
-  if (!record) {
-    return new Response(
-      JSON.stringify({ error: `Record with id: ${id} not found` }),
-      {
-        status: 404,
-        headers: { "content-type": "application/json" },
-      }
-    );
-  }
+  if (!record) throw new Error(`Record with id: ${id} not found`);
+
   return record;
 };
