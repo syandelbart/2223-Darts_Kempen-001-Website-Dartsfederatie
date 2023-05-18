@@ -1,5 +1,21 @@
 import { managementData } from "./components/ManagementCard";
 import { teamData } from "./components/Team";
+import {
+  CLASSIFICATION,
+  COMPETITION_TYPE,
+  Competition,
+} from "./types/competition";
+
+export const competitions: Array<Competition> = [
+  {
+    competitionID: "id:dummy:1",
+    name: "competitie 1",
+    type: COMPETITION_TYPE.COMPETITION,
+    classification: CLASSIFICATION.PROVINCIAAL,
+    startDate: 0,
+    endDate: 0,
+  },
+];
 
 let teams: Array<teamData> = [
   {
