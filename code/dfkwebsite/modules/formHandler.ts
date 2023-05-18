@@ -25,12 +25,16 @@ export const handleSubmit = async (
   regexPatterns: {
     [key: string]: fieldInformation;
   },
-  apiLink: string
+  apiLink: string,
+  dummy: any,
+  noAPI?: boolean
 ) => {
   // Do something with formValues, such as send it to a server
   if (!value) throw new Error("No value was provided");
   if (!apiLink || apiLink[0] != "/")
     throw new Error("Incorrect api path was provided");
+
+  if (noAPI) return dummy;
 
   const data = new FormData();
 
@@ -42,13 +46,13 @@ export const handleSubmit = async (
     if (regexPattern && !value[formValueKey].match(regexPattern)) return;
   });
 
-  await fetch(apiLink, {
+  return await fetch(apiLink, {
     body: data,
     method: "POST",
   })
     .then((response) => response.json())
     .then(async (response) => {
-      //dit is uw response doe er iets mee
+      return response;
     })
     .catch((err) => console.error(err));
 };
