@@ -1,12 +1,10 @@
 import { managementData } from "./components/ManagementCard";
-import { teamData } from "./components/Team";
 import {
   CLASSIFICATION,
   COMPETITION_TYPE,
   Competition,
 } from "./types/competition";
 import { Club } from "./types/club";
-import { CLASSIFICATION } from "./types/general";
 import { PlayerFront } from "./types/player";
 import { TeamFront } from "./types/team";
 

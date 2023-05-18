@@ -7,7 +7,7 @@ import {
   getNextFriday,
   getParams,
 } from "../../../modules/general";
-import teams, { competitions } from "../../../data";
+import { teams, competitions } from "../../../data";
 import { Competition } from "../../../types/competition";
 
 interface TableData {
@@ -124,8 +124,8 @@ const GeneratePlaydays: NextPage = () => {
                     <option value=""></option>
                     {teams.map((team) => {
                       return (
-                        <option key={team.teamnaam} value={team.teamnaam}>
-                          {team.teamnaam}
+                        <option key={team.name} value={team.name}>
+                          {team.name}
                         </option>
                       );
                     })}
@@ -143,8 +143,8 @@ const GeneratePlaydays: NextPage = () => {
                     <option value=""></option>
                     {teams.map((team) => {
                       return (
-                        <option key={team.teamnaam} value={team.teamnaam}>
-                          {team.teamnaam}
+                        <option key={team.name} value={team.name}>
+                          {team.name}
                         </option>
                       );
                     })}
