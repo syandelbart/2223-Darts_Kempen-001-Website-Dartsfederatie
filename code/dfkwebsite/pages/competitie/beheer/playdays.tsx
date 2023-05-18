@@ -2,8 +2,13 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { NextPage } from "next";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import { useRouter } from "next/router";
-import { getParams } from "../../../modules/general";
-import teams from "../../../data";
+import {
+  countFridays,
+  getNextFriday,
+  getParams,
+} from "../../../modules/general";
+import teams, { competitions } from "../../../data";
+import { Competition } from "../../../types/competition";
 
 interface TableData {
   team1: string;
@@ -15,15 +20,12 @@ const GeneratePlaydays: NextPage = () => {
   const { asPath } = router;
   const params = getParams(asPath);
 
-  const startDate = new Date(params.startdate);
+  const startDate = new Date(params.startDate);
+  const endDate = new Date(params.endDate);
 
-  const getNextFriday = (startDate: Date) => {
-    return new Date(
-      startDate.setDate(
-        startDate.getDate() + ((5 - startDate.getDay() + 7) % 7)
-      )
-    );
-  };
+  const [competitionInfo, setCompetitionInfo] = useState<
+    Competition | undefined
+  >(undefined);
 
   const [amountTeams, setAmountTeams] = useState<number>(0);
 
@@ -31,9 +33,10 @@ const GeneratePlaydays: NextPage = () => {
 
   const handleAmountTeamsChange = (e?: ChangeEvent<HTMLInputElement>): void => {
     const teamCount = amountTeams;
+    const maxRows = countFridays(startDate, endDate);
 
     const newData: TableData[][] = [];
-    for (let i = 0; i < teamCount; i++) {
+    for (let i = 0; i < maxRows; i++) {
       const row: TableData[] = [];
       for (let j = 0; j < teamCount; j++) {
         row.push({ team1: "", team2: "" });
@@ -56,10 +59,22 @@ const GeneratePlaydays: NextPage = () => {
     tableD[rowIndex][columnIndex][field] = value;
 
     setTableData(tableD);
+    console.log(tableD);
   };
 
   useEffect(() => {
-    setAmountTeams(Number(params.amountTeams));
+    if (process.env.NEXT_PUBLIC_NO_API) {
+      setAmountTeams(Number(params.amountTeams));
+      setCompetitionInfo(competitions[0]);
+    } else {
+      fetch(`/api/competitions/${params.competitionID}`)
+        .then((competition) => competition.json())
+        .then((parsedCompetition) => {
+          setCompetitionInfo(parsedCompetition);
+          setAmountTeams(parsedCompetition.teams.length);
+        });
+    }
+
     handleAmountTeamsChange();
   }, [amountTeams]);
 
