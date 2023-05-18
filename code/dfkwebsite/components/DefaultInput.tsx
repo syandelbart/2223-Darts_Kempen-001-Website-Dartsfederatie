@@ -8,6 +8,7 @@ type DefaultInputData = {
   name: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: any;
+  regex?: RegExp;
 };
 
 const DefaultInput: FunctionComponent<DefaultInputData> = ({
@@ -18,11 +19,27 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
   onChange,
   id,
   placeholder = "",
+  regex,
 }) => {
+  const isValidRegex = () => {
+    if (regex) {
+      return regex.test(value);
+    }
+    return true;
+  };
+
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
-        {label ?? name}
+        {label ?? name}{" "}
+        {regex && (
+          <span
+            className="text-sm"
+            style={{ color: isValidRegex() ? "greenyellow" : "red" }}
+          >
+            {isValidRegex() ? "Geldig" : "Ongeldig"}
+          </span>
+        )}
       </label>
       <input
         type={type}
