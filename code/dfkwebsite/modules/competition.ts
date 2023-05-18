@@ -14,7 +14,6 @@ export enum CompetitionSubmission {
 export const competitionRegexPatterns: { [key: string]: fieldInformation } = {
   [CompetitionSubmission.NAME]: { regex: /^[a-zA-Z ]+$/, required: false },
   [CompetitionSubmission.TYPE]: {
-    regex: /^\d+$/,
     required: true,
   },
   [CompetitionSubmission.STARTDATE]: {
