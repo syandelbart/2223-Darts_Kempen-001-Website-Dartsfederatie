@@ -3,10 +3,12 @@ import { fieldInformation } from "./fieldsCheck";
 export enum CompetitionSubmission {
   NAME = "name",
   TYPE = "type",
+  CLASSIFICATION = "classification",
   STARTDATE = "startdate",
   ENDDATE = "enddate",
   AMOUNT_TEAMS = "amountteams",
   TEAMS = "teams",
+  PLAYDAYS = "playdays",
 }
 
 export const competitionRegexPatterns: { [key: string]: fieldInformation } = {
