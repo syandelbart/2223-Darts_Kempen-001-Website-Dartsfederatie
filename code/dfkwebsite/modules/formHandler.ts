@@ -26,7 +26,7 @@ export const handleSubmit = async (
     [key: string]: fieldInformation;
   },
   apiLink: string,
-  dummy: any,
+  dummy?: any,
   noAPI?: boolean
 ) => {
   // Do something with formValues, such as send it to a server
