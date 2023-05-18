@@ -1,18 +1,22 @@
 const availableParams = [
+  // General
   { name: "limit", regex: /^[0-9]+$/, castFunction: Number, default: 100 },
   { name: "cursor", regex: /^[a-zA-Z]*$/ },
+  // Competition
   { name: "competitionID" },
-  { name: "startdate" },
-  { name: "enddate" },
+  { name: "startDate" },
+  { name: "endDate" },
   { name: "amountTeams", regex: /^[0-9]+$/, castFunction: Number },
 ];
 type urlParamsType = {
+  // General
   limit?: number;
   cursor?: string;
+  // Competition
   competitionID?: string;
   amountTeams?: number;
-  startdate: string;
-  enddate: string;
+  startDate: string;
+  endDate: string;
 };
 
 export const getParams = (url: string) => {
@@ -79,4 +83,22 @@ export const getRecordByIdOrError = async (id: string, namespace: any) => {
     );
   }
   return record;
+};
+
+export const getNextFriday = (startDate: Date) => {
+  return new Date(
+    startDate.setDate(startDate.getDate() + ((5 - startDate.getDay() + 7) % 7))
+  );
+};
+
+export const countFridays = (startDate: Date, endDate: Date) => {
+  let dateCursor = getNextFriday(startDate);
+  let amountFridays = 0;
+  while (dateCursor.getTime() < endDate.getTime()) {
+    dateCursor = getNextFriday(
+      new Date(dateCursor.setDate(dateCursor.getDate() + 1))
+    );
+    amountFridays++;
+  }
+  return amountFridays;
 };
