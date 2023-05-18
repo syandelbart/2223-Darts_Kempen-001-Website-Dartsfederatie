@@ -21,6 +21,7 @@ export type Competition = {
   endDate: number;
   playDaysTable?: { team1: number; team2: number }[][];
   teamsID?: Array<string>;
+  deleted?: boolean;
 };
 
 export interface CompetitionFront extends Competition {
