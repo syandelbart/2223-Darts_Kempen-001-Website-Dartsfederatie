@@ -17,11 +17,10 @@ export type Competition = {
   name: string;
   type: COMPETITION_TYPE;
   classification: CLASSIFICATION;
-  season: {
-    startDate: number;
-    endDate: number;
-  };
-  teamsID: Array<string>;
+  startDate: number;
+  endDate: number;
+  playDaysTable?: { team1: number; team2: number }[][];
+  teamsID?: Array<string>;
 };
 
 export interface CompetitionFront extends Competition {
