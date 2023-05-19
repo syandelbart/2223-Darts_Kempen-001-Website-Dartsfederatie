@@ -14,7 +14,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const matches = await env.MATCHES.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let matchesMapped = matches.keys.map(async (matches) => {
@@ -86,7 +86,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
       const matchData: Match = JSON.parse(await env.MATCHES.get(match.name));
 
       const data: Match = {
-       // TODO: Add match data/fields
+        // TODO: Add match data/fields
       };
 
       // Update the match data in the KV store

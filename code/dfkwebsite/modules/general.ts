@@ -7,11 +7,13 @@ const availableParams = [
   { name: "startDate" },
   { name: "endDate" },
   { name: "amountTeams", regex: /^[0-9]+$/, castFunction: Number },
+  { name: "prefix", regex: /^[a-zA-Z:]+$/, default: "id:" },
 ];
 type urlParamsType = {
   // General
-  limit?: number;
+  limit: number;
   cursor?: string;
+  prefix: string;
   // Competition
   competitionID?: string;
   amountTeams?: number;

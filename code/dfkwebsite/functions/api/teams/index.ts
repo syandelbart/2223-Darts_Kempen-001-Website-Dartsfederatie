@@ -15,7 +15,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const teams = await env.TEAMS.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let teamsMapped = teams.keys.map(async (teams) => {
@@ -51,8 +51,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     let data: Team = {
       teamID: teamIdKey,
       name: name,
-      classification: formData.get(TeamSubmission.CLASSIFICATION) as CLASSIFICATION,
-      clubID: Number(formData.get(TeamSubmission.CLUB)),
+      classification: formData.get(
+        TeamSubmission.CLASSIFICATION
+      ) as CLASSIFICATION,
+      clubID: formData.get(TeamSubmission.CLUB),
     };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));

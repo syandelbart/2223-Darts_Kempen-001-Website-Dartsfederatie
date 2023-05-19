@@ -14,7 +14,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const posts = await env.POSTS.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let postsMapped = posts.keys.map(async (posts) => {
@@ -67,50 +67,50 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 };
 
 export const onRequestPut: PagesFunction<PagesEnv> = async ({
-    request,
-    env,
-  }) => {
-    try {
-      const formData = await request.formData();
-  
-      const params = getParams(request.url);
-  
-      const posts = await env.POSTS.list({
-        limit: params.limit,
-        cursor: params.cursor,
-      });
-  
-      // Update each post using the form data
-      const updates = posts.keys.map(async (post) => {
-        const postData: Post = JSON.parse(await env.POSTS.get(post.name));
-  
-        const data: Post = {
-          // TODO: Add fields here
-        };
-  
-        // Update the team data in the KV store
-        await env.POSTS.put(post.name, JSON.stringify(data));
-      });
-  
-      // Wait for all updates to complete
-      await Promise.all(updates);
-  
-      const responseBody = {
-        message: "POsts updated successfully.",
-        status: 200,
+  request,
+  env,
+}) => {
+  try {
+    const formData = await request.formData();
+
+    const params = getParams(request.url);
+
+    const posts = await env.POSTS.list({
+      limit: params.limit,
+      cursor: params.cursor,
+    });
+
+    // Update each post using the form data
+    const updates = posts.keys.map(async (post) => {
+      const postData: Post = JSON.parse(await env.POSTS.get(post.name));
+
+      const data: Post = {
+        // TODO: Add fields here
       };
-  
-      return new Response(JSON.stringify(responseBody), {
-        headers: { "Content-Type": "application/json" },
-      });
-    } catch (e) {
-      const errorBody = {
-        message: e instanceof Error ? e.message : "Internal server error.",
-        status: e instanceof Error ? 500 : 400,
-      };
-  
-      return new Response(JSON.stringify(errorBody), {
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-  };
+
+      // Update the team data in the KV store
+      await env.POSTS.put(post.name, JSON.stringify(data));
+    });
+
+    // Wait for all updates to complete
+    await Promise.all(updates);
+
+    const responseBody = {
+      message: "POsts updated successfully.",
+      status: 200,
+    };
+
+    return new Response(JSON.stringify(responseBody), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (e) {
+    const errorBody = {
+      message: e instanceof Error ? e.message : "Internal server error.",
+      status: e instanceof Error ? 500 : 400,
+    };
+
+    return new Response(JSON.stringify(errorBody), {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+};

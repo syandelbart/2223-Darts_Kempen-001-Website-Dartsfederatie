@@ -22,7 +22,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const competitions = await env.COMPETITION.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let competitionsMapped = competitions.keys.map(async (competition) => {
