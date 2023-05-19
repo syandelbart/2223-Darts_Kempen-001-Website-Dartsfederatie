@@ -67,7 +67,7 @@ const GeneratePlaydays: NextPage = () => {
       setAmountTeams(Number(params.amountTeams));
       setCompetitionInfo(competitions[0]);
     } else {
-      fetch(`/api/competitions/${params.competitionID}`)
+      fetch(`/api/competition/${params.competitionID}`)
         .then((competition) => competition.json())
         .then((parsedCompetition) => {
           setCompetitionInfo(parsedCompetition);
