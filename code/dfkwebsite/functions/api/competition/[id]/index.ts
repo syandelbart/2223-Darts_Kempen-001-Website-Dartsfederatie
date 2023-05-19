@@ -115,7 +115,7 @@ export const onRequestDelete: PagesFunction<PagesEnv> = async ({
     await env.COMPETITION.put(competitionId, JSON.stringify(data));
 
     const responseBody = {
-      message: "competition deleted successfully.",
+      message: "Competition deleted successfully.",
       status: 200,
     };
 
