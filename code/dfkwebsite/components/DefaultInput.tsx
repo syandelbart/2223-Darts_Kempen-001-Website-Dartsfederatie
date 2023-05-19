@@ -6,9 +6,10 @@ type DefaultInputData = {
   placeholder?: string;
   label?: string;
   name: string;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   value?: any;
   regex?: RegExp;
+  textArea?: boolean;
 };
 
 const DefaultInput: FunctionComponent<DefaultInputData> = ({
@@ -20,6 +21,7 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
   id,
   placeholder = "",
   regex,
+  textArea,
 }) => {
   const isValidRegex = () => {
     if (regex) {
@@ -41,15 +43,28 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
           </span>
         )}
       </label>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        id={name}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="bg-gray-200 p-2 text-black"
-      />
+      {!textArea ? (
+        <input
+          type={type}
+          name={name}
+          value={value}
+          id={name}
+          onChange={onChange}
+          placeholder={placeholder}
+          className="bg-gray-200 p-2 text-black"
+        />
+      ) : (
+        <textarea
+          name={name}
+          value={value}
+          id={name}
+          onChange={onChange}
+          placeholder={placeholder}
+          cols={30}
+          rows={10}
+          className="bg-gray-200 p-2 text-black"
+        ></textarea>
+      )}
     </div>
   );
 };
