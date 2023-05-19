@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { fieldInformation } from "./fieldsCheck";
+import { checkFields, fieldInformation } from "./fieldsCheck";
 
 export const handleChange = (
   event: any,
@@ -10,11 +10,13 @@ export const handleChange = (
   >,
   oldValue: {
     [key: string]: string;
-  }
+  },
+  handledChangeStateSetter?: Dispatch<SetStateAction<boolean>>
 ) => {
   const { name, value } = event.target;
 
   setState({ ...oldValue, [name]: value });
+  if (handledChangeStateSetter) handledChangeStateSetter(true);
 };
 
 export const handleSubmit = async (
@@ -26,33 +28,42 @@ export const handleSubmit = async (
     [key: string]: fieldInformation;
   },
   apiLink: string,
+  informationOutputState?: Dispatch<SetStateAction<string>>,
+  setSubmitSuccess?: Dispatch<SetStateAction<boolean>>,
   dummy?: any,
   noAPI?: boolean
 ) => {
-  // Do something with formValues, such as send it to a server
-  if (!value) throw new Error("No value was provided");
-  if (!apiLink || apiLink[0] != "/")
-    throw new Error("Incorrect api path was provided");
+  if (informationOutputState) informationOutputState("");
+  try {
+    // Do something with formValues, such as send it to a server
+    if (!value) throw new Error("No value was provided");
+    if (!apiLink || apiLink[0] != "/")
+      throw new Error("Incorrect api path was provided");
 
-  if (noAPI) return dummy;
+    const data = new FormData();
+    Object.keys(value).forEach((formValueKey) => {
+      data.append(formValueKey, value[formValueKey]);
+    });
 
-  const data = new FormData();
+    checkFields(data, regexPatterns);
 
-  Object.keys(value).forEach((formValueKey) => {
-    data.append(formValueKey, value[formValueKey]);
+    if (noAPI) {
+      if (setSubmitSuccess) setSubmitSuccess(true);
+      return dummy;
+    }
 
-    const regexPattern = regexPatterns[formValueKey]?.regex;
-    //TODO add error box handling
-    if (regexPattern && !value[formValueKey].match(regexPattern)) return;
-  });
-
-  return await fetch(apiLink, {
-    body: data,
-    method: "POST",
-  })
-    .then((response) => response.json())
-    .then(async (response) => {
-      return response;
+    return await fetch(apiLink, {
+      body: data,
+      method: "POST",
     })
-    .catch((err) => console.error(err));
+      .then((response) => response.json())
+      .then(async (response) => {
+        if (setSubmitSuccess) setSubmitSuccess(true);
+        return response;
+      });
+  } catch (e: any) {
+    if (informationOutputState) informationOutputState(e.message);
+    if (setSubmitSuccess) setSubmitSuccess(false);
+    return;
+  }
 };
