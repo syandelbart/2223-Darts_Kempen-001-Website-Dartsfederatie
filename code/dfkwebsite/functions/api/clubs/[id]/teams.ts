@@ -13,14 +13,14 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
       await getRecordByIdOrError(clubId, env.CLUBS)
     );
 
-    if (!club?.teamsID)
+    if (!club?.teamIDs)
       return new Response(JSON.stringify([]), {
         headers: {
           "content-type": "application/json",
         },
       });
 
-    const teamsMapped = club.teamsID.map(async (teamsID) => {
+    const teamsMapped = club.teamIDs.map(async (teamsID) => {
       return JSON.parse(await env.TEAMS.get(teamsID));
     });
 
