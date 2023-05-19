@@ -33,7 +33,7 @@ const Clubs: NextPage = () => {
         titleName="Clubs"
         search={search}
         setSearch={setSearch}
-        addButtonName="club"
+        addButtonName="Club"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />

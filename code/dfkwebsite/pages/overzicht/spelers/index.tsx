@@ -34,7 +34,7 @@ const Spelers: NextPage = () => {
         titleName="Spelers"
         search={search}
         setSearch={setSearch}
-        addButtonName="speler"
+        addButtonName="Speler"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
