@@ -43,9 +43,9 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         />
 
         <DefaultSelect
-          name="team"
-          id="team"
-          label="Team"
+          name="club"
+          id="club"
+          label="Club"
           options={[{ value: "1", label: "1" }]}
         />
 
