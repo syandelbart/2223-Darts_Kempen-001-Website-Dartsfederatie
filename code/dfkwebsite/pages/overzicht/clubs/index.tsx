@@ -55,7 +55,7 @@ const Clubs: NextPage = () => {
               results++;
             })
             .map((club) => (
-              <Card>
+              <Card key={club}>
                 <ClubCard clubData={club} setIsOpen={setIsOpen} />
               </Card>
             ))
