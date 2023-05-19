@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { CLASSIFICATION } from "../types/general";
 import Modal from "./Modal";
+import { CLASSIFICATION } from "../types/competition";
 
 type AddTeamModalData = {
   addModalOpen: boolean;

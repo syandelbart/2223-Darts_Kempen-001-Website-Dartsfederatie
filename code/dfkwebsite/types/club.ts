@@ -9,10 +9,12 @@ export type Club = {
   address?: Address;
   contactPersonID: string;
   deleted?: boolean;
+  teamIDs: string[];
+  fineIDs?: string[];
 };
 
 export interface ClubFront extends Club {
   teams: Team[];
-  fines: Fine[];
+  fines?: Fine[];
   contactPerson: Player;
 }
