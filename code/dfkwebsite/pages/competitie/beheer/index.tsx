@@ -203,7 +203,7 @@ const Clubs: NextPage = () => {
       return;
     }
 
-    await fetch(`/api/competitions/${id}`, { method: "DELETE" }).then(
+    await fetch(`/api/competition/${id}`, { method: "DELETE" }).then(
       (response) => {
         if (response.status != 200)
           throw new Error("Competition not deleted correctly");
@@ -216,7 +216,7 @@ const Clubs: NextPage = () => {
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
-      fetch(`/api/competitions`)
+      fetch(`/api/competition`)
         .then((competitions) => competitions.json())
         .then((parsedCompetitions) => setCompetitions(parsedCompetitions));
     }
@@ -225,7 +225,6 @@ const Clubs: NextPage = () => {
   const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(false);
   const [handledChange, setHandledChange] = useState(false);
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
-
 
   return (
     <div>
