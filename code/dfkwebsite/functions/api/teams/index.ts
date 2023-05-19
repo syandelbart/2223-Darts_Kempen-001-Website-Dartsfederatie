@@ -54,7 +54,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       classification: formData.get(
         TeamSubmission.CLASSIFICATION
       ) as CLASSIFICATION,
-      clubID: Number(formData.get(TeamSubmission.CLUB)),
+      clubID: formData.get(TeamSubmission.CLUB),
     };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
@@ -99,7 +99,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
           ? (formData.get(TeamSubmission.CLASSIFICATION) as CLASSIFICATION)
           : teamData.classification,
         clubID: formData.get(TeamSubmission.CLUB)
-          ? Number(formData.get(TeamSubmission.CLUB))
+          ? formData.get(TeamSubmission.CLUB)
           : teamData.clubID,
       };
 
