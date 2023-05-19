@@ -3,6 +3,8 @@ import { FunctionComponent, useState } from "react";
 import { clubRegexPatterns } from "../modules/club";
 import * as formHandler from "../modules/formHandler";
 import Modal from "./Modal";
+import DefaultInput from "./DefaultInput";
+import DefaultSelect from "./DefaultSelect";
 
 type AddClubModalData = {
   addModalOpen: boolean;
@@ -41,106 +43,61 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       <div className="flex flex-col">
-        <label htmlFor="name" className="text-xl text-white mt-16 mb-2">
-          Clubnaam
-        </label>
-        <input
-          type="text"
+        <DefaultInput
           name="name"
-          id="name"
+          label="Clubnaam"
           placeholder="Clubnaam"
           value={formValues.name}
           onChange={handleChange}
-          className="bg-gray-200 p-2"
         />
         <div className="flex gap-5 justify-between">
           <div className="flex flex-col w-1/2">
-            <label
-              htmlFor="address_city"
-              className="text-xl text-white mt-5 mb-2"
-            >
-              Stad
-            </label>
-            <input
-              type="text"
+            <DefaultInput
               name="address_city"
-              id="address_city"
+              label="Stad"
               placeholder="Stad"
               value={formValues.address_city}
               onChange={handleChange}
-              className="bg-gray-200 p-2"
             />
           </div>
           <div className="flex flex-col w-1/2">
-            <label
-              htmlFor="address_postal"
-              className="text-xl text-white mt-5 mb-2"
-            >
-              Postcode
-            </label>
-            <input
-              type="text"
+            <DefaultInput
               name="address_postal"
-              id="address_postal"
+              label="Postcode"
+              placeholder="Postcode"
               value={formValues.address_postal}
               onChange={handleChange}
-              placeholder="Postcode"
-              className="bg-gray-200 p-2"
             />
           </div>
         </div>
         <div className="flex gap-5 justify-between">
           <div className="flex flex-col w-1/2">
-            <label
-              htmlFor="address_street"
-              className="text-xl text-white mt-5 mb-2"
-            >
-              Straat
-            </label>
-            <input
-              type="text"
+            <DefaultInput
               name="address_street"
+              label="Straat"
+              placeholder="Straat"
               value={formValues.address_street}
               onChange={handleChange}
-              id="address_street"
-              placeholder="Straat"
-              className="bg-gray-200 p-2"
             />
           </div>
           <div className="flex flex-col w-1/2">
-            <label
-              htmlFor="address_housenumber"
-              className="text-xl text-white mt-5 mb-2"
-            >
-              Huisnummer
-            </label>
-            <input
-              type="text"
+            <DefaultInput
               name="address_housenumber"
+              label="Huisnummer"
+              placeholder="Huisnummer"
               value={formValues.address_housenumber}
               onChange={handleChange}
-              id="address_housenumber"
-              placeholder="Huisnummer"
-              className="bg-gray-200 p-2"
             />
           </div>
         </div>
 
-        <label
-          htmlFor="contactpersonid"
-          className="text-xl text-white mt-5 mb-2"
-        >
-          Contactpersoon
-        </label>
-        <select
+        <DefaultSelect
           name="contactpersonid"
           id="contactpersonid"
-          value={formValues.contactpersonid}
-          onChange={handleChange}
-          className="bg-gray-200 p-2"
-        >
-          <option value="1">1</option>
-        </select>
+          label="Contactpersoon"
+          options={[{ value: "1", label: "1" }]}
+        />
+
         <button
           type="submit"
           className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"

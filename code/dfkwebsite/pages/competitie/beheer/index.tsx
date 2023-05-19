@@ -16,6 +16,7 @@ import * as dummyData from "../../../data";
 import DataTable from "react-data-table-component";
 import { Icon } from "@iconify/react";
 import InformationBox from "../../../components/InformationBox";
+import DefaultSelect from "../../../components/DefaultSelect";
 
 interface TableData {
   team1: string;
@@ -278,54 +279,39 @@ const Clubs: NextPage = () => {
           />
 
           <div className="flex flex-col">
-            <label
-              htmlFor="classification"
-              className="text-xl text-white mt-5 mb-2"
-            >
-              Classificatie
-            </label>
-            <select
+            <DefaultSelect
               name="classification"
-              className="p-2 text-black"
+              id="classification"
+              label="Classificatie"
               value={formValues.classification}
               onChange={handleChange}
-            >
-              <option key={"Selecteer"} value="">
-                Selecteer
-              </option>
-              {Object.keys(CLASSIFICATION).map((classification) => {
-                return (
-                  <option key={classification} value={classification}>
-                    {classification.substring(0, 1).toUpperCase()}
-                    {classification.substring(1).toLowerCase()}
-                  </option>
-                );
+              options={Object.values(CLASSIFICATION).map((value) => {
+                return {
+                  value: value,
+                  label: `${value[0].toUpperCase()}${value
+                    .substring(1)
+                    .toLowerCase()}`,
+                };
               })}
-            </select>
+            />
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="type" className="text-xl text-white mt-5 mb-2">
-              Type
-            </label>
-            <select
+            <DefaultSelect
               name="type"
-              className="p-2 text-black"
+              id="type"
+              label="Type"
               value={formValues.type}
               onChange={handleChange}
-            >
-              <option key={"Selecteer"} value="">
-                Selecteer
-              </option>
-              {Object.keys(COMPETITION_TYPE).map((type) => {
-                return (
-                  <option key={type} value={type}>
-                    {type.substring(0, 1).toUpperCase()}
-                    {type.substring(1).toLowerCase()}
-                  </option>
-                );
+              options={Object.values(COMPETITION_TYPE).map((value) => {
+                return {
+                  value: value,
+                  label: `${value[0].toUpperCase()}${value
+                    .substring(1)
+                    .toLowerCase()}`,
+                };
               })}
-            </select>
+            />
           </div>
 
           <button

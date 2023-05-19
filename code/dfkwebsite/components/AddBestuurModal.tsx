@@ -1,6 +1,8 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
 import Modal from "./Modal";
+import DefaultInput from "./DefaultInput";
+import DefaultCheckbox from "./DefaultCheckbox";
 
 type AddBestuurModalData = {
   addModalOpen: boolean;
@@ -17,47 +19,25 @@ const AddBestuurModal: FunctionComponent<AddBestuurModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       <div className="flex flex-col">
-        <label htmlFor="firstname" className="text-xl text-white mt-16 mb-2">
-          Voornaam
-        </label>
-        <input
-          type="text"
+        <DefaultInput
           name="firstname"
-          id="firstname"
+          label="Voornaam"
           placeholder="Voornaam"
-          className="bg-gray-200 p-2"
         />
-        <label htmlFor="lastname" className="text-xl text-white mt-5 mb-2">
-          Achternaam
-        </label>
-        <input
-          type="text"
+
+        <DefaultInput
           name="lastname"
-          id="lastname"
+          label="Achternaam"
           placeholder="Achternaam"
-          className="bg-gray-200 p-2"
         />
-        <label htmlFor="phone" className="text-xl text-white mt-5 mb-2">
-          Telefoonnummer
-        </label>
-        <input
-          type="text"
+        <DefaultInput
           name="phone"
-          id="phone"
+          label="Telefoonnummer"
           placeholder="Telefoonnummer"
-          className="bg-gray-200 p-2"
+          type="phone"
         />
         <div className="mt-5 mb-2">
-          <label htmlFor="allowedToPlay" className="text-xl text-white mr-3">
-            Speelgerechtigd
-          </label>
-          <input
-            type="checkbox"
-            name="allowedToPlay"
-            id="allowedToPlay"
-            placeholder="Speelgerechtigd"
-            className="bg-gray-200 p-2"
-          />
+          <DefaultCheckbox label="Speelgerechtigd" name="allowedToPlay" />
         </div>
         <button className="bg-[#0A893D] text-white rounded-lg p-3 mt-10">
           Aanmaken
