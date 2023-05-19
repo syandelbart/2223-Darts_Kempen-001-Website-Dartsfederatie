@@ -16,6 +16,9 @@ export const competitionRegexPatterns: { [key: string]: fieldInformation } = {
   [CompetitionSubmission.TYPE]: {
     required: true,
   },
+  [CompetitionSubmission.CLASSIFICATION]: {
+    required: true,
+  },
   [CompetitionSubmission.STARTDATE]: {
     required: true,
   },
