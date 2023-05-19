@@ -6,7 +6,7 @@ import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
-import { Club } from "../../../types/club";
+import { Club, ClubFront } from "../../../types/club";
 import * as dummyData from "../../../data";
 
 const Clubs: NextPage = () => {
@@ -14,6 +14,7 @@ const Clubs: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [selectedClub, setSelectedClub] = useState;
   let results = 0;
 
   useEffect(() => {
@@ -37,7 +38,11 @@ const Clubs: NextPage = () => {
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <ClubModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ClubModal
+        selectedClub={selectedClub}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
       <CardGrid>
         {clubs.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
@@ -55,7 +60,11 @@ const Clubs: NextPage = () => {
             })
             .map((club) => (
               <Card key={club}>
-                <ClubCard clubData={club} setIsOpen={setIsOpen} />
+                <ClubCard
+                  clubData={club}
+                  setIsOpen={setIsOpen}
+                  setSelectedClub={setSelectedClub}
+                />
               </Card>
             ))
         )}
