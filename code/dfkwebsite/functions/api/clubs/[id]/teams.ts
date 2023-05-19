@@ -1,4 +1,6 @@
+import { Club } from "../../../../types/club";
 import { PagesEnv } from "../../env";
+import { getRecordByIdOrError } from "../../../../modules/general";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -6,10 +8,31 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
   params,
 }) => {
   try {
+    const clubId = params.id.toString();
+    const club: Club = JSON.parse(
+      await getRecordByIdOrError(clubId, env.CLUBS)
+    );
+
+    if (!club?.teamsID)
+      return new Response(JSON.stringify([]), {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+
+    const teamsMapped = club.teamsID.map(async (teamsID) => {
+      return JSON.parse(await env.TEAMS.get(teamsID));
+    });
+
+    return new Response(JSON.stringify(teamsMapped), {
+      headers: {
+        "content-type": "application/json",
+      },
+    });
   } catch (e) {
-    if (e instanceof Error) {
-      return new Response(e.message);
-    }
-    return new Response("Internal server error.", { status: 500 });
+    return new Response(JSON.stringify({ error: e.message }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
   }
 };
