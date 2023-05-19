@@ -1,14 +1,15 @@
-import { CLASSIFICATION, Fine, Game } from "./general";
+import { CLASSIFICATION, Game } from "./competition";
+import { Fine } from "./fine";
 import { Player } from "./player";
 
 export type Team = {
   teamID: string;
   name: string;
-  captainID?: number;
+  captainID?: string;
   classification: CLASSIFICATION;
-  playersID?: string[];
-  clubID: number;
-  finesID?: string[];
+  fineIDs?: string[];
+  clubID: string;
+  playerIDs?: string[];
   deleted?: boolean;
 };
 

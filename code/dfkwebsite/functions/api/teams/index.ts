@@ -3,7 +3,7 @@ import { getParams, searchKeyChecker } from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
 import { TeamSubmission, teamRegexPatterns } from "../../../modules/team";
 import { Team } from "../../../types/team";
-import { CLASSIFICATION } from "../../../types/general";
+import { CLASSIFICATION } from "../../../types/competition";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -15,7 +15,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const teams = await env.TEAMS.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let teamsMapped = teams.keys.map(async (teams) => {
@@ -55,9 +55,6 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
         TeamSubmission.CLASSIFICATION
       ) as CLASSIFICATION,
       clubID: Number(formData.get(TeamSubmission.CLUB)),
-      ...(formData.has(TeamSubmission.PLAYERS) && {
-        playersID: formData.get(TeamSubmission.PLAYERS).split(","),
-      }),
     };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));

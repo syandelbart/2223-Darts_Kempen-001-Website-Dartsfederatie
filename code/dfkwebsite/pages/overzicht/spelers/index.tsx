@@ -7,18 +7,21 @@ import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import PlayerComponent from "../../../components/Player";
 import TeamModal from "../../../components/TeamModal";
 import { Player } from "../../../types/player";
+import * as dummyData from "../../../data";
 
 const Spelers: NextPage = () => {
-  const [players, setPlayers] = useState<Array<Player>>([]);
+  const [players, setPlayers] = useState<Player[]>(dummyData.players);
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
 
   useEffect(() => {
-    fetch(`/api/players`)
-      .then((players) => players.json())
-      .then((parsedPlayers) => setPlayers(parsedPlayers));
+    if (!process.env.NEXT_PUBLIC_NO_API) {
+      fetch(`/api/players`)
+        .then((players) => players.json())
+        .then((parsedPlayers) => setPlayers(parsedPlayers));
+    }
   }, []);
 
   return (
@@ -37,7 +40,7 @@ const Spelers: NextPage = () => {
       />
       <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
       <CardGrid>
-        {players.length === 0 || results === players.length ? (
+        {!players || players.length === 0 || results === players.length ? (
           <h1 className="text-4xl font-extrabold text-white">
             Geen spelers gevonden
           </h1>

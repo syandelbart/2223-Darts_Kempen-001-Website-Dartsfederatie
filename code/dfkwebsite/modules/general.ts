@@ -1,14 +1,28 @@
 const availableParams = [
+  // General
   { name: "limit", regex: /^[0-9]+$/, castFunction: Number, default: 100 },
   { name: "cursor", regex: /^[a-zA-Z]*$/ },
+  // Competition
+  { name: "competitionID" },
+  { name: "startDate" },
+  { name: "endDate" },
+  { name: "amountTeams", regex: /^[0-9]+$/, castFunction: Number },
+  { name: "prefix", regex: /^[a-zA-Z:]+$/, default: "id:" },
 ];
-
 type urlParamsType = {
-  limit?: number;
+  // General
+  limit: number;
   cursor?: string;
+  prefix: string;
+  // Competition
+  competitionID?: string;
+  amountTeams?: number;
+  startDate: string;
+  endDate: string;
 };
 
 export const getParams = (url: string) => {
+  if (url[0] == "/") url = "https://www.placeholder.xyz/" + url;
   const urlObject = new URL(url);
   const data: { [key: string]: any } = {};
   availableParams.forEach((availableParam) => {
@@ -38,7 +52,7 @@ export const getParams = (url: string) => {
     }
   });
 
-  return data;
+  return data as urlParamsType;
 };
 
 export const searchKeyChecker = async (
@@ -57,14 +71,29 @@ export const searchKeyChecker = async (
   }
 };
 
-export const getRecordByIdOrError = async (
-  id: string,
-  namespace: any
-) => {
+export const getRecordByIdOrError = async (id: string, namespace: any) => {
   // TODO: namespace type
   const record = await namespace.get(id);
 
   if (!record) throw new Error(`Record with id: ${id} not found`);
 
   return record;
+};
+
+export const getNextFriday = (startDate: Date) => {
+  return new Date(
+    startDate.setDate(startDate.getDate() + ((5 - startDate.getDay() + 7) % 7))
+  );
+};
+
+export const countFridays = (startDate: Date, endDate: Date) => {
+  let dateCursor = getNextFriday(startDate);
+  let amountFridays = 0;
+  while (dateCursor.getTime() < endDate.getTime()) {
+    dateCursor = getNextFriday(
+      new Date(dateCursor.setDate(dateCursor.getDate() + 1))
+    );
+    amountFridays++;
+  }
+  return amountFridays;
 };

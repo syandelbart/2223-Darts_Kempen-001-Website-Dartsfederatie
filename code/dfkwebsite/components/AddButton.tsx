@@ -1,10 +1,10 @@
 import { Icon } from "@iconify/react";
-import { FunctionComponent } from "react";
+import { Dispatch, FunctionComponent, SetStateAction } from "react";
 
 type buttonData = {
   name: string;
-  addModalOpen: boolean;
-  setAddModalOpen: any;
+  addModalOpen?: boolean;
+  setAddModalOpen?: Dispatch<SetStateAction<boolean>>;
 };
 
 const AddButton: FunctionComponent<buttonData> = ({
@@ -15,10 +15,12 @@ const AddButton: FunctionComponent<buttonData> = ({
   return (
     <div
       className="flex items-center gap-3 bg-add-button text-white rounded-lg px-5 py-3 hover:cursor-pointer"
-      onClick={() => setAddModalOpen(!addModalOpen)}
+      {...(typeof setAddModalOpen == "function" && addModalOpen != null
+        ? { onClick: () => setAddModalOpen(!addModalOpen) }
+        : {})}
     >
       <Icon icon="fa6-solid:plus" className="text-2xl" />
-      <p className="text-lg">Add {name}</p>
+      <p className="text-sm sm:text-lg whitespace-nowrap">Add {name}</p>
     </div>
   );
 };
