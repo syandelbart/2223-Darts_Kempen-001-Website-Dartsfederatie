@@ -8,13 +8,11 @@ import { Club } from "../types/club";
 interface clubDataInterface {
   clubData: Club;
   setIsOpen: any;
-  setSelectedClub: any;
 }
 
 const ClubCard: FunctionComponent<clubDataInterface> = ({
   clubData,
   setIsOpen,
-  setSelectedClub,
 }) => {
   return (
     <div>
@@ -23,7 +21,6 @@ const ClubCard: FunctionComponent<clubDataInterface> = ({
         <CardButton
           onClick={() => {
             setIsOpen(true);
-            setSelectedClub(clubData);
           }}
         >
           Teams

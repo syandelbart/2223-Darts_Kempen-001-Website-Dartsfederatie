@@ -5,9 +5,10 @@ import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import PlayerComponent from "../../../components/Player";
-import TeamModal from "../../../components/TeamModal";
 import { Player } from "../../../types/player";
 import * as dummyData from "../../../data";
+import SelectedModal from "../../../components/SelectedModal";
+import TeamSpelers from "../../../components/TeamSpelers";
 
 const Spelers: NextPage = () => {
   const [players, setPlayers] = useState<Player[]>(dummyData.players);
@@ -38,7 +39,9 @@ const Spelers: NextPage = () => {
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <SelectedModal title="Speler" isOpen={isOpen} setIsOpen={setIsOpen}>
+        <TeamSpelers selected={players[0]} />
+      </SelectedModal>
       <CardGrid>
         {!players || players.length === 0 || results === players.length ? (
           <h1 className="text-4xl font-extrabold text-white">

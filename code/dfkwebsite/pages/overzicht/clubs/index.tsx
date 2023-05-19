@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import ClubCard from "../../../components/ClubCard";
-import ClubModal from "../../../components/ClubModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
-import { Club, ClubFront } from "../../../types/club";
+import { Club } from "../../../types/club";
 import * as dummyData from "../../../data";
+import SelectedModal from "../../../components/SelectedModal";
+import TeamSpelers from "../../../components/TeamSpelers";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<Club>>(dummyData.club);
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const [selectedClub, setSelectedClub] = useState;
   let results = 0;
 
   useEffect(() => {
@@ -38,11 +38,9 @@ const Clubs: NextPage = () => {
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <ClubModal
-        selectedClub={selectedClub}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
+      <SelectedModal title="Selected Club" isOpen={isOpen} setIsOpen={setIsOpen}>
+        <TeamSpelers selected={clubs[0]} />
+      </SelectedModal>
       <CardGrid>
         {clubs.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
@@ -63,7 +61,6 @@ const Clubs: NextPage = () => {
                 <ClubCard
                   clubData={club}
                   setIsOpen={setIsOpen}
-                  setSelectedClub={setSelectedClub}
                 />
               </Card>
             ))

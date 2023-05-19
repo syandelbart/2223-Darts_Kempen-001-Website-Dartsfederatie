@@ -1,8 +1,7 @@
 import { FunctionComponent } from "react";
-import { ClubFront } from "../types/club";
 
 type teamSpelersData = {
-  selectedClub: ClubFront;
+  selected: any;
 };
 
 const TeamSpelers: FunctionComponent<teamSpelersData> = (
@@ -11,7 +10,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = (
   return (
     <>
       <div className="flex gap-3 items-center">
-        <h1 className="text-3xl font-semibold">{props.selectedClub.name}</h1>
+        <h1 className="text-3xl font-semibold">{props.selected.name}</h1>
         <button className="bg-edit-button px-4 py-1">Edit</button>
       </div>
 
