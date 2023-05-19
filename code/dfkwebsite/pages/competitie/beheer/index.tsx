@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { NextPage } from "next";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import Modal from "../../../components/Modal";
@@ -12,12 +12,22 @@ import * as formHandler from "../../../modules/formHandler";
 import { useRouter } from "next/router";
 import { countFridays } from "../../../modules/general";
 import { competitionRegexPatterns } from "../../../modules/competition";
-import { competitions } from "../../../data";
+import * as dummyData from "../../../data";
+import DataTable from "react-data-table-component";
+import { Icon } from "@iconify/react";
 
 interface TableData {
   team1: string;
   team2: string;
 }
+
+type columnType = {
+  name: string;
+  selector: (row: Competition) => any;
+  sortable?: boolean;
+  filterable?: boolean;
+  grow?: number;
+};
 
 const Clubs: NextPage = () => {
   const router = useRouter();
@@ -26,6 +36,10 @@ const Clubs: NextPage = () => {
 
   const [amountTeams, setAmountTeams] = useState<number>(0);
   const [tableData, setTableData] = useState<TableData[][]>([]);
+
+  const [competitions, setCompetitions] = useState<Competition[]>(
+    dummyData.competitions
+  );
 
   const handleAmountTeamsChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
@@ -99,6 +113,95 @@ const Clubs: NextPage = () => {
       },
     });
   };
+
+  let competitionCount = 0;
+
+  const columns: Array<columnType> = [
+    {
+      name: "ID",
+      selector: (row) => {
+        competitionCount++;
+        return competitionCount;
+      },
+      sortable: true,
+      filterable: true,
+    },
+    {
+      name: "Start datum",
+      selector: (row) =>
+        new Date(row.startDate).toLocaleDateString("nl-BE", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }),
+      sortable: true,
+      filterable: true,
+      grow: 2,
+    },
+    {
+      name: "Type",
+      selector: (row) => row.type,
+      sortable: true,
+      filterable: true,
+      grow: 2,
+    },
+    {
+      name: "Classificatie",
+      selector: (row) => row.classification,
+      sortable: true,
+      filterable: true,
+      grow: 2,
+    },
+    {
+      name: "Aantal teams",
+      selector: (row) => row.playDaysTable?.[0]?.length || 0,
+      sortable: true,
+      filterable: true,
+      grow: 2,
+    },
+    {
+      name: "Acties",
+      selector: (row) => (
+        <div className="flex gap-3 flex-nowrap">
+          <Icon
+            className="cursor-pointer text-2xl"
+            onClick={() => onClickDelete(row.competitionID)}
+            icon="mdi:delete"
+          />
+        </div>
+      ),
+      grow: 1,
+    },
+  ];
+
+  const onClickDelete = async (id: string) => {
+    if (!window.confirm("Ben je zeker dat je deze competitie wil verwijderen?"))
+      return;
+    if (process.env.NEXT_PUBLIC_NO_API) {
+      setCompetitions(
+        competitions.filter((competition) => competition.competitionID != id)
+      );
+      return;
+    }
+
+    await fetch(`/api/competitions/${id}`, { method: "DELETE" }).then(
+      (response) => {
+        if (response.status != 200)
+          throw new Error("Competition not deleted correctly");
+        setCompetitions(
+          competitions.filter((competition) => competition.competitionID != id)
+        );
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_NO_API) {
+      fetch(`/api/competitions`)
+        .then((competitions) => competitions.json())
+        .then((parsedCompetitions) => setCompetitions(parsedCompetitions));
+    }
+  }, []);
 
   return (
     <div>
@@ -211,6 +314,12 @@ const Clubs: NextPage = () => {
         addButtonName="competition"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
+      />
+      <DataTable
+        title="Projecten"
+        columns={columns}
+        data={competitions}
+        pagination
       />
     </div>
   );
