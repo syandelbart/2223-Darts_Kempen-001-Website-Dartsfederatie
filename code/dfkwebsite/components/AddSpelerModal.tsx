@@ -3,6 +3,8 @@ import { FunctionComponent, useState } from "react";
 import { playerRegexPatterns } from "../modules/player";
 import * as formHandler from "../modules/formHandler";
 import Modal from "./Modal";
+import DefaultInput from "./DefaultInput";
+import DefaultCheckbox from "./DefaultCheckbox";
 
 type AddSpelerModalData = {
   addModalOpen: boolean;
@@ -39,55 +41,30 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       <div className="flex flex-col">
-        <label htmlFor="firstname" className="text-xl text-white mt-16 mb-2">
-          Voornaam
-        </label>
-        <input
-          type="text"
+        <DefaultInput
           name="firstname"
-          id="firstname"
+          label="Voornaam"
           placeholder="Voornaam"
-          value={formValues.name}
+          value={formValues.firstname}
           onChange={handleChange}
-          className="bg-gray-200 p-2"
         />
-        <label htmlFor="lastname" className="text-xl text-white mt-5 mb-2">
-          Achternaam
-        </label>
-        <input
-          type="text"
+
+        <DefaultInput
           name="lastname"
-          id="lastname"
+          label="Achternaam"
           placeholder="Achternaam"
-          value={formValues.name}
+          value={formValues.lastname}
           onChange={handleChange}
-          className="bg-gray-200 p-2"
         />
-        <label htmlFor="phone" className="text-xl text-white mt-5 mb-2">
-          Telefoonnummer
-        </label>
-        <input
-          type="text"
+        <DefaultInput
           name="phone"
-          id="phone"
+          label="Telefoonnummer"
           placeholder="Telefoonnummer"
-          value={formValues.name}
+          value={formValues.phone}
           onChange={handleChange}
-          className="bg-gray-200 p-2"
         />
         <div className="mt-5 mb-2">
-          <label htmlFor="allowed" className="text-xl text-white mr-3">
-            Speelgerechtigd
-          </label>
-          <input
-            type="checkbox"
-            name="allowed"
-            id="allowed"
-            placeholder="Speelgerechtigd"
-            value={formValues.name}
-            onChange={handleChange}
-            className="bg-gray-200 p-2"
-          />
+          <DefaultCheckbox label="Speelgerechtigd" name="allowed" />
         </div>
         <button
           type="submit"
