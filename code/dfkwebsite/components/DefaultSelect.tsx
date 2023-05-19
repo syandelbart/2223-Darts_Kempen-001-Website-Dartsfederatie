@@ -19,6 +19,7 @@ type DefaultSelectData = {
   defaultOptionEnabled?: boolean;
   defaultOptionLabel?: string;
   defaultOptionValue?: string;
+  labelEnabled?: boolean;
 };
 
 const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
@@ -26,6 +27,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
   name,
   label,
   value,
+  labelEnabled = true,
   onChange,
   id,
   placeholder = "",
@@ -45,17 +47,19 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
-        {label ?? name}{" "}
-        {regex && (
-          <span
-            className="text-sm"
-            style={{ color: isValidRegex() ? "greenyellow" : "red" }}
-          >
-            {isValidRegex() ? "Geldig" : "Ongeldig"}
-          </span>
-        )}
-      </label>
+      {labelEnabled && (
+        <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
+          {label ?? name}{" "}
+          {regex && (
+            <span
+              className="text-sm"
+              style={{ color: isValidRegex() ? "greenyellow" : "red" }}
+            >
+              {isValidRegex() ? "Geldig" : "Ongeldig"}
+            </span>
+          )}
+        </label>
+      )}
 
       <select
         name={name}
