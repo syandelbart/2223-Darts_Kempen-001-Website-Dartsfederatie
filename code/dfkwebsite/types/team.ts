@@ -8,7 +8,7 @@ export type Team = {
   captainID?: string;
   classification: CLASSIFICATION;
   clubID: string;
-  playersID: string[];
+  playersID?: string[];
   deleted?: boolean;
 };
 
