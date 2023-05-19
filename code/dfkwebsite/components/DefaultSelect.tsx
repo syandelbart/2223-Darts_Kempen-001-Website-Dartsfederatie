@@ -5,7 +5,7 @@ type SelectOption = {
   label?: string;
 };
 
-type DefaultInputData = {
+type DefaultSelectData = {
   type?: string;
   id?: string;
   placeholder?: string;
@@ -21,7 +21,7 @@ type DefaultInputData = {
   defaultOptionValue?: string;
 };
 
-const DefaultInput: FunctionComponent<DefaultInputData> = ({
+const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
   type = "text",
   name,
   label,
@@ -83,4 +83,4 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
   );
 };
 
-export default DefaultInput;
+export default DefaultSelect;
