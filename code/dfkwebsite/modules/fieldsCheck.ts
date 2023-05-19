@@ -7,13 +7,14 @@ export const checkFields = (
   formData: FormData,
   fieldsInformation: { [key: string]: fieldInformation }
 ) => {
+  console.log(formData, fieldsInformation);
   const fields = Object.keys(fieldsInformation);
 
   for (const field of fields) {
     const value = fieldsInformation[field];
 
     // If value is required and formData does not contain the field, error
-    if (value?.required && !formData.has(field))
+    if (value?.required && (!formData.has(field) || formData.get(field) == ""))
       throw new Error(`Field "${field}" is required.`);
 
     // if the field has a regex field, and the form has this field, it will check the pattern, if it doesn't match, it throws an error

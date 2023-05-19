@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { countFridays } from "../../../modules/general";
 import { competitionRegexPatterns } from "../../../modules/competition";
 import { competitions } from "../../../data";
+import InformationBox from "../../../components/InformationBox";
 
 interface TableData {
   team1: string;
@@ -68,37 +69,59 @@ const Clubs: NextPage = () => {
   });
 
   const handleChange = (event: any) => {
-    formHandler.handleChange(event, setFormValues, formValues);
+    formHandler.handleChange(
+      event,
+      setFormValues,
+      formValues,
+      setHandledChange
+    );
   };
 
   const handleSubmit = async (event: any) => {
     console.log(formValues);
 
-    const competition: Competition | null = await formHandler.handleSubmit(
+    let competition: Competition | null = null;
+
+    competition = await formHandler.handleSubmit(
       event,
       formValues,
       competitionRegexPatterns,
       "/api/competition",
+      setInformationBoxMessage,
+      setHandleSubmitSuccess,
       competitions[0],
       process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
     );
 
-    if (!competition) return;
+    if (!competition) {
+      return;
+    }
 
-    router.push({
-      pathname: "/competitie/beheer/playdays",
-      query: {
-        competitionID: competition.competitionID,
-        // Passing extra variables if the API is disabled
-        query: true,
-        startDate: formValues.startdate,
-        endDate: formValues.enddate,
-        amountTeams: formValues.amountteams,
-        classification: formValues.classification,
-        type: formValues.type,
-      },
-    });
+    setInformationBoxMessage(
+      "Competitie succesvol aangemaakt, je wordt binnen 5 seconden doorgestuurd naar de speeldagen pagina."
+    );
+    setTimeout(() => {
+      if (!competition) return;
+
+      router.push({
+        pathname: "/competitie/beheer/playdays",
+        query: {
+          competitionID: competition.competitionID,
+          // Passing extra variables if the API is disabled
+          query: true,
+          startDate: formValues.startdate,
+          endDate: formValues.enddate,
+          amountTeams: formValues.amountteams,
+          classification: formValues.classification,
+          type: formValues.type,
+        },
+      });
+    }, 5000);
   };
+
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(false);
+  const [handledChange, setHandledChange] = useState(false);
+  const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   return (
     <div>
@@ -107,6 +130,13 @@ const Clubs: NextPage = () => {
         modalOpen={addModalOpen}
         setModalOpen={setAddModalOpen}
       >
+        <InformationBox
+          success={handleSubmitSuccess}
+          show={informationBoxMessage !== ""}
+          onClose={() => setInformationBoxMessage("")}
+        >
+          {informationBoxMessage}
+        </InformationBox>
         <div>
           <DefaultInput
             name="startdate"
@@ -178,7 +208,7 @@ const Clubs: NextPage = () => {
             <select
               name="type"
               className="p-2 text-black"
-              value={formValues.typ}
+              value={formValues.type}
               onChange={handleChange}
             >
               <option key={"Selecteer"} value="">
@@ -199,6 +229,7 @@ const Clubs: NextPage = () => {
             type="submit"
             className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
             onClick={handleSubmit}
+            disabled={!handledChange}
           >
             Aanmaken
           </button>
