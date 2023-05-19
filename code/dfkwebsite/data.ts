@@ -107,6 +107,7 @@ export let club: Array<Club> = [
       postalCode: "2480",
     },
     contactPersonID: "1",
+    teamIDs: ["1", "2", "3"],
   },
 ];
 
