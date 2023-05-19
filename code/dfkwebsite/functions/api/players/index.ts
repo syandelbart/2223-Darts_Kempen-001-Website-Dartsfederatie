@@ -22,7 +22,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const players = await env.PLAYERS.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let playersMapped = players.keys.map(async (players) => {

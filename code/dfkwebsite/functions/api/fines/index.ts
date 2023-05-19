@@ -14,7 +14,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const fines = await env.FINES.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let finesMapped = fines.keys.map(async (fines) => {

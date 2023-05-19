@@ -15,7 +15,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const teams = await env.TEAMS.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let teamsMapped = teams.keys.map(async (teams) => {
