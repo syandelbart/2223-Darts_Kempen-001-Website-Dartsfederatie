@@ -4,7 +4,6 @@ import ClubCard from "../../../components/ClubCard";
 import ClubModal from "../../../components/ClubModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
-
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
 import { Club } from "../../../types/club";
@@ -55,7 +54,7 @@ const Clubs: NextPage = () => {
               results++;
             })
             .map((club) => (
-              <Card>
+              <Card key={club}>
                 <ClubCard clubData={club} setIsOpen={setIsOpen} />
               </Card>
             ))
