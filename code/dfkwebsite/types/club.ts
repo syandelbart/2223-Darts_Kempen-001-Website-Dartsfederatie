@@ -1,6 +1,7 @@
-import { Address, Fine } from "./general";
+import { Address } from "./general";
 import { Team } from "./team";
 import { Player } from "./player";
+import { Fine } from "./fine";
 
 export type Club = {
   clubID: string;

@@ -56,15 +56,6 @@ export enum ENTITY_TYPE {
   CLUB = "CLUB",
 }
 
-export type Fine = {
-  fineID: string;
-  entityID: number;
-  entityType: ENTITY_TYPE;
-  amount: number;
-  date: number;
-  reason: string;
-  entity: Player | Team | Club;
-};
 
 export type PersonRanking = {
   id: number;
