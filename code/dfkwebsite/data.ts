@@ -26,7 +26,7 @@ export const teams: Array<TeamFront> = [
     name: "sunt laborum",
     classification: CLASSIFICATION.PROVINCIAAL,
     clubID: "id:123456798",
-    playersID: ["id:123456798", "id:123456798", "id:123456798"],
+    playerIDs: ["id:123456798", "id:123456798", "id:123456798"],
     teamID: "id:123456798",
     captainID: "id:123456798",
     captain: {
