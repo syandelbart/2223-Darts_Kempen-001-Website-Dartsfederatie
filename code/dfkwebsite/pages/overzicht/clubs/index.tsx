@@ -39,7 +39,7 @@ const Clubs: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
       />
       <SelectedModal title="Selected Club" isOpen={isOpen} setIsOpen={setIsOpen}>
-        <TeamSpelers selected={clubs[0]} />
+        <TeamSpelers />
       </SelectedModal>
       <CardGrid>
         {clubs.length === 0 ? (
