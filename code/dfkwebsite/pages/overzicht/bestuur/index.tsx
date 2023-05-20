@@ -32,7 +32,7 @@ const Bestuur: NextPage = () => {
         titleName="Bestuur"
         search={search}
         setSearch={setSearch}
-        addButtonName="bestuur"
+        addButtonName="Bestuur"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
