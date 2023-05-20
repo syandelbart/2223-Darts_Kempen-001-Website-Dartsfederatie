@@ -29,6 +29,8 @@ const Clubs: NextPage = () => {
       <AddClubModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
+        clubs={clubs}
+        setClubs={setClubs}
       />
       <OverzichtTopBar
         titleName="Clubs"
