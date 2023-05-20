@@ -1,7 +1,7 @@
 import { Address } from "./general";
-import { Team, TeamFront } from "./team";
+import { TeamFront } from "./team";
 import { Player } from "./player";
-import { Fine, FineFront } from "./fine";
+import { FineFront } from "./fine";
 
 export type Club = {
   clubID: string;
