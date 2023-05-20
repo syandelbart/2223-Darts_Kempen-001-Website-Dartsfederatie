@@ -1,7 +1,7 @@
 import { Address } from "./general";
-import { Team } from "./team";
+import { Team, TeamFront } from "./team";
 import { Player } from "./player";
-import { Fine } from "./fine";
+import { Fine, FineFront } from "./fine";
 
 export type Club = {
   clubID: string;
@@ -14,7 +14,7 @@ export type Club = {
 };
 
 export interface ClubFront extends Club {
-  teams?: Team[];
-  fines?: Fine[];
+  teams?: TeamFront[];
+  fines?: FineFront[];
   contactPerson: Player;
 }
