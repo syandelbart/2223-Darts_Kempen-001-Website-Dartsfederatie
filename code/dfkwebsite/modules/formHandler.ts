@@ -34,6 +34,7 @@ export const handleSubmit = async (
   noAPI?: boolean
 ) => {
   if (informationOutputState) informationOutputState("");
+  if (setSubmitSuccess) setSubmitSuccess(null);
   try {
     // Do something with formValues, such as send it to a server
     if (!value) throw new Error("No value was provided");
@@ -64,6 +65,7 @@ export const handleSubmit = async (
   } catch (e: any) {
     if (informationOutputState) informationOutputState(e.message);
     if (setSubmitSuccess) setSubmitSuccess(false);
+    console.log(e.message);
     return;
   }
 };
