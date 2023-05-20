@@ -9,6 +9,10 @@ import TeamCard from "../../../components/TeamCard";
 import TeamSpelers from "../../../components/TeamSpelers";
 import { TeamFront } from "../../../types/team";
 import Modal from "../../../components/Modal";
+import {
+  handleDeletePlayerFromTeam,
+  handleMakePlayerCaptain,
+} from "../../../modules/overzicht";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -16,14 +20,6 @@ const Teams: NextPage = () => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [teams, setTeams] = useState<TeamFront[]>(dummyData.teams);
   const [currentTeam, setCurrentTeam] = useState<TeamFront | null>(null);
-
-  const handleDeletePlayerFromTeam = (playerID: string, teamID: string) => {
-    // Liefste Bryan, dit is aan u! <3
-  };
-
-  const handleMakePlayerCaptain = (playerID: string, teamID: string) => {
-    // Liefste Bryan, dit is aan u! <3
-  };
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
@@ -78,7 +74,11 @@ const Teams: NextPage = () => {
             })
             .map((team) => (
               <Card key={team.name}>
-                <TeamCard teamData={team} setIsOpen={setIsOpen} setCurrentTeam={setCurrentTeam} />
+                <TeamCard
+                  teamData={team}
+                  setIsOpen={setIsOpen}
+                  setCurrentTeam={setCurrentTeam}
+                />
               </Card>
             ))
         )}

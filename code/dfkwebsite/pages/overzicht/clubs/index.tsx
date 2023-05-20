@@ -9,6 +9,10 @@ import { ClubFront } from "../../../types/club";
 import * as dummyData from "../../../data";
 import Modal from "../../../components/Modal";
 import TeamSpelers from "../../../components/TeamSpelers";
+import {
+  handleDeletePlayerFromTeam,
+  handleMakePlayerCaptain,
+} from "../../../modules/overzicht";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
@@ -17,14 +21,6 @@ const Clubs: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
-
-  const handleDeletePlayerFromTeam = (playerID: string, teamID: string) => {
-    // Liefste Bryan, dit is aan u! <3
-  };
-
-  const handleMakePlayerCaptain = (playerID: string, teamID: string) => {
-    // Liefste Bryan, dit is aan u! <3
-  };
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {

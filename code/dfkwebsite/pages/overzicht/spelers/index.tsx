@@ -9,6 +9,10 @@ import { PlayerFront } from "../../../types/player";
 import * as dummyData from "../../../data";
 import TeamSpelers from "../../../components/TeamSpelers";
 import Modal from "../../../components/Modal";
+import {
+  handleDeletePlayerFromTeam,
+  handleMakePlayerCaptain,
+} from "../../../modules/overzicht";
 
 const Spelers: NextPage = () => {
   const [players, setPlayers] = useState<PlayerFront[]>(dummyData.players);
@@ -17,14 +21,6 @@ const Spelers: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
-
-  const handleDeletePlayerFromTeam = (playerID: string, teamID: string) => {
-    // Liefste Bryan, dit is aan u! <3
-  };
-
-  const handleMakePlayerCaptain = (playerID: string, teamID: string) => {
-    // Liefste Bryan, dit is aan u! <3
-  };
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
@@ -87,7 +83,11 @@ const Spelers: NextPage = () => {
             })
             .map((player) => (
               <Card key={player.playerID}>
-                <PlayerComponent playerData={player} setIsOpen={setIsOpen} setCurrentPlayer={setCurrentPlayer} />
+                <PlayerComponent
+                  playerData={player}
+                  setIsOpen={setIsOpen}
+                  setCurrentPlayer={setCurrentPlayer}
+                />
               </Card>
             ))
         )}
