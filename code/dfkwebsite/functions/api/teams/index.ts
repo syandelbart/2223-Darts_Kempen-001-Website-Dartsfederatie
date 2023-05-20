@@ -3,7 +3,7 @@ import { getParams, searchKeyChecker } from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
 import { TeamSubmission, teamRegexPatterns } from "../../../modules/team";
 import { Team } from "../../../types/team";
-import { CLASSIFICATION } from "../../../types/general";
+import { CLASSIFICATION } from "../../../types/competition";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -54,7 +54,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       classification: formData.get(
         TeamSubmission.CLASSIFICATION
       ) as CLASSIFICATION,
-      clubID: formData.get(TeamSubmission.CLUB),
+      clubID: formData.get(TeamSubmission.CLUBID),
     };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
@@ -98,8 +98,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
         classification: formData.get(TeamSubmission.CLASSIFICATION)
           ? (formData.get(TeamSubmission.CLASSIFICATION) as CLASSIFICATION)
           : teamData.classification,
-        clubID: formData.get(TeamSubmission.CLUB)
-          ? Number(formData.get(TeamSubmission.CLUB))
+        clubID: formData.get(TeamSubmission.CLUBID)
+          ? formData.get(TeamSubmission.CLUBID)
           : teamData.clubID,
       };
 
