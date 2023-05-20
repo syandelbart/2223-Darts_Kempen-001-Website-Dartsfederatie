@@ -1,13 +1,18 @@
-import { FunctionComponent, useState } from "react";
+import { Dispatch, FunctionComponent, useState } from "react";
 import { clubRegexPatterns } from "../modules/club";
 import * as formHandler from "../modules/formHandler";
 import Modal from "./Modal";
 import DefaultInput from "./DefaultInput";
 import DefaultSelect from "./DefaultSelect";
+import InformationBox from "./InformationBox";
+import * as dummyData from "../data";
+import { Club } from "../types/club";
 
 type AddClubModalData = {
   addModalOpen: boolean;
-  setAddModalOpen: any;
+  setAddModalOpen: Dispatch<React.SetStateAction<boolean>>;
+  clubs: Club[];
+  setClubs: Dispatch<React.SetStateAction<Club[]>>;
 };
 
 const AddClubModal: FunctionComponent<AddClubModalData> = (
@@ -27,13 +32,35 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   };
 
   const handleSubmit = async (event: any) => {
-    formHandler.handleSubmit(
+    console.log("happened");
+
+    let club: Club | null = await formHandler.handleSubmit(
       event,
       formValues,
       clubRegexPatterns,
-      "/api/clubs"
+      "/api/clubs",
+      setInformationBoxMessage,
+      setHandleSubmitSuccess,
+      dummyData.club[0],
+      process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
     );
+
+    if (!club || !handleSubmitSuccess) return;
+
+    setInformationBoxMessage(
+      "Club succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
+    );
+    props.setClubs((clubs) => {
+      if (!club) return clubs;
+      return [...clubs, club];
+    });
+    setTimeout(() => {
+      props.setAddModalOpen(false);
+    }, 5000);
   };
+
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(false);
+  const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   return (
     <Modal
@@ -42,6 +69,14 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       <div className="flex flex-col">
+        <InformationBox
+          success={handleSubmitSuccess}
+          show={informationBoxMessage !== ""}
+          onClose={() => setInformationBoxMessage("")}
+        >
+          {informationBoxMessage}
+        </InformationBox>
+
         <DefaultInput
           name="name"
           label="Clubnaam"
@@ -95,6 +130,8 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           id="contactpersonid"
           label="Contactpersoon"
           options={[{ value: "1", label: "1" }]}
+          value={formValues.contactpersonid}
+          onChange={handleChange}
         />
 
         <button
