@@ -5,13 +5,14 @@ import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import PlayerComponent from "../../../components/Player";
-import { Player } from "../../../types/player";
+import { PlayerFront } from "../../../types/player";
 import * as dummyData from "../../../data";
-import SelectedModal from "../../../components/SelectedModal";
 import TeamSpelers from "../../../components/TeamSpelers";
+import Modal from "../../../components/Modal";
 
 const Spelers: NextPage = () => {
-  const [players, setPlayers] = useState<Player[]>(dummyData.players);
+  const [players, setPlayers] = useState<PlayerFront[]>(dummyData.players);
+  const [currentPlayer, setCurrentPlayer] = useState<PlayerFront | null>(null);
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -47,14 +48,28 @@ const Spelers: NextPage = () => {
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <SelectedModal title="Speler" isOpen={isOpen} setIsOpen={setIsOpen}>
-        <TeamSpelers
-          selected={players[0]}
-          team={players[0].teams[0]}
-          handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
-          handleMakePlayerCaptain={handleMakePlayerCaptain}
-        />
-      </SelectedModal>
+
+      {currentPlayer && (
+        <Modal
+          title={currentPlayer.firstName + " " + currentPlayer.lastName}
+          modalOpen={isOpen}
+          setModalOpen={setIsOpen}
+        >
+          {currentPlayer.teams ? (
+            currentPlayer.teams.map((team) => (
+              <TeamSpelers
+                team={team}
+                key={team.teamID}
+                handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
+                handleMakePlayerCaptain={handleMakePlayerCaptain}
+              />
+            ))
+          ) : (
+            <p>Deze speler heeft geen teams.</p>
+          )}
+        </Modal>
+      )}
+
       <CardGrid>
         {!players || players.length === 0 || results === players.length ? (
           <h1 className="text-4xl font-extrabold text-white">
@@ -72,7 +87,7 @@ const Spelers: NextPage = () => {
             })
             .map((player) => (
               <Card key={player.playerID}>
-                <PlayerComponent playerData={player} setIsOpen={setIsOpen} />
+                <PlayerComponent playerData={player} setIsOpen={setIsOpen} setCurrentPlayer={setCurrentPlayer} />
               </Card>
             ))
         )}

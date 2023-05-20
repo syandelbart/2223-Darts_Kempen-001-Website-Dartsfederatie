@@ -2,19 +2,28 @@ import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
-
 import * as dummyData from "../../../data";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddTeamModal from "../../../components/AddTeamModal";
 import TeamCard from "../../../components/TeamCard";
-import SelectedModal from "../../../components/SelectedModal";
 import TeamSpelers from "../../../components/TeamSpelers";
+import { TeamFront } from "../../../types/team";
+import Modal from "../../../components/Modal";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const [teams, setTeams] = useState(dummyData.teams);
+  const [teams, setTeams] = useState<TeamFront[]>(dummyData.teams);
+  const [currentTeam, setCurrentTeam] = useState<TeamFront | null>(null);
+
+  const handleDeletePlayerFromTeam = (playerID: string, teamID: string) => {
+    // Liefste Bryan, dit is aan u! <3
+  };
+
+  const handleMakePlayerCaptain = (playerID: string, teamID: string) => {
+    // Liefste Bryan, dit is aan u! <3
+  };
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
@@ -38,9 +47,20 @@ const Teams: NextPage = () => {
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <SelectedModal title="Team" isOpen={isOpen} setIsOpen={setIsOpen}>
-        <TeamSpelers selected={teams[0]} />
-      </SelectedModal>
+
+      {currentTeam && (
+        <Modal
+          title={currentTeam.name}
+          modalOpen={isOpen}
+          setModalOpen={setIsOpen}
+        >
+          <TeamSpelers
+            team={currentTeam}
+            handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
+            handleMakePlayerCaptain={handleMakePlayerCaptain}
+          />
+        </Modal>
+      )}
       <CardGrid>
         {teams.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
@@ -58,7 +78,7 @@ const Teams: NextPage = () => {
             })
             .map((team) => (
               <Card key={team.name}>
-                <TeamCard teamData={team} setIsOpen={setIsOpen} />
+                <TeamCard teamData={team} setIsOpen={setIsOpen} setCurrentTeam={setCurrentTeam} />
               </Card>
             ))
         )}
