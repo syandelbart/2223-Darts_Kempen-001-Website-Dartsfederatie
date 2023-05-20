@@ -4,7 +4,7 @@ import {
   COMPETITION_TYPE,
   Competition,
 } from "./types/competition";
-import { Club, ClubFront } from "./types/club";
+import { ClubFront } from "./types/club";
 import { PlayerFront } from "./types/player";
 import { TeamFront } from "./types/team";
 
