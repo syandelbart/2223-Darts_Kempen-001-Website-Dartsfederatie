@@ -5,6 +5,7 @@ export enum TeamSubmission {
   CAPTAINID = "captainid",
   CLUBID = "clubid", 
   CLASSIFICATION = "classification",
+  PLAYERSID = "playersid",
 }
 
 export const teamRegexPatterns: { [key: string]: fieldInformation } = {

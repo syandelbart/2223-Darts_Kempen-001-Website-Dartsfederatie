@@ -5,8 +5,9 @@ export const handleDeletePlayerFromTeam = async (
   if (!playerID || !teamID) throw new Error("No playerID or teamID was given");
 
   try {
-    return await fetch(`/api/teams/${teamID}/players/${playerID}`, {
-      method: "DELETE",
+    return await fetch(`/api/teams/${teamID}/`, {
+      method: "PUT",
+      body: JSON.stringify({ playerIDs: [playerID] }),
     });
   } catch (e: any) {
     console.error(e.message);

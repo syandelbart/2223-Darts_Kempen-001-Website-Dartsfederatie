@@ -53,6 +53,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
       clubID: formData.has(TeamSubmission.CLUBID)
         ? formData.get(TeamSubmission.CLUBID)
         : teamData.clubID,
+      playersID: formData.has(TeamSubmission.PLAYERSID)
+        ? teamData.playersID.filter(
+            (id: string) => id !== formData.get(TeamSubmission.PLAYERSID) // Remove the specified playerID from the array
+          )
+        : teamData.playersID,
     };
 
     // Update the team data in the KV store
