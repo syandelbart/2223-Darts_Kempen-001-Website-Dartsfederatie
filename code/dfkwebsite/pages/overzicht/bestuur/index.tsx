@@ -3,12 +3,10 @@ import { useEffect, useState } from "react";
 import AddBestuurModal from "../../../components/AddBestuurModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
-import ManagementCard, {
-  managementData,
-} from "../../../components/ManagementCard";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 
 import * as dummyData from "../../../data";
+import ManagementCard from "../../../components/ManagementCard";
 
 const Bestuur: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -34,7 +32,7 @@ const Bestuur: NextPage = () => {
         titleName="Bestuur"
         search={search}
         setSearch={setSearch}
-        addButtonName="bestuur"
+        addButtonName="Bestuur"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
@@ -54,7 +52,7 @@ const Bestuur: NextPage = () => {
               results++;
             })
             .map((bestuurslid) => (
-              <Card>
+              <Card key={bestuurslid}>
                 <ManagementCard
                   naam={bestuurslid.naam}
                   functie={bestuurslid.functie}

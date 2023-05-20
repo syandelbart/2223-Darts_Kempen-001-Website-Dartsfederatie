@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import ClubCard from "../../../components/ClubCard";
-import ClubModal from "../../../components/ClubModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
-
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
 import { Club } from "../../../types/club";
 import * as dummyData from "../../../data";
+import SelectedModal from "../../../components/SelectedModal";
+import TeamSpelers from "../../../components/TeamSpelers";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<Club>>(dummyData.club);
@@ -29,16 +29,24 @@ const Clubs: NextPage = () => {
       <AddClubModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
+        clubs={clubs}
+        setClubs={setClubs}
       />
       <OverzichtTopBar
         titleName="Clubs"
         search={search}
         setSearch={setSearch}
-        addButtonName="club"
+        addButtonName="Club"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <ClubModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <SelectedModal
+        title="Selected Club"
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      >
+        <TeamSpelers />
+      </SelectedModal>
       <CardGrid>
         {clubs.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
@@ -55,7 +63,7 @@ const Clubs: NextPage = () => {
               results++;
             })
             .map((club) => (
-              <Card>
+              <Card key={club}>
                 <ClubCard clubData={club} setIsOpen={setIsOpen} />
               </Card>
             ))

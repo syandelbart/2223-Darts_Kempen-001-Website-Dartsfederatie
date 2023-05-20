@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 type InformationBoxData = {
   show?: boolean;
-  success: boolean;
+  success: boolean | null;
   children: any;
   onClose?: Function;
 };

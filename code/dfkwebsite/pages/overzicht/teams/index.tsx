@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import TeamModal from "../../../components/TeamModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 
@@ -8,6 +7,8 @@ import * as dummyData from "../../../data";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddTeamModal from "../../../components/AddTeamModal";
 import TeamCard from "../../../components/TeamCard";
+import SelectedModal from "../../../components/SelectedModal";
+import TeamSpelers from "../../../components/TeamSpelers";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -33,11 +34,13 @@ const Teams: NextPage = () => {
         titleName="Teams"
         search={search}
         setSearch={setSearch}
-        addButtonName="team"
+        addButtonName="Team"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <SelectedModal title="Team" isOpen={isOpen} setIsOpen={setIsOpen}>
+        <TeamSpelers selected={teams[0]} />
+      </SelectedModal>
       <CardGrid>
         {teams.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">

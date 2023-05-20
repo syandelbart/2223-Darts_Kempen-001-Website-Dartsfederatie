@@ -95,9 +95,7 @@ const Clubs: NextPage = () => {
   const handleSubmit = async (event: any) => {
     console.log(formValues);
 
-    let competition: Competition | null = null;
-
-    competition = await formHandler.handleSubmit(
+    let competition: Competition | null = await formHandler.handleSubmit(
       event,
       formValues,
       competitionRegexPatterns,
@@ -223,7 +221,9 @@ const Clubs: NextPage = () => {
     }
   }, []);
 
-  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(false);
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
+    boolean | null
+  >(false);
   const [handledChange, setHandledChange] = useState(false);
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
@@ -328,7 +328,7 @@ const Clubs: NextPage = () => {
         titleName="Beheer Competities"
         search={search}
         setSearch={setSearch}
-        addButtonName="competition"
+        addButtonName="Competition"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />

@@ -19,7 +19,7 @@ export default function NavItem(props: MyProps) {
       onMouseLeave={() => setIsOpen(false)}
     >
       <Link
-        href={"/" + props.href}
+        href={props.href}
         className="capitalize  flex items-center hover:underline hover:underline-offset-[7px] hover:decoration-[3px] hover:decoration-white visible "
       >
         {props.title}
@@ -36,7 +36,7 @@ export default function NavItem(props: MyProps) {
           {props.dropdown.map((item: any, i: number, row) => {
             return (
               <Link
-                href={"/" + item.href}
+                href={item.href}
                 className={`capitalize hover:text-gray-500 py-4 px-6 bg-nav-background ${
                   i + 1 === row.length ? "" : "border-b border-gray-500"
                 }`}

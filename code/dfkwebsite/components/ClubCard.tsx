@@ -10,21 +10,25 @@ interface clubDataInterface {
   setIsOpen: any;
 }
 
-const ClubCard : FunctionComponent<clubDataInterface> = ({clubData,setIsOpen}) => {
+const ClubCard: FunctionComponent<clubDataInterface> = ({
+  clubData,
+  setIsOpen,
+}) => {
   return (
     <div>
       <CardTitle>{clubData.name}</CardTitle>
-        <CardButtonRow>
-          <CardButton onClick={() => setIsOpen(true)}>
-            Spelers
-          </CardButton>
-          <CardButton bg={"bg-edit-button"}>
-            Edit
-          </CardButton>
-        </CardButtonRow>
-      <div className="my-3">
-        <CardIcon icon="mdi:address-marker"
+      <CardButtonRow>
+        <CardButton
+          onClick={() => {
+            setIsOpen(true);
+          }}
         >
+          Teams
+        </CardButton>
+        <CardButton bg={"bg-edit-button"}>Edit</CardButton>
+      </CardButtonRow>
+      <div className="my-3">
+        <CardIcon icon="mdi:address-marker">
           <p>{clubData.address?.postalCode}</p>
           <p>{clubData.address?.city}</p>
           <p>{clubData.address?.street}</p>
@@ -33,6 +37,6 @@ const ClubCard : FunctionComponent<clubDataInterface> = ({clubData,setIsOpen}) =
       </div>
     </div>
   );
-}
+};
 
 export default ClubCard;

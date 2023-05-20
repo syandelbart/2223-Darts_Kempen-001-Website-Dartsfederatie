@@ -18,19 +18,19 @@ const routes = [
     title: "Overzicht",
     dropdown: [
       {
-        href: "overzicht/clubs",
+        href: "/overzicht/clubs",
         title: "Clubs",
       },
       {
-        href: "overzicht/teams",
+        href: "/overzicht/teams",
         title: "Teams",
       },
       {
-        href: "overzicht/spelers",
+        href: "/overzicht/spelers",
         title: "Spelers",
       },
       {
-        href: "overzicht/bestuur",
+        href: "/overzicht/bestuur",
         title: "Bestuur",
       },
     ],

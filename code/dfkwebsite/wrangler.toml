@@ -5,6 +5,8 @@ compatibility_date = "2023-03-13"
 kv_namespaces = [
   { binding = "NEWS", id = "86cdd1ce931747f897b9328306e0b30a", preview_id="86cdd1ce931747f897b9328306e0b30a" },
   { binding = "PLAYERS", id = "785bcbe5d8894158a0f2ea1b9877c694", preview_id="785bcbe5d8894158a0f2ea1b9877c694" },
+  { binding = "TEAMS", id = "08dba4bbf976463da5ecc6271b67a42c", preview_id="08dba4bbf976463da5ecc6271b67a42c" },
+  { binding = "CLUBS", id = "e028c593dd954aa5be355271f1403da5", preview_id="e028c593dd954aa5be355271f1403da5" },
 ]
 
 [env.prod]
@@ -12,4 +14,6 @@ name = "dfkwebsite-prod"
 kv_namespaces = [
   { binding = "NEWS", id = "86cdd1ce931747f897b9328306e0b30a"},
   { binding = "PLAYERS", id = "785bcbe5d8894158a0f2ea1b9877c694"},
+  { binding = "TEAMS", id = "08dba4bbf976463da5ecc6271b67a42c"},
+  { binding = "CLUBS", id = "e028c593dd954aa5be355271f1403da5"},
 ]

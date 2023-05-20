@@ -19,7 +19,15 @@ export const competitions: Array<Competition> = [
   },
 ];
 
-export const players: Array<PlayerFront> = [];
+export const players: Array<PlayerFront> = [
+  {
+    firstName: "Bryan",
+    lastName: "Deckers",
+    phone: "+32 123 45 67 89",
+    allowedToPlay: true,
+    playerID: "id:123456798",
+  },
+];
 
 export const teams: Array<TeamFront> = [
   {
