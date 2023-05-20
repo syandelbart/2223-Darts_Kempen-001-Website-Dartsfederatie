@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { Dispatch, FunctionComponent, SetStateAction } from "react";
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
@@ -7,12 +7,14 @@ import { Club } from "../types/club";
 
 interface clubDataInterface {
   clubData: Club;
-  setIsOpen: any;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setCurrentClub: Dispatch<SetStateAction<Club | null>>;
 }
 
 const ClubCard: FunctionComponent<clubDataInterface> = ({
   clubData,
   setIsOpen,
+  setCurrentClub,
 }) => {
   return (
     <div>
@@ -21,6 +23,7 @@ const ClubCard: FunctionComponent<clubDataInterface> = ({
         <CardButton
           onClick={() => {
             setIsOpen(true);
+            setCurrentClub(clubData);
           }}
         >
           Teams
