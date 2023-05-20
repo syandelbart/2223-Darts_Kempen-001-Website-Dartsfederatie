@@ -27,6 +27,13 @@ export const players: Array<PlayerFront> = [
     allowedToPlay: true,
     playerID: "id:123456798",
   },
+  {
+    firstName: "Joske",
+    lastName: "Vermeulen",
+    phone: "+32 123 45 67 89",
+    allowedToPlay: true,
+    playerID: "id:77777242424",
+  },
 ];
 
 export const teams: Array<TeamFront> = [
@@ -34,7 +41,7 @@ export const teams: Array<TeamFront> = [
     name: "sunt laborum",
     classification: CLASSIFICATION.PROVINCIAAL,
     clubID: "id:123456798",
-    playersID: ["id:123456798", "id:123456798", "id:123456798"],
+    playersID: ["id:123456798", "id:77777242424", "id:123456798"],
     players: players,
     teamID: "id:123456798",
     captainID: "id:123456798",
