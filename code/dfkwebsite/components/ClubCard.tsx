@@ -3,12 +3,12 @@ import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
-import { Club } from "../types/club";
+import { ClubFront } from "../types/club";
 
 interface clubDataInterface {
-  clubData: Club;
+  clubData: ClubFront;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  setCurrentClub: Dispatch<SetStateAction<Club | null>>;
+  setCurrentClub: Dispatch<SetStateAction<ClubFront | null>>;
 }
 
 const ClubCard: FunctionComponent<clubDataInterface> = ({

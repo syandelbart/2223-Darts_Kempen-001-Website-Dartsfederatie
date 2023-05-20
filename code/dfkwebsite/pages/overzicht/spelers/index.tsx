@@ -17,6 +17,14 @@ const Spelers: NextPage = () => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   let results = 0;
 
+  const handleDeletePlayerFromTeam = (playerID: string, teamID: string) => {
+    // Liefste Bryan, dit is aan u! <3
+  };
+
+  const handleMakePlayerCaptain = (playerID: string, teamID: string) => {
+    // Liefste Bryan, dit is aan u! <3
+  };
+
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/players`)
@@ -40,7 +48,12 @@ const Spelers: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
       />
       <SelectedModal title="Speler" isOpen={isOpen} setIsOpen={setIsOpen}>
-        <TeamSpelers selected={players[0]} />
+        <TeamSpelers
+          selected={players[0]}
+          team={players[0].teams[0]}
+          handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
+          handleMakePlayerCaptain={handleMakePlayerCaptain}
+        />
       </SelectedModal>
       <CardGrid>
         {!players || players.length === 0 || results === players.length ? (

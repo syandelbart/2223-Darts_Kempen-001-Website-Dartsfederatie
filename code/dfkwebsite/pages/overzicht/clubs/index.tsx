@@ -5,11 +5,10 @@ import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
-import { Club, ClubFront } from "../../../types/club";
+import { ClubFront } from "../../../types/club";
 import * as dummyData from "../../../data";
-import SelectedModal from "../../../components/SelectedModal";
-import TeamSpelers from "../../../components/TeamSpelers";
 import Modal from "../../../components/Modal";
+import TeamSpelers from "../../../components/TeamSpelers";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
@@ -59,50 +58,12 @@ const Clubs: NextPage = () => {
         >
           {currentClub.teams ? (
             currentClub.teams.map((team) => (
-              <>
-                <div className="flex gap-3 items-center">
-                  <h1 className="text-3xl font-semibold">{team.name}</h1>
-                  <button className="bg-edit-button px-4 py-1">Edit</button>
-                </div>
-
-                <div>
-                  <div className="flex flex-col gap-2">
-                    {team.players ? (
-                      team.players.map((player) => (
-                        <div className="flex gap-3" key={player.playerID}>
-                          <p>
-                            {player.firstName} {player.lastName}
-                          </p>
-                          <button
-                            className="bg-delete-button px-8 ml-3"
-                            onClick={() =>
-                              handleDeletePlayerFromTeam(
-                                player.playerID,
-                                team.teamID
-                              )
-                            }
-                          >
-                            Verwijder van team
-                          </button>
-                          <button
-                            className="bg-edit-button px-8 text-white"
-                            onClick={() =>
-                              handleMakePlayerCaptain(
-                                player.playerID,
-                                team.teamID
-                              )
-                            }
-                          >
-                            Maak kapitein
-                          </button>
-                        </div>
-                      ))
-                    ) : (
-                      <p>Dit team heeft geen spelers</p>
-                    )}
-                  </div>
-                </div>
-              </>
+              <TeamSpelers
+                team={team}
+                key={team.teamID}
+                handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
+                handleMakePlayerCaptain={handleMakePlayerCaptain}
+              />
             ))
           ) : (
             <p>Deze club heeft geen teams.</p>
