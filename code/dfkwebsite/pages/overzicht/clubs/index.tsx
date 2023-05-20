@@ -38,7 +38,11 @@ const Clubs: NextPage = () => {
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <SelectedModal title="Selected Club" isOpen={isOpen} setIsOpen={setIsOpen}>
+      <SelectedModal
+        title="Selected Club"
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      >
         <TeamSpelers />
       </SelectedModal>
       <CardGrid>
@@ -58,10 +62,7 @@ const Clubs: NextPage = () => {
             })
             .map((club) => (
               <Card key={club}>
-                <ClubCard
-                  clubData={club}
-                  setIsOpen={setIsOpen}
-                />
+                <ClubCard clubData={club} setIsOpen={setIsOpen} />
               </Card>
             ))
         )}

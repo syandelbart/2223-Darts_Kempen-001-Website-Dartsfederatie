@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import { FunctionComponent, useState } from "react";
 import { playerRegexPatterns } from "../modules/player";
 import * as formHandler from "../modules/formHandler";

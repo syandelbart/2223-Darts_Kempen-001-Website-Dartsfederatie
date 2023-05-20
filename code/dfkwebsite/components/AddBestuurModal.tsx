@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
 import Modal from "./Modal";
 import DefaultInput from "./DefaultInput";
