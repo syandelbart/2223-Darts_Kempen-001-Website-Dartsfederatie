@@ -1,10 +1,30 @@
-export const handleDeletePlayerFromTeam = (
+export const handleDeletePlayerFromTeam = async (
   playerID: string,
   teamID: string
 ) => {
-  // Liefste Bryan, dit is aan u! <3
+  if (!playerID || !teamID) throw new Error("No playerID or teamID was given");
+
+  try {
+    return await fetch(`/api/teams/${teamID}/players/${playerID}`, {
+      method: "DELETE",
+    });
+  } catch (e: any) {
+    console.error(e.message);
+  }
 };
 
-export const handleMakePlayerCaptain = (playerID: string, teamID: string) => {
-  // Liefste Bryan, dit is aan u! <3
+export const handleMakePlayerCaptain = async (
+  playerID: string,
+  teamID: string
+) => {
+  if (!playerID || !teamID) throw new Error("No playerID or teamID was given");
+
+  try {
+    return await fetch(`/api/teams/${teamID}/`, {
+      method: "PUT",
+      body: JSON.stringify({ captainID: playerID }),
+    });
+  } catch (e: any) {
+    console.error(e.message);
+  }
 };
