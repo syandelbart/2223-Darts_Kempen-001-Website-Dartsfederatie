@@ -29,7 +29,7 @@ export const handleSubmit = async (
   },
   apiLink: string,
   informationOutputState?: Dispatch<SetStateAction<string>>,
-  setSubmitSuccess?: Dispatch<SetStateAction<boolean>>,
+  setSubmitSuccess?: Dispatch<SetStateAction<boolean | null>>,
   dummy?: any,
   noAPI?: boolean
 ) => {

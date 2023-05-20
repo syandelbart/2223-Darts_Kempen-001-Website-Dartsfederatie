@@ -59,7 +59,9 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     }, 5000);
   };
 
-  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(false);
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
+    boolean | null
+  >(false);
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   return (

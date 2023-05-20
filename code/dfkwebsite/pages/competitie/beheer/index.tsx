@@ -221,7 +221,9 @@ const Clubs: NextPage = () => {
     }
   }, []);
 
-  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(false);
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
+    boolean | null
+  >(false);
   const [handledChange, setHandledChange] = useState(false);
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
