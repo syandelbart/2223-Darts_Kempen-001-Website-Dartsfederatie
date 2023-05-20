@@ -95,9 +95,7 @@ const Clubs: NextPage = () => {
   const handleSubmit = async (event: any) => {
     console.log(formValues);
 
-    let competition: Competition | null = null;
-
-    competition = await formHandler.handleSubmit(
+    let competition: Competition | null = await formHandler.handleSubmit(
       event,
       formValues,
       competitionRegexPatterns,
