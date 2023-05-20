@@ -1,8 +1,4 @@
 import { FunctionComponent } from "react";
-import CardButton from "./CardButton";
-import CardButtonRow from "./CardButtonRow";
-import CardIcon from "./CardIcon";
-import CardTitle from "./CardTitle";
 import { TeamFront } from "../types/team";
 import { Player } from "../types/player";
 
