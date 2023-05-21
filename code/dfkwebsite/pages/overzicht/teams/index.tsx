@@ -82,11 +82,6 @@ const Teams: NextPage = () => {
               </Card>
             ))
         )}
-        {results === teams.length && (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen teams gevonden
-          </h1>
-        )}
       </CardGrid>
     </div>
   );
