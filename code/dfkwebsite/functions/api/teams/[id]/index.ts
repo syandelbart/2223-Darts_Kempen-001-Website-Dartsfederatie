@@ -54,9 +54,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
         ? formData.get(TeamSubmission.CLUBID)
         : teamData.clubID,
       playersID: formData.has(TeamSubmission.PLAYERSID)
-        ? teamData.playersID.filter(
-            (id: string) => id !== formData.get(TeamSubmission.PLAYERSID) // Remove the specified playerID from the array
-          )
+        ? formData.get(TeamSubmission.PLAYERSID).split(",") // The playersID is a string of comma separated values
         : teamData.playersID,
     };
 
