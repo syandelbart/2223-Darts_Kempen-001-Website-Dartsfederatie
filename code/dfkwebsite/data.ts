@@ -4,7 +4,7 @@ import {
   COMPETITION_TYPE,
   Competition,
 } from "./types/competition";
-import { Club } from "./types/club";
+import { ClubFront } from "./types/club";
 import { PlayerFront } from "./types/player";
 import { TeamFront } from "./types/team";
 
@@ -27,6 +27,13 @@ export const players: Array<PlayerFront> = [
     allowedToPlay: true,
     playerID: "id:123456798",
   },
+  {
+    firstName: "Joske",
+    lastName: "Vermeulen",
+    phone: "+32 123 45 67 89",
+    allowedToPlay: true,
+    playerID: "id:77777242424",
+  },
 ];
 
 export const teams: Array<TeamFront> = [
@@ -34,7 +41,8 @@ export const teams: Array<TeamFront> = [
     name: "sunt laborum",
     classification: CLASSIFICATION.PROVINCIAAL,
     clubID: "id:123456798",
-    playersID: ["id:123456798", "id:123456798", "id:123456798"],
+    playersID: ["id:123456798", "id:77777242424", "id:123456798"],
+    players: players,
     teamID: "id:123456798",
     captainID: "id:123456798",
     captain: {
@@ -104,7 +112,7 @@ export const bestuur: Array<managementData> = [
 ];
 
 //Given the following data, can you create a function that will make multiple of this dummy data?
-export let club: Array<Club> = [
+export let club: Array<ClubFront> = [
   {
     clubID: "1",
     name: "Dessel Sport",
@@ -116,6 +124,8 @@ export let club: Array<Club> = [
     },
     contactPersonID: "1",
     teamIDs: ["1", "2", "3"],
+    teams: teams,
+    contactPerson: players[0],
   },
 ];
 

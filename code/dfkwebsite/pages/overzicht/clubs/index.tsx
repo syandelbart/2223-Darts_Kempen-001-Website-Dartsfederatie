@@ -5,13 +5,18 @@ import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
-import { Club } from "../../../types/club";
+import { ClubFront } from "../../../types/club";
 import * as dummyData from "../../../data";
-import SelectedModal from "../../../components/SelectedModal";
+import Modal from "../../../components/Modal";
 import TeamSpelers from "../../../components/TeamSpelers";
+import {
+  handleDeletePlayerFromTeam,
+  handleMakePlayerCaptain,
+} from "../../../modules/overzicht";
 
 const Clubs: NextPage = () => {
-  const [clubs, setClubs] = useState<Array<Club>>(dummyData.club);
+  const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
+  const [currentClub, setCurrentClub] = useState<ClubFront | null>(null);
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -40,13 +45,28 @@ const Clubs: NextPage = () => {
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <SelectedModal
-        title="Selected Club"
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      >
-        <TeamSpelers />
-      </SelectedModal>
+
+      {currentClub && (
+        <Modal
+          title={currentClub.name}
+          modalOpen={isOpen}
+          setModalOpen={setIsOpen}
+        >
+          {currentClub.teams ? (
+            currentClub.teams.map((team) => (
+              <TeamSpelers
+                team={team}
+                key={team.teamID}
+                handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
+                handleMakePlayerCaptain={handleMakePlayerCaptain}
+              />
+            ))
+          ) : (
+            <p>Deze club heeft geen teams.</p>
+          )}
+        </Modal>
+      )}
+
       <CardGrid>
         {clubs.length === 0 ? (
           <h1 className="text-4xl font-extrabold text-white">
@@ -64,7 +84,11 @@ const Clubs: NextPage = () => {
             })
             .map((club) => (
               <Card key={club}>
-                <ClubCard clubData={club} setIsOpen={setIsOpen} />
+                <ClubCard
+                  clubData={club}
+                  setIsOpen={setIsOpen}
+                  setCurrentClub={setCurrentClub}
+                />
               </Card>
             ))
         )}

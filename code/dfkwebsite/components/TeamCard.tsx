@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { Dispatch, FunctionComponent, SetStateAction } from "react";
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
@@ -13,18 +13,27 @@ export type teamData = {
 
 interface teamDataInterface {
   teamData: TeamFront;
-  setIsOpen: any;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setCurrentTeam: Dispatch<SetStateAction<TeamFront | null>>;
 }
 
 const TeamCard: FunctionComponent<teamDataInterface> = ({
   teamData,
   setIsOpen,
+  setCurrentTeam,
 }) => {
   return (
     <>
       <CardTitle>{teamData.name}</CardTitle>
       <CardButtonRow>
-        <CardButton onClick={() => setIsOpen(true)}>Spelers</CardButton>
+        <CardButton
+          onClick={() => {
+            setIsOpen(true);
+            setCurrentTeam(teamData);
+          }}
+        >
+          Spelers
+        </CardButton>
         <CardButton bg={"bg-[#95A4F3]"}>Edit</CardButton>
       </CardButtonRow>
       <div className="my-3">
