@@ -6,13 +6,13 @@ import DefaultInput from "./DefaultInput";
 import DefaultSelect from "./DefaultSelect";
 import InformationBox from "./InformationBox";
 import * as dummyData from "../data";
-import { Club } from "../types/club";
+import { Club, ClubFront } from "../types/club";
 
 type AddClubModalData = {
   addModalOpen: boolean;
   setAddModalOpen: Dispatch<React.SetStateAction<boolean>>;
   clubs: Club[];
-  setClubs: Dispatch<React.SetStateAction<Club[]>>;
+  setClubs: Dispatch<React.SetStateAction<ClubFront[]>>;
 };
 
 const AddClubModal: FunctionComponent<AddClubModalData> = (
@@ -52,7 +52,8 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     );
     props.setClubs((clubs) => {
       if (!club) return clubs;
-      return [...clubs, club];
+      // The new Club will be of type Club, but we want it to be of type ClubFront
+      return [...clubs, club as ClubFront];
     });
     setTimeout(() => {
       props.setAddModalOpen(false);

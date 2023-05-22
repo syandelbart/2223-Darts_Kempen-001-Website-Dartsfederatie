@@ -14,7 +14,7 @@ const routes = [
     title: "Startpagina",
   },
   {
-    href: "overzicht",
+    href: "/overzicht",
     title: "Overzicht",
     dropdown: [
       {
@@ -36,43 +36,43 @@ const routes = [
     ],
   },
   {
-    href: "info",
+    href: "/info",
     title: "Info",
     dropdown: [
       {
-        href: "info/nieuws",
+        href: "/info/nieuws",
         title: "Nieuws",
       },
       {
-        href: "info/reglementen",
+        href: "/info/reglementen",
         title: "Reglementen",
       },
       {
-        href: "info/inschrijvingen",
+        href: "/info/inschrijvingen",
         title: "Inschrijvingen",
       },
     ],
   },
   {
-    href: "competitie",
+    href: "/competitie",
     title: "Competitie",
     dropdown: [
       {
-        href: "competitie/speeldagen",
+        href: "/competitie/speeldagen",
         title: "Speeldagen",
       },
       {
-        href: "competitie/klassement",
+        href: "/competitie/klassement",
         title: "Klassement",
       },
       {
-        href: "competitie/individueleranking",
+        href: "/competitie/individueleranking",
         title: "Individuele ranking",
       },
     ],
   },
   {
-    href: "contact",
+    href: "/contact",
     title: "Contact",
   },
 ];

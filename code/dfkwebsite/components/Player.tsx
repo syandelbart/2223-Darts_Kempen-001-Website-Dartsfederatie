@@ -9,17 +9,26 @@ import { Player } from "../types/player";
 interface playerDataInterface {
   playerData: Player;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setCurrentPlayer: Dispatch<SetStateAction<Player | null>>;
 }
 
 const PlayerComponent: FunctionComponent<playerDataInterface> = ({
   playerData,
   setIsOpen,
+  setCurrentPlayer,
 }) => {
   return (
     <div>
       <CardTitle>{playerData.firstName + " " + playerData.lastName}</CardTitle>
       <CardButtonRow>
-        <CardButton onClick={() => setIsOpen(true)}>Team</CardButton>
+        <CardButton
+          onClick={() => {
+            setIsOpen(true);
+            setCurrentPlayer(playerData);
+          }}
+        >
+          Team
+        </CardButton>
         <CardButton bg={"bg-edit-button"}>Edit</CardButton>
       </CardButtonRow>
       <div className="my-3">

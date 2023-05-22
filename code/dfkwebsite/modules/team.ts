@@ -2,14 +2,16 @@ import { fieldInformation } from "./fieldsCheck";
 
 export enum TeamSubmission {
   NAME = "name",
-  CLUB = "club", // TODO: change to clubID
+  CAPTAINID = "captainid",
+  CLUBID = "clubid", 
   CLASSIFICATION = "classification",
-  PLAYERS = "playersID",
+  PLAYERSID = "playersid",
 }
 
 export const teamRegexPatterns: { [key: string]: fieldInformation } = {
   [TeamSubmission.NAME]: { regex: /^[a-zA-Z ]+$/, required: true },
-  [TeamSubmission.CLUB]: { regex: /^[0-9]+$/, required: true },
+  [TeamSubmission.CAPTAINID]: { regex: /^[0-9]+$/, required: true },
+  [TeamSubmission.CLUBID]: { regex: /^[0-9]+$/, required: true },
   [TeamSubmission.CLASSIFICATION]: { regex: /^[0-9]+$/, required: true },
   [TeamSubmission.PLAYERS]: {
     // This regex matches the following pattern:

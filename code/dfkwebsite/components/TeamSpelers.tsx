@@ -1,51 +1,57 @@
 import { FunctionComponent } from "react";
+import { TeamFront } from "../types/team";
+import { Player } from "../types/player";
 
-type teamSpelersData = {
-  selected?: any;
+export type teamSpelersData = {
+  team: TeamFront;
+  handleDeletePlayerFromTeam: Function;
+  handleMakePlayerCaptain: Function;
+  selected?: Player;
 };
 
-const TeamSpelers: FunctionComponent<teamSpelersData> = (
-  props: teamSpelersData
-) => {
+const TeamSpelers: FunctionComponent<teamSpelersData> = ({
+  team,
+  handleDeletePlayerFromTeam,
+  handleMakePlayerCaptain,
+}) => {
   return (
     <>
       <div className="flex gap-3 items-center">
-        <h1 className="text-3xl font-semibold">Team naam</h1>
+        <h1 className="text-3xl font-semibold">{team.name}</h1>
         <button className="bg-edit-button px-4 py-1">Edit</button>
       </div>
 
       <div>
         <div className="flex flex-col gap-2">
-          <div className="flex gap-3">
-            <p>John Doe</p>
-            <button className="bg-delete-button px-8 ml-3">
-              Verwijder van team
-            </button>
-            <button className="bg-edit-button px-8 text-white">
-              Maak kapitein
-            </button>
-          </div>
-          <div className="flex gap-3">
-            <p>John Doe</p>
-            <button className="bg-delete-button px-8 ml-3">
-              Verwijder van team
-            </button>
-            <button className="bg-edit-button px-8">Maak kapitein</button>
-          </div>
-          <div className="flex gap-3">
-            <p>John Doe</p>
-            <button className="bg-delete-button px-8 ml-3">
-              Verwijder van team
-            </button>
-            <button className="bg-edit-button px-8">Maak kapitein</button>
-          </div>
-          <div className="flex gap-3">
-            <p>John Doe</p>
-            <button className="bg-delete-button px-8 ml-3">
-              Verwijder van team
-            </button>
-            <button className="bg-edit-button px-8">Maak kapitein</button>
-          </div>
+          {team.players ? (
+            team.players.map((player) => (
+              <div className="flex gap-3" key={player.playerID}>
+                <p>
+                  {player.firstName} {player.lastName}
+                </p>
+                <button
+                  className="bg-delete-button px-8 ml-3"
+                  onClick={() =>
+                    handleDeletePlayerFromTeam(player.playerID, team.teamID)
+                  }
+                >
+                  Verwijder van team
+                </button>
+                {team.captainID !== player.playerID ? (
+                  <button
+                    className="bg-edit-button px-8 text-white"
+                    onClick={() =>
+                      handleMakePlayerCaptain(player.playerID, team.teamID)
+                    }
+                  >
+                    Maak kapitein 
+                  </button>
+                ) : null}
+              </div>
+            ))
+          ) : (
+            <p>Dit team heeft geen spelers</p>
+          )}
         </div>
       </div>
     </>
