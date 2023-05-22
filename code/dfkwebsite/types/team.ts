@@ -7,6 +7,7 @@ export type Team = {
   name: string;
   captainID?: string;
   classification: CLASSIFICATION;
+  fineIDs?: string[];
   clubID: string;
   playersID?: string[];
   deleted?: boolean;

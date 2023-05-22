@@ -75,15 +75,8 @@ export const getRecordByIdOrError = async (id: string, namespace: any) => {
   // TODO: namespace type
   const record = await namespace.get(id);
 
-  if (!record) {
-    return new Response(
-      JSON.stringify({ error: `Record with id: ${id} not found` }),
-      {
-        status: 404,
-        headers: { "content-type": "application/json" },
-      }
-    );
-  }
+  if (!record) throw new Error(`Record with id: ${id} not found`);
+
   return record;
 };
 
