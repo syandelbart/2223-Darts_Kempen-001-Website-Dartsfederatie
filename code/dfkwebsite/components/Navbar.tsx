@@ -101,7 +101,7 @@ const Navbar: FunctionComponent = () => {
       <ul
         className={`${
           isOpen ? "flex" : "hidden"
-        } lg:flex flex-col lg:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center absolute top-full left-0 py-5 z-10  bg-nav-background border-t-2 border-b-2 lg:border-none lg:relative`}
+        } lg:flex flex-col lg:flex-row gap-5 lg:gap-8 xl:gap-15 2xl:gap-20 items-center absolute top-full left-0 py-5 z-10 bg-nav-background border-t-2 border-b-2 lg:border-none lg:relative`}
       >
         {routes.map((route, index) => {
           return (
