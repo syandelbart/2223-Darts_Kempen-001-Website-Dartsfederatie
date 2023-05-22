@@ -15,7 +15,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
   handleMakePlayerCaptain,
 }) => {
   return (
-    <div className="mt-10">
+    <div className="mt-10 text-white">
       <div className="flex gap-3 items-center mb-5">
         <h1 className="text-3xl font-semibold">{team.name}</h1>
         <button className="bg-edit-button px-4 py-1">Edit</button>
@@ -26,9 +26,11 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
           {team.players ? (
             team.players.map((player) => (
               <div className="flex items-center gap-3" key={player.playerID}>
-                <p className="flex-grow">
-                  {player.firstName} {player.lastName}
-                </p>
+                <input
+                  type="text"
+                  className="flex-grow bg-inherit"
+                  placeholder={player.firstName + " " + player.lastName}
+                ></input>
                 <button
                   className="bg-delete-button px-6 py-2 ml-3"
                   onClick={() =>
@@ -43,7 +45,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
                     team.captainID == player.playerID
                       ? "opacity-60 cursor-default"
                       : ""
-                  } bg-edit-button px-8 text-white py-2`}
+                  } bg-edit-button px-8 py-2`}
                   onClick={() =>
                     handleMakePlayerCaptain(player.playerID, team.teamID)
                   }
