@@ -17,7 +17,11 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
   return (
     <div className="mt-10 text-white">
       <div className="flex gap-3 items-center mb-5">
-        <h1 className="text-3xl font-semibold">{team.name}</h1>
+        <input
+          type="text"
+          className="text-3xl font-semibold bg-inherit placeholder:text-white"
+          defaultValue={team.name}
+        ></input>
         <button className="bg-edit-button px-4 py-1">Edit</button>
       </div>
 
@@ -26,11 +30,9 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
           {team.players ? (
             team.players.map((player) => (
               <div className="flex items-center gap-3" key={player.playerID}>
-                <input
-                  type="text"
-                  className="flex-grow bg-inherit placeholder:text-white"
-                  placeholder={player.firstName + " " + player.lastName}
-                ></input>
+                <p className="flex-grow">
+                  {player.firstName + " " + player.lastName}
+                </p>
                 <button
                   className="bg-delete-button px-6 py-2 ml-3"
                   onClick={() =>
