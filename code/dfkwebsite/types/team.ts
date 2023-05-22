@@ -9,7 +9,7 @@ export type Team = {
   classification: CLASSIFICATION;
   fineIDs?: string[];
   clubID: string;
-  playerIDs?: string[];
+  playersID?: string[];
   deleted?: boolean;
 };
 

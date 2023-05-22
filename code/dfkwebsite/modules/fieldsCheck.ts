@@ -25,4 +25,6 @@ export const checkFields = (
     )
       throw new Error(`Field "${field}" does not match the required pattern`);
   }
+
+  return true;
 };
