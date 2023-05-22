@@ -99,11 +99,11 @@ export const countFridays = (startDate: Date, endDate: Date) => {
 };
 
 export const changeData = (
-  fields: string[],
+  fields: {[key: string]: string },
   currentData: Object,
   newData: FormData
 ) => {
-  const data = { ...currentData }; // Create a shallow copy of currentData
+  const data = JSON.parse(JSON.stringify(currentData));
 
   Object.values(fields).forEach((field) => {
     if (!newData.has(field)) return;
