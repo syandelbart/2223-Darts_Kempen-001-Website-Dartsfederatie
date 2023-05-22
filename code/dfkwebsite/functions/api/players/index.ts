@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from "uuid";
-import { Player } from "../../../types/general";
 import { PagesEnv } from "../env";
 import { getParams, searchKeyChecker } from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
 import { playerRegexPatterns } from "../../../modules/player";
+import { Player } from "../../../types/player";
 
 export enum PlayerSubmission {
   FIRSTNAME = "firstname",
@@ -22,7 +22,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const players = await env.PLAYERS.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let playersMapped = players.keys.map(async (players) => {

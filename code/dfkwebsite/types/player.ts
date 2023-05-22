@@ -1,4 +1,5 @@
-import { Account, Fine } from "./general";
+import { Fine } from "./fine";
+import { Account } from "./general";
 import { Team } from "./team";
 
 export type Player = {

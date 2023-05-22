@@ -1,112 +1,61 @@
 import { managementData } from "./components/ManagementCard";
-import { teamData } from "./components/Team";
+import {
+  CLASSIFICATION,
+  COMPETITION_TYPE,
+  Competition,
+} from "./types/competition";
+import { ClubFront } from "./types/club";
+import { PlayerFront } from "./types/player";
+import { TeamFront } from "./types/team";
 
-let teams: Array<teamData> = [
+export const competitions: Array<Competition> = [
   {
-    teamnaam: "sunt laborum",
-    kapitein: "Lorie Soto",
-    telefoonnummer: "(906) 523-3037",
-  },
-  {
-    teamnaam: "mollit id",
-    kapitein: "Alana Rutledge",
-    telefoonnummer: "(850) 457-3899",
-  },
-  {
-    teamnaam: "minim officia",
-    kapitein: "Baird Fowler",
-    telefoonnummer: "(873) 583-2043",
-  },
-  {
-    teamnaam: "ullamco irure",
-    kapitein: "Valerie Newman",
-    telefoonnummer: "(981) 485-3325",
-  },
-  {
-    teamnaam: "proident sunt",
-    kapitein: "Morse Sparks",
-    telefoonnummer: "(804) 548-3206",
-  },
-  {
-    teamnaam: "reprehenderit labore",
-    kapitein: "Cheryl Payne",
-    telefoonnummer: "(926) 471-3203",
-  },
-  {
-    teamnaam: "duis exercitation",
-    kapitein: "Berry Whitfield",
-    telefoonnummer: "(941) 597-3651",
-  },
-  {
-    teamnaam: "quis tempor",
-    kapitein: "Chasity Goodwin",
-    telefoonnummer: "(909) 486-3292",
-  },
-  {
-    teamnaam: "ullamco nulla",
-    kapitein: "Bradford Johns",
-    telefoonnummer: "(845) 563-3455",
-  },
-  {
-    teamnaam: "culpa dolor",
-    kapitein: "Case Guerra",
-    telefoonnummer: "(927) 518-2660",
-  },
-  {
-    teamnaam: "culpa tempor",
-    kapitein: "Whitaker Gillespie",
-    telefoonnummer: "(810) 481-3428",
-  },
-  {
-    teamnaam: "et eiusmod",
-    kapitein: "Jana Huff",
-    telefoonnummer: "(808) 517-2063",
-  },
-  {
-    teamnaam: "nostrud proident",
-    kapitein: "Patton Kirk",
-    telefoonnummer: "(964) 519-3045",
-  },
-  {
-    teamnaam: "in minim",
-    kapitein: "Walter Gomez",
-    telefoonnummer: "(975) 401-3560",
-  },
-  {
-    teamnaam: "nostrud elit",
-    kapitein: "Kathleen Mayo",
-    telefoonnummer: "(908) 469-2384",
-  },
-  {
-    teamnaam: "incididunt et",
-    kapitein: "Sandoval Mack",
-    telefoonnummer: "(932) 584-3279",
-  },
-  {
-    teamnaam: "reprehenderit tempor",
-    kapitein: "Orr Rocha",
-    telefoonnummer: "(890) 531-2605",
-  },
-  {
-    teamnaam: "dolor ad",
-    kapitein: "Moss Hardin",
-    telefoonnummer: "(872) 583-2827",
-  },
-  {
-    teamnaam: "non nisi",
-    kapitein: "Maura Benton",
-    telefoonnummer: "(995) 451-3130",
-  },
-  {
-    teamnaam: "laborum fugiat",
-    kapitein: "Brandy Andrews",
-    telefoonnummer: "(925) 469-2708",
+    competitionID: "id:dummy:1",
+    name: "competitie 1",
+    type: COMPETITION_TYPE.COMPETITION,
+    classification: CLASSIFICATION.PROVINCIAAL,
+    startDate: 0,
+    endDate: 0,
   },
 ];
 
-export default teams;
+export const players: Array<PlayerFront> = [
+  {
+    firstName: "Bryan",
+    lastName: "Deckers",
+    phone: "+32 123 45 67 89",
+    allowedToPlay: true,
+    playerID: "id:123456798",
+  },
+  {
+    firstName: "Joske",
+    lastName: "Vermeulen",
+    phone: "+32 123 45 67 89",
+    allowedToPlay: true,
+    playerID: "id:77777242424",
+  },
+];
 
-export let bestuur: Array<managementData> = [
+export const teams: Array<TeamFront> = [
+  {
+    name: "sunt laborum",
+    classification: CLASSIFICATION.PROVINCIAAL,
+    clubID: "id:123456798",
+    playersID: ["id:123456798", "id:77777242424", "id:123456798"],
+    players: players,
+    teamID: "id:123456798",
+    captainID: "id:123456798",
+    captain: {
+      firstName: "Bryan",
+      lastName: "Deckers",
+      phone: "+32 123 45 67 89",
+      allowedToPlay: true,
+      playerID: "id:123456798",
+    },
+  },
+];
+
+export const bestuur: Array<managementData> = [
   {
     naam: "Wim Oeyen",
     functie: "Voorzitter",
@@ -162,128 +111,23 @@ export let bestuur: Array<managementData> = [
   },
 ];
 
-// export let clubs: Array<clubData> = [
-//   {
-//     clubnaam: "cupidatat",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Madison Street",
-//     postcode: "1871",
-//   },
-//   {
-//     clubnaam: "aute",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Norwood Avenue",
-//     postcode: "3526",
-//   },
-//   {
-//     clubnaam: "adipisicing",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Schenck Avenue",
-//     postcode: "2038",
-//   },
-//   {
-//     clubnaam: "ea",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Berriman Street",
-//     postcode: "3179",
-//   },
-//   {
-//     clubnaam: "amet",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "George Street",
-//     postcode: "2152",
-//   },
-//   {
-//     clubnaam: "sint",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Clymer Street",
-//     postcode: "1345",
-//   },
-//   {
-//     clubnaam: "incididunt",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Love Lane",
-//     postcode: "2421",
-//   },
-//   {
-//     clubnaam: "elit",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Cadman Plaza",
-//     postcode: "2075",
-//   },
-//   {
-//     clubnaam: "dolor",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Wythe Avenue",
-//     postcode: "1255",
-//   },
-//   {
-//     clubnaam: "incididunt",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Gerritsen Avenue",
-//     postcode: "2813",
-//   },
-//   {
-//     clubnaam: "ipsum",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Heath Place",
-//     postcode: "1427",
-//   },
-//   {
-//     clubnaam: "magna",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Franklin Avenue",
-//     postcode: "1156",
-//   },
-//   {
-//     clubnaam: "aute",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "School Lane",
-//     postcode: "1689",
-//   },
-//   {
-//     clubnaam: "officia",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Porter Avenue",
-//     postcode: "2299",
-//   },
-//   {
-//     clubnaam: "enim",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Roder Avenue",
-//     postcode: "1670",
-//   },
-//   {
-//     clubnaam: "laboris",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Hubbard Place",
-//     postcode: "2730",
-//   },
-//   {
-//     clubnaam: "quis",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Provost Street",
-//     postcode: "3427",
-//   },
-//   {
-//     clubnaam: "non",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Pooles Lane",
-//     postcode: "2946",
-//   },
-//   {
-//     clubnaam: "veniam",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Cameron Court",
-//     postcode: "2177",
-//   },
-//   {
-//     clubnaam: "aute",
-//     clubplek: "Cafe 't Centrum",
-//     straatnaam: "Seaview Avenue",
-//     postcode: "1624",
-//   },
-// ];
+//Given the following data, can you create a function that will make multiple of this dummy data?
+export let club: Array<ClubFront> = [
+  {
+    clubID: "1",
+    name: "Dessel Sport",
+    address: {
+      street: "Kerkstraat",
+      city: "Dessel",
+      houseNumber: "1",
+      postalCode: "2480",
+    },
+    contactPersonID: "1",
+    teamIDs: ["1", "2", "3"],
+    teams: teams,
+    contactPerson: players[0],
+  },
+];
 
 // const news = Array.from({ length: 20 }, (_, i) => ({
 //     id: `${i}`,

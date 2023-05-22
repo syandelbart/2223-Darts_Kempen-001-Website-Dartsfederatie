@@ -1,12 +1,18 @@
-import { Icon } from "@iconify/react";
-import { FunctionComponent, useState } from "react";
+import { Dispatch, FunctionComponent, useState } from "react";
 import { clubRegexPatterns } from "../modules/club";
 import * as formHandler from "../modules/formHandler";
 import Modal from "./Modal";
+import DefaultInput from "./DefaultInput";
+import DefaultSelect from "./DefaultSelect";
+import InformationBox from "./InformationBox";
+import * as dummyData from "../data";
+import { Club, ClubFront } from "../types/club";
 
 type AddClubModalData = {
   addModalOpen: boolean;
-  setAddModalOpen: any;
+  setAddModalOpen: Dispatch<React.SetStateAction<boolean>>;
+  clubs: Club[];
+  setClubs: Dispatch<React.SetStateAction<ClubFront[]>>;
 };
 
 const AddClubModal: FunctionComponent<AddClubModalData> = (
@@ -26,13 +32,38 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   };
 
   const handleSubmit = async (event: any) => {
-    formHandler.handleSubmit(
+    console.log("happened");
+
+    let club: Club | null = await formHandler.handleSubmit(
       event,
       formValues,
       clubRegexPatterns,
-      "/api/clubs"
+      "/api/clubs",
+      setInformationBoxMessage,
+      setHandleSubmitSuccess,
+      dummyData.club[0],
+      process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
     );
+
+    if (!club || !handleSubmitSuccess) return;
+
+    setInformationBoxMessage(
+      "Club succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
+    );
+    props.setClubs((clubs) => {
+      if (!club) return clubs;
+      // The new Club will be of type Club, but we want it to be of type ClubFront
+      return [...clubs, club as ClubFront];
+    });
+    setTimeout(() => {
+      props.setAddModalOpen(false);
+    }, 5000);
   };
+
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
+    boolean | null
+  >(false);
+  const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   return (
     <Modal
@@ -41,106 +72,71 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       <div className="flex flex-col">
-        <label htmlFor="name" className="text-xl text-white mt-16 mb-2">
-          Clubnaam
-        </label>
-        <input
-          type="text"
+        <InformationBox
+          success={handleSubmitSuccess}
+          show={informationBoxMessage !== ""}
+          onClose={() => setInformationBoxMessage("")}
+        >
+          {informationBoxMessage}
+        </InformationBox>
+
+        <DefaultInput
           name="name"
-          id="name"
+          label="Clubnaam"
           placeholder="Clubnaam"
           value={formValues.name}
           onChange={handleChange}
-          className="bg-gray-200 p-2"
         />
         <div className="flex gap-5 justify-between">
           <div className="flex flex-col w-1/2">
-            <label
-              htmlFor="address_city"
-              className="text-xl text-white mt-5 mb-2"
-            >
-              Stad
-            </label>
-            <input
-              type="text"
+            <DefaultInput
               name="address_city"
-              id="address_city"
+              label="Stad"
               placeholder="Stad"
               value={formValues.address_city}
               onChange={handleChange}
-              className="bg-gray-200 p-2"
             />
           </div>
           <div className="flex flex-col w-1/2">
-            <label
-              htmlFor="address_postal"
-              className="text-xl text-white mt-5 mb-2"
-            >
-              Postcode
-            </label>
-            <input
-              type="text"
+            <DefaultInput
               name="address_postal"
-              id="address_postal"
+              label="Postcode"
+              placeholder="Postcode"
               value={formValues.address_postal}
               onChange={handleChange}
-              placeholder="Postcode"
-              className="bg-gray-200 p-2"
             />
           </div>
         </div>
         <div className="flex gap-5 justify-between">
           <div className="flex flex-col w-1/2">
-            <label
-              htmlFor="address_street"
-              className="text-xl text-white mt-5 mb-2"
-            >
-              Straat
-            </label>
-            <input
-              type="text"
+            <DefaultInput
               name="address_street"
+              label="Straat"
+              placeholder="Straat"
               value={formValues.address_street}
               onChange={handleChange}
-              id="address_street"
-              placeholder="Straat"
-              className="bg-gray-200 p-2"
             />
           </div>
           <div className="flex flex-col w-1/2">
-            <label
-              htmlFor="address_housenumber"
-              className="text-xl text-white mt-5 mb-2"
-            >
-              Huisnummer
-            </label>
-            <input
-              type="text"
+            <DefaultInput
               name="address_housenumber"
+              label="Huisnummer"
+              placeholder="Huisnummer"
               value={formValues.address_housenumber}
               onChange={handleChange}
-              id="address_housenumber"
-              placeholder="Huisnummer"
-              className="bg-gray-200 p-2"
             />
           </div>
         </div>
 
-        <label
-          htmlFor="contactpersonid"
-          className="text-xl text-white mt-5 mb-2"
-        >
-          Contactpersoon
-        </label>
-        <select
+        <DefaultSelect
           name="contactpersonid"
           id="contactpersonid"
+          label="Contactpersoon"
+          options={[{ value: "1", label: "1" }]}
           value={formValues.contactpersonid}
           onChange={handleChange}
-          className="bg-gray-200 p-2"
-        >
-          <option value="1">1</option>
-        </select>
+        />
+
         <button
           type="submit"
           className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
