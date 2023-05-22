@@ -32,10 +32,14 @@ const ClubCard: FunctionComponent<clubDataInterface> = ({
       </CardButtonRow>
       <div className="my-3">
         <CardIcon icon="mdi:address-marker">
-          <p>{clubData.address?.postalCode}</p>
-          <p>{clubData.address?.city}</p>
-          <p>{clubData.address?.street}</p>
-          <p>{clubData.address?.houseNumber}</p>
+          <div className="flex gap-3">
+            <p>{clubData.address?.postalCode}</p>
+            <p>{clubData.address?.city}</p>
+          </div>
+          <div className="flex gap-3">
+            <p>{clubData.address?.street}</p>
+            <p>{clubData.address?.houseNumber}</p>
+          </div>
         </CardIcon>
       </div>
     </div>
