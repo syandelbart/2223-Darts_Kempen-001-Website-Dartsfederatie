@@ -28,7 +28,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
               <div className="flex items-center gap-3" key={player.playerID}>
                 <input
                   type="text"
-                  className="flex-grow bg-inherit"
+                  className="flex-grow bg-inherit placeholder:text-white"
                   placeholder={player.firstName + " " + player.lastName}
                 ></input>
                 <button
