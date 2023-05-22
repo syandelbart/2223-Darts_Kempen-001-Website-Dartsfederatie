@@ -13,6 +13,7 @@ import {
   handleDeletePlayerFromTeam,
   handleMakePlayerCaptain,
 } from "../../../modules/overzicht";
+import AddButton from "../../../components/AddButton";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
@@ -52,7 +53,10 @@ const Clubs: NextPage = () => {
           modalOpen={isOpen}
           setModalOpen={setIsOpen}
         >
-          {currentClub.teams ? (
+          <div className="mt-10 w-1/2">
+            <AddButton name="Team" />
+          </div>
+          {currentClub.teams && currentClub.teams.length !== 0 ? (
             currentClub.teams.map((team) => (
               <TeamSpelers
                 team={team}
@@ -62,7 +66,7 @@ const Clubs: NextPage = () => {
               />
             ))
           ) : (
-            <p>Deze club heeft geen teams.</p>
+            <p className="text-xl mt-10">Deze club heeft geen teams.</p>
           )}
         </Modal>
       )}
