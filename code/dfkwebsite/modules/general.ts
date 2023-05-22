@@ -97,3 +97,19 @@ export const countFridays = (startDate: Date, endDate: Date) => {
   }
   return amountFridays;
 };
+
+export const changeData = (
+  fields: string[],
+  currentData: Object,
+  newData: FormData
+) => {
+  const data = { ...currentData }; // Create a shallow copy of currentData
+
+  Object.values(fields).forEach((field) => {
+    if (!newData.has(field)) return;
+
+    data[field] = newData.get(field);
+  });
+
+  return data;
+};
