@@ -3,7 +3,7 @@ import { getParams, searchKeyChecker } from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
 import { TeamSubmission, teamRegexPatterns } from "../../../modules/team";
 import { Team } from "../../../types/team";
-import { CLASSIFICATION } from "../../../types/general";
+import { CLASSIFICATION } from "../../../types/competition";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -15,7 +15,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const teams = await env.TEAMS.list({
       limit: params.limit,
       cursor: params.cursor,
-      prefix: "id:",
+      prefix: params.prefix,
     });
 
     let teamsMapped = teams.keys.map(async (teams) => {
@@ -51,8 +51,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     let data: Team = {
       teamID: teamIdKey,
       name: name,
-      classification: formData.get(TeamSubmission.CLASSIFICATION) as CLASSIFICATION,
-      clubID: Number(formData.get(TeamSubmission.CLUB)),
+      classification: formData.get(
+        TeamSubmission.CLASSIFICATION
+      ) as CLASSIFICATION,
+      clubID: formData.get(TeamSubmission.CLUBID),
     };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
@@ -96,8 +98,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
         classification: formData.get(TeamSubmission.CLASSIFICATION)
           ? (formData.get(TeamSubmission.CLASSIFICATION) as CLASSIFICATION)
           : teamData.classification,
-        clubID: formData.get(TeamSubmission.CLUB)
-          ? Number(formData.get(TeamSubmission.CLUB))
+        clubID: formData.get(TeamSubmission.CLUBID)
+          ? formData.get(TeamSubmission.CLUBID)
           : teamData.clubID,
       };
 

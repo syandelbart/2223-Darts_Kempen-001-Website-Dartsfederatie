@@ -1,8 +1,8 @@
 import { checkFields } from "../../../modules/fieldsCheck";
 import { getParams, searchKeyChecker } from "../../../modules/general";
 import { PagesEnv } from "../env";
-import { PostSubmission, postRegexPatterns } from "../../../modules/post";
-import { Post } from "../../../types/posts";
+import { fineRegexPatterns, FineSubmission } from "../../../modules/fine";
+import { Fine } from "../../../types/fine";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -11,17 +11,17 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
   try {
     const params = getParams(request.url);
 
-    const posts = await env.POSTS.list({
+    const fines = await env.FINES.list({
       limit: params.limit,
       cursor: params.cursor,
       prefix: params.prefix,
     });
 
-    let postsMapped = posts.keys.map(async (posts) => {
-      return JSON.parse(await env.POSTS.get(posts.name));
+    let finesMapped = fines.keys.map(async (fines) => {
+      return JSON.parse(await env.FINES.get(fines.name));
     });
 
-    return new Response(JSON.stringify(await Promise.all(postsMapped)), {
+    return new Response(JSON.stringify(await Promise.all(finesMapped)), {
       headers: {
         "content-type": "application/json",
       },
@@ -41,21 +41,21 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
-    checkFields(formData, postRegexPatterns);
+    checkFields(formData, fineRegexPatterns);
 
-    const name = formData.get(PostSubmission.NAME);
+    const name = formData.get(FineSubmission.NAME);
 
-    const postIdKey = `id:${Date.now()}`;
+    const fineIdKey = `id:${Date.now()}`;
 
-    let data: Post = {
-      // TODO: Add fields here
+    let data: Fine = {
+      // TODO: Update the fine data/types
     };
 
-    await env.POSTS.put(postIdKey, JSON.stringify(data));
-    await searchKeyChecker(env.POSTS, postIdKey, `name:${name}`);
+    await env.FINES.put(fineIdKey, JSON.stringify(data));
+    await searchKeyChecker(env.FINES, fineIdKey, `name:${name}`);
 
     return new Response(
-      JSON.stringify({ message: "Post added successfully." }),
+      JSON.stringify({ message: "Fine added successfully." }),
       { status: 200, headers: { "content-type": "application/json" } }
     );
   } catch (e) {
@@ -75,28 +75,28 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const params = getParams(request.url);
 
-    const posts = await env.POSTS.list({
+    const fines = await env.FINES.list({
       limit: params.limit,
       cursor: params.cursor,
     });
 
-    // Update each post using the form data
-    const updates = posts.keys.map(async (post) => {
-      const postData: Post = JSON.parse(await env.POSTS.get(post.name));
+    // Update each fine using the form data
+    const updates = fines.keys.map(async (fine) => {
+      const fineData: Fine = JSON.parse(await env.FINES.get(fine.name));
 
-      const data: Post = {
-        // TODO: Add fields here
+      const data: Fine = {
+        // TODO: Update the fine data/types
       };
 
-      // Update the team data in the KV store
-      await env.POSTS.put(post.name, JSON.stringify(data));
+      // Update the fine data in the KV store
+      await env.FINES.put(fine.name, JSON.stringify(data));
     });
 
     // Wait for all updates to complete
     await Promise.all(updates);
 
     const responseBody = {
-      message: "POsts updated successfully.",
+      message: "Fines updated successfully.",
       status: 200,
     };
 

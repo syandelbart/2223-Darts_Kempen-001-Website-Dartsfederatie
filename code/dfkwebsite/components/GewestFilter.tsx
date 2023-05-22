@@ -1,16 +1,23 @@
 import { FunctionComponent } from "react";
+import DefaultSelect from "./DefaultSelect";
+import { CLASSIFICATION } from "../types/competition";
 
-const GewestFilter : FunctionComponent = () => {
+const GewestFilter: FunctionComponent = () => {
   return (
-    <select className="text-black pl-5 pr-2 py-2" id="gewestfilter" name="gewestfilter">
-      <option value="all" selected>
-        Alle gewesten
-      </option>
-      <option value="provinciaal">Provinciaal</option>
-      <option value="gewest1">1e Gewest</option>
-      <option value="gewest2">2e Gewest</option>
-    </select>
+    <DefaultSelect
+      labelEnabled={false}
+      name="gewestfilter"
+      options={Object.values(CLASSIFICATION).map((value) => {
+        return {
+          value: value,
+          label: `${value[0].toUpperCase()}${value.substring(1).toLowerCase()}`,
+        };
+      })}
+      defaultOptionEnabled={true}
+      defaultOptionLabel="Alle gewesten"
+      defaultOptionValue="all"
+    />
   );
-}
+};
 
 export default GewestFilter;

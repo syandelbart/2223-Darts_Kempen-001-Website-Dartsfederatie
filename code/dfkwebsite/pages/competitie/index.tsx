@@ -7,6 +7,11 @@ const Competitie: NextPage = () => {
       <h1 className="text-6xl mb-20 text-white font-bold">Competitie</h1>
       <div className="grid grid-cols-2 lg:grid-cols-4 flew-wrap gap-20">
         <Selectie
+          href="/competitie/beheer"
+          title="beheer competities"
+          icon="mdi:calculator"
+        />
+        <Selectie
           href="/competitie/speeldagen"
           title="speeldagen"
           icon="mdi:calendar-today"

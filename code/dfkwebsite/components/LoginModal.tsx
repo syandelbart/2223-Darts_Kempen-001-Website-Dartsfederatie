@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
 import Modal from "./Modal";
+import DefaultInput from "./DefaultInput";
 
 type LoginModalData = {
   isOpen: boolean;
@@ -17,26 +18,20 @@ const LoginModal: FunctionComponent<LoginModalData> = (
       setModalOpen={props.setIsOpen}
     >
       <div className="flex flex-col">
-        <label htmlFor="email" className="text-xl text-white mt-16 mb-2">
-          Email
-        </label>
-        <input
-          type="email"
+        <DefaultInput
           name="email"
           id="email"
+          label="Email"
           placeholder="email"
-          className="bg-gray-200 p-2"
         />
-        <label htmlFor="password" className="text-xl text-white mt-5 mb-2">
-          Wachtwoord
-        </label>
-        <input
-          type="password"
+        <DefaultInput
           name="password"
           id="password"
-          placeholder="wachtwoord"
-          className="bg-gray-200 p-2"
+          label="Wachtwoord"
+          placeholder="email"
+          type="password"
         />
+
         <button className="bg-[#0A893D] text-white rounded-lg p-3 mt-10">
           Inloggen
         </button>

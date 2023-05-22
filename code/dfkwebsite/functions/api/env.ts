@@ -11,4 +11,5 @@ export interface PagesEnv {
     POSTS: KVNamespace;
     MATCHES: KVNamespace;
     USERS: KVNamespace;
+    FINES: KVNamespace;
 }

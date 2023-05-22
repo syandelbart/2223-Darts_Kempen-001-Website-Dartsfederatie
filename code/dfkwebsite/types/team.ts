@@ -1,17 +1,20 @@
-import { CLASSIFICATION, Fine, Game } from "./general";
+import { CLASSIFICATION, Game } from "./competition";
+import { Fine } from "./fine";
 import { Player } from "./player";
 
 export type Team = {
   teamID: string;
   name: string;
-  captainID?: number;
+  captainID?: string;
   classification: CLASSIFICATION;
-  captain?: Player;
-  players?: Player[];
-  clubID: number;
-  games?: Game[];
-  fines?: Fine[];
+  clubID: string;
+  playersID?: string[];
   deleted?: boolean;
 };
 
-export interface TeamFront extends Team {}
+export interface TeamFront extends Team {
+  captain?: Player;
+  players?: Player[];
+  games?: Game[];
+  fines?: Fine[];
+}

@@ -1,30 +1,37 @@
-import { FunctionComponent } from "react";
+import { Dispatch, FunctionComponent, SetStateAction } from "react";
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
-import { Club } from "../types/club";
+import { ClubFront } from "../types/club";
 
 interface clubDataInterface {
-  clubData: Club;
-  setIsOpen: any;
+  clubData: ClubFront;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setCurrentClub: Dispatch<SetStateAction<ClubFront | null>>;
 }
 
-const ClubCard : FunctionComponent<clubDataInterface> = ({clubData,setIsOpen}) => {
+const ClubCard: FunctionComponent<clubDataInterface> = ({
+  clubData,
+  setIsOpen,
+  setCurrentClub,
+}) => {
   return (
     <div>
       <CardTitle>{clubData.name}</CardTitle>
-        <CardButtonRow>
-          <CardButton onClick={() => setIsOpen(true)}>
-            Spelers
-          </CardButton>
-          <CardButton bg={"bg-edit-button"}>
-            Edit
-          </CardButton>
-        </CardButtonRow>
-      <div className="my-3">
-        <CardIcon icon="mdi:address-marker"
+      <CardButtonRow>
+        <CardButton
+          onClick={() => {
+            setIsOpen(true);
+            setCurrentClub(clubData);
+          }}
         >
+          Teams
+        </CardButton>
+        <CardButton bg={"bg-edit-button"}>Edit</CardButton>
+      </CardButtonRow>
+      <div className="my-3">
+        <CardIcon icon="mdi:address-marker">
           <p>{clubData.address?.postalCode}</p>
           <p>{clubData.address?.city}</p>
           <p>{clubData.address?.street}</p>
@@ -33,6 +40,6 @@ const ClubCard : FunctionComponent<clubDataInterface> = ({clubData,setIsOpen}) =
       </div>
     </div>
   );
-}
+};
 
 export default ClubCard;
