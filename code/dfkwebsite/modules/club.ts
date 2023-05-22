@@ -7,6 +7,7 @@ export enum ClubSubmission {
   ADDRESS_CITY = "address_city",
   ADDRESS_POSTAL = "address_postal",
   CONTACTPERSONID = "contactpersonid",
+  TEAMIDS= "teamids"
 }
 
 export const clubRegexPatterns: { [key: string]: fieldInformation } = {
@@ -25,4 +26,5 @@ export const clubRegexPatterns: { [key: string]: fieldInformation } = {
     required: true,
   },
   [ClubSubmission.CONTACTPERSONID]: { regex: /^[0-9]+$/, required: true },
+  [ClubSubmission.TEAMIDS]: {},
 };

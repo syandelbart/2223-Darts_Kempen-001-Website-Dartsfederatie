@@ -1,4 +1,4 @@
-import { Dispatch, FunctionComponent, useState } from "react";
+import { Dispatch, FunctionComponent, useEffect, useState } from "react";
 import { clubRegexPatterns } from "../modules/club";
 import * as formHandler from "../modules/formHandler";
 import Modal from "./Modal";
@@ -7,6 +7,8 @@ import DefaultSelect from "./DefaultSelect";
 import InformationBox from "./InformationBox";
 import * as dummyData from "../data";
 import { Club, ClubFront } from "../types/club";
+import { getAllTeamSelectOptions } from "../modules/team";
+import { SelectOption } from "../modules/general";
 
 type AddClubModalData = {
   addModalOpen: boolean;
@@ -25,6 +27,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     address_housenumber: "",
     address_postal: "",
     contactpersonid: "",
+    teamids: "",
   });
 
   const handleChange = (event: any) => {
@@ -64,6 +67,16 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     boolean | null
   >(false);
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
+
+  const [teams, setTeams] = useState<SelectOption[]>([]);
+
+  useEffect(() => {
+    const getTeams = async () => {
+      let teams = await getAllTeamSelectOptions();
+      setTeams(teams);
+    };
+    getTeams();
+  }, []);
 
   return (
     <Modal
@@ -135,6 +148,16 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           options={[{ value: "1", label: "1" }]}
           value={formValues.contactpersonid}
           onChange={handleChange}
+        />
+
+        <DefaultSelect
+          name="teamids"
+          id="teamids"
+          label="Teams toevoegen"
+          options={teams}
+          value={formValues.teamids}
+          onChange={handleChange}
+          search={true}
         />
 
         <button
