@@ -27,7 +27,7 @@ export default function ProfileMenu() {
   return (
     <div>
       <div
-        className=" text-[#fff] xl:text-xl relative hover:children:visible"
+        className=" text-[#fff] xl:text-xl relative hover:children:visible z-10"
         onClick={() => setIsOpen(!isOpen)}
       >
         <Icon
