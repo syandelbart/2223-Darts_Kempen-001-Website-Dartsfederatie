@@ -1,4 +1,6 @@
+import { checkFields } from "../../../../modules/fieldsCheck";
 import { getRecordByIdOrError } from "../../../../modules/general";
+import { matchRegexPatterns } from "../../../../modules/match";
 import { Match } from "../../../../types/match";
 
 import { PagesEnv } from "../../env";
@@ -34,6 +36,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
+
+    checkFields(formData, matchRegexPatterns, true);
 
     const matchId = params.id.toString();
     const match = await getRecordByIdOrError(matchId, env.MATCHES);

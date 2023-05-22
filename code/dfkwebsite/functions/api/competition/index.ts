@@ -89,6 +89,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, competitionRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const competitions = await env.COMPETITION.list({

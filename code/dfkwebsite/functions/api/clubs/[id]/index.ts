@@ -1,4 +1,5 @@
-import { ClubSubmission } from "../../../../modules/club";
+import { ClubSubmission, clubRegexPatterns } from "../../../../modules/club";
+import { checkFields } from "../../../../modules/fieldsCheck";
 import { getRecordByIdOrError } from "../../../../modules/general";
 import { Club } from "../../../../types/club";
 import { PagesEnv } from "../../env";
@@ -32,6 +33,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
+
+    checkFields(formData, clubRegexPatterns, true);
 
     const clubId = params.id.toString();
     const club = await getRecordByIdOrError(clubId, env.CLUBS);

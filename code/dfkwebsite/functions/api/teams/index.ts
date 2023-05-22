@@ -79,6 +79,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, teamRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const teams = await env.TEAMS.list({

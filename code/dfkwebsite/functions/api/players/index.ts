@@ -91,6 +91,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, playerRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const players = await env.PLAYERS.list({

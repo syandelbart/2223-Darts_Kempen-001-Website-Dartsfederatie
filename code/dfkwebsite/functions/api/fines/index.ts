@@ -73,6 +73,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, fineRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const fines = await env.FINES.list({

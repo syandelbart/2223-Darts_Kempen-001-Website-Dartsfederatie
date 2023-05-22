@@ -73,6 +73,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, documentRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const documents = await env.DOCUMENTS.list({
