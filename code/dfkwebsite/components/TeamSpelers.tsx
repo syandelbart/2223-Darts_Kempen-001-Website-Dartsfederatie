@@ -15,8 +15,8 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
   handleMakePlayerCaptain,
 }) => {
   return (
-    <>
-      <div className="flex gap-3 items-center">
+    <div className="mt-10">
+      <div className="flex gap-3 items-center mb-5">
         <h1 className="text-3xl font-semibold">{team.name}</h1>
         <button className="bg-edit-button px-4 py-1">Edit</button>
       </div>
@@ -25,27 +25,31 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
         <div className="flex flex-col gap-2">
           {team.players ? (
             team.players.map((player) => (
-              <div className="flex gap-3" key={player.playerID}>
-                <p>
+              <div className="flex items-center gap-3" key={player.playerID}>
+                <p className="flex-grow">
                   {player.firstName} {player.lastName}
                 </p>
                 <button
-                  className="bg-delete-button px-8 ml-3"
+                  className="bg-delete-button px-6 py-2 ml-3"
                   onClick={() =>
                     handleDeletePlayerFromTeam(player.playerID, team.teamID)
                   }
                 >
                   Verwijder van team
                 </button>
-                
-                  <button
-                    className={`${team.captainID == player.playerID ? "opacity-60 cursor-default" : ""} bg-edit-button px-8 text-white`}
-                    onClick={() =>
-                      handleMakePlayerCaptain(player.playerID, team.teamID)
-                    }
-                  >
-                    Maak kapitein
-                  </button>
+
+                <button
+                  className={`${
+                    team.captainID == player.playerID
+                      ? "opacity-60 cursor-default"
+                      : ""
+                  } bg-edit-button px-8 text-white py-2`}
+                  onClick={() =>
+                    handleMakePlayerCaptain(player.playerID, team.teamID)
+                  }
+                >
+                  Maak kapitein
+                </button>
               </div>
             ))
           ) : (
@@ -53,7 +57,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
