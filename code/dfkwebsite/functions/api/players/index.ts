@@ -1,16 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { PagesEnv } from "../env";
-import { getParams, searchKeyChecker } from "../../../modules/general";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
-import { playerRegexPatterns } from "../../../modules/player";
+import { PlayerSubmission, playerRegexPatterns } from "../../../modules/player";
 import { Player } from "../../../types/player";
-
-export enum PlayerSubmission {
-  FIRSTNAME = "firstname",
-  LASTNAME = "lastname",
-  PHONE = "phone",
-  ALLOWED = "allowed",
-}
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
