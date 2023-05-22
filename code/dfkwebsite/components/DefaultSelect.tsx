@@ -1,9 +1,6 @@
 import { ChangeEventHandler, FunctionComponent } from "react";
-
-type SelectOption = {
-  value: string;
-  label?: string;
-};
+import Select from "react-select";
+import { SelectOption } from "../modules/general";
 
 type DefaultSelectData = {
   type?: string;
@@ -20,6 +17,7 @@ type DefaultSelectData = {
   defaultOptionLabel?: string;
   defaultOptionValue?: string;
   labelEnabled?: boolean;
+  search?: boolean;
 };
 
 const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
@@ -37,6 +35,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
   defaultOptionEnabled = true,
   defaultOptionLabel = "Selecteer",
   defaultOptionValue = "",
+  search = false,
 }) => {
   const isValidRegex = () => {
     if (regex) {
@@ -61,28 +60,40 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
         </label>
       )}
 
-      <select
-        name={name}
-        value={value}
-        id={name}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="bg-gray-200 p-2 text-black"
-      >
-        {defaultOptionEnabled && (
-          <option key={defaultOptionValue} value={defaultOptionValue}>
-            {defaultOptionLabel ?? defaultOptionValue}
-          </option>
-        )}
-
-        {options.map((option) => {
-          return (
-            <option key={option.value} value={option.value}>
-              {option.label ?? option.value}
+      {search ? (
+        <Select
+          name={name}
+          value={value}
+          id={name}
+          onChange={onChange}
+          placeholder={placeholder}
+          className="bg-gray-200 p-2 text-black"
+          options={options}
+        />
+      ) : (
+        <select
+          name={name}
+          value={value}
+          id={name}
+          onChange={onChange}
+          placeholder={placeholder}
+          className="bg-gray-200 p-2 text-black"
+        >
+          {defaultOptionEnabled && (
+            <option key={defaultOptionValue} value={defaultOptionValue}>
+              {defaultOptionLabel ?? defaultOptionValue}
             </option>
-          );
-        })}
-      </select>
+          )}
+
+          {options.map((option) => {
+            return (
+              <option key={option.value} value={option.value}>
+                {option.label ?? option.value}
+              </option>
+            );
+          })}
+        </select>
+      )}
     </div>
   );
 };
