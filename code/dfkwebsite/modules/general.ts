@@ -97,3 +97,8 @@ export const countFridays = (startDate: Date, endDate: Date) => {
   }
   return amountFridays;
 };
+
+export type SelectOption = {
+  value: string;
+  label?: string;
+};
