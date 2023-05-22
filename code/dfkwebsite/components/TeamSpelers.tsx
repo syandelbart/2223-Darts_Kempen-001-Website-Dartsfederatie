@@ -37,16 +37,15 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
                 >
                   Verwijder van team
                 </button>
-                {team.captainID !== player.playerID ? (
+                
                   <button
-                    className="bg-edit-button px-8 text-white"
+                    className={`${team.captainID == player.playerID ? "opacity-60 cursor-default" : ""} bg-edit-button px-8 text-white`}
                     onClick={() =>
                       handleMakePlayerCaptain(player.playerID, team.teamID)
                     }
                   >
-                    Maak kapitein 
+                    Maak kapitein
                   </button>
-                ) : null}
               </div>
             ))
           ) : (
