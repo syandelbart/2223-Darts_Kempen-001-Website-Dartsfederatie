@@ -14,6 +14,7 @@ import {
   handleMakePlayerCaptain,
 } from "../../../modules/overzicht";
 import AddButton from "../../../components/AddButton";
+import AddTeamModal from "../../../components/AddTeamModal";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
@@ -21,6 +22,7 @@ const Clubs: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [addTeamModalOpen, setAddTeamModalOpen] = useState(false);
   let results = 0;
 
   useEffect(() => {
@@ -54,7 +56,11 @@ const Clubs: NextPage = () => {
           setModalOpen={setIsOpen}
         >
           <div className="mt-10 w-1/2">
-            <AddButton name="Team" />
+            <AddButton
+              name="Team"
+              addModalOpen={addTeamModalOpen}
+              setAddModalOpen={setAddTeamModalOpen}
+            />
           </div>
           {currentClub.teams && currentClub.teams.length !== 0 ? (
             currentClub.teams.map((team) => (
@@ -70,6 +76,10 @@ const Clubs: NextPage = () => {
           )}
         </Modal>
       )}
+      <AddTeamModal
+        addModalOpen={addTeamModalOpen}
+        setAddModalOpen={setAddTeamModalOpen}
+      />
 
       <CardGrid>
         {clubs.length === 0 ? (
