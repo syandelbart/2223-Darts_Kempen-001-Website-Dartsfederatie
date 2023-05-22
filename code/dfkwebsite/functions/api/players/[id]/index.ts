@@ -1,6 +1,9 @@
 import { checkFields } from "../../../../modules/fieldsCheck";
-import { getRecordByIdOrError } from "../../../../modules/general";
-import { PlayerSubmission, playerRegexPatterns } from "../../../../modules/player";
+import { changeData, getRecordByIdOrError } from "../../../../modules/general";
+import {
+  PlayerSubmission,
+  playerRegexPatterns,
+} from "../../../../modules/player";
 import { Player } from "../../../../types/player";
 import { PagesEnv } from "../../env";
 
@@ -43,21 +46,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const playerData: Player = JSON.parse(player);
 
-    const data: Player = {
-      playerID: playerData.playerID,
-      firstName: formData.has(PlayerSubmission.FIRSTNAME)
-        ? formData.get(PlayerSubmission.FIRSTNAME)
-        : playerData.firstName,
-      lastName: formData.has(PlayerSubmission.LASTNAME)
-        ? formData.get(PlayerSubmission.LASTNAME)
-        : playerData.lastName,
-      phone: formData.has(PlayerSubmission.PHONE)
-        ? formData.get(PlayerSubmission.PHONE)
-        : playerData.phone,
-        allowedToPlay: formData.has(PlayerSubmission.ALLOWED)
-        ? Boolean(formData.get(PlayerSubmission.ALLOWED))
-        : playerData.allowedToPlay,
-    };
+    const data: Player = changeData(
+      PlayerSubmission,
+      playerData,
+      formData
+    ) as Player;
 
     // Update the player data in the KV store
     await env.PLAYERS.put(playerId, JSON.stringify(data));
@@ -83,40 +76,40 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 };
 
 export const onRequestDelete: PagesFunction<PagesEnv> = async ({
-    request,
-    env,
-    params,
-  }) => {
-    try {
-      const playerId = params.id.toString();
-      const player = await getRecordByIdOrError(playerId, env.PLAYERS);
-  
-      const playerData: Player = JSON.parse(player);
-  
-      const data: Player = {
-        ...playerData,
-        deleted: true,
-      };
-  
-      // Update the player data in the KV store
-      await env.PLAYERS.put(playerId, JSON.stringify(data));
-  
-      const responseBody = {
-        message: "Player deleted successfully.",
-        status: 200,
-      };
-  
-      return new Response(JSON.stringify(responseBody), {
-        headers: { "Content-Type": "application/json" },
-      });
-    } catch (e) {
-      const errorBody = {
-        message: e instanceof Error ? e.message : "Internal server error.",
-        status: e instanceof Error ? 500 : 400,
-      };
-  
-      return new Response(JSON.stringify(errorBody), {
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-  };
+  request,
+  env,
+  params,
+}) => {
+  try {
+    const playerId = params.id.toString();
+    const player = await getRecordByIdOrError(playerId, env.PLAYERS);
+
+    const playerData: Player = JSON.parse(player);
+
+    const data: Player = {
+      ...playerData,
+      deleted: true,
+    };
+
+    // Update the player data in the KV store
+    await env.PLAYERS.put(playerId, JSON.stringify(data));
+
+    const responseBody = {
+      message: "Player deleted successfully.",
+      status: 200,
+    };
+
+    return new Response(JSON.stringify(responseBody), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (e) {
+    const errorBody = {
+      message: e instanceof Error ? e.message : "Internal server error.",
+      status: e instanceof Error ? 500 : 400,
+    };
+
+    return new Response(JSON.stringify(errorBody), {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+};

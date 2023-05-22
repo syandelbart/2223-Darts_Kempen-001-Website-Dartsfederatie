@@ -1,5 +1,9 @@
 import { checkFields } from "../../../modules/fieldsCheck";
-import { getParams, searchKeyChecker } from "../../../modules/general";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
 import { PagesEnv } from "../env";
 import { fineRegexPatterns, FineSubmission } from "../../../modules/fine";
 import { Fine } from "../../../types/fine";
@@ -86,9 +90,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = fines.keys.map(async (fine) => {
       const fineData: Fine = JSON.parse(await env.FINES.get(fine.name));
 
-      const data: Fine = {
-        // TODO: Update the fine data/types
-      };
+      const data: Fine = changeData(FineSubmission, fineData, formData) as Fine;
 
       // Update the fine data in the KV store
       await env.FINES.put(fine.name, JSON.stringify(data));

@@ -1,5 +1,9 @@
 import { checkFields } from "../../../modules/fieldsCheck";
-import { getParams, searchKeyChecker } from "../../../modules/general";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
 import { PagesEnv } from "../env";
 import { MatchSubmission, matchRegexPatterns } from "../../../modules/match";
 import { Match } from "../../../types/match";
@@ -87,9 +91,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = matches.keys.map(async (match) => {
       const matchData: Match = JSON.parse(await env.MATCHES.get(match.name));
 
-      const data: Match = {
-        // TODO: Add match data/fields
-      };
+      const data: Match = changeData(
+        MatchSubmission,
+        matchData,
+        formData
+      ) as Match;
 
       // Update the match data in the KV store
       await env.MATCHES.put(match.name, JSON.stringify(data));

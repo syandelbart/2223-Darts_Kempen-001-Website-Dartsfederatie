@@ -1,5 +1,9 @@
 import { PagesEnv } from "../env";
-import { getParams, searchKeyChecker } from "../../../modules/general";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
 import { TeamSubmission, teamRegexPatterns } from "../../../modules/team";
 import { Team } from "../../../types/team";
@@ -92,18 +96,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = teams.keys.map(async (team) => {
       const teamData: Team = JSON.parse(await env.TEAMS.get(team.name));
 
-      const data: Team = {
-        teamID: teamData.teamID,
-        name: formData.get(TeamSubmission.NAME)
-          ? formData.get(TeamSubmission.NAME)
-          : teamData.name,
-        classification: formData.get(TeamSubmission.CLASSIFICATION)
-          ? (formData.get(TeamSubmission.CLASSIFICATION) as CLASSIFICATION)
-          : teamData.classification,
-        clubID: formData.get(TeamSubmission.CLUBID)
-          ? formData.get(TeamSubmission.CLUBID)
-          : teamData.clubID,
-      };
+      const data: Team = changeData(TeamSubmission, teamData, formData) as Team;
 
       // Update the team data in the KV store
       await env.TEAMS.put(team.name, JSON.stringify(data));

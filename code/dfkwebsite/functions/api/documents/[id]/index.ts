@@ -1,8 +1,8 @@
-import { getRecordByIdOrError } from "../../../../modules/general";
+import { changeData, getRecordByIdOrError } from "../../../../modules/general";
 import { PagesEnv } from "../../env";
 import { Document } from "../../../../types/document";
 import { checkFields } from "../../../../modules/fieldsCheck";
-import { documentRegexPatterns } from "../../../../modules/document";
+import { DocumentSubmission, documentRegexPatterns } from "../../../../modules/document";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -41,9 +41,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const documentsData: Document = JSON.parse(documents);
 
-    const data: Document = {
-      // TODO: Add documents data
-    };
+    const data: Document = changeData(
+      DocumentSubmission,
+      documentsData,
+      formData
+    ) as Document;
 
     // Update the club data in the KV store
     await env.DOCUMENTS.put(documentsId, JSON.stringify(data));
