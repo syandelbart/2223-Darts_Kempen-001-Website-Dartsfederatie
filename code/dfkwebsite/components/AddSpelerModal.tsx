@@ -5,6 +5,8 @@ import Modal from "./Modal";
 import DefaultInput from "./DefaultInput";
 import DefaultCheckbox from "./DefaultCheckbox";
 import InformationBox from "./InformationBox";
+import { Player } from "../types/player";
+import * as dummyData from "../data";
 
 type AddSpelerModalData = {
   addModalOpen: boolean;
@@ -21,23 +23,33 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
     allowed: "",
   });
 
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
+    boolean | null
+  >(false);
+  const [informationBoxMessage, setInformationBoxMessage] = useState("");
+
   const handleChange = (event: any) => {
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
   const handleSubmit = async (event: any) => {
-    formHandler.handleSubmit(
+    let player: Player | null = formHandler.handleSubmit(
       event,
       formValues,
       playerRegexPatterns,
-      "/api/players"
+      "/api/players",
+      setInformationBoxMessage,
+      setHandleSubmitSuccess,
+      dummyData.players[0],
+      process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
+    );
+
+    if (!player || !handleSubmitSuccess) return;
+
+    setInformationBoxMessage(
+      "Speler succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
     );
   };
-
-  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
-    boolean | null
-  >(false);
-  const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   return (
     <Modal
