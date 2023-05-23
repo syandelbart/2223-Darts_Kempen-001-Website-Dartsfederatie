@@ -5,6 +5,10 @@ import DefaultInput from "./DefaultInput";
 import DefaultSelect from "./DefaultSelect";
 import { ClubFront } from "../types/club";
 import InformationBox from "./InformationBox";
+import * as dummyData from "../data";
+import * as formHandler from "../modules/formHandler";
+import { Team } from "../types/team";
+import { teamRegexPatterns } from "../modules/team";
 
 type AddTeamModalData = {
   addModalOpen: boolean;
@@ -15,10 +19,40 @@ type AddTeamModalData = {
 const AddTeamModal: FunctionComponent<AddTeamModalData> = (
   props: AddTeamModalData
 ) => {
+  const [formValues, setFormValues] = useState<{ [key: string]: string }>({
+    name: "",
+    captainid: "",
+    classification: "",
+    club: "",
+  });
+
   const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
     boolean | null
   >(false);
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
+
+  const handleChange = (event: any) => {
+    formHandler.handleChange(event, setFormValues, formValues);
+  };
+
+  const handleSubmit = async (event: any) => {
+    let team: Team | null = await formHandler.handleSubmit(
+      event,
+      formValues,
+      teamRegexPatterns,
+      "/api/players",
+      setInformationBoxMessage,
+      setHandleSubmitSuccess,
+      dummyData.teams[0],
+      process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
+    );
+
+    if (!team || !handleSubmitSuccess) return;
+
+    setInformationBoxMessage(
+      "Team succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
+    );
+  };
   return (
     <Modal
       title="Team toevoegen"
@@ -38,6 +72,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           name="name"
           label="Teamnaam"
           placeholder="Teamnaam"
+          onChange={handleChange}
         />
 
         <DefaultSelect
@@ -45,6 +80,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           id="captainid"
           label="Kapitein"
           options={[{ value: "1", label: "1" }]}
+          onChange={handleChange}
         />
 
         <DefaultSelect
@@ -59,6 +95,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                 .toLowerCase()}`,
             };
           })}
+          onChange={handleChange}
         />
 
         <DefaultSelect
@@ -83,11 +120,16 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                 }
               : undefined
           }
+          onChange={handleChange}
           search={true}
           notRequired={true}
         />
 
-        <button className="bg-[#0A893D] text-white rounded-lg p-3 mt-10">
+        <button
+          type="submit"
+          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
+          onClick={handleSubmit}
+        >
           Aanmaken
         </button>
       </div>
