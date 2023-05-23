@@ -159,6 +159,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           value={formValues.teamids}
           onChange={handleChange}
           search={true}
+          notRequired={true}
         />
 
         <button

@@ -26,5 +26,5 @@ export const clubRegexPatterns: { [key: string]: fieldInformation } = {
     required: true,
   },
   [ClubSubmission.CONTACTPERSONID]: { regex: /^[0-9]+$/, required: true },
-  [ClubSubmission.TEAMIDS]: {},
+  [ClubSubmission.TEAMIDS]: { regex: /^[0-9]+$/, required: false },
 };
