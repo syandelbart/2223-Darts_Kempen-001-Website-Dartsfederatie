@@ -4,6 +4,7 @@ import * as formHandler from "../modules/formHandler";
 import Modal from "./Modal";
 import DefaultInput from "./DefaultInput";
 import DefaultCheckbox from "./DefaultCheckbox";
+import InformationBox from "./InformationBox";
 
 type AddSpelerModalData = {
   addModalOpen: boolean;
@@ -33,6 +34,11 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
     );
   };
 
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
+    boolean | null
+  >(false);
+  const [informationBoxMessage, setInformationBoxMessage] = useState("");
+
   return (
     <Modal
       title="Speler toevoegen"
@@ -40,6 +46,13 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       <div className="flex flex-col">
+        <InformationBox
+          success={handleSubmitSuccess}
+          show={informationBoxMessage !== ""}
+          onClose={() => setInformationBoxMessage("")}
+        >
+          {informationBoxMessage}
+        </InformationBox>
         <DefaultInput
           name="firstname"
           label="Voornaam"
