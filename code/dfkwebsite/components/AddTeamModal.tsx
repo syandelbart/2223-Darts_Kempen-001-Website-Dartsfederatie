@@ -14,6 +14,7 @@ type AddTeamModalData = {
   addModalOpen: boolean;
   setAddModalOpen: any;
   currentClub?: ClubFront | null;
+  showTeamList?: boolean;
 };
 
 const AddTeamModal: FunctionComponent<AddTeamModalData> = (
@@ -59,6 +60,10 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       modalOpen={props.addModalOpen}
       setModalOpen={props.setAddModalOpen}
     >
+      {props.showTeamList ? (
+        <DefaultSelect id="" name="" label="Bestaande Teams" options={[]} search={true} /> // TODO: Finish select
+      ) : null}
+
       <div className="flex flex-col">
         <InformationBox
           success={handleSubmitSuccess}

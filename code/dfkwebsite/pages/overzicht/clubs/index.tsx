@@ -80,6 +80,7 @@ const Clubs: NextPage = () => {
         addModalOpen={addTeamModalOpen}
         setAddModalOpen={setAddTeamModalOpen}
         currentClub={currentClub}
+        showTeamList={true}
       />
 
       <CardGrid>
