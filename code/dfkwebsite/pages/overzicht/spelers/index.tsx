@@ -55,6 +55,7 @@ const Spelers: NextPage = () => {
           modalOpen={isOpen}
           setModalOpen={setIsOpen}
         >
+          <input className="bg-inherit" type="text" defaultValue={currentPlayer.phone}></input>
           <div className="mt-10 w-1/2">
             <AddButton
               name="Team"

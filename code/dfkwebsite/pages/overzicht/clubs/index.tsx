@@ -55,6 +55,31 @@ const Clubs: NextPage = () => {
           modalOpen={isOpen}
           setModalOpen={setIsOpen}
         >
+          <div className="flex">
+            <input
+              className="bg-inherit"
+              type="text"
+              defaultValue={currentClub.address?.postalCode}
+            ></input>
+            <input
+              className="bg-inherit"
+              type="text"
+              defaultValue={currentClub.address?.city}
+            ></input>
+          </div>
+          <div className="flex">
+            <input
+              className="bg-inherit"
+              type="text"
+              defaultValue={currentClub.address?.street}
+            ></input>
+            <input
+              className="bg-inherit"
+              type="text"
+              defaultValue={currentClub.address?.houseNumber}
+            ></input>
+          </div>
+
           <div className="mt-10 w-1/2">
             <AddButton
               name="Team"

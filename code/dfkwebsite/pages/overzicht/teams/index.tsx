@@ -50,6 +50,23 @@ const Teams: NextPage = () => {
           modalOpen={isOpen}
           setModalOpen={setIsOpen}
         >
+          <input
+            className="bg-inherit"
+            type="text"
+            defaultValue={
+              currentTeam.captain?.firstName +
+              " " +
+              currentTeam.captain?.lastName
+            }
+          ></input>
+          <input
+            className="bg-inherit"
+            type="text"
+            defaultValue={
+              currentTeam.captain?.phone
+            }
+          ></input>
+
           <TeamSpelers
             team={currentTeam}
             handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
