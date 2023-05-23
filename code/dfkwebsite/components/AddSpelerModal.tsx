@@ -33,7 +33,7 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
   };
 
   const handleSubmit = async (event: any) => {
-    let player: Player | null = formHandler.handleSubmit(
+    let player: Player | null = await formHandler.handleSubmit(
       event,
       formValues,
       playerRegexPatterns,
