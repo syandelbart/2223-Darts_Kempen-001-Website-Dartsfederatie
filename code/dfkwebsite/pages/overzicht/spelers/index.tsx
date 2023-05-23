@@ -72,7 +72,7 @@ const Spelers: NextPage = () => {
               />
             ))
           ) : (
-            <p className="text-xl mt-10">Deze speler heeft geen teams.</p>
+            <p className="text-xl mt-10">Deze speler heeft geen team.</p>
           )}
         </Modal>
       )}
