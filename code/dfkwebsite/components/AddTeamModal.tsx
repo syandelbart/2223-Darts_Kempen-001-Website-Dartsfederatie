@@ -1,9 +1,10 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import Modal from "./Modal";
 import { CLASSIFICATION } from "../types/competition";
 import DefaultInput from "./DefaultInput";
 import DefaultSelect from "./DefaultSelect";
 import { ClubFront } from "../types/club";
+import InformationBox from "./InformationBox";
 
 type AddTeamModalData = {
   addModalOpen: boolean;
@@ -14,6 +15,10 @@ type AddTeamModalData = {
 const AddTeamModal: FunctionComponent<AddTeamModalData> = (
   props: AddTeamModalData
 ) => {
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
+    boolean | null
+  >(false);
+  const [informationBoxMessage, setInformationBoxMessage] = useState("");
   return (
     <Modal
       title="Team toevoegen"
@@ -21,6 +26,13 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       <div className="flex flex-col">
+        <InformationBox
+          success={handleSubmitSuccess}
+          show={informationBoxMessage !== ""}
+          onClose={() => setInformationBoxMessage("")}
+        >
+          {informationBoxMessage}
+        </InformationBox>
         <DefaultInput
           id="teamnaam"
           name="name"
