@@ -19,6 +19,7 @@ type DefaultSelectData = {
   labelEnabled?: boolean;
   search?: boolean;
   defaultValue?: SelectOption;
+  notRequired?: boolean;
 };
 
 const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
@@ -38,6 +39,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
   defaultOptionValue = "",
   search = false,
   defaultValue,
+  notRequired,
 }) => {
   const isValidRegex = () => {
     if (regex) {
@@ -50,7 +52,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
     <div className="flex flex-col">
       {labelEnabled && (
         <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
-          {label ?? name}{" "}
+          {label ?? name}
           {regex && (
             <span
               className="text-sm"
@@ -59,6 +61,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
               {isValidRegex() ? "Geldig" : "Ongeldig"}
             </span>
           )}
+          {!notRequired && <span className="text-sm align-top">*</span>}
         </label>
       )}
 
