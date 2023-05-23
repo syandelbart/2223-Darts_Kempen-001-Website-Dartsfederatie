@@ -94,6 +94,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
         </InformationBox>
 
         <DefaultInput
+          id="clubnaam"
           name="name"
           label="Clubnaam"
           placeholder="Clubnaam"
