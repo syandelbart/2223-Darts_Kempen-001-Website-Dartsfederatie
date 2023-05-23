@@ -72,6 +72,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
               : undefined
           }
           search={true}
+          notRequired={true}
         />
 
         <button className="bg-[#0A893D] text-white rounded-lg p-3 mt-10">
