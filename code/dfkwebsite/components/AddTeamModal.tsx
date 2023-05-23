@@ -3,10 +3,12 @@ import Modal from "./Modal";
 import { CLASSIFICATION } from "../types/competition";
 import DefaultInput from "./DefaultInput";
 import DefaultSelect from "./DefaultSelect";
+import { ClubFront } from "../types/club";
 
 type AddTeamModalData = {
   addModalOpen: boolean;
   setAddModalOpen: any;
+  currentClub?: ClubFront | null;
 };
 
 const AddTeamModal: FunctionComponent<AddTeamModalData> = (
@@ -19,7 +21,12 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       <div className="flex flex-col">
-        <DefaultInput name="name" label="Teamnaam" placeholder="Teamnaam" />
+        <DefaultInput
+          id="teamnaam"
+          name="name"
+          label="Teamnaam"
+          placeholder="Teamnaam"
+        />
 
         <DefaultSelect
           name="captainid"
@@ -46,7 +53,25 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           name="club"
           id="club"
           label="Club"
-          options={[{ value: "1", label: "1" }]}
+          options={
+            props.currentClub
+              ? [
+                  {
+                    value: props.currentClub.clubID,
+                    label: props.currentClub.name,
+                  },
+                ]
+              : [{ value: "1", label: "1" }]
+          }
+          defaultValue={
+            props.currentClub
+              ? {
+                  value: props.currentClub.clubID,
+                  label: props.currentClub.name,
+                }
+              : undefined
+          }
+          search={true}
         />
 
         <button className="bg-[#0A893D] text-white rounded-lg p-3 mt-10">

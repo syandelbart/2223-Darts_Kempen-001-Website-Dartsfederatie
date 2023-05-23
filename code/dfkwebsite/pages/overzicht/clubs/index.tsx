@@ -79,6 +79,7 @@ const Clubs: NextPage = () => {
       <AddTeamModal
         addModalOpen={addTeamModalOpen}
         setAddModalOpen={setAddTeamModalOpen}
+        currentClub={currentClub}
       />
 
       <CardGrid>
