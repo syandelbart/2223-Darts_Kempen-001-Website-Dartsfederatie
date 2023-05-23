@@ -116,6 +116,11 @@ export const changeData = (
   return data;
 };
 
+export type SelectOption = {
+  value: string;
+  label?: string;
+};
+
 export const getAllSelectOptionsByName = async (
   api: string,
   labelField: string,
