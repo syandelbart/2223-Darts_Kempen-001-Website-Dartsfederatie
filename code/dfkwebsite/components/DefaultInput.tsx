@@ -10,6 +10,7 @@ type DefaultInputData = {
   value?: any;
   regex?: RegExp;
   textArea?: boolean;
+  notRequired?: boolean;
 };
 
 const DefaultInput: FunctionComponent<DefaultInputData> = ({
@@ -22,6 +23,7 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
   placeholder = "",
   regex,
   textArea,
+  notRequired,
 }) => {
   const isValidRegex = () => {
     if (regex) {
@@ -33,7 +35,7 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
-        {label ?? name}{" "}
+        {label ?? name}
         {regex && (
           <span
             className="text-sm"
@@ -42,6 +44,7 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
             {isValidRegex() ? "Geldig" : "Ongeldig"}
           </span>
         )}
+        {!notRequired && <span className="text-sm align-top">*</span>}
       </label>
       {!textArea ? (
         <input
