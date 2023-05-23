@@ -33,6 +33,7 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
   };
 
   const handleSubmit = async (event: any) => {
+    console.log(formValues);
     let player: Player | null = await formHandler.handleSubmit(
       event,
       formValues,
@@ -88,7 +89,7 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
           onChange={handleChange}
         />
         <div className="mt-5 mb-2">
-          <DefaultCheckbox label="Speelgerechtigd" name="allowed" />
+          <DefaultCheckbox label="Speelgerechtigd" name="allowed" onChange={handleChange} />
         </div>
         <button
           type="submit"
