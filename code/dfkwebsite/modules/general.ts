@@ -1,3 +1,5 @@
+import * as dummyData from "../data";
+
 const availableParams = [
   // General
   { name: "limit", regex: /^[0-9]+$/, castFunction: Number, default: 100 },
@@ -112,4 +114,35 @@ export const changeData = (
   });
 
   return data;
+};
+
+export const getAllSelectOptionsByName = async (
+  api: string,
+  labelField: string,
+  valueField: string,
+): Promise<SelectOption[]> => {
+  if (process.env.NEXT_PUBLIC_NO_API) {
+    return (dummyData as any)[api].map((item: any) => ({
+      label: item[labelField],
+      value: item[valueField],
+    }));
+  }
+
+  const response = await fetch(`/api/${api}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch data from the ${api} API.`);
+  }
+
+  const data = await response.json();
+
+  return (data as Object[]).map((item: any) => ({
+    label: item[labelField],
+    value: item[valueField],
+  }));
 };

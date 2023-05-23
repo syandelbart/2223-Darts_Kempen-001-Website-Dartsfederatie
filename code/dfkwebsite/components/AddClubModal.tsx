@@ -1,4 +1,4 @@
-import { Dispatch, FunctionComponent, useState } from "react";
+import { Dispatch, FunctionComponent, useEffect, useState } from "react";
 import { clubRegexPatterns } from "../modules/club";
 import * as formHandler from "../modules/formHandler";
 import Modal from "./Modal";
@@ -7,6 +7,7 @@ import DefaultSelect from "./DefaultSelect";
 import InformationBox from "./InformationBox";
 import * as dummyData from "../data";
 import { Club, ClubFront } from "../types/club";
+import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
 
 type AddClubModalData = {
   addModalOpen: boolean;
@@ -64,6 +65,16 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     boolean | null
   >(false);
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
+
+  const [teams, setTeams] = useState<SelectOption[]>([]);
+
+  useEffect(() => {
+    const getTeams = async () => {
+      let teams = await getAllSelectOptionsByName("teams", "name", "teamID");
+      setTeams(teams);
+    };
+    getTeams();
+  }, []);
 
   return (
     <Modal
