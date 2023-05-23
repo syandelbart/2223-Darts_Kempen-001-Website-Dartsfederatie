@@ -1,5 +1,4 @@
 import { Dispatch, FunctionComponent, SetStateAction } from "react";
-
 import CardButton from "./CardButton";
 import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
@@ -12,7 +11,7 @@ interface playerDataInterface {
   setCurrentPlayer: Dispatch<SetStateAction<Player | null>>;
 }
 
-const PlayerComponent: FunctionComponent<playerDataInterface> = ({
+const PlayerCard: FunctionComponent<playerDataInterface> = ({
   playerData,
   setIsOpen,
   setCurrentPlayer,
@@ -38,4 +37,4 @@ const PlayerComponent: FunctionComponent<playerDataInterface> = ({
   );
 };
 
-export default PlayerComponent;
+export default PlayerCard;

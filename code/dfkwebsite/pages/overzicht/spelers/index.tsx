@@ -4,7 +4,7 @@ import AddSpelerModal from "../../../components/AddSpelerModal";
 import Card from "../../../components/Card";
 import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
-import PlayerComponent from "../../../components/Player";
+import PlayerCard from "../../../components/PlayerCard";
 import { PlayerFront } from "../../../types/player";
 import * as dummyData from "../../../data";
 import TeamSpelers from "../../../components/TeamSpelers";
@@ -13,6 +13,8 @@ import {
   handleDeletePlayerFromTeam,
   handleMakePlayerCaptain,
 } from "../../../modules/overzicht";
+import AddButton from "../../../components/AddButton";
+import AddTeamModal from "../../../components/AddTeamModal";
 
 const Spelers: NextPage = () => {
   const [players, setPlayers] = useState<PlayerFront[]>(dummyData.players);
@@ -20,6 +22,8 @@ const Spelers: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [addTeamModalOpen, setAddTeamModalOpen] = useState(false);
+
   let results = 0;
 
   useEffect(() => {
@@ -51,6 +55,13 @@ const Spelers: NextPage = () => {
           modalOpen={isOpen}
           setModalOpen={setIsOpen}
         >
+          <div className="mt-10 w-1/2">
+            <AddButton
+              name="Team"
+              addModalOpen={addTeamModalOpen}
+              setAddModalOpen={setAddTeamModalOpen}
+            />
+          </div>
           {currentPlayer.teams ? (
             currentPlayer.teams.map((team) => (
               <TeamSpelers
@@ -61,10 +72,14 @@ const Spelers: NextPage = () => {
               />
             ))
           ) : (
-            <p>Deze speler heeft geen teams.</p>
+            <p className="text-xl mt-10">Deze speler heeft geen teams.</p>
           )}
         </Modal>
       )}
+      <AddTeamModal
+        addModalOpen={addTeamModalOpen}
+        setAddModalOpen={setAddTeamModalOpen}
+      />
 
       <CardGrid>
         {!players || players.length === 0 || results === players.length ? (
@@ -78,12 +93,12 @@ const Spelers: NextPage = () => {
                 search == "" ||
                 player.firstName.toLowerCase().includes(search.toLowerCase())
               )
-                return player; // filter nakijken
+                return player;
               results++;
             })
             .map((player) => (
               <Card key={player.playerID}>
-                <PlayerComponent
+                <PlayerCard
                   playerData={player}
                   setIsOpen={setIsOpen}
                   setCurrentPlayer={setCurrentPlayer}
