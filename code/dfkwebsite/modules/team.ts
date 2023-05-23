@@ -14,7 +14,7 @@ export enum TeamSubmission {
 export const teamRegexPatterns: { [key: string]: fieldInformation } = {
   [TeamSubmission.NAME]: { regex: /^[a-zA-Z ]+$/, required: true },
   [TeamSubmission.CAPTAINID]: { regex: /^[0-9]+$/, required: true },
-  [TeamSubmission.CLUBID]: { regex: /^[0-9]+$/, required: true },
+  [TeamSubmission.CLUBID]: { regex: /^[0-9]+$/, required: false },
   [TeamSubmission.CLASSIFICATION]: { regex: /^[0-9]+$/, required: true },
   [TeamSubmission.PLAYERSID]: {
     // This regex matches the following pattern:
