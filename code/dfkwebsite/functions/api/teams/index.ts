@@ -59,6 +59,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
         TeamSubmission.CLASSIFICATION
       ) as CLASSIFICATION,
       clubID: formData.get(TeamSubmission.CLUBID),
+      playersID: JSON.parse(formData.get(TeamSubmission.PLAYERSID)), // ["id:123", "id:456"]
     };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
@@ -96,7 +97,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = teams.keys.map(async (team) => {
       const teamData: Team = JSON.parse(await env.TEAMS.get(team.name));
 
-      const data: Team = changeData(TeamSubmission, teamData, formData) as Team;
+      const data: Team = changeData(
+        teamRegexPatterns,
+        teamData,
+        formData
+      ) as Team;
 
       // Update the team data in the KV store
       await env.TEAMS.put(team.name, JSON.stringify(data));

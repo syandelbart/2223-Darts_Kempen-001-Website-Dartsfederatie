@@ -42,7 +42,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const teamData: Team = JSON.parse(team);
 
-    const data: Team = changeData(TeamSubmission, teamData, formData) as Team;
+    const data: Team = changeData(
+      teamRegexPatterns,
+      teamData,
+      formData
+    ) as Team;
     data.playersID =
       typeof data.playersID === "object"
         ? data.playersID

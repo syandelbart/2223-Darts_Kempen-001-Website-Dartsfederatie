@@ -15,6 +15,7 @@ import {
   COMPETITION_TYPE,
   Competition,
 } from "../../../types/competition";
+import { clubRegexPatterns } from "../../../modules/club";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -109,7 +110,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
       );
 
       const data: Competition = changeData(
-        CompetitionSubmission,
+        clubRegexPatterns,
         competitionData,
         formData
       ) as Competition;

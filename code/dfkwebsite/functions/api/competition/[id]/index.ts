@@ -54,7 +54,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const competitionData: Competition = JSON.parse(competition);
 
     const data: Competition = changeData(
-      CompetitionSubmission,
+      competitionRegexPatterns,
       competitionData,
       formData
     ) as Competition;

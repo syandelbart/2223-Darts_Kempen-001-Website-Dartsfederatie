@@ -41,7 +41,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const fineData: Fine = JSON.parse(fine);
 
-    const data: Fine = changeData(FineSubmission, fineData, formData) as Fine;
+    const data: Fine = changeData(
+      fineRegexPatterns,
+      fineData,
+      formData
+    ) as Fine;
 
     // Update the fine data in the KV store
     await env.FINES.put(fineId, JSON.stringify(data));
