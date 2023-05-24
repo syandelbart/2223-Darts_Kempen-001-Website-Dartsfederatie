@@ -83,10 +83,10 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     const getSpelers = async () => {
       let spelers = await getAllSelectOptionsByName(
         "players",
-        "firstname:lastname",
+        ["firstName", "lastName"],
         "playerID"
       );
-      console.log("spelers: ", spelers)
+      console.log("spelers: ", spelers);
       setSpelers(spelers);
     };
     getSpelers();

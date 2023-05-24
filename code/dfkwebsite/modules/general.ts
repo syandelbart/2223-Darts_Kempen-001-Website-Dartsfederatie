@@ -101,7 +101,7 @@ export const countFridays = (startDate: Date, endDate: Date) => {
 };
 
 export const changeData = (
-  fields: {[key: string]: string },
+  fields: { [key: string]: string },
   currentData: Object,
   newData: FormData
 ) => {
@@ -123,12 +123,15 @@ export type SelectOption = {
 
 export const getAllSelectOptionsByName = async (
   api: string,
-  labelField: string,
-  valueField: string,
+  labelField: string | string[],
+  valueField: string
 ): Promise<SelectOption[]> => {
   if (process.env.NEXT_PUBLIC_NO_API) {
     return (dummyData as any)[api].map((item: any) => ({
-      label: item[labelField],
+      label:
+        typeof labelField === "object"
+          ? labelField.map((field) => item[field]).join(" ")
+          : item[labelField],
       value: item[valueField],
     }));
   }
@@ -145,9 +148,14 @@ export const getAllSelectOptionsByName = async (
   }
 
   const data = await response.json();
+  console.log("data");
+  console.log(data);
 
   return (data as Object[]).map((item: any) => ({
-    label: item[labelField],
+    label:
+      typeof labelField === "object"
+        ? labelField.map((field) => item[field]).join(" ")
+        : item[labelField],
     value: item[valueField],
   }));
 };
