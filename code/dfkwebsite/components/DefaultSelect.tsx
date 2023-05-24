@@ -49,7 +49,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       {labelEnabled && (
         <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
           {label ?? name}

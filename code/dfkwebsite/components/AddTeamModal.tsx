@@ -132,53 +132,53 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           })}
           onChange={handleChange}
         />
-
-        <DefaultSelect
-          name="clubid"
-          id="clubid"
-          label="Club"
-          options={
-            props.currentClub
-              ? [
-                  {
+        <div className="flex gap-5">
+          <DefaultSelect
+            name="clubid"
+            id="clubid"
+            label="Club"
+            options={
+              props.currentClub
+                ? [
+                    {
+                      value: props.currentClub.clubID,
+                      label: props.currentClub.name,
+                    },
+                  ]
+                : [{ value: "1", label: "1" }]
+            }
+            defaultValue={
+              props.currentClub
+                ? {
                     value: props.currentClub.clubID,
                     label: props.currentClub.name,
-                  },
-                ]
-              : [{ value: "1", label: "1" }]
-          }
-          defaultValue={
-            props.currentClub
-              ? {
-                  value: props.currentClub.clubID,
-                  label: props.currentClub.name,
-                }
-              : undefined
-          }
-          onChange={handleChange}
-          search={true}
-          notRequired={true}
-        />
+                  }
+                : undefined
+            }
+            onChange={handleChange}
+            search={true}
+            notRequired={true}
+          />
 
-        <DefaultSelect
-          name="playersid"
-          id="playersid"
-          label="Spelers"
-          options={
-            props.currentPlayer
-              ? [
-                  {
-                    value: props.currentPlayer.playerID,
-                    label: `${props.currentPlayer.firstName} ${props.currentPlayer.lastName}`,
-                  },
-                ]
-              : [{ value: "1", label: "1" }]
-          }
-          onChange={handleChange}
-          search={true}
-          notRequired={true}
-        />
-
+          <DefaultSelect
+            name="playersid"
+            id="playersid"
+            label="Spelers"
+            options={
+              props.currentPlayer
+                ? [
+                    {
+                      value: props.currentPlayer.playerID,
+                      label: `${props.currentPlayer.firstName} ${props.currentPlayer.lastName}`,
+                    },
+                  ]
+                : [{ value: "1", label: "1" }]
+            }
+            onChange={handleChange}
+            search={true}
+            notRequired={true}
+          />
+        </div>
         <button
           type="submit"
           className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
