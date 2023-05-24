@@ -50,6 +50,9 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
     setInformationBoxMessage(
       "Speler succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
     );
+    setTimeout(() => {
+      props.setAddModalOpen(false);
+    }, 5000);
   };
 
   return (
@@ -89,7 +92,11 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
           onChange={handleChange}
         />
         <div className="mt-5 mb-2">
-          <DefaultCheckbox label="Speelgerechtigd" name="allowed" onChange={handleChange} />
+          <DefaultCheckbox
+            label="Speelgerechtigd"
+            name="allowed"
+            onChange={handleChange}
+          />
         </div>
         <button
           type="submit"
