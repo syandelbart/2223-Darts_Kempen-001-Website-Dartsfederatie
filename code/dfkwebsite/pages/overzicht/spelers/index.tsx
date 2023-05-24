@@ -81,6 +81,7 @@ const Spelers: NextPage = () => {
         addModalOpen={addTeamModalOpen}
         setAddModalOpen={setAddTeamModalOpen}
         showTeamList={true}
+        currentPlayer={currentPlayer}
       />
 
       <CardGrid>

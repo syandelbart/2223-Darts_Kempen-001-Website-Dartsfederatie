@@ -9,11 +9,13 @@ import * as dummyData from "../data";
 import * as formHandler from "../modules/formHandler";
 import { Team } from "../types/team";
 import { teamRegexPatterns } from "../modules/team";
+import { PlayerFront } from "../types/player";
 
 type AddTeamModalData = {
   addModalOpen: boolean;
   setAddModalOpen: any;
   currentClub?: ClubFront | null;
+  currentPlayer?: PlayerFront | null;
   showTeamList?: boolean;
 };
 
@@ -68,14 +70,16 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
             id=""
             name=""
             label="Bestaand Team"
-            options={[]}
+            options={}
             search={true}
           />{" "}
         </div>
       ) : null}
 
       <div className="flex flex-col">
-        {props.showTeamList ? <p className="mt-5">Of maak een nieuw team</p> : null}
+        {props.showTeamList ? (
+          <p className="mt-5">Of maak een nieuw team</p>
+        ) : null}
         <InformationBox
           success={handleSubmitSuccess}
           show={informationBoxMessage !== ""}
@@ -145,7 +149,16 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           name="playersid"
           id="playersid"
           label="Spelers"
-          options={[]}
+          options={
+            props.currentPlayer
+              ? [
+                  {
+                    value: props.currentPlayer.playerID,
+                    label: `${props.currentPlayer.firstName} ${props.currentPlayer.lastName}`,
+                  },
+                ]
+              : [{ value: "1", label: "1" }]
+          }
           onChange={handleChange}
           search={true}
           notRequired={true}
