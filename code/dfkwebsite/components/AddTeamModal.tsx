@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import Modal from "./Modal";
 import { CLASSIFICATION } from "../types/competition";
 import DefaultInput from "./DefaultInput";
@@ -10,6 +10,7 @@ import * as formHandler from "../modules/formHandler";
 import { Team } from "../types/team";
 import { teamRegexPatterns } from "../modules/team";
 import { PlayerFront } from "../types/player";
+import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
 
 type AddTeamModalData = {
   addModalOpen: boolean;
@@ -57,6 +58,16 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       "Team succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
     );
   };
+
+  const [teams, setTeams] = useState<SelectOption[]>([]);
+
+  useEffect(() => {
+    const getTeams = async () => {
+      let teams = await getAllSelectOptionsByName("teams", "name", "teamID");
+      setTeams(teams);
+    };
+    getTeams();
+  }, []);
   return (
     <Modal
       title="Team toevoegen"
@@ -70,7 +81,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
             id=""
             name=""
             label="Bestaand Team"
-            options={}
+            options={teams}
             search={true}
           />{" "}
         </div>

@@ -7,7 +7,6 @@ import DefaultSelect from "./DefaultSelect";
 import InformationBox from "./InformationBox";
 import * as dummyData from "../data";
 import { Club, ClubFront } from "../types/club";
-import { SelectOption } from "../modules/general";
 import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
 
 type AddClubModalData = {
