@@ -63,14 +63,33 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     }, 5000);
   };
 
+  const [clubs, setClubs] = useState<SelectOption[]>([]);
   const [teams, setTeams] = useState<SelectOption[]>([]);
+  const [spelers, setSpelers] = useState<SelectOption[]>([]);
 
   useEffect(() => {
+    const getClubs = async () => {
+      let clubs = await getAllSelectOptionsByName("clubs", "name", "clubID");
+      setClubs(clubs);
+    };
+    getClubs();
+
     const getTeams = async () => {
       let teams = await getAllSelectOptionsByName("teams", "name", "teamID");
       setTeams(teams);
     };
     getTeams();
+
+    const getSpelers = async () => {
+      let spelers = await getAllSelectOptionsByName(
+        "players",
+        "firstname:lastname",
+        "playerID"
+      );
+      console.log("spelers: ", spelers)
+      setSpelers(spelers);
+    };
+    getSpelers();
   }, []);
   return (
     <Modal
@@ -114,8 +133,15 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           name="captainid"
           id="captainid"
           label="Kapitein"
-          options={[{ value: "1", label: "1" }]}
+          options={spelers.map((speler) => {
+            console.log(speler);
+            return {
+              value: speler.value,
+              label: speler.label,
+            };
+          })}
           onChange={handleChange}
+          search={true}
         />
 
         <DefaultSelect
@@ -145,15 +171,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                       label: props.currentClub.name,
                     },
                   ]
-                : [{ value: "1", label: "1" }]
-            }
-            defaultValue={
-              props.currentClub
-                ? {
-                    value: props.currentClub.clubID,
-                    label: props.currentClub.name,
-                  }
-                : undefined
+                : clubs
             }
             onChange={handleChange}
             search={true}
@@ -172,7 +190,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                       label: `${props.currentPlayer.firstName} ${props.currentPlayer.lastName}`,
                     },
                   ]
-                : [{ value: "1", label: "1" }]
+                : spelers
             }
             onChange={handleChange}
             search={true}
