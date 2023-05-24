@@ -24,30 +24,3 @@ export const teamRegexPatterns: { [key: string]: fieldInformation } = {
     required: false,
   },
 };
-
-export const getAllTeamSelectOptions = async (): Promise<SelectOption[]> => {
-  if (process.env.NEXT_PUBLIC_NO_API) {
-    return dummyData.teams.map((team) => {
-      return {
-        label: team.name,
-        value: team.teamID,
-      };
-    });
-  }
-
-  return await fetch("/api/teams", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data: TeamFront[]) => {
-      return data.map((team) => {
-        return {
-          label: team.name,
-          value: team.teamID,
-        };
-      });
-    });
-};
