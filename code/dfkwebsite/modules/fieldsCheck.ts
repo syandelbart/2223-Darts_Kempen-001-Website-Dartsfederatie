@@ -15,7 +15,11 @@ export const checkFields = (
     const value = fieldsInformation[field];
 
     // If value is required and formData does not contain the field, error
-    if (!ignoreRequired && value?.required && (!formData.has(field) || formData.get(field) == ""))
+    if (
+      !ignoreRequired &&
+      value?.required &&
+      (!formData.has(field) || formData.get(field) == "")
+    )
       throw new Error(`Field "${field}" is required.`);
 
     // if the field has a regex field, and the form has this field, it will check the pattern, if it doesn't match, it throws an error
@@ -23,6 +27,7 @@ export const checkFields = (
       value?.regex &&
       formData.has(field) &&
       !formData.get(field)?.toString().match(value.regex) &&
+      !value.required &&
       formData.get(field) != ""
     )
       throw new Error(`Field "${field}" does not match the required pattern`);
