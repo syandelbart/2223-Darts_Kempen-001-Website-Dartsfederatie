@@ -1,4 +1,5 @@
 import * as dummyData from "../data";
+import { fieldInformation } from "./fieldsCheck";
 
 const availableParams = [
   // General
@@ -101,16 +102,20 @@ export const countFridays = (startDate: Date, endDate: Date) => {
 };
 
 export const changeData = (
-  fields: { [key: string]: string },
+  fields: { [key: string]: fieldInformation },
   currentData: Object,
   newData: FormData
 ) => {
   const data = JSON.parse(JSON.stringify(currentData));
 
-  Object.values(fields).forEach((field) => {
+  Object.keys(fields).forEach((field) => {
     if (!newData.has(field)) return;
 
-    data[field] = newData.get(field);
+    data[field] = fields[field].castFunction
+      ? fields[field].castFunction(newData.get(field))
+      : (data[field] = newData.get(field));
+
+    // data[field] = newData.get(field);
   });
 
   return data;
