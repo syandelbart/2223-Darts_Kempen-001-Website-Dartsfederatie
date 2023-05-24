@@ -62,10 +62,20 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       {props.showTeamList ? (
-        <DefaultSelect id="" name="" label="Bestaande Teams" options={[]} search={true} /> // TODO: Finish select
+        <div className="mt-10">
+          <p>Voeg hieronder een bestaand team toe</p>
+          <DefaultSelect
+            id=""
+            name=""
+            label="Bestaand Team"
+            options={[]}
+            search={true}
+          />{" "}
+        </div>
       ) : null}
 
       <div className="flex flex-col">
+        {props.showTeamList ? <p className="mt-5">Of maak een nieuw team</p> : null}
         <InformationBox
           success={handleSubmitSuccess}
           show={informationBoxMessage !== ""}
