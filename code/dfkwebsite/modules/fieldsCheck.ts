@@ -1,6 +1,7 @@
 export type fieldInformation = {
   regex?: RegExp;
   required?: boolean;
+  castFunction?: Function;
 };
 
 export const checkFields = (
@@ -35,3 +36,5 @@ export const checkFields = (
 
   return true;
 };
+
+// We get a formData object, and a fieldsInformation object, and we want to output a new object with the same keys as fieldsInformation, but with the values of the formData object.
