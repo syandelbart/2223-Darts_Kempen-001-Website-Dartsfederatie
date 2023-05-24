@@ -37,6 +37,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   const handleChange = (event: any) => {
+    console.log(formValues)
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
@@ -45,7 +46,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       event,
       formValues,
       teamRegexPatterns,
-      "/api/players",
+      "/api/teams",
       setInformationBoxMessage,
       setHandleSubmitSuccess,
       dummyData.teams[0],
