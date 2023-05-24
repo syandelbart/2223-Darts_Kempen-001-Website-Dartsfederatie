@@ -102,18 +102,46 @@ export const countFridays = (startDate: Date, endDate: Date) => {
 };
 
 export const changeData = (
-  fields: { [key: string]: fieldInformation },
+  fieldsInformation: { [key: string]: fieldInformation },
   currentData: Object,
-  newData: FormData
+  newData: FormData,
+  ignoreRequired = false
 ) => {
   const data = JSON.parse(JSON.stringify(currentData));
 
-  Object.keys(fields).forEach((field) => {
+  Object.keys(fieldsInformation).forEach((field) => {
     if (!newData.has(field)) return;
+    let newValue = newData.get(field);
 
-    data[field] = fields[field].castFunction
-      ? fields[field].castFunction(newData.get(field))
-      : (data[field] = newData.get(field));
+    const fieldInformation = fieldsInformation[field];
+
+    // If value is required and formData does not contain the field, error
+    if (
+      fieldInformation?.required &&
+      (!newData.has(field) || newValue == "") &&
+      !data[field]
+    )
+      throw new Error(`Field "${field}" is required.`);
+
+    if (
+      fieldInformation?.regex &&
+      newData.has(field) &&
+      !newValue?.toString().match(fieldInformation.regex) &&
+      !fieldInformation.required &&
+      newValue != ""
+    )
+      throw new Error(`Field "${field}" does not match the required pattern`);
+
+    // If value has a casting function, execute it first, otherwise add the raw (string) value
+    try {
+      data[field] = fieldInformation.castFunction
+        ? fieldInformation.castFunction(newValue)
+        : newValue;
+    } catch (e: any) {
+      throw new Error(
+        `The value ${newValue} could not be casted using the function ${fieldInformation.castFunction}`
+      );
+    }
 
     // data[field] = newData.get(field);
   });
