@@ -1,11 +1,15 @@
-import { getRecordByIdOrError } from "../../../../modules/general";
-import { CompetitionSubmission } from "../../../../modules/competition";
+import { changeData, getRecordByIdOrError } from "../../../../modules/general";
+import {
+  CompetitionSubmission,
+  competitionRegexPatterns,
+} from "../../../../modules/competition";
 import {
   CLASSIFICATION,
   COMPETITION_TYPE,
   Competition,
 } from "../../../../types/competition";
 import { PagesEnv } from "../../env";
+import { checkFields } from "../../../../modules/fieldsCheck";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -39,6 +43,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, competitionRegexPatterns, true);
+
     const competitionId = params.id.toString();
     const competition = await getRecordByIdOrError(
       competitionId,
@@ -47,27 +53,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const competitionData: Competition = JSON.parse(competition);
 
-    const data: Competition = {
-      competitionID: competitionData.competitionID,
-      classification: formData.has(CompetitionSubmission.CLASSIFICATION)
-        ? (formData.get(CompetitionSubmission.CLASSIFICATION) as CLASSIFICATION)
-        : competitionData.classification,
-      name: formData.has(CompetitionSubmission.NAME)
-        ? formData.get(CompetitionSubmission.NAME)
-        : competitionData.name,
-      endDate: formData.has(CompetitionSubmission.ENDDATE)
-        ? new Date(formData.get(CompetitionSubmission.ENDDATE)).getTime()
-        : competitionData.endDate,
-      startDate: formData.has(CompetitionSubmission.STARTDATE)
-        ? new Date(formData.get(CompetitionSubmission.STARTDATE)).getTime()
-        : competitionData.startDate,
-      type: formData.has(CompetitionSubmission.TYPE)
-        ? (formData.get(CompetitionSubmission.TYPE) as COMPETITION_TYPE)
-        : competitionData.type,
-      playDaysTable: formData.has(CompetitionSubmission.PLAYDAYS)
-        ? JSON.parse(formData.get(CompetitionSubmission.PLAYDAYS))
-        : competitionData.playDaysTable,
-    };
+    const data: Competition = changeData(
+      CompetitionSubmission,
+      competitionData,
+      formData
+    ) as Competition;
 
     // Update the competition data in the KV store
     await env.COMPETITION.put(competitionId, JSON.stringify(data));

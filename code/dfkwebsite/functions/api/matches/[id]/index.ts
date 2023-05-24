@@ -1,4 +1,6 @@
-import { getRecordByIdOrError } from "../../../../modules/general";
+import { checkFields } from "../../../../modules/fieldsCheck";
+import { changeData, getRecordByIdOrError } from "../../../../modules/general";
+import { MatchSubmission, matchRegexPatterns } from "../../../../modules/match";
 import { Match } from "../../../../types/match";
 
 import { PagesEnv } from "../../env";
@@ -10,9 +12,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const matchId = params.id.toString();
-    const match = JSON.parse(
-      await getRecordByIdOrError(matchId, env.MATCHES)
-    );
+    const match = JSON.parse(await getRecordByIdOrError(matchId, env.MATCHES));
 
     return new Response(JSON.stringify(match), {
       headers: {
@@ -35,14 +35,18 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, matchRegexPatterns, true);
+
     const matchId = params.id.toString();
     const match = await getRecordByIdOrError(matchId, env.MATCHES);
 
     const matchData: Match = JSON.parse(match);
 
-    const data: Match = {
-      // TODO: add match data/fields
-    };
+    const data: Match = changeData(
+      MatchSubmission,
+      matchData,
+      formData
+    ) as Match;
 
     // Update the match data in the KV store
     await env.MATCHES.put(matchId, JSON.stringify(data));

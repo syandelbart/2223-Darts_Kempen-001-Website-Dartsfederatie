@@ -1,6 +1,10 @@
 import { Club } from "../../../types/club";
 import { PagesEnv } from "../env";
-import { getParams, searchKeyChecker } from "../../../modules/general";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
 import { ClubSubmission, clubRegexPatterns } from "../../../modules/club";
 
@@ -83,6 +87,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, clubRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const clubs = await env.CLUBS.list({
@@ -94,29 +100,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = clubs.keys.map(async (club) => {
       const clubData: Club = JSON.parse(await env.CLUBS.get(club.name));
 
-      const data: Club = {
-        clubID: clubData.clubID,
-        name: formData.has(ClubSubmission.NAME)
-          ? formData.get(ClubSubmission.NAME)
-          : clubData.contactPersonID,
-        contactPersonID: formData.has(ClubSubmission.CONTACTPERSONID)
-          ? formData.get(ClubSubmission.CONTACTPERSONID)
-          : clubData.contactPersonID,
-        address: {
-          city: formData.has(ClubSubmission.ADDRESS_CITY)
-            ? formData.get(ClubSubmission.ADDRESS_CITY)
-            : clubData.address.city,
-          houseNumber: formData.has(ClubSubmission.ADDRESS_HOUSENUMBER)
-            ? formData.get(ClubSubmission.ADDRESS_HOUSENUMBER)
-            : clubData.address.houseNumber,
-          postalCode: formData.has(ClubSubmission.ADDRESS_POSTAL)
-            ? formData.get(ClubSubmission.ADDRESS_POSTAL)
-            : clubData.address.postalCode,
-          street: formData.has(ClubSubmission.ADDRESS_STREET)
-            ? formData.get(ClubSubmission.ADDRESS_STREET)
-            : clubData.address.street,
-        },
-      };
+      const data: Club = changeData(ClubSubmission, clubData, formData) as Club;
 
       // Update the club data in the KV store
       await env.CLUBS.put(club.name, JSON.stringify(data));

@@ -1,4 +1,6 @@
-import { getRecordByIdOrError } from "../../../../modules/general";
+import { checkFields } from "../../../../modules/fieldsCheck";
+import { changeData, getRecordByIdOrError } from "../../../../modules/general";
+import { UserSubmission, userRegexPatterns } from "../../../../modules/user";
 import { User } from "../../../../types/user";
 import { PagesEnv } from "../../env";
 
@@ -32,14 +34,14 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, userRegexPatterns, true);
+
     const userId = params.id.toString();
     const user = await getRecordByIdOrError(userId, env.USERS);
 
     const userData: User = JSON.parse(user);
 
-    const data: User = {
-      // TODO: Add the rest of the fields
-    };
+    const data: User = changeData(UserSubmission, userData, formData) as User;
 
     // Update the user data in the KV store
     await env.USERS.put(userId, JSON.stringify(data));

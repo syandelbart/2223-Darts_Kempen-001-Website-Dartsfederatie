@@ -7,8 +7,8 @@ import DefaultSelect from "./DefaultSelect";
 import InformationBox from "./InformationBox";
 import * as dummyData from "../data";
 import { Club, ClubFront } from "../types/club";
-import { getAllTeamSelectOptions } from "../modules/team";
 import { SelectOption } from "../modules/general";
+import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
 
 type AddClubModalData = {
   addModalOpen: boolean;
@@ -72,7 +72,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
 
   useEffect(() => {
     const getTeams = async () => {
-      let teams = await getAllTeamSelectOptions();
+      let teams = await getAllSelectOptionsByName("teams", "name", "teamID");
       setTeams(teams);
     };
     getTeams();

@@ -1,7 +1,14 @@
 import { PagesEnv } from "../env";
-import { getParams, searchKeyChecker } from "../../../modules/general";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
-import { DocumentSubmission, documentRegexPatterns } from "../../../modules/document";
+import {
+  DocumentSubmission,
+  documentRegexPatterns,
+} from "../../../modules/document";
 import { Document } from "../../../types/document";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
@@ -73,6 +80,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, documentRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const documents = await env.DOCUMENTS.list({
@@ -82,11 +91,15 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     // Update each document using the form data
     const updates = documents.keys.map(async (document) => {
-      const documentData: Document = JSON.parse(await env.DOCUMENTS.get(document.name));
+      const documentData: Document = JSON.parse(
+        await env.DOCUMENTS.get(document.name)
+      );
 
-      const data: Document = {
-        // TODO: Add fields
-      };
+      const data: Document = changeData(
+        DocumentSubmission,
+        documentData,
+        formData
+      ) as Document;
 
       // Update the document data in the KV store
       await env.DOCUMENTS.put(document.name, JSON.stringify(data));

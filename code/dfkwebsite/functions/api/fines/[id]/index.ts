@@ -1,4 +1,6 @@
-import { getRecordByIdOrError } from "../../../../modules/general";
+import { checkFields } from "../../../../modules/fieldsCheck";
+import { FineSubmission, fineRegexPatterns } from "../../../../modules/fine";
+import { changeData, getRecordByIdOrError } from "../../../../modules/general";
 import { Fine } from "../../../../types/fine";
 import { PagesEnv } from "../../env";
 
@@ -32,14 +34,14 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, fineRegexPatterns, true);
+
     const fineId = params.id.toString();
     const fine = await getRecordByIdOrError(fineId, env.FINES);
 
     const fineData: Fine = JSON.parse(fine);
 
-    const data: Fine = {
-      // TODO: Add the rest of the fields
-    };
+    const data: Fine = changeData(FineSubmission, fineData, formData) as Fine;
 
     // Update the fine data in the KV store
     await env.FINES.put(fineId, JSON.stringify(data));
@@ -76,7 +78,7 @@ export const onRequestDelete: PagesFunction<PagesEnv> = async ({
     const fineData: Fine = JSON.parse(fine);
 
     const data: Fine = {
-        // TODO: Add the rest of the fields
+      // TODO: Add the rest of the fields
     };
 
     // Update the fine data in the KV store
