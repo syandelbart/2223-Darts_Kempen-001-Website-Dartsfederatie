@@ -15,9 +15,11 @@ export const handleChange = (
 ) => {
   const { name, value, type, checked } = event.target;
 
-  if (type === "checkbox")
-    setState({ ...oldValue, [name]: checked ? "1" : "0" });
-  else setState({ ...oldValue, [name]: value });
+  let newValue;
+  if (type === "checkbox") newValue = checked ? "1" : "0";
+  else newValue = value;
+
+  setState({ ...oldValue, [name]: newValue });
 
   if (handledChangeStateSetter) handledChangeStateSetter(true);
 };
