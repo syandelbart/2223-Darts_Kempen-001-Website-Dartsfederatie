@@ -1,5 +1,9 @@
 import { PagesEnv } from "../env";
-import { getParams, searchKeyChecker } from "../../../modules/general";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
 import { UserSubmission, userRegexPatterns } from "../../../modules/user";
 import { User } from "../../../types/user";
@@ -73,6 +77,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, userRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const users = await env.USERS.list({
@@ -84,9 +90,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = users.keys.map(async (user) => {
       const userData: User = JSON.parse(await env.USERS.get(user.name));
 
-      const data: User = {
-        // TODO: add user data/fields
-      };
+      const data: User = changeData(UserSubmission, userData, formData) as User;
 
       // Update the user data in the KV store
       await env.USERS.put(user.name, JSON.stringify(data));

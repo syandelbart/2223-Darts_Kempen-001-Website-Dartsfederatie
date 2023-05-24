@@ -1,5 +1,9 @@
 import { checkFields } from "../../../modules/fieldsCheck";
-import { getParams, searchKeyChecker } from "../../../modules/general";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
 import { PagesEnv } from "../env";
 import { PostSubmission, postRegexPatterns } from "../../../modules/post";
 import { Post } from "../../../types/posts";
@@ -73,6 +77,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, postRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const posts = await env.POSTS.list({
@@ -84,9 +90,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = posts.keys.map(async (post) => {
       const postData: Post = JSON.parse(await env.POSTS.get(post.name));
 
-      const data: Post = {
-        // TODO: Add fields here
-      };
+      const data: Post = changeData(PostSubmission, postData, formData) as Post;
 
       // Update the team data in the KV store
       await env.POSTS.put(post.name, JSON.stringify(data));

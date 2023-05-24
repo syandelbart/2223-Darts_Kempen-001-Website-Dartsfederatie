@@ -1,5 +1,6 @@
-import { getRecordByIdOrError } from "../../../../modules/general";
-import { TeamSubmission } from "../../../../modules/team";
+import { checkFields } from "../../../../modules/fieldsCheck";
+import { changeData, getRecordByIdOrError } from "../../../../modules/general";
+import { TeamSubmission, teamRegexPatterns } from "../../../../modules/team";
 import { CLASSIFICATION } from "../../../../types/competition";
 import { Team } from "../../../../types/team";
 import { PagesEnv } from "../../env";
@@ -34,29 +35,18 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, teamRegexPatterns, true);
+
     const teamId = params.id.toString();
     const team = await getRecordByIdOrError(teamId, env.TEAMS);
 
     const teamData: Team = JSON.parse(team);
 
-    const data: Team = {
-      teamID: teamData.teamID,
-      name: formData.has(TeamSubmission.NAME)
-        ? formData.get(TeamSubmission.NAME)
-        : teamData.name,
-      captainID: formData.has(TeamSubmission.CAPTAINID)
-        ? formData.get(TeamSubmission.CAPTAINID)
-        : teamData.captainID,
-      classification: formData.has(TeamSubmission.CLASSIFICATION)
-        ? (formData.get(TeamSubmission.CLASSIFICATION) as CLASSIFICATION)
-        : teamData.classification,
-      clubID: formData.has(TeamSubmission.CLUBID)
-        ? formData.get(TeamSubmission.CLUBID)
-        : teamData.clubID,
-      playersID: formData.has(TeamSubmission.PLAYERSID)
-        ? formData.get(TeamSubmission.PLAYERSID).split(",") // The playersID is a string of comma separated values
-        : teamData.playersID,
-    };
+    const data: Team = changeData(TeamSubmission, teamData, formData) as Team;
+    data.playersID =
+      typeof data.playersID === "object"
+        ? data.playersID
+        : (data.playersID as string).split(",");
 
     // Update the team data in the KV store
     await env.TEAMS.put(teamId, JSON.stringify(data));

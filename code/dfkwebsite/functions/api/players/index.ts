@@ -1,16 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { PagesEnv } from "../env";
-import { getParams, searchKeyChecker } from "../../../modules/general";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
-import { playerRegexPatterns } from "../../../modules/player";
+import { PlayerSubmission, playerRegexPatterns } from "../../../modules/player";
 import { Player } from "../../../types/player";
-
-export enum PlayerSubmission {
-  FIRSTNAME = "firstname",
-  LASTNAME = "lastname",
-  PHONE = "phone",
-  ALLOWED = "allowed",
-}
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -94,6 +91,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, playerRegexPatterns, true);
+
     const params = getParams(request.url);
 
     const players = await env.PLAYERS.list({
@@ -105,15 +104,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = players.keys.map(async (player) => {
       const playerData: Player = JSON.parse(await env.PLAYERS.get(player.name));
 
-      const data: Player = {
-        playerID: playerData.playerID,
-        firstName: formData.has(PlayerSubmission.FIRSTNAME)
-          ? formData.get(PlayerSubmission.FIRSTNAME)
-          : playerData.firstName,
-        lastName: formData.has(PlayerSubmission.LASTNAME)
-          ? formData.get(PlayerSubmission.LASTNAME)
-          : playerData.lastName,
-      };
+      const data: Player = changeData(
+        PlayerSubmission,
+        playerData,
+        formData
+      ) as Player;
 
       // Update the player data in the KV store
       await env.PLAYERS.put(player.name, JSON.stringify(data));
