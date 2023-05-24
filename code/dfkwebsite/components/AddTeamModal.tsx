@@ -24,7 +24,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     name: "",
     captainid: "",
     classification: "",
-    club: "",
+    clubid: "",
+    playersid: "",
   });
 
   const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
@@ -104,8 +105,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         />
 
         <DefaultSelect
-          name="club"
-          id="club"
+          name="clubid"
+          id="clubid"
           label="Club"
           options={
             props.currentClub
@@ -125,6 +126,16 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                 }
               : undefined
           }
+          onChange={handleChange}
+          search={true}
+          notRequired={true}
+        />
+
+        <DefaultSelect
+          name="playersid"
+          id="playersid"
+          label="Spelers"
+          options={[]}
           onChange={handleChange}
           search={true}
           notRequired={true}
