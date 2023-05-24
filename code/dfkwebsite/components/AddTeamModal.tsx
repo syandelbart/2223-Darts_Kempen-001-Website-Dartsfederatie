@@ -37,7 +37,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   const handleChange = (event: any) => {
-    console.log(formValues)
+    console.log(formValues);
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
@@ -58,6 +58,9 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     setInformationBoxMessage(
       "Team succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
     );
+    setTimeout(() => {
+      props.setAddModalOpen(false);
+    }, 5000);
   };
 
   const [teams, setTeams] = useState<SelectOption[]>([]);
