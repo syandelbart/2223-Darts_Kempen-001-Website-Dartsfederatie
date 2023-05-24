@@ -1,7 +1,4 @@
-import { TeamFront } from "../types/team";
 import { fieldInformation } from "./fieldsCheck";
-import { SelectOption } from "./general";
-import * as dummyData from "../data";
 
 export enum TeamSubmission {
   NAME = "name",
