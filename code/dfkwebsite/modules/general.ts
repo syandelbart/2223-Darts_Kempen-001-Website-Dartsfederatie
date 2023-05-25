@@ -105,7 +105,6 @@ export const changeData = (
   fieldsInformation: { [key: string]: fieldInformation },
   currentData: Object,
   newData: FormData,
-  ignoreRequired = false
 ) => {
   const data = JSON.parse(JSON.stringify(currentData));
 
