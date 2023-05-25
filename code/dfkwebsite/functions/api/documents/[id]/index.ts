@@ -1,7 +1,9 @@
 import { changeData, getRecordByIdOrError } from "../../../../modules/general";
 import { PagesEnv } from "../../env";
 import { Document } from "../../../../types/document";
+import { checkFields } from "../../../../modules/fieldsCheck";
 import {
+  DocumentSubmission,
   documentRegexPatterns,
 } from "../../../../modules/document";
 
@@ -37,6 +39,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
+    checkFields(formData, documentRegexPatterns, true);
 
     const documentsId = params.id.toString();
     const documents = await getRecordByIdOrError(documentsId, env.DOCUMENTS);

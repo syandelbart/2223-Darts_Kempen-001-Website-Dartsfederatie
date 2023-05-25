@@ -5,6 +5,7 @@ import {
   getParams,
   searchKeyChecker,
 } from "../../../modules/general";
+import { checkFields } from "../../../modules/fieldsCheck";
 import { PlayerSubmission, playerRegexPatterns } from "../../../modules/player";
 import { Player } from "../../../types/player";
 
@@ -46,6 +47,8 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
+    checkFields(formData, playerRegexPatterns);
+
     let firstName = formData.get(PlayerSubmission.FIRSTNAME);
     let lastName = formData.get(PlayerSubmission.LASTNAME);
 
@@ -54,7 +57,17 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     // ID will be random, uuidv4() generates a random UUID
     const playerIdKey = `id:${uuidv4()}`;
 
-    let data: Player = changeData(playerRegexPatterns, {}, formData) as Player;
+    let data: Player = {
+      playerID: playerIdKey,
+      firstName: formData.get(PlayerSubmission.FIRSTNAME),
+      lastName: formData.get(PlayerSubmission.LASTNAME),
+      ...(formData.has(PlayerSubmission.PHONE) && {
+        phone: formData.get(PlayerSubmission.PHONE),
+      }),
+      ...(formData.has(PlayerSubmission.ALLOWED) && {
+        allowedToPlay: Boolean(formData.get(PlayerSubmission.ALLOWED)),
+      }),
+    };
 
     await env.PLAYERS.put(playerIdKey, JSON.stringify(data));
     await searchKeyChecker(env.PLAYERS, playerIdKey, indexKey);
@@ -77,6 +90,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
+
+    checkFields(formData, playerRegexPatterns, true);
 
     const params = getParams(request.url);
 

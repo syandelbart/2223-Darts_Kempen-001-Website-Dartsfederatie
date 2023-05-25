@@ -1,7 +1,15 @@
 import { changeData, getRecordByIdOrError } from "../../../../modules/general";
-import { competitionRegexPatterns } from "../../../../modules/competition";
-import { Competition } from "../../../../types/competition";
+import {
+  CompetitionSubmission,
+  competitionRegexPatterns,
+} from "../../../../modules/competition";
+import {
+  CLASSIFICATION,
+  COMPETITION_TYPE,
+  Competition,
+} from "../../../../types/competition";
 import { PagesEnv } from "../../env";
+import { checkFields } from "../../../../modules/fieldsCheck";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -34,6 +42,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
+
+    checkFields(formData, competitionRegexPatterns, true);
 
     const competitionId = params.id.toString();
     const competition = await getRecordByIdOrError(

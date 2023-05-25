@@ -4,6 +4,7 @@ import {
   getParams,
   searchKeyChecker,
 } from "../../../modules/general";
+import { checkFields } from "../../../modules/fieldsCheck";
 import {
   DocumentSubmission,
   documentRegexPatterns,
@@ -47,15 +48,15 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
+    checkFields(formData, documentRegexPatterns);
+
     const name = formData.get(DocumentSubmission.NAME);
 
     const documentIdKey = `id:${Date.now()}`;
 
-    let data: Document = changeData(
-      documentRegexPatterns,
-      {},
-      formData
-    ) as Document;
+    let data: Document = {
+      // TODO: Add fields
+    };
 
     await env.DOCUMENTS.put(documentIdKey, JSON.stringify(data));
     await searchKeyChecker(env.DOCUMENTS, documentIdKey, `name:${name}`);
@@ -78,6 +79,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
+
+    checkFields(formData, documentRegexPatterns, true);
 
     const params = getParams(request.url);
 

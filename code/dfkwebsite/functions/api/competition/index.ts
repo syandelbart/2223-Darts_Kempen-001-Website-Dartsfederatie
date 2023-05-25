@@ -1,7 +1,20 @@
+import { v4 as uuidv4 } from "uuid";
 import { PagesEnv } from "../env";
-import { changeData, getParams } from "../../../modules/general";
-import { competitionRegexPatterns } from "../../../modules/competition";
-import { Competition } from "../../../types/competition";
+import {
+  changeData,
+  getParams,
+  searchKeyChecker,
+} from "../../../modules/general";
+import { checkFields } from "../../../modules/fieldsCheck";
+import {
+  CompetitionSubmission,
+  competitionRegexPatterns,
+} from "../../../modules/competition";
+import {
+  CLASSIFICATION,
+  COMPETITION_TYPE,
+  Competition,
+} from "../../../types/competition";
 import { clubRegexPatterns } from "../../../modules/club";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
@@ -42,14 +55,23 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
+    checkFields(formData, competitionRegexPatterns);
+
     // ID will be random, uuidv4() generates a random UUID
     const competitionIdKey = `id:${new Date().getTime()}`;
 
-    let data: Competition = changeData(
-      competitionRegexPatterns,
-      {},
-      formData
-    ) as Competition;
+    let data: Competition = {
+      competitionID: competitionIdKey,
+      classification: formData.get(
+        CompetitionSubmission.CLASSIFICATION
+      ) as CLASSIFICATION,
+      name: formData.get(CompetitionSubmission.NAME),
+      startDate: new Date(
+        formData.get(CompetitionSubmission.STARTDATE)
+      ).getTime(),
+      endDate: new Date(formData.get(CompetitionSubmission.ENDDATE)).getTime(),
+      type: formData.get(CompetitionSubmission.TYPE) as COMPETITION_TYPE,
+    };
 
     await env.COMPETITION.put(competitionIdKey, JSON.stringify(data));
 
@@ -71,6 +93,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
+
+    checkFields(formData, competitionRegexPatterns, true);
 
     const params = getParams(request.url);
 

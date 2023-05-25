@@ -4,8 +4,10 @@ import {
   getParams,
   searchKeyChecker,
 } from "../../../modules/general";
+import { checkFields } from "../../../modules/fieldsCheck";
 import { TeamSubmission, teamRegexPatterns } from "../../../modules/team";
 import { Team } from "../../../types/team";
+import { CLASSIFICATION } from "../../../types/competition";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -44,11 +46,29 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
+    checkFields(formData, teamRegexPatterns);
+
+    console.log("checkfields complete");
+    console.log(formData.get(TeamSubmission.CAPTAINID));
+    console.log(formData.get(TeamSubmission.CLUBID));
+    console.log(formData.get(TeamSubmission.PLAYERSID));
+    console.log(JSON.parse(formData.get(TeamSubmission.PLAYERSID)));
+    console.log("Done")
+
     const name = formData.get(TeamSubmission.NAME);
 
     const teamIdKey = `id:${Date.now()}`;
 
-    let data: Team = changeData(teamRegexPatterns, {}, formData) as Team;
+    let data: Team = {
+      teamID: teamIdKey,
+      name: name,
+      captainID: formData.get(TeamSubmission.CAPTAINID),
+      classification: formData.get(
+        TeamSubmission.CLASSIFICATION
+      ) as CLASSIFICATION,
+      clubID: formData.get(TeamSubmission.CLUBID),
+      playersID: JSON.parse(formData.get(TeamSubmission.PLAYERSID)), // ["id:123", "id:456"]
+    };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
     await searchKeyChecker(env.TEAMS, teamIdKey, `name:${name}`);
@@ -71,6 +91,8 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
+
+    checkFields(formData, teamRegexPatterns, true);
 
     const params = getParams(request.url);
 
