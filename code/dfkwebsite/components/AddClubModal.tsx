@@ -34,7 +34,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   };
 
   const handleSelectChange = (
-    value: { value: string; label: string },
+    value: { value: string; label: string }[],
     action: { action: string; name: string }
   ) => {
     formHandler.handleChangeSelect(value, action, setFormValues, formValues);
@@ -163,7 +163,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           id="contactpersonid"
           label="Contactpersoon"
           options={spelers}
-          value={formValues.contactpersonid}
+          search={true}
           onSelectChange={handleSelectChange}
         />
 
@@ -172,7 +172,6 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           id="teamids"
           label="Teams toevoegen"
           options={teams}
-          value={formValues.teamids}
           onChange={handleChange}
           search={true}
           notRequired={true}
