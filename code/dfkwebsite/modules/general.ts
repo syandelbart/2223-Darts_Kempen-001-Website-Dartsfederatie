@@ -141,8 +141,6 @@ export const changeData = (
         `The value ${newValue} could not be casted using the function ${fieldInformation.castFunction}`
       );
     }
-
-    // data[field] = newData.get(field);
   });
 
   return data;
