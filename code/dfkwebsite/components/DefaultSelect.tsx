@@ -21,7 +21,7 @@ type DefaultSelectData = {
   defaultValue?: SelectOption;
   notRequired?: boolean;
   multiple?: boolean;
-  onSelectChange?: (value: string, action: any) => void;
+  onSelectChange?: (value: {value: string, label: string}, action: any) => void;
 };
 
 const DefaultSelect: FunctionComponent<DefaultSelectData> = ({

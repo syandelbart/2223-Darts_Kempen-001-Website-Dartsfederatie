@@ -25,8 +25,8 @@ export const handleChange = (
 };
 
 export const handleChangeSelect = (
-  value: string,
-  action: any,
+  value: { value: string; label: string },
+  action: { name: string },
   setState: Dispatch<
     SetStateAction<{
       [key: string]: string;
@@ -37,7 +37,9 @@ export const handleChangeSelect = (
   },
   handledChangeStateSetter?: Dispatch<SetStateAction<boolean>>
 ) => {
-  setState({ ...oldValue, [action.name]: value });
+  console.log("handleChangeSelect")
+  console.log(action.name, value)
+  setState({ ...oldValue, [action.name]: value.value });
 
   if (handledChangeStateSetter) handledChangeStateSetter(true);
 };
