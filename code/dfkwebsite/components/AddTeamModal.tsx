@@ -39,13 +39,13 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   const handleChange = (event: any) => {
-    console.log(formValues);
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
-  const handleSelectChange = ( value: string, action: any ) => {
+  const handleSelectChange = ( value: { value : string, label: string }, action: { action : string, name: string } ) => {
     console.log("handleSelectChange");
     console.log("value: ", value);
+    console.log("value.value: ", value.value);
     console.log("action: ", action);
     console.log("action.name: ", action.name);
     
@@ -153,7 +153,6 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           id="captainid"
           label="Kapitein"
           options={spelers.map((speler) => {
-            console.log(speler);
             return {
               value: speler.value,
               label: speler.label,
@@ -175,7 +174,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                 .toLowerCase()}`,
             };
           })}
-          onChange={handleChange}
+          onSelectChange={handleSelectChange}
         />
         <div className="flex gap-5">
           <DefaultSelect
@@ -192,7 +191,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                   ]
                 : clubs
             }
-            onChange={handleChange}
+            onSelectChange={handleSelectChange}
             search={true}
             notRequired={true}
           />
@@ -211,8 +210,9 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                   ]
                 : spelers
             }
-            onChange={handleChange}
+            onSelectChange={handleSelectChange}
             search={true}
+            multiple={true}
             notRequired={true}
           />
         </div>
