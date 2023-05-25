@@ -18,7 +18,7 @@ export const teamRegexPatterns: { [key: string]: fieldInformation } = {
   [TeamSubmission.CLASSIFICATION]: { required: true },
   [TeamSubmission.CLUBID]: {
     regex:
-      /^(id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12},)*(id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12})$/,
+      /^(id:\d+)$/,
     required: false,
   },
 
