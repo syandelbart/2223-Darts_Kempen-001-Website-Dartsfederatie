@@ -104,7 +104,7 @@ export const countFridays = (startDate: Date, endDate: Date) => {
 export const changeData = (
   fieldsInformation: { [key: string]: fieldInformation },
   currentData: Object,
-  newData: FormData,
+  newData: FormData
 ) => {
   const data = JSON.parse(JSON.stringify(currentData));
 
@@ -186,4 +186,14 @@ export const getAllSelectOptionsByName = async (
         : item[labelField],
     value: item[valueField],
   }));
+};
+
+export const parseData = async (data: string | string[], namespace: any) => {
+  if (typeof data === "string") return JSON.parse(await namespace.get(data));
+
+  return await Promise.all(
+    data.map(async (dataKey) => {
+      return JSON.parse(await namespace.get(dataKey));
+    })
+  );
 };
