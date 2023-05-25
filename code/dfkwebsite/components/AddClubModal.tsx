@@ -34,8 +34,6 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   };
 
   const handleSubmit = async (event: any) => {
-    console.log("happened");
-
     let club: Club | null = await formHandler.handleSubmit(
       event,
       formValues,

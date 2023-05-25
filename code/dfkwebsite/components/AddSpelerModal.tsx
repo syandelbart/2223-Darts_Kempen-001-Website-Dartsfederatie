@@ -35,7 +35,6 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
   };
 
   const handleSubmit = async (event: any) => {
-    console.log(formValues);
     let player: Player | null = await formHandler.handleSubmit(
       event,
       formValues,

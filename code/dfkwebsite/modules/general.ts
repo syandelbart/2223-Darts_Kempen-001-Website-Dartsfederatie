@@ -181,8 +181,6 @@ export const getAllSelectOptionsByName = async (
   }
 
   const data = await response.json();
-  console.log("data");
-  console.log(data);
 
   return (data as Object[]).map((item: any) => ({
     label:
