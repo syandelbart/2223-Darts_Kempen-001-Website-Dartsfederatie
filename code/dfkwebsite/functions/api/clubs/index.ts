@@ -5,9 +5,7 @@ import {
   getParams,
   searchKeyChecker,
 } from "../../../modules/general";
-import { checkFields } from "../../../modules/fieldsCheck";
 import { ClubSubmission, clubRegexPatterns } from "../../../modules/club";
-import { club } from "../../../data";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -73,8 +71,6 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
-
-    checkFields(formData, clubRegexPatterns, true);
 
     const params = getParams(request.url);
 

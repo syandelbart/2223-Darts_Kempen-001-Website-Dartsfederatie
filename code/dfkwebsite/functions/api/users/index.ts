@@ -4,7 +4,6 @@ import {
   getParams,
   searchKeyChecker,
 } from "../../../modules/general";
-import { checkFields } from "../../../modules/fieldsCheck";
 import { UserSubmission, userRegexPatterns } from "../../../modules/user";
 import { User } from "../../../types/user";
 
@@ -45,15 +44,11 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
-    checkFields(formData, userRegexPatterns);
-
     const name = formData.get(UserSubmission.NAME);
 
     const userIdKey = `id:${Date.now()}`;
 
-    let data: User = {
-      // TODO: add user data/fields
-    };
+    let data: User = changeData(userRegexPatterns, {}, formData) as User
 
     await env.USERS.put(userIdKey, JSON.stringify(data));
     await searchKeyChecker(env.USERS, userIdKey, `name:${name}`);
@@ -76,8 +71,6 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
-
-    checkFields(formData, userRegexPatterns, true);
 
     const params = getParams(request.url);
 

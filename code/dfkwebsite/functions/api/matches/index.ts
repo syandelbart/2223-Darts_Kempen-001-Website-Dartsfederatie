@@ -1,4 +1,3 @@
-import { checkFields } from "../../../modules/fieldsCheck";
 import {
   changeData,
   getParams,
@@ -46,15 +45,11 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
-    checkFields(formData, matchRegexPatterns);
-
     const name = formData.get(MatchSubmission.NAME);
 
     const matchIdKey = `id:${Date.now()}`;
 
-    let data: Match = {
-      // TODO: Add match data/fields
-    };
+    let data: Match = changeData(matchRegexPatterns, {}, formData) as Match;
 
     await env.MATCHES.put(matchIdKey, JSON.stringify(data));
     await searchKeyChecker(env.MATCHES, matchIdKey, `name:${name}`);
@@ -77,8 +72,6 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
-
-    checkFields(formData, matchRegexPatterns, true);
 
     const params = getParams(request.url);
 

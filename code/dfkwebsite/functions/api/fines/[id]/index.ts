@@ -1,5 +1,4 @@
-import { checkFields } from "../../../../modules/fieldsCheck";
-import { FineSubmission, fineRegexPatterns } from "../../../../modules/fine";
+import { fineRegexPatterns } from "../../../../modules/fine";
 import { changeData, getRecordByIdOrError } from "../../../../modules/general";
 import { Fine } from "../../../../types/fine";
 import { PagesEnv } from "../../env";
@@ -34,7 +33,6 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
-    checkFields(formData, fineRegexPatterns, true);
 
     const fineId = params.id.toString();
     const fine = await getRecordByIdOrError(fineId, env.FINES);

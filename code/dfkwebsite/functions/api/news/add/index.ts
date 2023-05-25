@@ -1,3 +1,4 @@
+import { changeData } from "../../../../modules/general";
 import { News } from "../../../../types/general";
 import { PagesEnv } from "../../env";
 
@@ -22,24 +23,12 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       NewsSubmission.TEXT,
     ];
 
-    for (const requiredField of requiredFields) {
-      if (!formData.has(requiredField)) {
-        throw new Error(`${requiredField} was not provided`);
-      }
-    }
-
     const id = formData
       .get(NewsSubmission.TITLE)
       .toLowerCase()
       .replace(/ /g, "-");
 
-    const data: News = {
-      newsID: id,
-      title: formData.get(NewsSubmission.TITLE),
-      description: formData.get(NewsSubmission.DESCRIPTION),
-      date: parseInt(formData.get(NewsSubmission.DATE)),
-      text: formData.get(NewsSubmission.TEXT),
-    };
+    const data: News = changeData(matchRegexPatterns, {}, formData) as News
 
     await env.NEWS.put(id, JSON.stringify(data));
 

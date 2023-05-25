@@ -1,6 +1,5 @@
-import { checkFields } from "../../../../modules/fieldsCheck";
 import { changeData, getRecordByIdOrError } from "../../../../modules/general";
-import { PostSubmission, postRegexPatterns } from "../../../../modules/post";
+import { postRegexPatterns } from "../../../../modules/post";
 import { Post } from "../../../../types/posts";
 import { PagesEnv } from "../../env";
 
@@ -33,8 +32,6 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
-
-    checkFields(formData, postRegexPatterns, true);
 
     const postId = params.id.toString();
     const post = await getRecordByIdOrError(postId, env.POSTS);

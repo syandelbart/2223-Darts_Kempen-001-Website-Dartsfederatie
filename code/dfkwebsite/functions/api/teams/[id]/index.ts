@@ -1,7 +1,5 @@
-import { checkFields } from "../../../../modules/fieldsCheck";
 import { changeData, getRecordByIdOrError } from "../../../../modules/general";
-import { TeamSubmission, teamRegexPatterns } from "../../../../modules/team";
-import { CLASSIFICATION } from "../../../../types/competition";
+import { teamRegexPatterns } from "../../../../modules/team";
 import { Team } from "../../../../types/team";
 import { PagesEnv } from "../../env";
 
@@ -34,8 +32,6 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const formData = await request.formData();
-
-    checkFields(formData, teamRegexPatterns, true);
 
     const teamId = params.id.toString();
     const team = await getRecordByIdOrError(teamId, env.TEAMS);
