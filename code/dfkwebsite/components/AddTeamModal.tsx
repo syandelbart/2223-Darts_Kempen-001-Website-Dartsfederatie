@@ -43,6 +43,15 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
+  const handleSelectChange = ( value: string, action: any ) => {
+    console.log("handleSelectChange");
+    console.log("value: ", value);
+    console.log("action: ", action);
+    console.log("action.name: ", action.name);
+    
+    formHandler.handleChangeSelect(value, action, setFormValues, formValues);
+  };
+
   const handleSubmit = async (event: any) => {
     let team: Team | null = await formHandler.handleSubmit(
       event,
@@ -150,7 +159,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
               label: speler.label,
             };
           })}
-          onChange={handleChange}
+          onSelectChange={handleSelectChange}
           search={true}
         />
 

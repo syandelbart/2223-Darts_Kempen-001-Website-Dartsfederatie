@@ -21,6 +21,7 @@ type DefaultSelectData = {
   defaultValue?: SelectOption;
   notRequired?: boolean;
   multiple?: boolean;
+  onSelectChange?: (value: string, action: any) => void;
 };
 
 const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
@@ -42,6 +43,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
   defaultValue,
   notRequired,
   multiple,
+  onSelectChange,
 }) => {
   const isValidRegex = () => {
     if (regex) {
@@ -72,7 +74,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
           name={name}
           value={value}
           id={name}
-          onChange={onChange}
+          onChange={onSelectChange}
           placeholder={placeholder}
           className="bg-gray-200 p-2 text-black"
           options={options}

@@ -24,6 +24,24 @@ export const handleChange = (
   if (handledChangeStateSetter) handledChangeStateSetter(true);
 };
 
+export const handleChangeSelect = (
+  value: string,
+  action: any,
+  setState: Dispatch<
+    SetStateAction<{
+      [key: string]: string;
+    }>
+  >,
+  oldValue: {
+    [key: string]: string;
+  },
+  handledChangeStateSetter?: Dispatch<SetStateAction<boolean>>
+) => {
+  setState({ ...oldValue, [action.name]: value });
+
+  if (handledChangeStateSetter) handledChangeStateSetter(true);
+};
+
 export const handleSubmit = async (
   event: any,
   value: {
