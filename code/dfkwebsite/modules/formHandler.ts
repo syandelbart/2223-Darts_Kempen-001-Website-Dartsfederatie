@@ -37,10 +37,11 @@ export const handleChangeSelect = (
   },
   handledChangeStateSetter?: Dispatch<SetStateAction<boolean>>
 ) => {
-
-
   if (Array.isArray(value))
-    setState({ ...oldValue, [action.name]: JSON.stringify(value.map((v) => v.value)) });
+    setState({
+      ...oldValue,
+      [action.name]: JSON.stringify(value.map((v) => v.value)),
+    });
   else setState({ ...oldValue, [action.name]: value.value });
 
   if (handledChangeStateSetter) handledChangeStateSetter(true);
