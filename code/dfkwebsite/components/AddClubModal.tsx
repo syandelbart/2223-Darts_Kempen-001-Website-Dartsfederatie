@@ -33,6 +33,13 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
+  const handleSelectChange = (
+    value: { value: string; label: string },
+    action: { action: string; name: string }
+  ) => {
+    formHandler.handleChangeSelect(value, action, setFormValues, formValues);
+  };
+
   const handleSubmit = async (event: any) => {
     let club: Club | null = await formHandler.handleSubmit(
       event,
@@ -66,6 +73,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   const [teams, setTeams] = useState<SelectOption[]>([]);
+  const [spelers, setSpelers] = useState<SelectOption[]>([]);
 
   useEffect(() => {
     const getTeams = async () => {
@@ -73,6 +81,17 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       setTeams(teams);
     };
     getTeams();
+
+    const getSpelers = async () => {
+      let spelers = await getAllSelectOptionsByName(
+        "players",
+        ["firstName", "lastName"],
+        "playerID"
+      );
+      console.log("spelers: ", spelers);
+      setSpelers(spelers);
+    };
+    getSpelers();
   }, []);
 
   return (
@@ -143,9 +162,9 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           name="contactpersonid"
           id="contactpersonid"
           label="Contactpersoon"
-          options={[{ value: "1", label: "1" }]}
+          options={spelers}
           value={formValues.contactpersonid}
-          onChange={handleChange}
+          onSelectChange={handleSelectChange}
         />
 
         <DefaultSelect
