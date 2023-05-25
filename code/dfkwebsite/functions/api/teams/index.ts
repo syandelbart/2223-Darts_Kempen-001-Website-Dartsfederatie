@@ -48,6 +48,13 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     checkFields(formData, teamRegexPatterns);
 
+    console.log("checkfields complete");
+    console.log(formData.get(TeamSubmission.CAPTAINID));
+    console.log(formData.get(TeamSubmission.CLUBID));
+    console.log(formData.get(TeamSubmission.PLAYERSID));
+    console.log(JSON.parse(formData.get(TeamSubmission.PLAYERSID)));
+    console.log("Done")
+
     const name = formData.get(TeamSubmission.NAME);
 
     const teamIdKey = `id:${Date.now()}`;
@@ -55,6 +62,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     let data: Team = {
       teamID: teamIdKey,
       name: name,
+      captainID: formData.get(TeamSubmission.CAPTAINID),
       classification: formData.get(
         TeamSubmission.CLASSIFICATION
       ) as CLASSIFICATION,

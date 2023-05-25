@@ -42,10 +42,9 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
-  const handleSelectChange = ( value: { value : string, label: string }, action: { action : string, name: string } ) => {
+  const handleSelectChange = ( value: { value : string, label: string }[], action: { action : string, name: string } ) => {
     console.log("handleSelectChange");
     console.log("value: ", value);
-    console.log("value.value: ", value.value);
     console.log("action: ", action);
     console.log("action.name: ", action.name);
     
@@ -53,6 +52,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
   };
 
   const handleSubmit = async (event: any) => {
+    console.log("handleSubmit");
+    console.log(formValues)
     let team: Team | null = await formHandler.handleSubmit(
       event,
       formValues,
@@ -175,6 +176,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
             };
           })}
           onSelectChange={handleSelectChange}
+          search={true}
         />
         <div className="flex gap-5">
           <DefaultSelect

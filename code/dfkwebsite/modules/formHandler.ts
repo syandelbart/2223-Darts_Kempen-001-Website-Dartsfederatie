@@ -25,7 +25,7 @@ export const handleChange = (
 };
 
 export const handleChangeSelect = (
-  value: { value: string; label: string },
+  value: { value: string; label: string } | { value: string; label: string }[],
   action: { name: string },
   setState: Dispatch<
     SetStateAction<{
@@ -37,9 +37,12 @@ export const handleChangeSelect = (
   },
   handledChangeStateSetter?: Dispatch<SetStateAction<boolean>>
 ) => {
-  console.log("handleChangeSelect")
-  console.log(action.name, value)
-  setState({ ...oldValue, [action.name]: value.value });
+  console.log("handleChangeSelect");
+  console.log(action.name, value);
+
+  if (Array.isArray(value))
+    setState({ ...oldValue, [action.name]: JSON.stringify(value.map((v) => v.value)) });
+  else setState({ ...oldValue, [action.name]: value.value });
 
   if (handledChangeStateSetter) handledChangeStateSetter(true);
 };
