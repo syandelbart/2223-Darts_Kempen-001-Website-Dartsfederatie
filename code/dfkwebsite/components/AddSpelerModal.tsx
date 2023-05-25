@@ -1,16 +1,18 @@
-import { FunctionComponent, useState } from "react";
+import { Dispatch, FunctionComponent, useState } from "react";
 import { playerRegexPatterns } from "../modules/player";
 import * as formHandler from "../modules/formHandler";
 import Modal from "./Modal";
 import DefaultInput from "./DefaultInput";
 import DefaultCheckbox from "./DefaultCheckbox";
 import InformationBox from "./InformationBox";
-import { Player } from "../types/player";
+import { Player, PlayerFront } from "../types/player";
 import * as dummyData from "../data";
 
 type AddSpelerModalData = {
   addModalOpen: boolean;
   setAddModalOpen: any;
+  players: Player[];
+  setPlayers: Dispatch<React.SetStateAction<PlayerFront[]>>;
 };
 
 const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
@@ -50,6 +52,11 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
     setInformationBoxMessage(
       "Speler succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
     );
+    props.setPlayers((players) => {
+      if (!player) return players;
+      // The new Player will be of type Player, but we want it to be of type PlayerFront
+      return [...players, player as PlayerFront];
+    });
     setTimeout(() => {
       props.setAddModalOpen(false);
     }, 5000);

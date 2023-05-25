@@ -39,6 +39,8 @@ const Spelers: NextPage = () => {
       <AddSpelerModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
+        players={players}
+        setPlayers={setPlayers}
       />
       <OverzichtTopBar
         titleName="Spelers"

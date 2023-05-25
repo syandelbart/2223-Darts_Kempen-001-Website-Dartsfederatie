@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { Dispatch, FunctionComponent, useEffect, useState } from "react";
 import Modal from "./Modal";
 import { CLASSIFICATION } from "../types/competition";
 import DefaultInput from "./DefaultInput";
@@ -7,7 +7,7 @@ import { ClubFront } from "../types/club";
 import InformationBox from "./InformationBox";
 import * as dummyData from "../data";
 import * as formHandler from "../modules/formHandler";
-import { Team } from "../types/team";
+import { Team, TeamFront } from "../types/team";
 import { teamRegexPatterns } from "../modules/team";
 import { PlayerFront } from "../types/player";
 import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
@@ -18,6 +18,8 @@ type AddTeamModalData = {
   currentClub?: ClubFront | null;
   currentPlayer?: PlayerFront | null;
   showTeamList?: boolean;
+  teams?: TeamFront[];
+  setTeams?: Dispatch<React.SetStateAction<TeamFront[]>>;
 };
 
 const AddTeamModal: FunctionComponent<AddTeamModalData> = (
@@ -58,6 +60,14 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     setInformationBoxMessage(
       "Team succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
     );
+    if (!props.setTeams) return;
+
+    props.setTeams((teams) => {
+      if (!team) return teams;
+      // The new Team will be of type Team, but we want it to be of type TeamFront
+      return [...teams, team as TeamFront];
+    });
+    
     setTimeout(() => {
       props.setAddModalOpen(false);
     }, 5000);

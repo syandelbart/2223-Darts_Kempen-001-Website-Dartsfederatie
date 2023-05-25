@@ -34,6 +34,8 @@ const Teams: NextPage = () => {
       <AddTeamModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
+        teams={teams}
+        setTeams={setTeams}
       />
       <OverzichtTopBar
         titleName="Teams"
