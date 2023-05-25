@@ -9,7 +9,6 @@ export const checkFields = (
   fieldsInformation: { [key: string]: fieldInformation },
   ignoreRequired?: boolean
 ) => {
-  console.log(formData, fieldsInformation);
   const fields = Object.keys(fieldsInformation);
 
   for (const field of fields) {

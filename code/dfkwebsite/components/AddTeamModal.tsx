@@ -42,18 +42,14 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
-  const handleSelectChange = ( value: { value : string, label: string }[], action: { action : string, name: string } ) => {
-    console.log("handleSelectChange");
-    console.log("value: ", value);
-    console.log("action: ", action);
-    console.log("action.name: ", action.name);
-    
+  const handleSelectChange = (
+    value: { value: string; label: string }[],
+    action: { action: string; name: string }
+  ) => {
     formHandler.handleChangeSelect(value, action, setFormValues, formValues);
   };
 
   const handleSubmit = async (event: any) => {
-    console.log("handleSubmit");
-    console.log(formValues)
     let team: Team | null = await formHandler.handleSubmit(
       event,
       formValues,
@@ -77,7 +73,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       // The new Team will be of type Team, but we want it to be of type TeamFront
       return [...teams, team as TeamFront];
     });
-    
+
     setTimeout(() => {
       props.setAddModalOpen(false);
     }, 5000);
@@ -106,7 +102,6 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         ["firstName", "lastName"],
         "playerID"
       );
-      console.log("spelers: ", spelers);
       setSpelers(spelers);
     };
     getSpelers();

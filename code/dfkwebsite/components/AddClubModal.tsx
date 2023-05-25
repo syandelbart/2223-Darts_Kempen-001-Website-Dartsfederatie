@@ -88,7 +88,6 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
         ["firstName", "lastName"],
         "playerID"
       );
-      console.log("spelers: ", spelers);
       setSpelers(spelers);
     };
     getSpelers();
