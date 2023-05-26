@@ -61,6 +61,9 @@ const Spelers: NextPage = () => {
         title={currentPlayer?.firstName + " " + currentPlayer?.lastName}
         currentModalOpen={isOpen}
         setCurrentModal={setIsOpen}
+        addTeams={true}
+        addTeamModalOpen={addTeamModalOpen}
+        setAddTeamModalOpen={setAddTeamModalOpen}
       >
         {(player) => {
           return (
@@ -70,25 +73,6 @@ const Spelers: NextPage = () => {
                 type="text"
                 defaultValue={player.phone}
               ></input>
-              <div className="mt-10 w-1/2">
-                <AddButton
-                  name="Team toevoegen"
-                  addModalOpen={addTeamModalOpen}
-                  setAddModalOpen={setAddTeamModalOpen}
-                />
-              </div>
-              {player.teams ? (
-                player.teams.map((team: TeamFront) => (
-                  <TeamSpelers
-                    team={team}
-                    key={team.teamID}
-                    handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
-                    handleMakePlayerCaptain={handleMakePlayerCaptain}
-                  />
-                ))
-              ) : (
-                <p className="text-xl mt-10">Deze speler heeft geen team.</p>
-              )}
             </div>
           );
         }}

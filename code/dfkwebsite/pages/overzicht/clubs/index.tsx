@@ -5,17 +5,9 @@ import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
 import { ClubFront } from "../../../types/club";
 import * as dummyData from "../../../data";
-import Modal from "../../../components/Modal";
-import TeamSpelers from "../../../components/TeamSpelers";
-import {
-  handleDeletePlayerFromTeam,
-  handleMakePlayerCaptain,
-} from "../../../modules/overzicht";
-import AddButton from "../../../components/AddButton";
 import AddTeamModal from "../../../components/AddTeamModal";
 import SearchableCardGrid from "../../../components/SearchableCardGrid";
 import CurrentModal from "../../../components/CurrentModal";
-import { TeamFront } from "../../../types/team";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
@@ -57,6 +49,9 @@ const Clubs: NextPage = () => {
         title={currentClub?.name}
         currentModalOpen={isOpen}
         setCurrentModal={setIsOpen}
+        addTeams={true}
+        addTeamModalOpen={addTeamModalOpen}
+        setAddTeamModalOpen={setAddTeamModalOpen}
       >
         {(club) => {
           return (
@@ -83,25 +78,6 @@ const Clubs: NextPage = () => {
                   defaultValue={club.address?.city}
                 ></input>
               </div>
-              <div className="mt-10 w-1/2">
-                <AddButton
-                  name="Team toevoegen"
-                  addModalOpen={addTeamModalOpen}
-                  setAddModalOpen={setAddTeamModalOpen}
-                />
-              </div>
-              {club.teams && club.teams.length !== 0 ? (
-                club.teams.map((team: TeamFront) => (
-                  <TeamSpelers
-                    team={team}
-                    key={team.teamID}
-                    handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
-                    handleMakePlayerCaptain={handleMakePlayerCaptain}
-                  />
-                ))
-              ) : (
-                <p className="text-xl mt-10">Deze club heeft geen teams.</p>
-              )}
             </div>
           );
         }}
