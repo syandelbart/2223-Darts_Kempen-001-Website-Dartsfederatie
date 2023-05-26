@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import AddButton from "./AddButton";
-import SearchBar from "./Searchbar";
+import SearchBar from "./SearchBar";
 
 type topBarData = {
   titleName: string;
@@ -33,7 +33,7 @@ const OverzichtTopBar: FunctionComponent<topBarData> = ({
           ""
         )}
         {typeof setSearch == "function" ? (
-          <SearchBar search={search} setSearch={setSearch} />
+          <SearchBar setSearch={setSearch} />
         ) : (
           ""
         )}

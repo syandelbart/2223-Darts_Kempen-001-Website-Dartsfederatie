@@ -1,17 +1,22 @@
-import { Dispatch, FunctionComponent, SetStateAction } from "react";
+import { FunctionComponent, ChangeEvent } from "react";
 
-type searchBarData = {
-  search?: string;
-  setSearch?: Dispatch<SetStateAction<string>>;
+type SearchBarData = {
+  setSearch?: (search: string) => void;
 };
 
-const SearchBar: FunctionComponent<searchBarData> = (search, setSearch) => {
+const SearchBar: FunctionComponent<SearchBarData> = ({ setSearch }) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (setSearch) {
+      setSearch(e.target.value);
+    }
+  };
+
   return (
     <input
       type="text"
       placeholder="Zoeken..."
       className="px-5 py-3 rounded bg-[#D9D9D9]"
-      onChange={(e) => setSearch(e.target.value)}
+      onChange={handleSearchChange}
     />
   );
 };
