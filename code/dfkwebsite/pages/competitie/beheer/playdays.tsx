@@ -51,12 +51,12 @@ const GeneratePlaydays: NextPage = () => {
   };
 
   const handleTableDataChange = (
-    selectedOption: SelectOption[],
+    selectedOption: SelectOption,
     rowIndex: number,
     columnIndex: number,
     field: "team1" | "team2"
   ): void => {
-    const { value } = selectedOption[0];
+    const { value } = selectedOption;
 
     let tableD = [...tableData];
     console.log(value);
@@ -104,8 +104,8 @@ const GeneratePlaydays: NextPage = () => {
         options={teams}
         multiple
         search
-        onSelectChange={(selectedoptions) =>
-          setCompetitionTeams(selectedoptions)
+        onSelectChange={(selectedOptions) =>
+          setCompetitionTeams(selectedOptions)
         }
       />
 
@@ -145,6 +145,7 @@ const GeneratePlaydays: NextPage = () => {
                     name=""
                     labelEnabled={false}
                     options={competitionTeams}
+                    search
                     onSelectChange={(selectedOption) =>
                       handleTableDataChange(
                         selectedOption,
@@ -160,9 +161,13 @@ const GeneratePlaydays: NextPage = () => {
                     name=""
                     options={competitionTeams}
                     labelEnabled={false}
-                    onSelectChange={(selectedOption) =>
+                    search
+                    onSelectChange={(
+                      selectedOptions: SelectOption[],
+                      action: { action: string; name: string }
+                    ) =>
                       handleTableDataChange(
-                        selectedOption,
+                        selectedOptions,
                         rowIndex,
                         columnIndex,
                         "team2"
