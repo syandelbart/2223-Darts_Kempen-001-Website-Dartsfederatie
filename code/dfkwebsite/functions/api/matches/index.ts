@@ -92,7 +92,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
       const matchData: Match = JSON.parse(await env.MATCHES.get(match.name));
 
       const data: Match = changeData(
-        MatchSubmission,
+        matchRegexPatterns,
         matchData,
         formData
       ) as Match;

@@ -48,6 +48,13 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     checkFields(formData, teamRegexPatterns);
 
+    console.log("checkfields complete");
+    console.log(formData.get(TeamSubmission.CAPTAINID));
+    console.log(formData.get(TeamSubmission.CLUBID));
+    console.log(formData.get(TeamSubmission.PLAYERSID));
+    console.log(JSON.parse(formData.get(TeamSubmission.PLAYERSID)));
+    console.log("Done")
+
     const name = formData.get(TeamSubmission.NAME);
 
     const teamIdKey = `id:${Date.now()}`;
@@ -55,10 +62,12 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     let data: Team = {
       teamID: teamIdKey,
       name: name,
+      captainID: formData.get(TeamSubmission.CAPTAINID),
       classification: formData.get(
         TeamSubmission.CLASSIFICATION
       ) as CLASSIFICATION,
       clubID: formData.get(TeamSubmission.CLUBID),
+      playersID: JSON.parse(formData.get(TeamSubmission.PLAYERSID)), // ["id:123", "id:456"]
     };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
@@ -96,7 +105,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = teams.keys.map(async (team) => {
       const teamData: Team = JSON.parse(await env.TEAMS.get(team.name));
 
-      const data: Team = changeData(TeamSubmission, teamData, formData) as Team;
+      const data: Team = changeData(
+        teamRegexPatterns,
+        teamData,
+        formData
+      ) as Team;
 
       // Update the team data in the KV store
       await env.TEAMS.put(team.name, JSON.stringify(data));

@@ -26,15 +26,21 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     address_housenumber: "",
     address_postal: "",
     contactpersonid: "",
+    teamids: "",
   });
 
   const handleChange = (event: any) => {
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
-  const handleSubmit = async (event: any) => {
-    console.log("happened");
+  const handleSelectChange = (
+    value: { value: string; label: string }[],
+    action: { action: string; name: string }
+  ) => {
+    formHandler.handleChangeSelect(value, action, setFormValues, formValues);
+  };
 
+  const handleSubmit = async (event: any) => {
     let club: Club | null = await formHandler.handleSubmit(
       event,
       formValues,
@@ -67,6 +73,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
   const [teams, setTeams] = useState<SelectOption[]>([]);
+  const [spelers, setSpelers] = useState<SelectOption[]>([]);
 
   useEffect(() => {
     const getTeams = async () => {
@@ -74,6 +81,16 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       setTeams(teams);
     };
     getTeams();
+
+    const getSpelers = async () => {
+      let spelers = await getAllSelectOptionsByName(
+        "players",
+        ["firstName", "lastName"],
+        "playerID"
+      );
+      setSpelers(spelers);
+    };
+    getSpelers();
   }, []);
 
   return (
@@ -92,6 +109,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
         </InformationBox>
 
         <DefaultInput
+          id="clubnaam"
           name="name"
           label="Clubnaam"
           placeholder="Clubnaam"
@@ -143,9 +161,19 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           name="contactpersonid"
           id="contactpersonid"
           label="Contactpersoon"
-          options={[{ value: "1", label: "1" }]}
-          value={formValues.contactpersonid}
+          options={spelers}
+          search={true}
+          onSelectChange={handleSelectChange}
+        />
+
+        <DefaultSelect
+          name="teamids"
+          id="teamids"
+          label="Teams toevoegen"
+          options={teams}
           onChange={handleChange}
+          search={true}
+          notRequired={true}
         />
 
         <button

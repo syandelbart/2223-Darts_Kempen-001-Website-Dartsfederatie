@@ -2,7 +2,10 @@ import { changeData, getRecordByIdOrError } from "../../../../modules/general";
 import { PagesEnv } from "../../env";
 import { Document } from "../../../../types/document";
 import { checkFields } from "../../../../modules/fieldsCheck";
-import { DocumentSubmission, documentRegexPatterns } from "../../../../modules/document";
+import {
+  DocumentSubmission,
+  documentRegexPatterns,
+} from "../../../../modules/document";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -11,7 +14,9 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const documentsId = params.id.toString();
-    const documents = JSON.parse(await getRecordByIdOrError(documentsId, env.DOCUMENTS));
+    const documents = JSON.parse(
+      await getRecordByIdOrError(documentsId, env.DOCUMENTS)
+    );
 
     return new Response(JSON.stringify(documents), {
       headers: {
@@ -42,7 +47,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const documentsData: Document = JSON.parse(documents);
 
     const data: Document = changeData(
-      DocumentSubmission,
+      documentRegexPatterns,
       documentsData,
       formData
     ) as Document;
@@ -82,7 +87,7 @@ export const onRequestDelete: PagesFunction<PagesEnv> = async ({
     const clubData: Document = JSON.parse(document);
 
     const data: Document = {
-        // TODO: Add documents data
+      // TODO: Add documents data
     };
 
     // Update the document data in the KV store

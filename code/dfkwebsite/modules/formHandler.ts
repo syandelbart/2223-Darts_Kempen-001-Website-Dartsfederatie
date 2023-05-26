@@ -13,9 +13,37 @@ export const handleChange = (
   },
   handledChangeStateSetter?: Dispatch<SetStateAction<boolean>>
 ) => {
-  const { name, value } = event.target;
+  const { name, value, type, checked } = event.target;
 
-  setState({ ...oldValue, [name]: value });
+  let newValue;
+  if (type === "checkbox") newValue = checked ? "1" : "0";
+  else newValue = value;
+
+  setState({ ...oldValue, [name]: newValue });
+
+  if (handledChangeStateSetter) handledChangeStateSetter(true);
+};
+
+export const handleChangeSelect = (
+  value: { value: string; label: string } | { value: string; label: string }[],
+  action: { name: string },
+  setState: Dispatch<
+    SetStateAction<{
+      [key: string]: string;
+    }>
+  >,
+  oldValue: {
+    [key: string]: string;
+  },
+  handledChangeStateSetter?: Dispatch<SetStateAction<boolean>>
+) => {
+  if (Array.isArray(value))
+    setState({
+      ...oldValue,
+      [action.name]: JSON.stringify(value.map((v) => v.value)),
+    });
+  else setState({ ...oldValue, [action.name]: value.value });
+
   if (handledChangeStateSetter) handledChangeStateSetter(true);
 };
 

@@ -41,7 +41,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const postData: Post = JSON.parse(post);
 
-    const data: Post = changeData(PostSubmission, postData, formData) as Post;
+    const data: Post = changeData(
+      postRegexPatterns,
+      postData,
+      formData
+    ) as Post;
 
     // Update the post data in the KV store
     await env.POSTS.put(postId, JSON.stringify(data));

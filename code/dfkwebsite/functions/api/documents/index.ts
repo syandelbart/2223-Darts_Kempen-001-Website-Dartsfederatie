@@ -96,7 +96,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
       );
 
       const data: Document = changeData(
-        DocumentSubmission,
+        documentRegexPatterns,
         documentData,
         formData
       ) as Document;

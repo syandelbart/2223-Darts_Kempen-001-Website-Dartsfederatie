@@ -7,6 +7,7 @@ type DefaultCheckboxData = {
   onChange?: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   value?: any;
   regex?: RegExp;
+  notRequired?: boolean;
 };
 
 const DefaultCheckbox: FunctionComponent<DefaultCheckboxData> = ({
@@ -16,6 +17,7 @@ const DefaultCheckbox: FunctionComponent<DefaultCheckboxData> = ({
   onChange,
   id,
   regex,
+  notRequired,
 }) => {
   const isValidRegex = () => {
     if (regex) {
@@ -26,8 +28,8 @@ const DefaultCheckbox: FunctionComponent<DefaultCheckboxData> = ({
 
   return (
     <div className="flex items-center gap-5">
-      <label htmlFor={name} className="text-base text-white">
-        {label ?? name}{" "}
+      <label htmlFor={name} className="text-xl text-white">
+        {label ?? name}
         {regex && (
           <span
             className="text-sm"
@@ -36,6 +38,7 @@ const DefaultCheckbox: FunctionComponent<DefaultCheckboxData> = ({
             {isValidRegex() ? "Geldig" : "Ongeldig"}
           </span>
         )}
+        {!notRequired && <span className="text-sm align-top">*</span>}
       </label>
 
       <input

@@ -1,4 +1,5 @@
 import * as dummyData from "../data";
+import { fieldInformation } from "./fieldsCheck";
 
 const availableParams = [
   // General
@@ -101,16 +102,45 @@ export const countFridays = (startDate: Date, endDate: Date) => {
 };
 
 export const changeData = (
-  fields: {[key: string]: string },
+  fieldsInformation: { [key: string]: fieldInformation },
   currentData: Object,
   newData: FormData
 ) => {
   const data = JSON.parse(JSON.stringify(currentData));
 
-  Object.values(fields).forEach((field) => {
+  Object.keys(fieldsInformation).forEach((field) => {
     if (!newData.has(field)) return;
+    let newValue = newData.get(field);
 
-    data[field] = newData.get(field);
+    const fieldInformation = fieldsInformation[field];
+
+    // If value is required and formData does not contain the field, error
+    if (
+      fieldInformation?.required &&
+      (!newData.has(field) || newValue == "") &&
+      !data[field]
+    )
+      throw new Error(`Field "${field}" is required.`);
+
+    if (
+      fieldInformation?.regex &&
+      newData.has(field) &&
+      !newValue?.toString().match(fieldInformation.regex) &&
+      !fieldInformation.required &&
+      newValue != ""
+    )
+      throw new Error(`Field "${field}" does not match the required pattern`);
+
+    // If value has a casting function, execute it first, otherwise add the raw (string) value
+    try {
+      data[field] = fieldInformation.castFunction
+        ? fieldInformation.castFunction(newValue)
+        : newValue;
+    } catch (e: any) {
+      throw new Error(
+        `The value ${newValue} could not be casted using the function ${fieldInformation.castFunction}`
+      );
+    }
   });
 
   return data;
@@ -123,12 +153,15 @@ export type SelectOption = {
 
 export const getAllSelectOptionsByName = async (
   api: string,
-  labelField: string,
-  valueField: string,
+  labelField: string | string[],
+  valueField: string
 ): Promise<SelectOption[]> => {
   if (process.env.NEXT_PUBLIC_NO_API) {
     return (dummyData as any)[api].map((item: any) => ({
-      label: item[labelField],
+      label:
+        typeof labelField === "object"
+          ? labelField.map((field) => item[field]).join(" ")
+          : item[labelField],
       value: item[valueField],
     }));
   }
@@ -147,7 +180,20 @@ export const getAllSelectOptionsByName = async (
   const data = await response.json();
 
   return (data as Object[]).map((item: any) => ({
-    label: item[labelField],
+    label:
+      typeof labelField === "object"
+        ? labelField.map((field) => item[field]).join(" ")
+        : item[labelField],
     value: item[valueField],
   }));
+};
+
+export const parseData = async (data: string | string[], namespace: any) => {
+  if (typeof data === "string") return JSON.parse(await namespace.get(data));
+
+  return await Promise.all(
+    data.map(async (dataKey) => {
+      return JSON.parse(await namespace.get(dataKey));
+    })
+  );
 };

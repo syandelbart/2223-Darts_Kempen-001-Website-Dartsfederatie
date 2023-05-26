@@ -8,11 +8,12 @@ import AddTeamModal from "../../../components/AddTeamModal";
 import TeamCard from "../../../components/TeamCard";
 import TeamSpelers from "../../../components/TeamSpelers";
 import { TeamFront } from "../../../types/team";
-import Modal from "../../../components/Modal";
 import {
   handleDeletePlayerFromTeam,
   handleMakePlayerCaptain,
 } from "../../../modules/overzicht";
+import SearchableCardGrid from "../../../components/SearchableCardGrid";
+import CurrentModal from "../../../components/CurrentModal";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -28,61 +29,71 @@ const Teams: NextPage = () => {
         .then((parsedTeams) => setTeams(parsedTeams));
     }
   }, []);
-  let results = 0;
   return (
     <div>
+      {/* Add Team Modal */}
       <AddTeamModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
+        teams={teams}
+        setTeams={setTeams}
       />
+
+      {/* Page title, add team button and search field */}
       <OverzichtTopBar
         titleName="Teams"
         search={search}
         setSearch={setSearch}
-        addButtonName="Team"
+        addButtonName="Team toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
 
-      {currentTeam && (
-        <Modal
-          title={currentTeam.name}
-          modalOpen={isOpen}
-          setModalOpen={setIsOpen}
-        >
-          <TeamSpelers
-            team={currentTeam}
-            handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
-            handleMakePlayerCaptain={handleMakePlayerCaptain}
-          />
-        </Modal>
-      )}
-      <CardGrid>
-        {teams.length === 0 ? (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen teams gevonden
-          </h1>
-        ) : (
-          teams
-            .filter((team) => {
-              if (
-                search == "" ||
-                team.name.toLowerCase().includes(search.toLowerCase())
-              )
-                return team;
-              results++;
-            })
-            .map((team) => (
-              <Card key={team.name}>
-                <TeamCard
-                  teamData={team}
-                  setIsOpen={setIsOpen}
-                  setCurrentTeam={setCurrentTeam}
-                />
-              </Card>
-            ))
-        )}
-      </CardGrid>
+      {/* Modal for team details when you press team button */}
+      <CurrentModal
+        currentObject={currentTeam}
+        title={currentTeam?.name}
+        currentModalOpen={isOpen}
+        setCurrentModal={setIsOpen}
+      >
+        {(team) => {
+          return (
+            <div>
+              <input
+                className="bg-inherit"
+                type="text"
+                defaultValue={
+                  team.captain?.firstName + " " + team.captain?.lastName
+                }
+              ></input>
+              <input
+                className="bg-inherit"
+                type="text"
+                defaultValue={team.captain?.phone}
+              ></input>
+
+              <TeamSpelers
+                team={team}
+                handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
+                handleMakePlayerCaptain={handleMakePlayerCaptain}
+              />
+            </div>
+          );
+        }}
+      </CurrentModal>
+
+      {/* Grid with all teams */}
+      <SearchableCardGrid items={teams} search={search}>
+        {(team: TeamFront) => {
+          return (
+            <TeamCard
+              teamData={team}
+              setCurrentTeam={setCurrentTeam}
+              setIsOpen={setIsOpen}
+            />
+          );
+        }}
+      </SearchableCardGrid>
     </div>
   );
 };

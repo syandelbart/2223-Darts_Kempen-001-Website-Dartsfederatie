@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import ClubCard from "../../../components/ClubCard";
-import Card from "../../../components/Card";
-import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
 import { ClubFront } from "../../../types/club";
 import * as dummyData from "../../../data";
-import Modal from "../../../components/Modal";
-import TeamSpelers from "../../../components/TeamSpelers";
-import {
-  handleDeletePlayerFromTeam,
-  handleMakePlayerCaptain,
-} from "../../../modules/overzicht";
+import AddTeamModal from "../../../components/AddTeamModal";
+import SearchableCardGrid from "../../../components/SearchableCardGrid";
+import CurrentModal from "../../../components/CurrentModal";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
@@ -20,7 +15,7 @@ const Clubs: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
-  let results = 0;
+  const [addTeamModalOpen, setAddTeamModalOpen] = useState(false);
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
@@ -31,68 +26,60 @@ const Clubs: NextPage = () => {
   }, []);
   return (
     <div>
+      {/* Add Club Modal */}
       <AddClubModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
         clubs={clubs}
         setClubs={setClubs}
+        formValues={
+          process.env.NEXT_PUBLIC_NO_API == "1"
+            ? dummyData.club[0]
+            : currentClub
+        }
       />
+      {/* Page title, add club button and search field */}
       <OverzichtTopBar
         titleName="Clubs"
         search={search}
         setSearch={setSearch}
-        addButtonName="Club"
+        addButtonName="Club toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
 
-      {currentClub && (
-        <Modal
-          title={currentClub.name}
-          modalOpen={isOpen}
-          setModalOpen={setIsOpen}
-        >
-          {currentClub.teams ? (
-            currentClub.teams.map((team) => (
-              <TeamSpelers
-                team={team}
-                key={team.teamID}
-                handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
-                handleMakePlayerCaptain={handleMakePlayerCaptain}
-              />
-            ))
-          ) : (
-            <p>Deze club heeft geen teams.</p>
-          )}
-        </Modal>
-      )}
+      {/* Modal for club details when you press teams button */}
+      <CurrentModal
+        currentObject={currentClub}
+        title={currentClub?.name}
+        currentModalOpen={isOpen}
+        setCurrentModal={setIsOpen}
+        addTeams={true}
+        addTeamModalOpen={addTeamModalOpen}
+        setAddTeamModalOpen={setAddTeamModalOpen}
+      />
 
-      <CardGrid>
-        {clubs.length === 0 ? (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen clubs gevonden
-          </h1>
-        ) : (
-          clubs
-            .filter((club) => {
-              if (
-                search == "" ||
-                club.name.toLowerCase().includes(search.toLowerCase())
-              )
-                return club;
-              results++;
-            })
-            .map((club) => (
-              <Card key={club}>
-                <ClubCard
-                  clubData={club}
-                  setIsOpen={setIsOpen}
-                  setCurrentClub={setCurrentClub}
-                />
-              </Card>
-            ))
-        )}
-      </CardGrid>
+      {/* This is for inside the current modal when adding a team to the club */}
+      <AddTeamModal
+        addModalOpen={addTeamModalOpen}
+        setAddModalOpen={setAddTeamModalOpen}
+        currentClub={currentClub}
+        showTeamList={true}
+      />
+
+      {/* Grid of all clubs */}
+      <SearchableCardGrid items={clubs} search={search}>
+        {(club) => {
+          return (
+            <ClubCard
+              clubData={club}
+              setIsOpen={setIsOpen}
+              setCurrentClub={setCurrentClub}
+              setAddClubModalOpen={setAddModalOpen}
+            />
+          );
+        }}
+      </SearchableCardGrid>
     </div>
   );
 };

@@ -90,7 +90,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = posts.keys.map(async (post) => {
       const postData: Post = JSON.parse(await env.POSTS.get(post.name));
 
-      const data: Post = changeData(PostSubmission, postData, formData) as Post;
+      const data: Post = changeData(
+        postRegexPatterns,
+        postData,
+        formData
+      ) as Post;
 
       // Update the team data in the KV store
       await env.POSTS.put(post.name, JSON.stringify(data));

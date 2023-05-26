@@ -47,7 +47,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const playerData: Player = JSON.parse(player);
 
     const data: Player = changeData(
-      PlayerSubmission,
+      playerRegexPatterns,
       playerData,
       formData
     ) as Player;

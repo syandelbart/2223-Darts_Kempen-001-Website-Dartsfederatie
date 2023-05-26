@@ -51,9 +51,11 @@ export const handleMakePlayerCaptain = async (
   if (teamData && teamData?.captainID == playerID) return teamData;
 
   try {
+    const data = new FormData();
+    data.append("captainID", playerID);
     return await fetch(`/api/teams/${teamID}/`, {
       method: "PUT",
-      body: JSON.stringify({ captainID: playerID }),
+      body: data,
     });
   } catch (e: any) {
     console.error(e.message);

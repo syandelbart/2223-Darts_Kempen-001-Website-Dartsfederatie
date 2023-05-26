@@ -1,8 +1,9 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import Modal from "./Modal";
 import DefaultInput from "./DefaultInput";
 import DefaultCheckbox from "./DefaultCheckbox";
 import DefaultSelect from "./DefaultSelect";
+import InformationBox from "./InformationBox";
 
 type AddBestuurModalData = {
   addModalOpen: boolean;
@@ -12,6 +13,10 @@ type AddBestuurModalData = {
 const AddBestuurModal: FunctionComponent<AddBestuurModalData> = (
   props: AddBestuurModalData
 ) => {
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
+    boolean | null
+  >(false);
+  const [informationBoxMessage, setInformationBoxMessage] = useState("");
   return (
     <Modal
       title="Bestuur toevoegen"
@@ -19,6 +24,13 @@ const AddBestuurModal: FunctionComponent<AddBestuurModalData> = (
       setModalOpen={props.setAddModalOpen}
     >
       <div className="flex flex-col">
+        <InformationBox
+          success={handleSubmitSuccess}
+          show={informationBoxMessage !== ""}
+          onClose={() => setInformationBoxMessage("")}
+        >
+          {informationBoxMessage}
+        </InformationBox>
         <DefaultInput
           name="firstname"
           label="Voornaam"
