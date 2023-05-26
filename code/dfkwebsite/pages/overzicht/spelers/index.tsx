@@ -16,6 +16,8 @@ import {
 import AddButton from "../../../components/AddButton";
 import AddTeamModal from "../../../components/AddTeamModal";
 import SearchableCardGrid from "../../../components/SearchableCardGrid";
+import CurrentModal from "../../../components/CurrentModal";
+import { TeamFront } from "../../../types/team";
 
 const Spelers: NextPage = () => {
   const [players, setPlayers] = useState<PlayerFront[]>(dummyData.players);
@@ -50,38 +52,44 @@ const Spelers: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
       />
 
-      {currentPlayer && (
-        <Modal
-          title={currentPlayer.firstName + " " + currentPlayer.lastName}
-          modalOpen={isOpen}
-          setModalOpen={setIsOpen}
-        >
-          <input
-            className="bg-inherit"
-            type="text"
-            defaultValue={currentPlayer.phone}
-          ></input>
-          <div className="mt-10 w-1/2">
-            <AddButton
-              name="Team toevoegen"
-              addModalOpen={addTeamModalOpen}
-              setAddModalOpen={setAddTeamModalOpen}
-            />
-          </div>
-          {currentPlayer.teams ? (
-            currentPlayer.teams.map((team) => (
-              <TeamSpelers
-                team={team}
-                key={team.teamID}
-                handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
-                handleMakePlayerCaptain={handleMakePlayerCaptain}
-              />
-            ))
-          ) : (
-            <p className="text-xl mt-10">Deze speler heeft geen team.</p>
-          )}
-        </Modal>
-      )}
+      <CurrentModal
+        currentObject={currentPlayer}
+        title={currentPlayer?.firstName + " " + currentPlayer?.lastName}
+        currentModalOpen={isOpen}
+        setCurrentModal={setIsOpen}
+      >
+        {(player) => {
+          return (
+            <div>
+              <input
+                className="bg-inherit"
+                type="text"
+                defaultValue={player.phone}
+              ></input>
+              <div className="mt-10 w-1/2">
+                <AddButton
+                  name="Team toevoegen"
+                  addModalOpen={addTeamModalOpen}
+                  setAddModalOpen={setAddTeamModalOpen}
+                />
+              </div>
+              {player.teams ? (
+                player.teams.map((team: TeamFront) => (
+                  <TeamSpelers
+                    team={team}
+                    key={team.teamID}
+                    handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
+                    handleMakePlayerCaptain={handleMakePlayerCaptain}
+                  />
+                ))
+              ) : (
+                <p className="text-xl mt-10">Deze speler heeft geen team.</p>
+              )}
+            </div>
+          );
+        }}
+      </CurrentModal>
+
       <AddTeamModal
         addModalOpen={addTeamModalOpen}
         setAddModalOpen={setAddTeamModalOpen}
@@ -89,7 +97,11 @@ const Spelers: NextPage = () => {
         currentPlayer={currentPlayer}
       />
 
-      <SearchableCardGrid items={players} search={search} filterName="firstName">
+      <SearchableCardGrid
+        items={players}
+        search={search}
+        filterName="firstName"
+      >
         {(player: PlayerFront) => {
           return (
             <PlayerCard

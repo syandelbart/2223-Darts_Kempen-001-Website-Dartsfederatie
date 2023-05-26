@@ -14,6 +14,7 @@ import {
   handleMakePlayerCaptain,
 } from "../../../modules/overzicht";
 import SearchableCardGrid from "../../../components/SearchableCardGrid";
+import CurrentModal from "../../../components/CurrentModal";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -46,34 +47,37 @@ const Teams: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
       />
 
-      {currentTeam && (
-        <Modal
-          title={currentTeam.name}
-          modalOpen={isOpen}
-          setModalOpen={setIsOpen}
-        >
-          <input
-            className="bg-inherit"
-            type="text"
-            defaultValue={
-              currentTeam.captain?.firstName +
-              " " +
-              currentTeam.captain?.lastName
-            }
-          ></input>
-          <input
-            className="bg-inherit"
-            type="text"
-            defaultValue={currentTeam.captain?.phone}
-          ></input>
+      <CurrentModal
+        currentObject={currentTeam}
+        title={currentTeam?.name}
+        currentModalOpen={isOpen}
+        setCurrentModal={setIsOpen}
+      >
+        {(team) => {
+          return (
+            <div>
+              <input
+                className="bg-inherit"
+                type="text"
+                defaultValue={
+                  team.captain?.firstName + " " + team.captain?.lastName
+                }
+              ></input>
+              <input
+                className="bg-inherit"
+                type="text"
+                defaultValue={team.captain?.phone}
+              ></input>
 
-          <TeamSpelers
-            team={currentTeam}
-            handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
-            handleMakePlayerCaptain={handleMakePlayerCaptain}
-          />
-        </Modal>
-      )}
+              <TeamSpelers
+                team={team}
+                handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
+                handleMakePlayerCaptain={handleMakePlayerCaptain}
+              />
+            </div>
+          );
+        }}
+      </CurrentModal>
 
       <SearchableCardGrid items={teams} search={search}>
         {(team: TeamFront) => {
