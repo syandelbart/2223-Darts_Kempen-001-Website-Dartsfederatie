@@ -99,6 +99,7 @@ const Clubs: NextPage = () => {
               clubData={club}
               setIsOpen={setIsOpen}
               setCurrentClub={setCurrentClub}
+              setAddClubModalOpen={setAddModalOpen}
             />
           );
         }}

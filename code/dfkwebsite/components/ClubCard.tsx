@@ -9,12 +9,14 @@ interface clubDataInterface {
   clubData: ClubFront;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setCurrentClub: Dispatch<SetStateAction<ClubFront | null>>;
+  setAddClubModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const ClubCard: FunctionComponent<clubDataInterface> = ({
   clubData,
   setIsOpen,
   setCurrentClub,
+  setAddClubModalOpen,
 }) => {
   return (
     <div>
@@ -28,7 +30,15 @@ const ClubCard: FunctionComponent<clubDataInterface> = ({
         >
           Teams
         </CardButton>
-        <CardButton bg={"bg-edit-button"}>Edit</CardButton>
+        <CardButton
+          bg={"bg-edit-button"}
+          onClick={() => {
+            setAddClubModalOpen(true);
+            setCurrentClub(clubData);
+          }}
+        >
+          Edit
+        </CardButton>
       </CardButtonRow>
       <div className="my-3">
         <CardIcon icon="mdi:address-marker">
