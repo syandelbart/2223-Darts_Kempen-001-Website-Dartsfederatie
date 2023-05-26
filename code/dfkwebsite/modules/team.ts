@@ -1,4 +1,5 @@
 import { fieldInformation } from "./fieldsCheck";
+import { getAllSelectOptionsByName } from "./general";
 
 export enum TeamSubmission {
   NAME = "name",
@@ -28,4 +29,8 @@ export const teamRegexPatterns: { [key: string]: fieldInformation } = {
       /^\[("id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}",)*("id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}")\]$/,
     required: false,
   },
+};
+
+export const getTeams = async () => {
+  return await getAllSelectOptionsByName("teams", "name", "teamID");
 };

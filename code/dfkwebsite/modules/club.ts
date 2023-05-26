@@ -1,4 +1,5 @@
 import { fieldInformation } from "./fieldsCheck";
+import { getAllSelectOptionsByName } from "./general";
 
 export enum ClubSubmission {
   NAME = "name",
@@ -32,4 +33,8 @@ export const clubRegexPatterns: { [key: string]: fieldInformation } = {
     required: false,
     castFunction: JSON.parse,
   },
+};
+
+export const getClubs = async () => {
+  return await getAllSelectOptionsByName("clubs", "name", "clubID");
 };
