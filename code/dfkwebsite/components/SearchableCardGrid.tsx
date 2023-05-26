@@ -4,17 +4,22 @@ import Card from "./Card";
 
 type SearchableCardGridData = {
   items: any[];
+  filterName?: string;
   search: string;
   children: (item: any) => JSX.Element;
 };
 
 const SearchableCardGrid: FunctionComponent<SearchableCardGridData> = ({
   items,
+  filterName,
   search,
   children,
 }) => {
   const filteredItems = items.filter((item) =>
-    item.name.toLowerCase().includes(search.toLowerCase())
+    // if filterName is not defined, filter on name else filter on filterName
+    filterName
+      ? item[filterName].toLowerCase().includes(search.toLowerCase())
+      : item.name.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -24,7 +29,9 @@ const SearchableCardGrid: FunctionComponent<SearchableCardGridData> = ({
           Geen items gevonden
         </h1>
       ) : (
-        filteredItems.map((item) => <Card key={item.name}>{children(item)}</Card>)
+        filteredItems.map((item) => (
+          <Card key={item.name}>{children(item)}</Card>
+        ))
       )}
     </CardGrid>
   );
