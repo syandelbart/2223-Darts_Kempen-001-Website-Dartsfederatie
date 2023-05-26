@@ -12,7 +12,7 @@ const CardTitle: FunctionComponent<cardTitleData> = ({ children }) => {
       <Icon
         icon="mdi:close"
         className="text-3xl hover:text-red-500 hover:cursor-pointer"
-        onClick={() => confirm("Are you sure you want to delete this?")}
+        onClick={() => confirm("Ben je zeker dat je dit wilt verwijderen?")}
       />
     </div>
   );
