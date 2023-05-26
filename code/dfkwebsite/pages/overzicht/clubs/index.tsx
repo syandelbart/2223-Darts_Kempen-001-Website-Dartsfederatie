@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import ClubCard from "../../../components/ClubCard";
-import Card from "../../../components/Card";
-import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddClubModal from "../../../components/AddClubModal";
 import { ClubFront } from "../../../types/club";
@@ -15,6 +13,7 @@ import {
 } from "../../../modules/overzicht";
 import AddButton from "../../../components/AddButton";
 import AddTeamModal from "../../../components/AddTeamModal";
+import SearchableCardGrid from "../../../components/SearchableCardGrid";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
@@ -108,32 +107,17 @@ const Clubs: NextPage = () => {
         showTeamList={true}
       />
 
-      <CardGrid>
-        {clubs.length === 0 ? (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen clubs gevonden
-          </h1>
-        ) : (
-          clubs
-            .filter((club) => {
-              if (
-                search == "" ||
-                club.name.toLowerCase().includes(search.toLowerCase())
-              )
-                return club;
-              results++;
-            })
-            .map((club) => (
-              <Card key={club}>
-                <ClubCard
-                  clubData={club}
-                  setIsOpen={setIsOpen}
-                  setCurrentClub={setCurrentClub}
-                />
-              </Card>
-            ))
-        )}
-      </CardGrid>
+      <SearchableCardGrid items={clubs} search={search}>
+        {(club) => {
+          return (
+            <ClubCard
+              clubData={club}
+              setIsOpen={setIsOpen}
+              setCurrentClub={setCurrentClub}
+            />
+          );
+        }}
+      </SearchableCardGrid>
     </div>
   );
 };
