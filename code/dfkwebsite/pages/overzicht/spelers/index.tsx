@@ -1,23 +1,13 @@
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import AddSpelerModal from "../../../components/AddSpelerModal";
-import Card from "../../../components/Card";
-import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import PlayerCard from "../../../components/PlayerCard";
 import { PlayerFront } from "../../../types/player";
 import * as dummyData from "../../../data";
-import TeamSpelers from "../../../components/TeamSpelers";
-import Modal from "../../../components/Modal";
-import {
-  handleDeletePlayerFromTeam,
-  handleMakePlayerCaptain,
-} from "../../../modules/overzicht";
-import AddButton from "../../../components/AddButton";
 import AddTeamModal from "../../../components/AddTeamModal";
 import SearchableCardGrid from "../../../components/SearchableCardGrid";
 import CurrentModal from "../../../components/CurrentModal";
-import { TeamFront } from "../../../types/team";
 
 const Spelers: NextPage = () => {
   const [players, setPlayers] = useState<PlayerFront[]>(dummyData.players);

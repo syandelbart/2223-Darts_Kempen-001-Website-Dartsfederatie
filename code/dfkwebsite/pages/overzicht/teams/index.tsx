@@ -8,7 +8,6 @@ import AddTeamModal from "../../../components/AddTeamModal";
 import TeamCard from "../../../components/TeamCard";
 import TeamSpelers from "../../../components/TeamSpelers";
 import { TeamFront } from "../../../types/team";
-import Modal from "../../../components/Modal";
 import {
   handleDeletePlayerFromTeam,
   handleMakePlayerCaptain,
