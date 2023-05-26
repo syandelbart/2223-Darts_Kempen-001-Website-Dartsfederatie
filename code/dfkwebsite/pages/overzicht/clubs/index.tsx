@@ -51,7 +51,7 @@ const Clubs: NextPage = () => {
 
       <CurrentModal
         currentObject={currentClub}
-        currentObjectKey="name"
+        title={currentClub?.name}
         currentModalOpen={isOpen}
         setCurrentModal={setIsOpen}
       >
