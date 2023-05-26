@@ -1,4 +1,5 @@
 import { fieldInformation } from "./fieldsCheck";
+import { getAllSelectOptionsByName } from "./general";
 
 export enum PlayerSubmission {
   FIRSTNAME = "firstname",
@@ -12,4 +13,12 @@ export const playerRegexPatterns: { [key: string]: fieldInformation } = {
   [PlayerSubmission.LASTNAME]: { regex: /^[a-zA-Z ]+$/, required: true },
   [PlayerSubmission.PHONE]: { regex: /^[0-9]+$/, required: false },
   [PlayerSubmission.ALLOWED]: { regex: /^[0-1]+$/, required: false },
+};
+
+export const getSpelers = async () => {
+  return await getAllSelectOptionsByName(
+    "players",
+    ["firstName", "lastName"],
+    "playerID"
+  );
 };

@@ -8,6 +8,8 @@ import InformationBox from "./InformationBox";
 import * as dummyData from "../data";
 import { Club, ClubFront } from "../types/club";
 import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
+import { getTeams } from "../modules/team";
+import { getSpelers } from "../modules/player";
 
 type AddClubModalData = {
   addModalOpen: boolean;
@@ -76,21 +78,13 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   const [spelers, setSpelers] = useState<SelectOption[]>([]);
 
   useEffect(() => {
-    const getTeams = async () => {
-      let teams = await getAllSelectOptionsByName("teams", "name", "teamID");
-      setTeams(teams);
-    };
-    getTeams();
+    getTeams()
+      .then((teams) => setTeams(teams))
+      .catch((err) => console.log(err));
 
-    const getSpelers = async () => {
-      let spelers = await getAllSelectOptionsByName(
-        "players",
-        ["firstName", "lastName"],
-        "playerID"
-      );
-      setSpelers(spelers);
-    };
-    getSpelers();
+    getSpelers()
+      .then((players) => setSpelers(players))
+      .catch((err) => console.log(err));
   }, []);
 
   return (

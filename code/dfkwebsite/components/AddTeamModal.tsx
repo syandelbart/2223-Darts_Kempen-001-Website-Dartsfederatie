@@ -8,9 +8,11 @@ import InformationBox from "./InformationBox";
 import * as dummyData from "../data";
 import * as formHandler from "../modules/formHandler";
 import { Team, TeamFront } from "../types/team";
-import { teamRegexPatterns } from "../modules/team";
+import { getTeams, teamRegexPatterns } from "../modules/team";
 import { PlayerFront } from "../types/player";
 import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
+import { getClubs } from "../modules/club";
+import { getSpelers } from "../modules/player";
 
 type AddTeamModalData = {
   addModalOpen: boolean;
@@ -84,27 +86,17 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
   const [spelers, setSpelers] = useState<SelectOption[]>([]);
 
   useEffect(() => {
-    const getClubs = async () => {
-      let clubs = await getAllSelectOptionsByName("clubs", "name", "clubID");
-      setClubs(clubs);
-    };
-    getClubs();
+    getClubs()
+      .then((clubs) => setClubs(clubs))
+      .catch((err) => console.log(err));
 
-    const getTeams = async () => {
-      let teams = await getAllSelectOptionsByName("teams", "name", "teamID");
-      setTeams(teams);
-    };
-    getTeams();
+    getTeams()
+      .then((teams) => setTeams(teams))
+      .catch((err) => console.log(err));
 
-    const getSpelers = async () => {
-      let spelers = await getAllSelectOptionsByName(
-        "players",
-        ["firstName", "lastName"],
-        "playerID"
-      );
-      setSpelers(spelers);
-    };
-    getSpelers();
+    getSpelers()
+      .then((players) => setSpelers(players))
+      .catch((err) => console.log(err));
   }, []);
   return (
     <Modal
