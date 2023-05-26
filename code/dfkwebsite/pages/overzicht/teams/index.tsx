@@ -13,6 +13,7 @@ import {
   handleDeletePlayerFromTeam,
   handleMakePlayerCaptain,
 } from "../../../modules/overzicht";
+import SearchableCardGrid from "../../../components/SearchableCardGrid";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -28,7 +29,6 @@ const Teams: NextPage = () => {
         .then((parsedTeams) => setTeams(parsedTeams));
     }
   }, []);
-  let results = 0;
   return (
     <div>
       <AddTeamModal
@@ -64,9 +64,7 @@ const Teams: NextPage = () => {
           <input
             className="bg-inherit"
             type="text"
-            defaultValue={
-              currentTeam.captain?.phone
-            }
+            defaultValue={currentTeam.captain?.phone}
           ></input>
 
           <TeamSpelers
@@ -76,32 +74,18 @@ const Teams: NextPage = () => {
           />
         </Modal>
       )}
-      <CardGrid>
-        {teams.length === 0 ? (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen teams gevonden
-          </h1>
-        ) : (
-          teams
-            .filter((team) => {
-              if (
-                search == "" ||
-                team.name.toLowerCase().includes(search.toLowerCase())
-              )
-                return team;
-              results++;
-            })
-            .map((team) => (
-              <Card key={team.name}>
-                <TeamCard
-                  teamData={team}
-                  setIsOpen={setIsOpen}
-                  setCurrentTeam={setCurrentTeam}
-                />
-              </Card>
-            ))
-        )}
-      </CardGrid>
+
+      <SearchableCardGrid items={teams} search={search}>
+        {(team: TeamFront) => {
+          return (
+            <TeamCard
+              teamData={team}
+              setCurrentTeam={setCurrentTeam}
+              setIsOpen={setIsOpen}
+            />
+          );
+        }}
+      </SearchableCardGrid>
     </div>
   );
 };

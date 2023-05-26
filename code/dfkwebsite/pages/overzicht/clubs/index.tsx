@@ -22,7 +22,6 @@ const Clubs: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [addTeamModalOpen, setAddTeamModalOpen] = useState(false);
-  let results = 0;
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {

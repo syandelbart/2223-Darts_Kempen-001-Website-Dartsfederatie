@@ -15,6 +15,7 @@ import {
 } from "../../../modules/overzicht";
 import AddButton from "../../../components/AddButton";
 import AddTeamModal from "../../../components/AddTeamModal";
+import SearchableCardGrid from "../../../components/SearchableCardGrid";
 
 const Spelers: NextPage = () => {
   const [players, setPlayers] = useState<PlayerFront[]>(dummyData.players);
@@ -23,8 +24,6 @@ const Spelers: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [addTeamModalOpen, setAddTeamModalOpen] = useState(false);
-
-  let results = 0;
 
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
@@ -57,7 +56,11 @@ const Spelers: NextPage = () => {
           modalOpen={isOpen}
           setModalOpen={setIsOpen}
         >
-          <input className="bg-inherit" type="text" defaultValue={currentPlayer.phone}></input>
+          <input
+            className="bg-inherit"
+            type="text"
+            defaultValue={currentPlayer.phone}
+          ></input>
           <div className="mt-10 w-1/2">
             <AddButton
               name="Team toevoegen"
@@ -86,32 +89,18 @@ const Spelers: NextPage = () => {
         currentPlayer={currentPlayer}
       />
 
-      <CardGrid>
-        {!players || players.length === 0 || results === players.length ? (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen spelers gevonden
-          </h1>
-        ) : (
-          players
-            .filter((player) => {
-              if (
-                search == "" ||
-                player.firstName.toLowerCase().includes(search.toLowerCase())
-              )
-                return player;
-              results++;
-            })
-            .map((player) => (
-              <Card key={player.playerID}>
-                <PlayerCard
-                  playerData={player}
-                  setIsOpen={setIsOpen}
-                  setCurrentPlayer={setCurrentPlayer}
-                />
-              </Card>
-            ))
-        )}
-      </CardGrid>
+      <SearchableCardGrid items={players} search={search} filterName="firstName">
+        {(player: PlayerFront) => {
+          return (
+            <PlayerCard
+              playerData={player}
+              key={player.playerID}
+              setCurrentPlayer={setCurrentPlayer}
+              setIsOpen={setIsOpen}
+            />
+          );
+        }}
+      </SearchableCardGrid>
     </div>
   );
 };
