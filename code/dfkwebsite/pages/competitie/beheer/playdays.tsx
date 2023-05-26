@@ -3,12 +3,16 @@ import { NextPage } from "next";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import { useRouter } from "next/router";
 import {
+  SelectOption,
   countFridays,
   getNextFriday,
   getParams,
 } from "../../../modules/general";
 import { teams, competitions } from "../../../data";
 import { Competition } from "../../../types/competition";
+import DefaultSelect from "../../../components/DefaultSelect";
+import { getTeams } from "../../../modules/team";
+import * as dummyData from "../../../data";
 
 interface TableData {
   team1: string;
@@ -47,12 +51,12 @@ const GeneratePlaydays: NextPage = () => {
   };
 
   const handleTableDataChange = (
-    e: ChangeEvent<HTMLSelectElement>,
+    selectedOption: SelectOption[],
     rowIndex: number,
     columnIndex: number,
     field: "team1" | "team2"
   ): void => {
-    const { value } = e.target;
+    const { value } = selectedOption[0];
 
     let tableD = [...tableData];
     console.log(value);
@@ -61,6 +65,14 @@ const GeneratePlaydays: NextPage = () => {
     setTableData(tableD);
     console.log(tableD);
   };
+
+  const [teams, setTeams] = useState(
+    dummyData.teams.map((team) => {
+      return { label: team.name, value: team.teamID } as SelectOption;
+    })
+  );
+
+  const [competitionTeams, setCompetitionTeams] = useState<SelectOption[]>([]);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_NO_API) {
@@ -75,12 +87,27 @@ const GeneratePlaydays: NextPage = () => {
         });
     }
 
+    getTeams()
+      .then((teams) => setTeams(teams))
+      .catch((err) => console.log(err));
+
     handleAmountTeamsChange();
   }, [amountTeams]);
 
   return (
     <div>
       <OverzichtTopBar titleName="Speeldagen genereren" />
+
+      <DefaultSelect
+        name="teams"
+        label="Selecteer teams"
+        options={teams}
+        multiple
+        search
+        onSelectChange={(selectedoptions) =>
+          setCompetitionTeams(selectedoptions)
+        }
+      />
 
       <div
         className="grid children:py-4 gap-2 children:border-b  text-white border-t"
@@ -114,41 +141,34 @@ const GeneratePlaydays: NextPage = () => {
             {rowData.map((data, columnIndex) => (
               <div key={columnIndex} className="flex items-center ">
                 <div className="flex flex-col justify-center items-center">
-                  <select
-                    className="w-24 text-black"
-                    value={data.team1}
-                    onChange={(e) =>
-                      handleTableDataChange(e, rowIndex, columnIndex, "team1")
+                  <DefaultSelect
+                    name=""
+                    labelEnabled={false}
+                    options={competitionTeams}
+                    onSelectChange={(selectedOption) =>
+                      handleTableDataChange(
+                        selectedOption,
+                        rowIndex,
+                        columnIndex,
+                        "team1"
+                      )
                     }
-                  >
-                    <option value=""></option>
-                    {teams.map((team) => {
-                      return (
-                        <option key={team.name} value={team.name}>
-                          {team.name}
-                        </option>
-                      );
-                    })}
-                  </select>
+                  />
 
                   <span>vs</span>
-                  <select
-                    className="w-24 text-black"
-                    value={data.team2}
-                    prefix="H"
-                    onChange={(e) =>
-                      handleTableDataChange(e, rowIndex, columnIndex, "team2")
+                  <DefaultSelect
+                    name=""
+                    options={competitionTeams}
+                    labelEnabled={false}
+                    onSelectChange={(selectedOption) =>
+                      handleTableDataChange(
+                        selectedOption,
+                        rowIndex,
+                        columnIndex,
+                        "team2"
+                      )
                     }
-                  >
-                    <option value=""></option>
-                    {teams.map((team) => {
-                      return (
-                        <option key={team.name} value={team.name}>
-                          {team.name}
-                        </option>
-                      );
-                    })}
-                  </select>
+                  />
                 </div>
               </div>
             ))}
