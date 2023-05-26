@@ -3,7 +3,7 @@ import Modal from "./Modal";
 
 type CurrentModalData = {
   currentObject: any;
-  currentObjectKey: string;
+  title: string | undefined;
   currentModalOpen: boolean;
   setCurrentModal: Function;
   children: (item: any) => JSX.Element;
@@ -11,7 +11,7 @@ type CurrentModalData = {
 
 const CurrentModal: FunctionComponent<CurrentModalData> = ({
   currentObject,
-  currentObjectKey,
+  title,
   currentModalOpen,
   setCurrentModal,
   children,
@@ -19,7 +19,7 @@ const CurrentModal: FunctionComponent<CurrentModalData> = ({
   return (
     currentObject && (
       <Modal
-        title={currentObject.currentObjectKey}
+        title={title}
         modalOpen={currentModalOpen}
         setModalOpen={setCurrentModal}
       >
