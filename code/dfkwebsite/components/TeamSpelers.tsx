@@ -16,14 +16,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
 }) => {
   return (
     <div className="mt-10 text-white">
-      <div className="flex gap-3 items-center mb-5">
-        <input
-          type="text"
-          className="text-3xl font-semibold bg-inherit placeholder:text-white"
-          defaultValue={team.name}
-        ></input>
-        <button className="bg-edit-button px-4 py-1">Edit</button>
-      </div>
+      <p className="text-3xl font-semibold mb-5">{team.name}</p>
 
       <div>
         <div className="flex flex-col gap-2">
