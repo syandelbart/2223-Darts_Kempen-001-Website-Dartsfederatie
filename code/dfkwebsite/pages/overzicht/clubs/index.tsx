@@ -44,7 +44,7 @@ const Clubs: NextPage = () => {
         titleName="Clubs"
         search={search}
         setSearch={setSearch}
-        addButtonName="Club"
+        addButtonName="Club toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
@@ -82,7 +82,7 @@ const Clubs: NextPage = () => {
 
           <div className="mt-10 w-1/2">
             <AddButton
-              name="Team"
+              name="Team toevoegen"
               addModalOpen={addTeamModalOpen}
               setAddModalOpen={setAddTeamModalOpen}
             />

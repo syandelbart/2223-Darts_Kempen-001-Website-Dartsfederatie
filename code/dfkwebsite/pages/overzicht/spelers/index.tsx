@@ -60,7 +60,7 @@ const Spelers: NextPage = () => {
           <input className="bg-inherit" type="text" defaultValue={currentPlayer.phone}></input>
           <div className="mt-10 w-1/2">
             <AddButton
-              name="Team"
+              name="Team toevoegen"
               addModalOpen={addTeamModalOpen}
               setAddModalOpen={setAddTeamModalOpen}
             />

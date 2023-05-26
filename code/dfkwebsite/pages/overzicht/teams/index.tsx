@@ -41,7 +41,7 @@ const Teams: NextPage = () => {
         titleName="Teams"
         search={search}
         setSearch={setSearch}
-        addButtonName="Team"
+        addButtonName="Team toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
