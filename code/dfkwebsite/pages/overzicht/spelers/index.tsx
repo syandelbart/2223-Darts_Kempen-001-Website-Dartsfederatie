@@ -37,12 +37,15 @@ const Spelers: NextPage = () => {
 
   return (
     <div>
+      {/* Add Player Modal */}
       <AddSpelerModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
         players={players}
         setPlayers={setPlayers}
       />
+
+      {/* Page title, add player button and search field */}
       <OverzichtTopBar
         titleName="Spelers"
         search={search}
@@ -52,6 +55,7 @@ const Spelers: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
       />
 
+      {/* Modal for player details when you press team button */}
       <CurrentModal
         currentObject={currentPlayer}
         title={currentPlayer?.firstName + " " + currentPlayer?.lastName}
@@ -90,6 +94,7 @@ const Spelers: NextPage = () => {
         }}
       </CurrentModal>
 
+      {/* This is for inside the current modal when adding a team to the player */}
       <AddTeamModal
         addModalOpen={addTeamModalOpen}
         setAddModalOpen={setAddTeamModalOpen}
@@ -97,6 +102,7 @@ const Spelers: NextPage = () => {
         currentPlayer={currentPlayer}
       />
 
+      {/* Grid of all players */}
       <SearchableCardGrid
         items={players}
         search={search}

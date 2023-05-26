@@ -34,12 +34,14 @@ const Clubs: NextPage = () => {
   }, []);
   return (
     <div>
+      {/* Add Club Modal */}
       <AddClubModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
         clubs={clubs}
         setClubs={setClubs}
       />
+      {/* Page title, add club button and search field */}
       <OverzichtTopBar
         titleName="Clubs"
         search={search}
@@ -49,6 +51,7 @@ const Clubs: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
       />
 
+      {/* Modal for club details when you press teams button */}
       <CurrentModal
         currentObject={currentClub}
         title={currentClub?.name}
@@ -104,6 +107,7 @@ const Clubs: NextPage = () => {
         }}
       </CurrentModal>
 
+      {/* This is for inside the current modal when adding a team to the club */}
       <AddTeamModal
         addModalOpen={addTeamModalOpen}
         setAddModalOpen={setAddTeamModalOpen}
@@ -111,6 +115,7 @@ const Clubs: NextPage = () => {
         showTeamList={true}
       />
 
+      {/* Grid of all clubs */}
       <SearchableCardGrid items={clubs} search={search}>
         {(club) => {
           return (

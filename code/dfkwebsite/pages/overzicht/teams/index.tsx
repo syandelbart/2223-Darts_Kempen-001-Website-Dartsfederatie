@@ -32,12 +32,15 @@ const Teams: NextPage = () => {
   }, []);
   return (
     <div>
+      {/* Add Team Modal */}
       <AddTeamModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
         teams={teams}
         setTeams={setTeams}
       />
+
+      {/* Page title, add team button and search field */}
       <OverzichtTopBar
         titleName="Teams"
         search={search}
@@ -47,6 +50,7 @@ const Teams: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
       />
 
+      {/* Modal for team details when you press team button */}
       <CurrentModal
         currentObject={currentTeam}
         title={currentTeam?.name}
@@ -79,6 +83,7 @@ const Teams: NextPage = () => {
         }}
       </CurrentModal>
 
+      {/* Grid with all teams */}
       <SearchableCardGrid items={teams} search={search}>
         {(team: TeamFront) => {
           return (
