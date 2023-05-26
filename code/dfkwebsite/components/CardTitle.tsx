@@ -1,4 +1,4 @@
-import { Icon, IconifyIcon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
 
 type cardTitleData = {

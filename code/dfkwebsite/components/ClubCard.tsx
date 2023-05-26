@@ -4,7 +4,7 @@ import CardButtonRow from "./CardButtonRow";
 import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 import { ClubFront } from "../types/club";
-import { Icon } from "@iconify/react";
+
 
 interface clubDataInterface {
   clubData: ClubFront;
