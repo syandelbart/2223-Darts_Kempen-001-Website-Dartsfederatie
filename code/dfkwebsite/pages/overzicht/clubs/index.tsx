@@ -32,6 +32,11 @@ const Clubs: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
         clubs={clubs}
         setClubs={setClubs}
+        formValues={
+          process.env.NEXT_PUBLIC_NO_API == "1"
+            ? dummyData.club[0]
+            : currentClub
+        }
       />
       {/* Page title, add club button and search field */}
       <OverzichtTopBar
@@ -52,36 +57,7 @@ const Clubs: NextPage = () => {
         addTeams={true}
         addTeamModalOpen={addTeamModalOpen}
         setAddTeamModalOpen={setAddTeamModalOpen}
-      >
-        {(club) => {
-          return (
-            <div>
-              <div className="flex">
-                <input
-                  className="bg-inherit"
-                  type="text"
-                  defaultValue={club.address?.postalCode}
-                ></input>
-                <input
-                  className="bg-inherit"
-                  type="text"
-                  defaultValue={club.address?.street}
-                ></input>
-                <input
-                  className="bg-inherit"
-                  type="text"
-                  defaultValue={club.address?.houseNumber}
-                ></input>
-                <input
-                  className="bg-inherit"
-                  type="text"
-                  defaultValue={club.address?.city}
-                ></input>
-              </div>
-            </div>
-          );
-        }}
-      </CurrentModal>
+      />
 
       {/* This is for inside the current modal when adding a team to the club */}
       <AddTeamModal

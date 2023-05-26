@@ -13,7 +13,7 @@ type CurrentModalData = {
   title: string | undefined;
   currentModalOpen: boolean;
   setCurrentModal: Function;
-  children: (item: any) => JSX.Element;
+  children?: (item: any) => JSX.Element;
   addTeams?: boolean;
   addTeamModalOpen?: boolean;
   setAddTeamModalOpen?: Dispatch<SetStateAction<boolean>>;
@@ -36,7 +36,7 @@ const CurrentModal: FunctionComponent<CurrentModalData> = ({
         modalOpen={currentModalOpen}
         setModalOpen={setCurrentModal}
       >
-        {children(currentObject)}
+        {children && children(currentObject)}
         {addTeams && (
           <div className="mt-10 w-1/2">
             <AddButton
