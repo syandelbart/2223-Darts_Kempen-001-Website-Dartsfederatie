@@ -328,7 +328,7 @@ const Clubs: NextPage = () => {
         titleName="Beheer Competities"
         search={search}
         setSearch={setSearch}
-        addButtonName="Competition"
+        addButtonName="Competition toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
