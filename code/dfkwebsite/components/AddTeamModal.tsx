@@ -81,9 +81,19 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     }, 5000);
   };
 
-  const [clubs, setClubs] = useState<SelectOption[]>([]);
-  const [teams, setTeams] = useState<SelectOption[]>([]);
-  const [spelers, setSpelers] = useState<SelectOption[]>([]);
+  const [clubs, setClubs] = useState<SelectOption[]>([
+    { value: dummyData.club[0].clubID, label: dummyData.club[0].name },
+  ]);
+  const [teams, setTeams] = useState<SelectOption[]>([
+    { value: dummyData.teams[0].teamID, label: dummyData.teams[0].name },
+  ]);
+  const [players, setPlayers] = useState<SelectOption[]>([
+    {
+      value: dummyData.players[0].playerID,
+      label:
+        dummyData.players[0].firstName + " " + dummyData.players[0].lastName,
+    },
+  ]);
 
   useEffect(() => {
     getClubs()
@@ -95,7 +105,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       .catch((err) => console.log(err));
 
     getSpelers()
-      .then((players) => setSpelers(players))
+      .then((players) => setPlayers(players))
       .catch((err) => console.log(err));
   }, []);
   return (
@@ -140,10 +150,10 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           name="captainid"
           id="captainid"
           label="Kapitein"
-          options={spelers.map((speler) => {
+          options={players.map((player) => {
             return {
-              value: speler.value,
-              label: speler.label,
+              value: player.value,
+              label: player.label,
             };
           })}
           onSelectChange={handleSelectChange}
@@ -197,7 +207,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                       label: `${props.currentPlayer.firstName} ${props.currentPlayer.lastName}`,
                     },
                   ]
-                : spelers
+                : players
             }
             onSelectChange={handleSelectChange}
             search={true}
