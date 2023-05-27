@@ -118,8 +118,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         <div className="mt-10">
           <p>Voeg hieronder een bestaand team toe</p>
           <DefaultSelect
-            id=""
-            name=""
+            id="existingTeam"
+            name="existingTeam"
             label="Bestaand Team"
             options={teams}
             search={true}
