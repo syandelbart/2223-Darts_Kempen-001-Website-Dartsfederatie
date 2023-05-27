@@ -173,7 +173,8 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           id="teamids"
           label="Teams toevoegen"
           options={teams}
-          onChange={handleChange}
+          onSelectChange={handleSelectChange}
+          multiple={true}
           search={true}
           notRequired={true}
         />
