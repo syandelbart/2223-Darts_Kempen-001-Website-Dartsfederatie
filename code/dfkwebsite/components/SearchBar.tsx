@@ -13,6 +13,8 @@ const SearchBar: FunctionComponent<SearchBarData> = ({ setSearch }) => {
 
   return (
     <input
+      id="search"
+      name="search"
       type="text"
       placeholder="Zoeken..."
       className="px-5 py-3 rounded bg-[#D9D9D9]"
