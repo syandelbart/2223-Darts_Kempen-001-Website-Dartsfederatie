@@ -7,6 +7,7 @@ import OverzichtTopBar from "../../../components/OverzichtTopBar";
 
 import * as dummyData from "../../../data";
 import ManagementCard from "../../../components/ManagementCard";
+import Head from "next/head";
 
 const Bestuur: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -24,6 +25,10 @@ const Bestuur: NextPage = () => {
   let results = 0;
   return (
     <div>
+      <Head>
+        <title>DFK | Bestuur</title>
+        <meta name="description" content="DFK bestuur" />
+      </Head>
       <AddBestuurModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}

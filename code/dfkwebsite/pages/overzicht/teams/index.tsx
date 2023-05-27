@@ -12,6 +12,7 @@ import {
 } from "../../../modules/overzicht";
 import SearchableCardGrid from "../../../components/SearchableCardGrid";
 import CurrentModal from "../../../components/CurrentModal";
+import Head from "next/head";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -29,6 +30,10 @@ const Teams: NextPage = () => {
   }, []);
   return (
     <div>
+      <Head>
+        <title>DFK | Teams</title>
+        <meta name="description" content="DFK teams" />
+      </Head>
       {/* Add Team Modal */}
       <AddTeamModal
         addModalOpen={addModalOpen}

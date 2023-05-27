@@ -8,6 +8,7 @@ import * as dummyData from "../../../data";
 import AddTeamModal from "../../../components/AddTeamModal";
 import SearchableCardGrid from "../../../components/SearchableCardGrid";
 import CurrentModal from "../../../components/CurrentModal";
+import Head from "next/head";
 
 const Spelers: NextPage = () => {
   const [players, setPlayers] = useState<PlayerFront[]>(dummyData.players);
@@ -27,6 +28,10 @@ const Spelers: NextPage = () => {
 
   return (
     <div>
+      <Head>
+        <title>DFK | Spelers</title>
+        <meta name="description" content="DFK spelers" />
+      </Head>
       {/* Add Player Modal */}
       <AddSpelerModal
         addModalOpen={addModalOpen}

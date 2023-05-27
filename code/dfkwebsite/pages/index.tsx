@@ -1,9 +1,14 @@
+import Head from "next/head";
 import ImageRead from "../components/ImageRead";
 import { NextPage } from "next";
 
 const HomePage: NextPage = () => {
   return (
     <div>
+      <Head>
+        <title>DFK | Startpagina</title>
+        <meta name="description" content="DFK startpagina" />
+      </Head>
       <ImageRead
         title="This is a title"
         summary="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
