@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import Card from "../../../components/Card";
-import CardGrid from "../../../components/CardGrid";
 import * as dummyData from "../../../data";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddTeamModal from "../../../components/AddTeamModal";
@@ -26,7 +24,7 @@ const Teams: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/teams`)
         .then((teams) => teams.json())
-        .then((parsedTeams) => setTeams(parsedTeams));
+        .then((parsedTeams) => setTeams(parsedTeams)).catch((err) => console.log(err));
     }
   }, []);
   return (

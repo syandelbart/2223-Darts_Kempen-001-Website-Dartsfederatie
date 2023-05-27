@@ -17,7 +17,7 @@ const Bestuur: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/bestuur`)
         .then((bestuur) => bestuur.json())
-        .then((parsedBestuur) => setBestuur(parsedBestuur));
+        .then((parsedBestuur) => setBestuur(parsedBestuur)).catch((err) => console.log(err));
     }
   }, []);
 

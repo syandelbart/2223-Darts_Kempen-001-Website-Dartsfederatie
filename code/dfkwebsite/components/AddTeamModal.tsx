@@ -10,7 +10,7 @@ import * as formHandler from "../modules/formHandler";
 import { Team, TeamFront } from "../types/team";
 import { getTeams, teamRegexPatterns } from "../modules/team";
 import { PlayerFront } from "../types/player";
-import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
+import { SelectOption } from "../modules/general";
 import { getClubs } from "../modules/club";
 import { getSpelers } from "../modules/player";
 
@@ -208,7 +208,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         <button
           type="submit"
           className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit}
         >
           Aanmaken
         </button>

@@ -21,7 +21,7 @@ const Clubs: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/clubs`)
         .then((clubs) => clubs.json())
-        .then((parsedClubs) => setClubs(parsedClubs));
+        .then((parsedClubs) => setClubs(parsedClubs)).catch((err) => console.log(err));
     }
   }, []);
   return (

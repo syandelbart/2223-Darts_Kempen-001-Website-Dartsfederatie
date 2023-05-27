@@ -21,7 +21,7 @@ const Spelers: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/players`)
         .then((players) => players.json())
-        .then((parsedPlayers) => setPlayers(parsedPlayers));
+        .then((parsedPlayers) => setPlayers(parsedPlayers)).catch((err) => console.log(err));
     }
   }, []);
 
