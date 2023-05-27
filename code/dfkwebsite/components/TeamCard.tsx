@@ -5,12 +5,6 @@ import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 import { TeamFront } from "../types/team";
 
-export type teamData = {
-  teamnaam: string;
-  kapitein: string;
-  telefoonnummer: string;
-};
-
 interface teamDataInterface {
   teamData: TeamFront;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
