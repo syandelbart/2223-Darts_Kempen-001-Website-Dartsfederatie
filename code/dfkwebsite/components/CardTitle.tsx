@@ -1,19 +1,18 @@
-import { Icon } from "@iconify/react";
 import { FunctionComponent } from "react";
+import CardDeleteIcon from "./CardDeleteIcon";
 
 type cardTitleData = {
   children: any;
+  hideDeleteIcon?: boolean;
 };
 
-const CardTitle: FunctionComponent<cardTitleData> = ({ children }) => {
+const CardTitle: FunctionComponent<cardTitleData> = ({ children, hideDeleteIcon }) => {
   return (
     <div className="flex justify-between items-center">
       <h2 className="text-2xl font-bold">{children}</h2>
-      <Icon
-        icon="mdi:close"
-        className="text-3xl hover:text-red-500 hover:cursor-pointer"
-        onClick={() => confirm("Ben je zeker dat je dit wilt verwijderen?")}
-      />
+      {
+        !hideDeleteIcon ? <CardDeleteIcon /> : null
+      }
     </div>
   );
 };

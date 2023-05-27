@@ -10,7 +10,7 @@ import * as formHandler from "../modules/formHandler";
 import { Team, TeamFront } from "../types/team";
 import { getTeams, teamRegexPatterns } from "../modules/team";
 import { PlayerFront } from "../types/player";
-import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
+import { SelectOption } from "../modules/general";
 import { getClubs } from "../modules/club";
 import { getSpelers } from "../modules/player";
 
@@ -81,9 +81,19 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
     }, 5000);
   };
 
-  const [clubs, setClubs] = useState<SelectOption[]>([]);
-  const [teams, setTeams] = useState<SelectOption[]>([]);
-  const [spelers, setSpelers] = useState<SelectOption[]>([]);
+  const [clubs, setClubs] = useState<SelectOption[]>([
+    { value: dummyData.club[0].clubID, label: dummyData.club[0].name },
+  ]);
+  const [teams, setTeams] = useState<SelectOption[]>([
+    { value: dummyData.teams[0].teamID, label: dummyData.teams[0].name },
+  ]);
+  const [players, setPlayers] = useState<SelectOption[]>([
+    {
+      value: dummyData.players[0].playerID,
+      label:
+        dummyData.players[0].firstName + " " + dummyData.players[0].lastName,
+    },
+  ]);
 
   useEffect(() => {
     getClubs()
@@ -95,7 +105,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       .catch((err) => console.log(err));
 
     getSpelers()
-      .then((players) => setSpelers(players))
+      .then((players) => setPlayers(players))
       .catch((err) => console.log(err));
   }, []);
   return (
@@ -108,8 +118,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         <div className="mt-10">
           <p>Voeg hieronder een bestaand team toe</p>
           <DefaultSelect
-            id=""
-            name=""
+            id="existingTeam"
+            name="existingTeam"
             label="Bestaand Team"
             options={teams}
             search={true}
@@ -140,10 +150,10 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           name="captainid"
           id="captainid"
           label="Kapitein"
-          options={spelers.map((speler) => {
+          options={players.map((player) => {
             return {
-              value: speler.value,
-              label: speler.label,
+              value: player.value,
+              label: player.label,
             };
           })}
           onSelectChange={handleSelectChange}
@@ -197,7 +207,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
                       label: `${props.currentPlayer.firstName} ${props.currentPlayer.lastName}`,
                     },
                   ]
-                : spelers
+                : players
             }
             onSelectChange={handleSelectChange}
             search={true}
@@ -208,7 +218,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         <button
           type="submit"
           className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit}
         >
           Aanmaken
         </button>

@@ -7,7 +7,7 @@ import DefaultSelect from "./DefaultSelect";
 import InformationBox from "./InformationBox";
 import * as dummyData from "../data";
 import { Club, ClubFront } from "../types/club";
-import { SelectOption, getAllSelectOptionsByName } from "../modules/general";
+import { SelectOption } from "../modules/general";
 import { getTeams } from "../modules/team";
 import { getSpelers } from "../modules/player";
 
@@ -74,8 +74,16 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   >(false);
   const [informationBoxMessage, setInformationBoxMessage] = useState("");
 
-  const [teams, setTeams] = useState<SelectOption[]>([]);
-  const [spelers, setSpelers] = useState<SelectOption[]>([]);
+  const [teams, setTeams] = useState<SelectOption[]>([
+    { value: dummyData.teams[0].teamID, label: dummyData.teams[0].name },
+  ]);
+  const [players, setPlayers] = useState<SelectOption[]>([
+    {
+      value: dummyData.players[0].playerID,
+      label:
+        dummyData.players[0].firstName + " " + dummyData.players[0].lastName,
+    },
+  ]);
 
   useEffect(() => {
     getTeams()
@@ -83,7 +91,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       .catch((err) => console.log(err));
 
     getSpelers()
-      .then((players) => setSpelers(players))
+      .then((players) => setPlayers(players))
       .catch((err) => console.log(err));
   }, []);
 
@@ -155,7 +163,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           name="contactpersonid"
           id="contactpersonid"
           label="Contactpersoon"
-          options={spelers}
+          options={players}
           search={true}
           onSelectChange={handleSelectChange}
         />
@@ -165,7 +173,8 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           id="teamids"
           label="Teams toevoegen"
           options={teams}
-          onChange={handleChange}
+          onSelectChange={handleSelectChange}
+          multiple={true}
           search={true}
           notRequired={true}
         />
@@ -173,7 +182,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
         <button
           type="submit"
           className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit}
         >
           Aanmaken
         </button>

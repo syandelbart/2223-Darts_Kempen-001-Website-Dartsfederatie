@@ -36,7 +36,7 @@ const CurrentModal: FunctionComponent<CurrentModalData> = ({
         modalOpen={currentModalOpen}
         setModalOpen={setCurrentModal}
       >
-        {children && children(currentObject)}
+        {children ? children(currentObject) : null}
         {addTeams && (
           <div className="mt-10 w-1/2">
             <AddButton

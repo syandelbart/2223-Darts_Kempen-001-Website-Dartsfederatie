@@ -217,7 +217,8 @@ const Clubs: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/competition`)
         .then((competitions) => competitions.json())
-        .then((parsedCompetitions) => setCompetitions(parsedCompetitions));
+        .then((parsedCompetitions) => setCompetitions(parsedCompetitions))
+        .catch((err) => console.log(err));
     }
   }, []);
 
@@ -317,7 +318,7 @@ const Clubs: NextPage = () => {
           <button
             type="submit"
             className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-            onClick={handleSubmit}
+            onClick={() => handleSubmit}
             disabled={!handledChange}
           >
             Aanmaken
@@ -328,7 +329,7 @@ const Clubs: NextPage = () => {
         titleName="Beheer Competities"
         search={search}
         setSearch={setSearch}
-        addButtonName="Competition"
+        addButtonName="Competition toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />

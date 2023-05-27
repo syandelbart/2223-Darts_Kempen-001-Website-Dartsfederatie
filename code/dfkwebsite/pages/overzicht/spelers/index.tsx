@@ -8,6 +8,7 @@ import * as dummyData from "../../../data";
 import AddTeamModal from "../../../components/AddTeamModal";
 import SearchableCardGrid from "../../../components/SearchableCardGrid";
 import CurrentModal from "../../../components/CurrentModal";
+import Head from "next/head";
 
 const Spelers: NextPage = () => {
   const [players, setPlayers] = useState<PlayerFront[]>(dummyData.players);
@@ -21,12 +22,16 @@ const Spelers: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/players`)
         .then((players) => players.json())
-        .then((parsedPlayers) => setPlayers(parsedPlayers));
+        .then((parsedPlayers) => setPlayers(parsedPlayers)).catch((err) => console.log(err));
     }
   }, []);
 
   return (
     <div>
+      <Head>
+        <title>DFK | Spelers</title>
+        <meta name="description" content="DFK spelers" />
+      </Head>
       {/* Add Player Modal */}
       <AddSpelerModal
         addModalOpen={addModalOpen}
@@ -40,7 +45,7 @@ const Spelers: NextPage = () => {
         titleName="Spelers"
         search={search}
         setSearch={setSearch}
-        addButtonName="Speler"
+        addButtonName="Speler toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />

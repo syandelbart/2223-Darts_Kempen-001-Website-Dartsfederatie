@@ -7,6 +7,7 @@ import OverzichtTopBar from "../../../components/OverzichtTopBar";
 
 import * as dummyData from "../../../data";
 import ManagementCard from "../../../components/ManagementCard";
+import Head from "next/head";
 
 const Bestuur: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -17,13 +18,17 @@ const Bestuur: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/bestuur`)
         .then((bestuur) => bestuur.json())
-        .then((parsedBestuur) => setBestuur(parsedBestuur));
+        .then((parsedBestuur) => setBestuur(parsedBestuur)).catch((err) => console.log(err));
     }
   }, []);
 
   let results = 0;
   return (
     <div>
+      <Head>
+        <title>DFK | Bestuur</title>
+        <meta name="description" content="DFK bestuur" />
+      </Head>
       <AddBestuurModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
@@ -32,7 +37,7 @@ const Bestuur: NextPage = () => {
         titleName="Bestuur"
         search={search}
         setSearch={setSearch}
-        addButtonName="Bestuur"
+        addButtonName="Bestuur toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />

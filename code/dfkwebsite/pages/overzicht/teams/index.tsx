@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import Card from "../../../components/Card";
-import CardGrid from "../../../components/CardGrid";
 import * as dummyData from "../../../data";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddTeamModal from "../../../components/AddTeamModal";
@@ -14,6 +12,7 @@ import {
 } from "../../../modules/overzicht";
 import SearchableCardGrid from "../../../components/SearchableCardGrid";
 import CurrentModal from "../../../components/CurrentModal";
+import Head from "next/head";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -26,11 +25,15 @@ const Teams: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/teams`)
         .then((teams) => teams.json())
-        .then((parsedTeams) => setTeams(parsedTeams));
+        .then((parsedTeams) => setTeams(parsedTeams)).catch((err) => console.log(err));
     }
   }, []);
   return (
     <div>
+      <Head>
+        <title>DFK | Teams</title>
+        <meta name="description" content="DFK teams" />
+      </Head>
       {/* Add Team Modal */}
       <AddTeamModal
         addModalOpen={addModalOpen}

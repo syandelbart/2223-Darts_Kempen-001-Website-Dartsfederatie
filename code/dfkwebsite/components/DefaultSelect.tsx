@@ -55,7 +55,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
   return (
     <div className="flex flex-col w-full">
       {labelEnabled && (
-        <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
+        <p className="text-xl text-white mt-5 mb-2">
           {label ?? name}
           {regex && (
             <span
@@ -66,7 +66,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
             </span>
           )}
           {!notRequired && <span className="text-sm align-top">*</span>}
-        </label>
+        </p>
       )}
 
       {search ? (

@@ -8,6 +8,7 @@ import * as dummyData from "../../../data";
 import AddTeamModal from "../../../components/AddTeamModal";
 import SearchableCardGrid from "../../../components/SearchableCardGrid";
 import CurrentModal from "../../../components/CurrentModal";
+import Head from "next/head";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
@@ -21,22 +22,21 @@ const Clubs: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/clubs`)
         .then((clubs) => clubs.json())
-        .then((parsedClubs) => setClubs(parsedClubs));
+        .then((parsedClubs) => setClubs(parsedClubs)).catch((err) => console.log(err));
     }
   }, []);
   return (
     <div>
+      <Head>
+        <title>DFK | Clubs</title>
+        <meta name="description" content="DFK clubs" />
+      </Head>
       {/* Add Club Modal */}
       <AddClubModal
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
         clubs={clubs}
         setClubs={setClubs}
-        formValues={
-          process.env.NEXT_PUBLIC_NO_API == "1"
-            ? dummyData.club[0]
-            : currentClub
-        }
       />
       {/* Page title, add club button and search field */}
       <OverzichtTopBar
