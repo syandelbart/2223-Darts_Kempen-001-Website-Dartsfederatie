@@ -104,9 +104,11 @@ const GeneratePlaydays: NextPage = () => {
         options={teams}
         multiple
         search
-        onSelectChange={(selectedOptions) =>
-          setCompetitionTeams(selectedOptions)
-        }
+        onSelectChange={(selectedOptions, action) => {
+          setCompetitionTeams(selectedOptions);
+          console.log(selectedOptions);
+          console.log(teams);
+        }}
       />
 
       <div
@@ -142,11 +144,14 @@ const GeneratePlaydays: NextPage = () => {
               <div key={columnIndex} className="flex items-center ">
                 <div className="flex flex-col justify-center items-center">
                   <DefaultSelect
-                    name=""
+                    name={`${rowIndex}-${columnIndex}`}
                     labelEnabled={false}
                     options={competitionTeams}
                     search
-                    onSelectChange={(selectedOption) =>
+                    onSelectChange={(
+                      selectedOption: SelectOption,
+                      action: { action: string; name: string }
+                    ) =>
                       handleTableDataChange(
                         selectedOption,
                         rowIndex,
@@ -158,16 +163,16 @@ const GeneratePlaydays: NextPage = () => {
 
                   <span>vs</span>
                   <DefaultSelect
-                    name=""
+                    name={`${rowIndex}-${columnIndex}`}
                     options={competitionTeams}
                     labelEnabled={false}
                     search
                     onSelectChange={(
-                      selectedOptions: SelectOption[],
+                      selectedOption: SelectOption,
                       action: { action: string; name: string }
                     ) =>
                       handleTableDataChange(
-                        selectedOptions,
+                        selectedOption,
                         rowIndex,
                         columnIndex,
                         "team2"
