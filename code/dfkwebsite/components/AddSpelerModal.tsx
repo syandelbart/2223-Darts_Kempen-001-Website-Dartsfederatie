@@ -107,7 +107,7 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
         <button
           type="submit"
           className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={() => handleSubmit}
+          onClick={handleSubmit}
         >
           Aanmaken
         </button>
