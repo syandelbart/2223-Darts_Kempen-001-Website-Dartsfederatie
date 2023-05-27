@@ -32,11 +32,6 @@ const Clubs: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
         clubs={clubs}
         setClubs={setClubs}
-        formValues={
-          process.env.NEXT_PUBLIC_NO_API == "1"
-            ? dummyData.club[0]
-            : currentClub
-        }
       />
       {/* Page title, add club button and search field */}
       <OverzichtTopBar
