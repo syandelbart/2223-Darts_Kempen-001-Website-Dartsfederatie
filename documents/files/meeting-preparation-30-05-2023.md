@@ -58,4 +58,5 @@
 
 ## Vragen
 - Wie zijn de sponsors? Eventuele data
+- Wedstrijdblad berekeningen, aantallen, etc
 - 
