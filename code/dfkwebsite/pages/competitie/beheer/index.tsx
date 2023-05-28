@@ -76,7 +76,6 @@ const Clubs: NextPage = () => {
   };
 
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({
-    amountteams: "",
     classification: "",
     startdate: "",
     enddate: "",
@@ -90,6 +89,26 @@ const Clubs: NextPage = () => {
       formValues,
       setHandledChange
     );
+  };
+
+  const goToPlayDays = (competitionID: string) => {
+    router
+      .push({
+        pathname: "/competitie/beheer/playdays",
+        query: {
+          competitionID: competitionID,
+          // Passing extra variables if the API is disabled
+          ...(process.env.NEXT_PUBLIC_NO_API == "1" && {
+            query: true,
+            startDate: formValues.startdate,
+            endDate: formValues.enddate,
+            amountTeams: formValues.amountteams,
+            classification: formValues.classification,
+            type: formValues.type,
+          }),
+        },
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleSubmit = async (event: any) => {
@@ -116,19 +135,7 @@ const Clubs: NextPage = () => {
     setTimeout(() => {
       if (!competition) return;
 
-      router.push({
-        pathname: "/competitie/beheer/playdays",
-        query: {
-          competitionID: competition.competitionID,
-          // Passing extra variables if the API is disabled
-          query: true,
-          startDate: formValues.startdate,
-          endDate: formValues.enddate,
-          amountTeams: formValues.amountteams,
-          classification: formValues.classification,
-          type: formValues.type,
-        },
-      });
+      goToPlayDays(competition.competitionID);
     }, 5000);
   };
 
@@ -185,6 +192,11 @@ const Clubs: NextPage = () => {
             className="cursor-pointer text-2xl"
             onClick={() => onClickDelete(row.competitionID)}
             icon="mdi:delete"
+          />
+          <Icon
+            className="cursor-pointer text-2xl"
+            onClick={() => goToPlayDays(row.competitionID)}
+            icon="mdi:play"
           />
         </div>
       ),
@@ -270,14 +282,6 @@ const Clubs: NextPage = () => {
               speeldagen worden gegenereerd.
             </p>
           )}
-
-          <DefaultInput
-            name="amountteams"
-            value={formValues.amountteams}
-            onChange={handleChange}
-            label={"Aantal teams"}
-            type="number"
-          />
 
           <div className="flex flex-col">
             <DefaultSelect
