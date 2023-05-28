@@ -10,12 +10,14 @@ import { Club, ClubFront } from "../types/club";
 import { SelectOption } from "../modules/general";
 import { getTeams } from "../modules/team";
 import { getSpelers } from "../modules/player";
+import SubmitButton from "./SubmitButton";
 
 type AddClubModalData = {
   addModalOpen: boolean;
   setAddModalOpen: Dispatch<React.SetStateAction<boolean>>;
   clubs: Club[];
   setClubs: Dispatch<React.SetStateAction<ClubFront[]>>;
+  currentClub?: ClubFront;
 };
 
 const AddClubModal: FunctionComponent<AddClubModalData> = (
@@ -32,6 +34,8 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   });
 
   const handleChange = (event: any) => {
+    console.log(props.currentClub);
+    console.log(formValues.name);
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
@@ -86,6 +90,41 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   ]);
 
   useEffect(() => {
+    console.log(props.currentClub);
+    props.currentClub &&
+      setFormValues({
+        name: props.currentClub.name,
+        address_city: props.currentClub.address?.city || "",
+        address_street: props.currentClub.address?.street || "",
+        address_housenumber: props.currentClub.address?.houseNumber || "",
+        address_postal: props.currentClub.address?.postalCode || "",
+      });
+    setPlayers(
+      props.currentClub?.contactPerson
+        ? [
+            {
+              value: props.currentClub.contactPerson.playerID,
+              label:
+                props.currentClub.contactPerson.firstName +
+                " " +
+                props.currentClub.contactPerson.lastName,
+            },
+          ]
+        : []
+    );
+    setTeams(
+      props.currentClub?.teams
+        ? props.currentClub.teams.map((team) => {
+            return {
+              value: team.teamID,
+              label: team.name,
+            };
+          })
+        : []
+    );
+  }, [props.currentClub]);
+
+  useEffect(() => {
     getTeams()
       .then((teams) => setTeams(teams))
       .catch((err) => console.log(err));
@@ -97,7 +136,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
 
   return (
     <Modal
-      title="Club toevoegen"
+      title={props.currentClub ? "Club bewerken" : "Club toevoegen"}
       modalOpen={props.addModalOpen}
       setModalOpen={props.setAddModalOpen}
     >
@@ -164,6 +203,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           id="contactpersonid"
           label="Contactpersoon"
           options={players}
+          value={players}
           search={true}
           onSelectChange={handleSelectChange}
         />
@@ -177,15 +217,10 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           multiple={true}
           search={true}
           notRequired={true}
+          value={teams}
         />
 
-        <button
-          type="submit"
-          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={handleSubmit}
-        >
-          Aanmaken
-        </button>
+        <SubmitButton handleSubmit={handleSubmit} current={props.currentClub} />
       </div>
     </Modal>
   );
