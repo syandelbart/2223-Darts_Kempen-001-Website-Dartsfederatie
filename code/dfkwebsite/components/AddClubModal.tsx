@@ -184,7 +184,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           id="contactpersonid"
           label="Contactpersoon"
           options={players}
-          value={
+          defaultValue={
             props.currentClub?.contactPerson
               ? [
                   {
@@ -210,7 +210,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           multiple={true}
           search={true}
           notRequired={true}
-          value={
+          defaultValue={
             props.currentClub?.teams
               ? props.currentClub.teams.map((team) => {
                   return {
