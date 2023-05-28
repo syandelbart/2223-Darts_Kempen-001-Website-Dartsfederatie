@@ -45,7 +45,6 @@ const Teams: NextPage = () => {
       {/* Page title, add team button and search field */}
       <OverzichtTopBar
         titleName="Teams"
-        search={search}
         setSearch={setSearch}
         addButtonName="Team toevoegen"
         addModalOpen={addModalOpen}

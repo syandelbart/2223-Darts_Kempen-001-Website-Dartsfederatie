@@ -327,7 +327,6 @@ const Clubs: NextPage = () => {
       </Modal>
       <OverzichtTopBar
         titleName="Beheer Competities"
-        search={search}
         setSearch={setSearch}
         addButtonName="Competition toevoegen"
         addModalOpen={addModalOpen}

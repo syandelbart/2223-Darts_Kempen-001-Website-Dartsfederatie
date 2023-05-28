@@ -43,7 +43,6 @@ const Spelers: NextPage = () => {
       {/* Page title, add player button and search field */}
       <OverzichtTopBar
         titleName="Spelers"
-        search={search}
         setSearch={setSearch}
         addButtonName="Speler toevoegen"
         addModalOpen={addModalOpen}

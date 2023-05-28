@@ -35,7 +35,6 @@ const Bestuur: NextPage = () => {
       />
       <OverzichtTopBar
         titleName="Bestuur"
-        search={search}
         setSearch={setSearch}
         addButtonName="Bestuur toevoegen"
         addModalOpen={addModalOpen}
