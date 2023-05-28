@@ -12,7 +12,7 @@ import Head from "next/head";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
-  const [currentClub, setCurrentClub] = useState<ClubFront | null>(null);
+  const [currentClub, setCurrentClub] = useState<ClubFront>();
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);

@@ -9,7 +9,7 @@ import { ClubFront } from "../types/club";
 interface clubDataInterface {
   clubData: ClubFront;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  setCurrentClub: Dispatch<SetStateAction<ClubFront | null>>;
+  setCurrentClub: Dispatch<SetStateAction<ClubFront | undefined>>;
   setEditClubModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
