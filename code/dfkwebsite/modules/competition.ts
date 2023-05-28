@@ -28,5 +28,4 @@ export const competitionRegexPatterns: { [key: string]: fieldInformation } = {
   [CompetitionSubmission.TEAMS]: {
     regex: /^((id:(\d+)),)*(id:(\d+))$/,
   },
-  [CompetitionSubmission.AMOUNT_TEAMS]: { regex: /^\d+$/ },
 };
