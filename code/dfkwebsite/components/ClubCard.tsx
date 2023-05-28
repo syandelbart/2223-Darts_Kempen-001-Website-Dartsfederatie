@@ -10,14 +10,14 @@ interface clubDataInterface {
   clubData: ClubFront;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setCurrentClub: Dispatch<SetStateAction<ClubFront | null>>;
-  setAddClubModalOpen: Dispatch<SetStateAction<boolean>>;
+  setEditClubModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const ClubCard: FunctionComponent<clubDataInterface> = ({
   clubData,
   setIsOpen,
   setCurrentClub,
-  setAddClubModalOpen,
+  setEditClubModalOpen,
 }) => {
   return (
     <div>
@@ -35,7 +35,7 @@ const ClubCard: FunctionComponent<clubDataInterface> = ({
         <CardButton
           bg={"bg-edit-button"}
           onClick={() => {
-            setAddClubModalOpen(true);
+            setEditClubModalOpen(true);
             setCurrentClub(clubData);
           }}
         >

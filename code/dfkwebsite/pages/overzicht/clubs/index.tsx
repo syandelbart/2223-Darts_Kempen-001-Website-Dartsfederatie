@@ -37,6 +37,7 @@ const Clubs: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
         clubs={clubs}
         setClubs={setClubs}
+        currentClub={currentClub}
       />
       {/* Page title, add club button and search field */}
       <OverzichtTopBar
@@ -75,7 +76,7 @@ const Clubs: NextPage = () => {
               clubData={club}
               setIsOpen={setIsOpen}
               setCurrentClub={setCurrentClub}
-              setAddClubModalOpen={setAddModalOpen}
+              setEditClubModalOpen={setAddModalOpen}
             />
           );
         }}
