@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import ClubCard from "../../../components/ClubCard";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
-import AddClubModal from "../../../components/AddClubModal";
+import AddClubModal from "../../../components/ShowClubModal";
 import { ClubFront } from "../../../types/club";
 import * as dummyData from "../../../data";
 import AddTeamModal from "../../../components/AddTeamModal";
