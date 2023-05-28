@@ -13,6 +13,7 @@ import { PlayerFront } from "../types/player";
 import { SelectOption } from "../modules/general";
 import { getClubs } from "../modules/club";
 import { getSpelers } from "../modules/player";
+import SubmitButton from "./SubmitButton";
 
 type AddTeamModalData = {
   addModalOpen: boolean;
@@ -215,13 +216,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
             notRequired={true}
           />
         </div>
-        <button
-          type="submit"
-          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={handleSubmit}
-        >
-          Aanmaken
-        </button>
+        <SubmitButton handleSubmit={handleSubmit} />
       </div>
     </Modal>
   );

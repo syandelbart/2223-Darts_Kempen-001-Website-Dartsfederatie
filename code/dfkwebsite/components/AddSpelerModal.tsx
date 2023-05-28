@@ -7,6 +7,7 @@ import DefaultCheckbox from "./DefaultCheckbox";
 import InformationBox from "./InformationBox";
 import { Player, PlayerFront } from "../types/player";
 import * as dummyData from "../data";
+import SubmitButton from "./SubmitButton";
 
 type AddSpelerModalData = {
   addModalOpen: boolean;
@@ -104,13 +105,7 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
             onChange={handleChange}
           />
         </div>
-        <button
-          type="submit"
-          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={handleSubmit}
-        >
-          Aanmaken
-        </button>
+        <SubmitButton handleSubmit={handleSubmit} />
       </div>
     </Modal>
   );
