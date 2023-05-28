@@ -17,7 +17,7 @@ type AddClubModalData = {
   setAddModalOpen: Dispatch<React.SetStateAction<boolean>>;
   clubs: Club[];
   setClubs: Dispatch<React.SetStateAction<ClubFront[]>>;
-  currentClub?: ClubFront;
+  currentClub?: ClubFront | null;
 };
 
 const AddClubModal: FunctionComponent<AddClubModalData> = (
@@ -34,8 +34,6 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   });
 
   const handleChange = (event: any) => {
-    console.log(props.currentClub);
-    console.log(formValues.name);
     formHandler.handleChange(event, setFormValues, formValues);
   };
 
@@ -90,41 +88,6 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
   ]);
 
   useEffect(() => {
-    console.log(props.currentClub);
-    props.currentClub &&
-      setFormValues({
-        name: props.currentClub.name,
-        address_city: props.currentClub.address?.city || "",
-        address_street: props.currentClub.address?.street || "",
-        address_housenumber: props.currentClub.address?.houseNumber || "",
-        address_postal: props.currentClub.address?.postalCode || "",
-      });
-    setPlayers(
-      props.currentClub?.contactPerson
-        ? [
-            {
-              value: props.currentClub.contactPerson.playerID,
-              label:
-                props.currentClub.contactPerson.firstName +
-                " " +
-                props.currentClub.contactPerson.lastName,
-            },
-          ]
-        : []
-    );
-    setTeams(
-      props.currentClub?.teams
-        ? props.currentClub.teams.map((team) => {
-            return {
-              value: team.teamID,
-              label: team.name,
-            };
-          })
-        : []
-    );
-  }, [props.currentClub]);
-
-  useEffect(() => {
     getTeams()
       .then((teams) => setTeams(teams))
       .catch((err) => console.log(err));
@@ -133,6 +96,24 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       .then((players) => setPlayers(players))
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    setFormValues({
+      name: props.currentClub ? props.currentClub.name : "",
+      address_city: props.currentClub?.address
+        ? props.currentClub.address?.city
+        : "",
+      address_street: props.currentClub?.address
+        ? props.currentClub.address?.street
+        : "",
+      address_housenumber: props.currentClub?.address
+        ? props.currentClub.address?.houseNumber
+        : "",
+      address_postal: props.currentClub?.address
+        ? props.currentClub.address?.postalCode
+        : "",
+    });
+  }, [props.currentClub]);
 
   return (
     <Modal
@@ -203,7 +184,19 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           id="contactpersonid"
           label="Contactpersoon"
           options={players}
-          value={players}
+          value={
+            props.currentClub?.contactPerson
+              ? [
+                  {
+                    value: props.currentClub.contactPerson.playerID,
+                    label:
+                      props.currentClub.contactPerson.firstName +
+                      " " +
+                      props.currentClub.contactPerson.lastName,
+                  },
+                ]
+              : []
+          }
           search={true}
           onSelectChange={handleSelectChange}
         />
@@ -217,7 +210,16 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           multiple={true}
           search={true}
           notRequired={true}
-          value={teams}
+          value={
+            props.currentClub?.teams
+              ? props.currentClub.teams.map((team) => {
+                  return {
+                    value: team.teamID,
+                    label: team.name,
+                  };
+                })
+              : []
+          }
         />
 
         <SubmitButton handleSubmit={handleSubmit} current={props.currentClub} />

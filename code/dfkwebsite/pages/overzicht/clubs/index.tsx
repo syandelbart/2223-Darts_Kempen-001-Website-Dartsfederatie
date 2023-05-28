@@ -42,11 +42,11 @@ const Clubs: NextPage = () => {
       {/* Page title, add club button and search field */}
       <OverzichtTopBar
         titleName="Clubs"
-        search={search}
         setSearch={setSearch}
         addButtonName="Club toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
+        setResetCurrent={setCurrentClub}
       />
 
       {/* Modal for club details when you press teams button */}
