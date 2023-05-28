@@ -14,7 +14,7 @@ import DefaultSelect from "../../../components/DefaultSelect";
 import { getTeams } from "../../../modules/team";
 import * as dummyData from "../../../data";
 
-interface TableData {
+export interface TableData {
   team1: string;
   team2: string;
 }
@@ -24,8 +24,8 @@ const GeneratePlaydays: NextPage = () => {
   const { asPath } = router;
   const params = getParams(asPath);
 
-  const startDate = new Date(params.startDate);
-  const endDate = new Date(params.endDate);
+  // const startDate = new Date(params.startDate);
+  // const endDate = new Date(params.endDate);
 
   const [competitionInfo, setCompetitionInfo] = useState<
     Competition | undefined
@@ -35,9 +35,18 @@ const GeneratePlaydays: NextPage = () => {
 
   const [tableData, setTableData] = useState<TableData[][]>([]);
 
-  const handleAmountTeamsChange = (e?: ChangeEvent<HTMLInputElement>): void => {
-    const teamCount = amountTeams;
-    const maxRows = countFridays(startDate, endDate);
+  const handleAmountTeamsChange = (
+    competitionInfo: Competition,
+    teamAmount?: number
+  ): void => {
+    const teamCount = teamAmount || amountTeams;
+
+    if (!competitionInfo) return;
+
+    const maxRows = countFridays(
+      new Date(competitionInfo?.startDate),
+      new Date(competitionInfo?.endDate)
+    );
 
     const newData: TableData[][] = [];
     for (let i = 0; i < maxRows; i++) {
@@ -74,25 +83,44 @@ const GeneratePlaydays: NextPage = () => {
 
   const [competitionTeams, setCompetitionTeams] = useState<SelectOption[]>([]);
 
+  const tableFilled = (): boolean => {
+    if (tableData.some((row) => row.some((cell) => !cell.team1 || !cell.team2)))
+      return false;
+
+    return true;
+  };
+
+  const handleSubmit = async (e: any) => {
+    // Check the table data for empty values and return if there is any empty value by using the most efficient method
+    if (!tableFilled()) return;
+
+    let data = new FormData();
+    data.append("playDaysTable", JSON.stringify(tableData));
+    await fetch(`/api/competition/${params.competitionID}`, {
+      method: "PUT",
+      body: JSON.stringify({ playDaysTable: tableData }),
+      headers: { "Content-Type": "application/json" },
+    });
+  };
+
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_NO_API) {
-      setAmountTeams(Number(params.amountTeams));
-      setCompetitionInfo(competitions[0]);
-    } else {
+    if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/competition/${params.competitionID}`)
         .then((competition) => competition.json())
-        .then((parsedCompetition) => {
+        .then((parsedCompetition: Competition) => {
           setCompetitionInfo(parsedCompetition);
-          setAmountTeams(parsedCompetition.teams.length);
-        });
+          if (parsedCompetition.playDaysTable)
+            setTableData(parsedCompetition.playDaysTable);
+          handleAmountTeamsChange(parsedCompetition);
+          return parsedCompetition;
+        })
+        .catch((err) => console.log(err));
     }
 
     getTeams()
       .then((teams) => setTeams(teams))
       .catch((err) => console.log(err));
-
-    handleAmountTeamsChange();
-  }, [amountTeams]);
+  }, []);
 
   return (
     <div>
@@ -106,6 +134,13 @@ const GeneratePlaydays: NextPage = () => {
         search
         onSelectChange={(selectedOptions, action) => {
           setCompetitionTeams(selectedOptions);
+          setAmountTeams(selectedOptions.length);
+
+          handleAmountTeamsChange(
+            competitionInfo as Competition,
+            selectedOptions.length
+          );
+
           console.log(selectedOptions);
           console.log(teams);
         }}
@@ -129,8 +164,13 @@ const GeneratePlaydays: NextPage = () => {
               <p>Speeldag {rowIndex + 1}</p>
               <p>
                 {new Date(
-                  getNextFriday(startDate).setDate(
-                    getNextFriday(startDate).getDate() + 7 * rowIndex
+                  getNextFriday(
+                    new Date(competitionInfo?.startDate || 0)
+                  ).setDate(
+                    getNextFriday(
+                      new Date(competitionInfo?.endDate || 0)
+                    ).getDate() +
+                      7 * rowIndex
                   )
                 ).toLocaleDateString("nl-BE", {
                   month: "long",
@@ -184,6 +224,20 @@ const GeneratePlaydays: NextPage = () => {
             ))}
           </div>
         ))}
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
+          onClick={handleSubmit}
+          disabled={!tableFilled()}
+        >
+          Genereer speeldagen
+        </button>
+        {tableFilled() ? null : (
+          <span>De tabel is nog niet volledig ingevuld</span>
+        )}
       </div>
     </div>
   );
