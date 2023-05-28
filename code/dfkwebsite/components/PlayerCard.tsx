@@ -18,7 +18,7 @@ const PlayerCard: FunctionComponent<playerDataInterface> = ({
 }) => {
   return (
     <div>
-      <CardTitle>{playerData.firstName + " " + playerData.lastName}</CardTitle>
+      <CardTitle title={playerData.firstName + " " + playerData.lastName} />
       <CardButtonRow>
         <CardButton
           onClick={() => {

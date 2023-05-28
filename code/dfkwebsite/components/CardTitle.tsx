@@ -2,16 +2,16 @@ import { FunctionComponent } from "react";
 import CardDeleteIcon from "./CardDeleteIcon";
 
 type cardTitleData = {
-  children: any;
+  title: string;
   hideDeleteIcon?: boolean;
 };
 
-const CardTitle: FunctionComponent<cardTitleData> = ({ children, hideDeleteIcon }) => {
+const CardTitle: FunctionComponent<cardTitleData> = ({ title, hideDeleteIcon }) => {
   return (
     <div className="flex justify-between items-center">
-      <h2 className="text-2xl font-bold">{children}</h2>
+      <h2 className="text-2xl font-bold">{title}</h2>
       {
-        !hideDeleteIcon ? <CardDeleteIcon /> : null
+        !hideDeleteIcon ? <CardDeleteIcon target={title} /> : null
       }
     </div>
   );
