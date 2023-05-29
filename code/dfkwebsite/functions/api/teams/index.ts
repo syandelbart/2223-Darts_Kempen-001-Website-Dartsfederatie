@@ -6,7 +6,7 @@ import {
 } from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
 import { TeamSubmission, teamRegexPatterns } from "../../../modules/team";
-import { Team } from "../../../types/team";
+import { Team, TeamFront } from "../../../types/team";
 import { CLASSIFICATION } from "../../../types/competition";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
@@ -23,7 +23,14 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     });
 
     let teamsMapped = teams.keys.map(async (teams) => {
-      return JSON.parse(await env.TEAMS.get(teams.name));
+      let team: Team = JSON.parse(await env.TEAMS.get(teams.name));
+      let teamFront: TeamFront = {
+        ...team,
+        ...(team.captainID && {
+          captain: JSON.parse(await env.PLAYERS.get(team.captainID)),
+        }),
+      };
+      return teamFront;
     });
 
     return new Response(JSON.stringify(await Promise.all(teamsMapped)), {
