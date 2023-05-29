@@ -47,7 +47,7 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
       process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
     );
 
-    if (!player || !handleSubmitSuccess) return;
+    if (!player) return;
 
     setInformationBoxMessage(
       "Speler succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
