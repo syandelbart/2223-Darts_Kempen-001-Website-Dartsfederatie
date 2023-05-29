@@ -60,14 +60,14 @@ export const handleSubmit = async (
   setSubmitSuccess?: Dispatch<SetStateAction<boolean | null>>,
   dummy?: any,
   noAPI?: boolean,
-  isEditRequest?: boolean,
+  isEditRequest?: boolean
 ) => {
   if (informationOutputState) informationOutputState("");
   if (setSubmitSuccess) setSubmitSuccess(null);
   try {
     // Do something with formValues, such as send it to a server
     if (!value) throw new Error("No value was provided");
-    if (!apiLink || apiLink[0] != "/")
+    if (!apiLink || apiLink.startsWith("/"))
       throw new Error("Incorrect api path was provided");
 
     const data = new FormData();
