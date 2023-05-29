@@ -7,7 +7,6 @@ import {
 import { checkFields } from "../../../modules/fieldsCheck";
 import { TeamSubmission, teamRegexPatterns } from "../../../modules/team";
 import { Team, TeamFront } from "../../../types/team";
-import { CLASSIFICATION } from "../../../types/competition";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -52,8 +51,6 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     let formData = await request.formData();
-
-    checkFields(formData, teamRegexPatterns);
 
     const name = formData.get(TeamSubmission.NAME);
 
