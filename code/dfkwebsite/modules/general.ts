@@ -1,6 +1,6 @@
 import * as dummyData from "../data";
 import { Club } from "../types/club";
-import { CLASSIFICATION } from "../types/competition";
+import { CLASSIFICATION, COMPETITION_TYPE } from "../types/competition";
 import { Player } from "../types/player";
 import { fieldInformation } from "./fieldsCheck";
 import lodash from "lodash";
@@ -105,14 +105,16 @@ export const countFridays = (startDate: Date, endDate: Date) => {
   return amountFridays;
 };
 
-export const changeData = (
+export const changeData = async (
   fieldsInformation: { [key: string]: fieldInformation },
   currentData: Object,
   newData: FormData
 ) => {
   const data = JSON.parse(JSON.stringify(currentData));
 
-  Object.keys(fieldsInformation).forEach((field) => {
+  // Can I use a foreach here?
+
+  for (const field of Object.keys(fieldsInformation)) {
     if (!newData.has(field)) return;
     let newValue = newData.get(field);
 
@@ -144,14 +146,79 @@ export const changeData = (
           ? fieldInformation.castFunction(newValue)
           : newValue
       );
+
+      //field = clubID
+
+      // mutate other side
     } catch (e: any) {
       throw new Error(
         `The value ${newValue} could not be casted using the function ${fieldInformation.castFunction}`
       );
     }
-  });
+  }
+
+  for (const field of Object.keys(fieldsInformation)) {
+    if (mutateOtherSide[field]) {
+      const mutateField = mutateOtherSide[field];
+
+      let newValue = data[mutateField.fieldToGet];
+      let currentValue = await fetch(
+        `${mutateField.mutateAPI}/${data[field]}`,
+        { method: "GET" }
+      )
+        .then((res) => res.json())
+        .catch((e) => {
+          throw new Error(e);
+        });
+      if (mutateField.method == METHODS.APPEND) {
+        (currentValue[mutateField.mutateField] as Array<any>).push(newValue);
+
+        // fetch first
+      } else if (mutateField.method == METHODS.REMOVE) {
+        currentValue = (
+          currentValue[mutateField.mutateField] as Array<any>
+        ).filter((value) => value != newValue);
+        //fetch first
+      } else if (mutateField.method == METHODS.REPLACE) {
+        currentValue[mutateField.mutateField] = newValue;
+      }
+
+      let dataToSend = new FormData();
+      dataToSend.append(
+        mutateField.mutateField,
+        currentValue[mutateField.mutateField]
+      );
+
+      await fetch(`${mutateField.mutateAPI}/${data[field]}`, {
+        method: "PUT",
+        body: JSON.stringify(dataToSend),
+      }).catch((e) => console.log(e));
+    }
+  }
 
   return data;
+};
+
+type mutateField = {
+  mutateAPI: string;
+  mutateField: string;
+  fieldToGet: string;
+  method: METHODS;
+};
+
+enum METHODS {
+  APPEND = "append",
+  REMOVE = "remove",
+  REPLACE = "replace",
+}
+
+export const mutateOtherSide: { [key: string]: mutateField } = {
+  clubID: {
+    mutateAPI: "/api/clubs",
+    fieldToGet: "teamID",
+    mutateField: "teamIDs",
+    method: METHODS.APPEND,
+  },
 };
 
 export type SelectOption = {
@@ -326,4 +393,12 @@ export const populateKV = async () => {
       // teamIDs.push(data.teamID);
     }
   }
+
+  // populate /api/competition using CompetitionSubmission as reference
+  let competition1 = new FormData();
+  competition1.append("name", "Competition 1");
+  competition1.append("type", COMPETITION_TYPE.COMPETITION);
+  competition1.append("classification", CLASSIFICATION.PROVINCIAAL);
+  competition1.append("startdate", "2021-01-01");
+  competition1.append("enddate", "2021-12-31");
 };
