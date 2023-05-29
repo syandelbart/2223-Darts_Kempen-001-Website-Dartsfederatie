@@ -159,6 +159,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           })}
           onSelectChange={handleSelectChange}
           search={true}
+          notRequired={true}
         />
 
         <DefaultSelect
