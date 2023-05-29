@@ -148,21 +148,6 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         />
 
         <DefaultSelect
-          name="captainid"
-          id="captainid"
-          label="Kapitein"
-          options={players.map((player) => {
-            return {
-              value: player.value,
-              label: player.label,
-            };
-          })}
-          onSelectChange={handleSelectChange}
-          search={true}
-          notRequired={true}
-        />
-
-        <DefaultSelect
           name="classification"
           id="classification"
           label="Gewest"
@@ -177,6 +162,22 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           onSelectChange={handleSelectChange}
           search={true}
         />
+
+        <DefaultSelect
+          name="captainid"
+          id="captainid"
+          label="Kapitein"
+          options={players.map((player) => {
+            return {
+              value: player.value,
+              label: player.label,
+            };
+          })}
+          onSelectChange={handleSelectChange}
+          search={true}
+          notRequired={true}
+        />
+        
         <div className="flex gap-5">
           <DefaultSelect
             name="clubid"
