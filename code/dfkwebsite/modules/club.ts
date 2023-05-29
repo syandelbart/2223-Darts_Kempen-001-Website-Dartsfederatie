@@ -29,9 +29,8 @@ export const clubRegexPatterns: { [key: string]: fieldInformation } = {
   },
   [ClubSubmission.CONTACTPERSONID]: { regex: /^[0-9]+$/, required: true },
   [ClubSubmission.TEAMIDS]: {
-    regex: /^[0-9]+$/,
+    regex: /^\[(['"]id:\d+['"],)*(['"]id:\d+['"])\]$/,
     required: false,
-    castFunction: JSON.parse,
   },
 };
 
