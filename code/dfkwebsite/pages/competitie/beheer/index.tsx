@@ -10,13 +10,14 @@ import {
 } from "../../../types/competition";
 import * as formHandler from "../../../modules/formHandler";
 import { useRouter } from "next/router";
-import { countFridays } from "../../../modules/general";
+import { SelectOption, countFridays } from "../../../modules/general";
 import { competitionRegexPatterns } from "../../../modules/competition";
 import * as dummyData from "../../../data";
 import DataTable from "react-data-table-component";
 import { Icon } from "@iconify/react";
 import InformationBox from "../../../components/InformationBox";
 import DefaultSelect from "../../../components/DefaultSelect";
+import AddButton from "../../../components/AddButton";
 
 interface TableData {
   team1: string;
@@ -42,6 +43,23 @@ const Clubs: NextPage = () => {
   const [competitions, setCompetitions] = useState<Competition[]>(
     dummyData.competitions
   );
+
+  const [activeCompetitions, setActiveCompetitions] = useState<SelectOption[]>(
+    []
+  );
+
+  const handleActiveCompetitionsSubmit = async () => {
+    const activeCompetitionsIDs = activeCompetitions.map(
+      (competition) => competition.value
+    );
+
+    let data = new FormData();
+    data.append("competitionsID", JSON.stringify(activeCompetitionsIDs));
+    await fetch("/api/competition/current", {
+      method: "PUT",
+      body: data,
+    });
+  };
 
   const handleAmountTeamsChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
@@ -231,6 +249,30 @@ const Clubs: NextPage = () => {
         .then((competitions) => competitions.json())
         .then((parsedCompetitions) => setCompetitions(parsedCompetitions))
         .catch((err) => console.log(err));
+
+      fetch(`/api/competition/current`)
+        .then((currentCompetitions) => currentCompetitions.json())
+        .then((parsedCurrentCompetitions: Competition[]) => {
+          setActiveCompetitions(
+            parsedCurrentCompetitions.map((competition) => {
+              return {
+                label: `${competition.type} ${
+                  competition.classification
+                } ${new Date(competition.startDate).toLocaleDateString(
+                  "nl-BE",
+                  {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  }
+                )}`,
+                value: competition.competitionID,
+              };
+            })
+          );
+        })
+
+        .catch((err) => console.log(err));
     }
   }, []);
 
@@ -343,6 +385,40 @@ const Clubs: NextPage = () => {
         data={competitions}
         pagination
       />
+
+      <div className="flex flex-row gap-3">
+        <DefaultSelect
+          name="activeCompetitions"
+          id="activeCompetitions"
+          label="Actieve competities"
+          multiple
+          search
+          value={activeCompetitions}
+          onSelectChange={(selectedOptions, action) => {
+            setActiveCompetitions(selectedOptions);
+          }}
+          options={competitions.map((competition) => {
+            return {
+              value: competition.competitionID,
+              label: `${competition.type} ${
+                competition.classification
+              } ${new Date(competition.startDate).toLocaleDateString("nl-BE", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}`,
+            };
+          })}
+        />
+
+        <button
+          type="submit"
+          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
+          onClick={handleActiveCompetitionsSubmit}
+        >
+          Aanmaken
+        </button>
+      </div>
     </div>
   );
 };
