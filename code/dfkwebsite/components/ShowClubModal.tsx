@@ -41,7 +41,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     value: { value: string; label: string }[],
     action: { action: string; name: string }
   ) => {
-    console.log(props.currentClub)
+    console.log(props.currentClub);
     formHandler.handleChangeSelect(value, action, setFormValues, formValues);
   };
 
@@ -50,15 +50,17 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       event,
       formValues,
       clubRegexPatterns,
-      props.currentClub ? `/api/club/${props.currentClub.clubID}` : "/api/clubs",
+      props.currentClub
+        ? `/api/club/${props.currentClub.clubID}`
+        : "/api/clubs",
       setInformationBoxMessage,
       setHandleSubmitSuccess,
       dummyData.club[0],
       process.env.NEXT_PUBLIC_NO_API == "1" ? true : false,
-      props.currentClub ? true : false,
+      props.currentClub ? true : false
     );
 
-    if (!club || !handleSubmitSuccess) return;
+    if (!club) return;
 
     setInformationBoxMessage(
       "Club succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
