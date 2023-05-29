@@ -6,8 +6,7 @@ import {
 } from "../../../modules/general";
 import { checkFields } from "../../../modules/fieldsCheck";
 import { TeamSubmission, teamRegexPatterns } from "../../../modules/team";
-import { Team } from "../../../types/team";
-import { CLASSIFICATION } from "../../../types/competition";
+import { Team, TeamFront } from "../../../types/team";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -23,7 +22,14 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     });
 
     let teamsMapped = teams.keys.map(async (teams) => {
-      return JSON.parse(await env.TEAMS.get(teams.name));
+      let team: Team = JSON.parse(await env.TEAMS.get(teams.name));
+      let teamFront: TeamFront = {
+        ...team,
+        ...(team.captainID && {
+          captain: JSON.parse(await env.PLAYERS.get(team.captainID)),
+        }),
+      };
+      return teamFront;
     });
 
     return new Response(JSON.stringify(await Promise.all(teamsMapped)), {
@@ -46,37 +52,23 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
-    checkFields(formData, teamRegexPatterns);
-
-    console.log("checkfields complete");
-    console.log(formData.get(TeamSubmission.CAPTAINID));
-    console.log(formData.get(TeamSubmission.CLUBID));
-    console.log(formData.get(TeamSubmission.PLAYERSID));
-    console.log(JSON.parse(formData.get(TeamSubmission.PLAYERSID)));
-    console.log("Done")
-
     const name = formData.get(TeamSubmission.NAME);
 
     const teamIdKey = `id:${Date.now()}`;
 
-    let data: Team = {
-      teamID: teamIdKey,
-      name: name,
-      captainID: formData.get(TeamSubmission.CAPTAINID),
-      classification: formData.get(
-        TeamSubmission.CLASSIFICATION
-      ) as CLASSIFICATION,
-      clubID: formData.get(TeamSubmission.CLUBID),
-      playersID: JSON.parse(formData.get(TeamSubmission.PLAYERSID)), // ["id:123", "id:456"]
-    };
+    let data: Team = changeData(
+      teamRegexPatterns,
+      { teamID: teamIdKey },
+      formData
+    );
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
     await searchKeyChecker(env.TEAMS, teamIdKey, `name:${name}`);
 
-    return new Response(
-      JSON.stringify({ message: "Team added successfully." }),
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
@@ -113,17 +105,14 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
       // Update the team data in the KV store
       await env.TEAMS.put(team.name, JSON.stringify(data));
+
+      return data;
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "Teams updated successfully.",
-      status: 200,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {

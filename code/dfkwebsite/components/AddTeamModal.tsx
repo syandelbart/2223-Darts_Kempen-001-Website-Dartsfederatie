@@ -12,7 +12,8 @@ import { getTeams, teamRegexPatterns } from "../modules/team";
 import { PlayerFront } from "../types/player";
 import { SelectOption } from "../modules/general";
 import { getClubs } from "../modules/club";
-import { getSpelers } from "../modules/player";
+import { getPlayers } from "../modules/player";
+import SubmitButton from "./SubmitButton";
 
 type AddTeamModalData = {
   addModalOpen: boolean;
@@ -29,10 +30,10 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
 ) => {
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({
     name: "",
-    captainid: "",
+    captainID: "",
     classification: "",
-    clubid: "",
-    playersid: "",
+    clubID: "",
+    playerIDs: "",
   });
 
   const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
@@ -63,7 +64,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
     );
 
-    if (!team || !handleSubmitSuccess) return;
+    if (!team) return;
 
     setInformationBoxMessage(
       "Team succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
@@ -78,6 +79,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
 
     setTimeout(() => {
       props.setAddModalOpen(false);
+      setInformationBoxMessage("")
     }, 5000);
   };
 
@@ -104,7 +106,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
       .then((teams) => setTeams(teams))
       .catch((err) => console.log(err));
 
-    getSpelers()
+    getPlayers()
       .then((players) => setPlayers(players))
       .catch((err) => console.log(err));
   }, []);
@@ -143,21 +145,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           name="name"
           label="Teamnaam"
           placeholder="Teamnaam"
+          value={formValues.name}
           onChange={handleChange}
-        />
-
-        <DefaultSelect
-          name="captainid"
-          id="captainid"
-          label="Kapitein"
-          options={players.map((player) => {
-            return {
-              value: player.value,
-              label: player.label,
-            };
-          })}
-          onSelectChange={handleSelectChange}
-          search={true}
         />
 
         <DefaultSelect
@@ -175,10 +164,26 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           onSelectChange={handleSelectChange}
           search={true}
         />
+
+        <DefaultSelect
+          name="captainID"
+          id="captainID"
+          label="Kapitein"
+          options={players.map((player) => {
+            return {
+              value: player.value,
+              label: player.label,
+            };
+          })}
+          onSelectChange={handleSelectChange}
+          search={true}
+          notRequired={true}
+        />
+        
         <div className="flex gap-5">
           <DefaultSelect
-            name="clubid"
-            id="clubid"
+            name="clubID"
+            id="clubID"
             label="Club"
             options={
               props.currentClub
@@ -196,8 +201,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           />
 
           <DefaultSelect
-            name="playersid"
-            id="playersid"
+            name="playerIDs"
+            id="playerIDs"
             label="Spelers"
             options={
               props.currentPlayer
@@ -215,13 +220,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
             notRequired={true}
           />
         </div>
-        <button
-          type="submit"
-          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={handleSubmit}
-        >
-          Aanmaken
-        </button>
+        <SubmitButton handleSubmit={handleSubmit} />
       </div>
     </Modal>
   );

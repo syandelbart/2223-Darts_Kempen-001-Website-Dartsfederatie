@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { NextPage } from "next";
 import ClubCard from "../../../components/ClubCard";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
-import AddClubModal from "../../../components/AddClubModal";
+import AddClubModal from "../../../components/ShowClubModal";
 import { ClubFront } from "../../../types/club";
 import * as dummyData from "../../../data";
 import AddTeamModal from "../../../components/AddTeamModal";
@@ -12,7 +12,7 @@ import Head from "next/head";
 
 const Clubs: NextPage = () => {
   const [clubs, setClubs] = useState<Array<ClubFront>>(dummyData.club);
-  const [currentClub, setCurrentClub] = useState<ClubFront | null>(null);
+  const [currentClub, setCurrentClub] = useState<ClubFront>();
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
@@ -37,15 +37,16 @@ const Clubs: NextPage = () => {
         setAddModalOpen={setAddModalOpen}
         clubs={clubs}
         setClubs={setClubs}
+        currentClub={currentClub}
       />
       {/* Page title, add club button and search field */}
       <OverzichtTopBar
         titleName="Clubs"
-        search={search}
         setSearch={setSearch}
         addButtonName="Club toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
+        setResetCurrent={setCurrentClub}
       />
 
       {/* Modal for club details when you press teams button */}
@@ -75,7 +76,7 @@ const Clubs: NextPage = () => {
               clubData={club}
               setIsOpen={setIsOpen}
               setCurrentClub={setCurrentClub}
-              setAddClubModalOpen={setAddModalOpen}
+              setEditClubModalOpen={setAddModalOpen}
             />
           );
         }}

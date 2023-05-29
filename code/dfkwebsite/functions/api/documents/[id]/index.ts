@@ -55,10 +55,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     // Update the club data in the KV store
     await env.DOCUMENTS.put(documentsId, JSON.stringify(data));
 
-    const responseBody = {
-      message: "Document updated successfully.",
-      status: 200,
-    };
+    const responseBody = data;
 
     return new Response(JSON.stringify(responseBody), {
       headers: { "Content-Type": "application/json" },

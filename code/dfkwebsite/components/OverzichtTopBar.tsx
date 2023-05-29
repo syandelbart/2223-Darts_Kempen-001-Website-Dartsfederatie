@@ -4,20 +4,20 @@ import SearchBar from "./SearchBar";
 
 type topBarData = {
   titleName: string;
-  search?: string;
   setSearch?: Function;
   addButtonName?: string;
   addModalOpen?: boolean;
   setAddModalOpen?: any;
+  setResetCurrent?:  any;
 };
 
 const OverzichtTopBar: FunctionComponent<topBarData> = ({
   titleName,
-  search,
   setSearch,
   addButtonName,
   addModalOpen,
   setAddModalOpen,
+  setResetCurrent,
 }: any) => {
   return (
     <div className="flex justify-between items-center mb-10">
@@ -28,6 +28,7 @@ const OverzichtTopBar: FunctionComponent<topBarData> = ({
             name={addButtonName}
             addModalOpen={addModalOpen}
             setAddModalOpen={setAddModalOpen}
+            setResetCurrent={setResetCurrent}
           />
         ) : (
           ""

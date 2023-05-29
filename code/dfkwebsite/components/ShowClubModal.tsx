@@ -9,13 +9,15 @@ import * as dummyData from "../data";
 import { Club, ClubFront } from "../types/club";
 import { SelectOption } from "../modules/general";
 import { getTeams } from "../modules/team";
-import { getSpelers } from "../modules/player";
+import { getPlayers } from "../modules/player";
+import SubmitButton from "./SubmitButton";
 
 type AddClubModalData = {
   addModalOpen: boolean;
   setAddModalOpen: Dispatch<React.SetStateAction<boolean>>;
   clubs: Club[];
   setClubs: Dispatch<React.SetStateAction<ClubFront[]>>;
+  currentClub?: ClubFront | null;
 };
 
 const AddClubModal: FunctionComponent<AddClubModalData> = (
@@ -27,8 +29,8 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     address_street: "",
     address_housenumber: "",
     address_postal: "",
-    contactpersonid: "",
-    teamids: "",
+    contactPersonID: "",
+    teamIDs: "",
   });
 
   const handleChange = (event: any) => {
@@ -47,14 +49,17 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       event,
       formValues,
       clubRegexPatterns,
-      "/api/clubs",
+      props.currentClub
+        ? `/api/club/${props.currentClub.clubID}`
+        : "/api/clubs",
       setInformationBoxMessage,
       setHandleSubmitSuccess,
       dummyData.club[0],
-      process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
+      process.env.NEXT_PUBLIC_NO_API == "1" ? true : false,
+      props.currentClub ? true : false
     );
 
-    if (!club || !handleSubmitSuccess) return;
+    if (!club) return;
 
     setInformationBoxMessage(
       "Club succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
@@ -66,6 +71,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     });
     setTimeout(() => {
       props.setAddModalOpen(false);
+      setInformationBoxMessage("")
     }, 5000);
   };
 
@@ -90,14 +96,32 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       .then((teams) => setTeams(teams))
       .catch((err) => console.log(err));
 
-    getSpelers()
+    getPlayers()
       .then((players) => setPlayers(players))
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    setFormValues({
+      name: props.currentClub ? props.currentClub.name : "",
+      address_city: props.currentClub?.address
+        ? props.currentClub.address?.city
+        : "",
+      address_street: props.currentClub?.address
+        ? props.currentClub.address?.street
+        : "",
+      address_housenumber: props.currentClub?.address
+        ? props.currentClub.address?.housenumber
+        : "",
+      address_postal: props.currentClub?.address
+        ? props.currentClub.address?.postal
+        : "",
+    });
+  }, [props.currentClub]);
+
   return (
     <Modal
-      title="Club toevoegen"
+      title={props.currentClub ? "Club bewerken" : "Club toevoegen"}
       modalOpen={props.addModalOpen}
       setModalOpen={props.setAddModalOpen}
     >
@@ -160,32 +184,50 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
         </div>
 
         <DefaultSelect
-          name="contactpersonid"
-          id="contactpersonid"
+          name="contactPersonID"
+          id="contactPersonID"
           label="Contactpersoon"
           options={players}
+          defaultValue={
+            props.currentClub?.contactPerson
+              ? [
+                  {
+                    value: props.currentClub.contactPerson.playerID,
+                    label:
+                      props.currentClub.contactPerson.firstName +
+                      " " +
+                      props.currentClub.contactPerson.lastName,
+                  },
+                ]
+              : []
+          }
           search={true}
           onSelectChange={handleSelectChange}
+          notRequired={true}
         />
 
         <DefaultSelect
-          name="teamids"
-          id="teamids"
+          name="teamIDs"
+          id="teamIDs"
           label="Teams toevoegen"
           options={teams}
           onSelectChange={handleSelectChange}
           multiple={true}
           search={true}
           notRequired={true}
+          defaultValue={
+            props.currentClub?.teams
+              ? props.currentClub.teams.map((team) => {
+                  return {
+                    value: team.teamID,
+                    label: team.name,
+                  };
+                })
+              : []
+          }
         />
 
-        <button
-          type="submit"
-          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={handleSubmit}
-        >
-          Aanmaken
-        </button>
+        <SubmitButton handleSubmit={handleSubmit} current={props.currentClub} />
       </div>
     </Modal>
   );

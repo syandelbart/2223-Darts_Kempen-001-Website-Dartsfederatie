@@ -50,10 +50,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     // Update the post data in the KV store
     await env.POSTS.put(postId, JSON.stringify(data));
 
-    const responseBody = {
-      message: "Post updated successfully.",
-      status: 200,
-    };
+    const responseBody = data;
 
     return new Response(JSON.stringify(responseBody), {
       headers: { "Content-Type": "application/json" },

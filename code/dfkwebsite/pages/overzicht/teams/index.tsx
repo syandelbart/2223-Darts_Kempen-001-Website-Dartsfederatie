@@ -45,7 +45,6 @@ const Teams: NextPage = () => {
       {/* Page title, add team button and search field */}
       <OverzichtTopBar
         titleName="Teams"
-        search={search}
         setSearch={setSearch}
         addButtonName="Team toevoegen"
         addModalOpen={addModalOpen}
@@ -62,19 +61,6 @@ const Teams: NextPage = () => {
         {(team) => {
           return (
             <div>
-              <input
-                className="bg-inherit"
-                type="text"
-                defaultValue={
-                  team.captain?.firstName + " " + team.captain?.lastName
-                }
-              ></input>
-              <input
-                className="bg-inherit"
-                type="text"
-                defaultValue={team.captain?.phone}
-              ></input>
-
               <TeamSpelers
                 team={team}
                 handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}

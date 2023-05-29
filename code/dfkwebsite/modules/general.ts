@@ -1,5 +1,6 @@
 import * as dummyData from "../data";
 import { fieldInformation } from "./fieldsCheck";
+import lodash from "lodash";
 
 const availableParams = [
   // General
@@ -133,9 +134,9 @@ export const changeData = (
 
     // If value has a casting function, execute it first, otherwise add the raw (string) value
     try {
-      data[field] = fieldInformation.castFunction
+      lodash.set(data, field.replace(/_/g, "."), fieldInformation.castFunction
         ? fieldInformation.castFunction(newValue)
-        : newValue;
+        : newValue)
     } catch (e: any) {
       throw new Error(
         `The value ${newValue} could not be casted using the function ${fieldInformation.castFunction}`

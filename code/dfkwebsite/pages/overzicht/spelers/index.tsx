@@ -22,7 +22,8 @@ const Spelers: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/players`)
         .then((players) => players.json())
-        .then((parsedPlayers) => setPlayers(parsedPlayers)).catch((err) => console.log(err));
+        .then((parsedPlayers) => setPlayers(parsedPlayers))
+        .catch((err) => console.log(err));
     }
   }, []);
 
@@ -43,7 +44,6 @@ const Spelers: NextPage = () => {
       {/* Page title, add player button and search field */}
       <OverzichtTopBar
         titleName="Spelers"
-        search={search}
         setSearch={setSearch}
         addButtonName="Speler toevoegen"
         addModalOpen={addModalOpen}
@@ -59,19 +59,7 @@ const Spelers: NextPage = () => {
         addTeams={true}
         addTeamModalOpen={addTeamModalOpen}
         setAddTeamModalOpen={setAddTeamModalOpen}
-      >
-        {(player) => {
-          return (
-            <div>
-              <input
-                className="bg-inherit"
-                type="text"
-                defaultValue={player.phone}
-              ></input>
-            </div>
-          );
-        }}
-      </CurrentModal>
+      />
 
       {/* This is for inside the current modal when adding a team to the player */}
       <AddTeamModal

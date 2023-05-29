@@ -59,10 +59,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     await env.MATCHES.put(matchIdKey, JSON.stringify(data));
     await searchKeyChecker(env.MATCHES, matchIdKey, `name:${name}`);
 
-    return new Response(
-      JSON.stringify({ message: "Match added successfully." }),
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
@@ -102,14 +102,9 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "Matches updated successfully.",
-      status: 200,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {

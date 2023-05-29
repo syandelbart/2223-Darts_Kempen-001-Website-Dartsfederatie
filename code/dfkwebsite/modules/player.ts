@@ -15,7 +15,7 @@ export const playerRegexPatterns: { [key: string]: fieldInformation } = {
   [PlayerSubmission.ALLOWED]: { regex: /^[0-1]+$/, required: false },
 };
 
-export const getSpelers = async () => {
+export const getPlayers = async () => {
   return await getAllSelectOptionsByName(
     "players",
     ["firstName", "lastName"],

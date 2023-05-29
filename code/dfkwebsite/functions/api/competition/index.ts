@@ -117,15 +117,14 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
       // Update the competition data in the KV store
       await env.COMPETITION.put(competition.name, JSON.stringify(data));
+
+      return data;
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "Competitions updated successfully.",
-      status: 200,
-    };
+    const responseBody = result;
 
     return new Response(JSON.stringify(responseBody), {
       headers: { "Content-Type": "application/json" },

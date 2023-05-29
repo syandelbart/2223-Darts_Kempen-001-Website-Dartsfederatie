@@ -72,10 +72,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     await env.PLAYERS.put(playerIdKey, JSON.stringify(data));
     await searchKeyChecker(env.PLAYERS, playerIdKey, indexKey);
 
-    return new Response(
-      JSON.stringify({ message: "Player added successfully." }),
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
@@ -112,17 +112,14 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
       // Update the player data in the KV store
       await env.PLAYERS.put(player.name, JSON.stringify(data));
+
+      return data;
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "Players updated successfully.",
-      status: 200,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {

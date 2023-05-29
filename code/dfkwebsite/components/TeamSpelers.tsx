@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { TeamFront } from "../types/team";
 import { Player } from "../types/player";
 
@@ -14,14 +14,27 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
   handleDeletePlayerFromTeam,
   handleMakePlayerCaptain,
 }) => {
+  const [players, setPlayers] = useState<Player[]>([]);
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_NO_API) {
+      fetch(`/api/teams/${team.teamID}/players`)
+        .then((players) => players.json())
+        .then((parsedPlayers) => setPlayers(parsedPlayers))
+        .catch((err) => console.log(err));
+    }
+    console.log(players);
+  }, []);
   return (
     <div className="mt-10 text-white">
-      <p className="text-3xl font-semibold mb-5">{team.name}</p>
+      {players ? (
+        <p className="text-3xl font-semibold mb-5">{team.name}</p>
+      ) : null}
 
       <div>
         <div className="flex flex-col gap-2">
-          {team.players ? (
-            team.players.map((player) => (
+          {players ? (
+            players.map((player) => (
               <div className="flex items-center gap-3" key={player.playerID}>
                 <p className="flex-grow">
                   {player.firstName + " " + player.lastName}
@@ -50,7 +63,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
               </div>
             ))
           ) : (
-            <p>Dit team heeft geen spelers</p>
+            <p className="text-xl">Dit team heeft geen spelers</p>
           )}
         </div>
       </div>

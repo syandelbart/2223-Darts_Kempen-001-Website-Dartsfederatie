@@ -1,8 +1,7 @@
 import { checkFields } from "../../../../modules/fieldsCheck";
 import { changeData, getRecordByIdOrError } from "../../../../modules/general";
-import { TeamSubmission, teamRegexPatterns } from "../../../../modules/team";
-import { CLASSIFICATION } from "../../../../types/competition";
-import { Team } from "../../../../types/team";
+import { teamRegexPatterns } from "../../../../modules/team";
+import { Team, TeamFront } from "../../../../types/team";
 import { PagesEnv } from "../../env";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
@@ -12,9 +11,15 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const teamId = params.id.toString();
-    const team = JSON.parse(await getRecordByIdOrError(teamId, env.TEAMS));
+    const team: Team = JSON.parse(
+      await getRecordByIdOrError(teamId, env.TEAMS)
+    );
+    const teamFront: TeamFront = {
+      ...team,
+      captain: JSON.parse(await env.PLAYERS.get(team.captainID)),
+    };
 
-    return new Response(JSON.stringify(team), {
+    return new Response(JSON.stringify(teamFront), {
       headers: {
         "content-type": "application/json",
       },
@@ -47,18 +52,15 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
       teamData,
       formData
     ) as Team;
-    data.playersID =
-      typeof data.playersID === "object"
-        ? data.playersID
-        : (data.playersID as string).split(",");
+    data.playerIDs =
+      typeof data.playerIDs === "object"
+        ? data.playerIDs
+        : (data.playerIDs as string).split(",");
 
     // Update the team data in the KV store
     await env.TEAMS.put(teamId, JSON.stringify(data));
 
-    const responseBody = {
-      message: "Team updated successfully.",
-      status: 200,
-    };
+    const responseBody = data;
 
     return new Response(JSON.stringify(responseBody), {
       headers: { "Content-Type": "application/json" },
