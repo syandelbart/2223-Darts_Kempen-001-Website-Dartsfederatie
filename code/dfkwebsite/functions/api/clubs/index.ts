@@ -49,7 +49,11 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     const clubIdKey = `id:${Date.now()}`;
 
-    let data: Club = changeData(clubRegexPatterns, {}, formData);
+    let data: Club = changeData(
+      clubRegexPatterns,
+      { clubID: clubIdKey },
+      formData
+    );
 
     await env.CLUBS.put(clubIdKey, JSON.stringify(data));
     await searchKeyChecker(env.CLUBS, clubIdKey, `name:${name}`);
@@ -99,7 +103,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     });
 
     // Wait for all updates to complete
-    let result = let result = await Promise.all(updates);
+    let result = await Promise.all(updates);
 
     return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
