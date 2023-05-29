@@ -67,7 +67,7 @@ export const handleSubmit = async (
   try {
     // Do something with formValues, such as send it to a server
     if (!value) throw new Error("No value was provided");
-    if (!apiLink || apiLink.startsWith("/"))
+    if (!apiLink || !apiLink.startsWith("/"))
       throw new Error("Incorrect api path was provided");
 
     const data = new FormData();
