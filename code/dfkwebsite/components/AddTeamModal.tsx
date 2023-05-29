@@ -79,6 +79,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
 
     setTimeout(() => {
       props.setAddModalOpen(false);
+      setInformationBoxMessage("")
     }, 5000);
   };
 

@@ -59,6 +59,7 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
     });
     setTimeout(() => {
       props.setAddModalOpen(false);
+      setInformationBoxMessage("")
     }, 5000);
   };
 
