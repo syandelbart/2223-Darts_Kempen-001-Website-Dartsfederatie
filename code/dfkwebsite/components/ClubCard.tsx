@@ -45,12 +45,12 @@ const ClubCard: FunctionComponent<clubDataInterface> = ({
       <div className="my-3">
         <CardIcon icon="mdi:address-marker">
           <div className="flex gap-3">
-            <p>{clubData.address?.postalCode}</p>
+            <p>{clubData.address?.postal}</p>
             <p>{clubData.address?.city}</p>
           </div>
           <div className="flex gap-3">
             <p>{clubData.address?.street}</p>
-            <p>{clubData.address?.houseNumber}</p>
+            <p>{clubData.address?.housenumber}</p>
           </div>
         </CardIcon>
       </div>

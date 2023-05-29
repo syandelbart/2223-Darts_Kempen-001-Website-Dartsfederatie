@@ -41,6 +41,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     value: { value: string; label: string }[],
     action: { action: string; name: string }
   ) => {
+    console.log(props.currentClub)
     formHandler.handleChangeSelect(value, action, setFormValues, formValues);
   };
 
@@ -49,11 +50,12 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       event,
       formValues,
       clubRegexPatterns,
-      "/api/clubs",
+      props.currentClub ? `/api/club/${props.currentClub.clubID}` : "/api/clubs",
       setInformationBoxMessage,
       setHandleSubmitSuccess,
       dummyData.club[0],
-      process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
+      process.env.NEXT_PUBLIC_NO_API == "1" ? true : false,
+      props.currentClub ? true : false,
     );
 
     if (!club || !handleSubmitSuccess) return;
@@ -107,10 +109,10 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
         ? props.currentClub.address?.street
         : "",
       address_housenumber: props.currentClub?.address
-        ? props.currentClub.address?.houseNumber
+        ? props.currentClub.address?.housenumber
         : "",
       address_postal: props.currentClub?.address
-        ? props.currentClub.address?.postalCode
+        ? props.currentClub.address?.postal
         : "",
     });
   }, [props.currentClub]);
@@ -199,6 +201,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
           }
           search={true}
           onSelectChange={handleSelectChange}
+          notRequired={true}
         />
 
         <DefaultSelect

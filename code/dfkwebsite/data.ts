@@ -119,8 +119,8 @@ export let club: Array<ClubFront> = [
     address: {
       street: "Kerkstraat",
       city: "Dessel",
-      houseNumber: "1",
-      postalCode: "2480",
+      housenumber: "1",
+      postal: "2480",
     },
     contactPersonID: "1",
     teamIDs: ["1", "2", "3"],

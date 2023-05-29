@@ -59,7 +59,8 @@ export const handleSubmit = async (
   informationOutputState?: Dispatch<SetStateAction<string>>,
   setSubmitSuccess?: Dispatch<SetStateAction<boolean | null>>,
   dummy?: any,
-  noAPI?: boolean
+  noAPI?: boolean,
+  isEditRequest?: boolean,
 ) => {
   if (informationOutputState) informationOutputState("");
   if (setSubmitSuccess) setSubmitSuccess(null);
@@ -83,7 +84,7 @@ export const handleSubmit = async (
 
     return await fetch(apiLink, {
       body: data,
-      method: "POST",
+      method: isEditRequest ? "PUT" : "POST",
     })
       .then((response) => response.json())
       .then(async (response) => {

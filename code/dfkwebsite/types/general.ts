@@ -35,8 +35,8 @@ export type TeamClub = {
 export type Address = {
   street: string;
   city: string;
-  houseNumber: string;
-  postalCode: string;
+  housenumber: string;
+  postal: string;
 };
 
 export type Account = {

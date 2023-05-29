@@ -45,25 +45,11 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
-    checkFields(formData, clubRegexPatterns);
-
     const name = formData.get(ClubSubmission.NAME);
 
     const clubIdKey = `id:${Date.now()}`;
 
-    let data: Club = {
-      clubID: clubIdKey,
-      name: name,
-      address: {
-        street: formData.get(ClubSubmission.ADDRESS_STREET),
-        city: formData.get(ClubSubmission.ADDRESS_CITY),
-        postalCode: formData.get(ClubSubmission.ADDRESS_POSTAL),
-        houseNumber: formData.get(ClubSubmission.ADDRESS_HOUSENUMBER),
-      },
-      ...(formData.has(ClubSubmission.CONTACTPERSONID) && {
-        contactPersonID: formData.get(ClubSubmission.CONTACTPERSONID),
-      }),
-    };
+    let data: Club = changeData(clubRegexPatterns, {}, formData);
 
     await env.CLUBS.put(clubIdKey, JSON.stringify(data));
     await searchKeyChecker(env.CLUBS, clubIdKey, `name:${name}`);

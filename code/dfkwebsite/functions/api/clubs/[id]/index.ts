@@ -34,8 +34,6 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
-    checkFields(formData, clubRegexPatterns, true);
-
     const clubId = params.id.toString();
     const club = await getRecordByIdOrError(clubId, env.CLUBS);
 
