@@ -1,10 +1,7 @@
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import AddBestuurModal from "../../../components/AddBestuurModal";
-import Card from "../../../components/Card";
-import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
-
 import * as dummyData from "../../../data";
 import ManagementCard from "../../../components/ManagementCard";
 import Head from "next/head";

@@ -5,13 +5,13 @@ import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 import { TeamFront } from "../types/team";
 
-interface teamDataInterface {
+interface TeamDataInterface {
   teamData: TeamFront;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setCurrentTeam: Dispatch<SetStateAction<TeamFront | null>>;
 }
 
-const TeamCard: FunctionComponent<teamDataInterface> = ({
+const TeamCard: FunctionComponent<TeamDataInterface> = ({
   teamData,
   setIsOpen,
   setCurrentTeam,

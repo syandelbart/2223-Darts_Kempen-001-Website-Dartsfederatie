@@ -6,14 +6,14 @@ import CardTitle from "./CardTitle";
 import { ClubFront } from "../types/club";
 
 
-interface clubDataInterface {
+interface ClubDataInterface {
   clubData: ClubFront;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setCurrentClub: Dispatch<SetStateAction<ClubFront | undefined>>;
   setEditClubModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const ClubCard: FunctionComponent<clubDataInterface> = ({
+const ClubCard: FunctionComponent<ClubDataInterface> = ({
   clubData,
   setIsOpen,
   setCurrentClub,
