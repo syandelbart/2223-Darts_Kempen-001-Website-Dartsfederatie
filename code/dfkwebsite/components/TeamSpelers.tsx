@@ -16,7 +16,9 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
 }) => {
   return (
     <div className="mt-10 text-white">
-      <p className="text-3xl font-semibold mb-5">{team.name}</p>
+      {team.players ? (
+        <p className="text-3xl font-semibold mb-5">{team.name}</p>
+      ) : null}
 
       <div>
         <div className="flex flex-col gap-2">
@@ -50,7 +52,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
               </div>
             ))
           ) : (
-            <p>Dit team heeft geen spelers</p>
+            <p className="text-xl">Dit team heeft geen spelers</p>
           )}
         </div>
       </div>
