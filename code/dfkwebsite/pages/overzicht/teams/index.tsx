@@ -61,19 +61,6 @@ const Teams: NextPage = () => {
         {(team) => {
           return (
             <div>
-              <input
-                className="bg-inherit"
-                type="text"
-                defaultValue={
-                  team.captain?.firstName + " " + team.captain?.lastName
-                }
-              ></input>
-              <input
-                className="bg-inherit"
-                type="text"
-                defaultValue={team.captain?.phone}
-              ></input>
-
               <TeamSpelers
                 team={team}
                 handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}

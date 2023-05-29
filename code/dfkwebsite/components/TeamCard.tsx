@@ -30,14 +30,16 @@ const TeamCard: FunctionComponent<TeamDataInterface> = ({
         </CardButton>
         <CardButton bg={"bg-[#95A4F3]"}>Edit</CardButton>
       </CardButtonRow>
-      <div className="my-3">
-        <CardIcon icon={"game-icons:captain-hat-profile"}>
-          {teamData.captain?.firstName + " " + teamData.captain?.lastName}
-        </CardIcon>
-        {teamData.captain?.phone ? (
-          <CardIcon icon={"ph:phone"}>{teamData.captain.phone}</CardIcon>
-        ) : null}
-      </div>
+      {teamData.captain ? (
+        <div className="my-3">
+          <CardIcon icon={"game-icons:captain-hat-profile"}>
+            {teamData.captain?.firstName + " " + teamData.captain?.lastName}
+          </CardIcon>
+          {teamData.captain?.phone ? (
+            <CardIcon icon={"ph:phone"}>{teamData.captain.phone}</CardIcon>
+          ) : null}
+        </div>
+      ) : null}
     </>
   );
 };
