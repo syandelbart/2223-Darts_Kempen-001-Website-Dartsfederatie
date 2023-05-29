@@ -10,13 +10,14 @@ import {
 } from "../../../types/competition";
 import * as formHandler from "../../../modules/formHandler";
 import { useRouter } from "next/router";
-import { countFridays } from "../../../modules/general";
+import { SelectOption, countFridays } from "../../../modules/general";
 import { competitionRegexPatterns } from "../../../modules/competition";
 import * as dummyData from "../../../data";
 import DataTable from "react-data-table-component";
 import { Icon } from "@iconify/react";
 import InformationBox from "../../../components/InformationBox";
 import DefaultSelect from "../../../components/DefaultSelect";
+import AddButton from "../../../components/AddButton";
 
 interface TableData {
   team1: string;
@@ -42,6 +43,23 @@ const Clubs: NextPage = () => {
   const [competitions, setCompetitions] = useState<Competition[]>(
     dummyData.competitions
   );
+
+  const [activeCompetitions, setActiveCompetitions] = useState<SelectOption[]>(
+    []
+  );
+
+  const handleActiveCompetitionsSubmit = async () => {
+    const activeCompetitionsIDs = activeCompetitions.map(
+      (competition) => competition.value
+    );
+
+    let data = new FormData();
+    data.append("competitionsID", JSON.stringify(activeCompetitionsIDs));
+    await fetch("/api/competition/current", {
+      method: "PUT",
+      body: data,
+    });
+  };
 
   const handleAmountTeamsChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
@@ -76,7 +94,6 @@ const Clubs: NextPage = () => {
   };
 
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({
-    amountteams: "",
     classification: "",
     startdate: "",
     enddate: "",
@@ -90,6 +107,26 @@ const Clubs: NextPage = () => {
       formValues,
       setHandledChange
     );
+  };
+
+  const goToPlayDays = (competitionID: string) => {
+    router
+      .push({
+        pathname: "/competitie/beheer/playdays",
+        query: {
+          competitionID: competitionID,
+          // Passing extra variables if the API is disabled
+          ...(process.env.NEXT_PUBLIC_NO_API == "1" && {
+            query: true,
+            startDate: formValues.startdate,
+            endDate: formValues.enddate,
+            amountTeams: formValues.amountteams,
+            classification: formValues.classification,
+            type: formValues.type,
+          }),
+        },
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleSubmit = async (event: any) => {
@@ -116,19 +153,7 @@ const Clubs: NextPage = () => {
     setTimeout(() => {
       if (!competition) return;
 
-      router.push({
-        pathname: "/competitie/beheer/playdays",
-        query: {
-          competitionID: competition.competitionID,
-          // Passing extra variables if the API is disabled
-          query: true,
-          startDate: formValues.startdate,
-          endDate: formValues.enddate,
-          amountTeams: formValues.amountteams,
-          classification: formValues.classification,
-          type: formValues.type,
-        },
-      });
+      goToPlayDays(competition.competitionID);
     }, 5000);
   };
 
@@ -172,7 +197,7 @@ const Clubs: NextPage = () => {
     },
     {
       name: "Aantal teams",
-      selector: (row) => row.playDaysTable?.[0]?.length || 0,
+      selector: (row) => row?.teamsID?.length || 0,
       sortable: true,
       filterable: true,
       grow: 2,
@@ -185,6 +210,11 @@ const Clubs: NextPage = () => {
             className="cursor-pointer text-2xl"
             onClick={() => onClickDelete(row.competitionID)}
             icon="mdi:delete"
+          />
+          <Icon
+            className="cursor-pointer text-2xl"
+            onClick={() => goToPlayDays(row.competitionID)}
+            icon="mdi:play"
           />
         </div>
       ),
@@ -218,6 +248,30 @@ const Clubs: NextPage = () => {
       fetch(`/api/competition`)
         .then((competitions) => competitions.json())
         .then((parsedCompetitions) => setCompetitions(parsedCompetitions))
+        .catch((err) => console.log(err));
+
+      fetch(`/api/competition/current`)
+        .then((currentCompetitions) => currentCompetitions.json())
+        .then((parsedCurrentCompetitions: Competition[]) => {
+          setActiveCompetitions(
+            parsedCurrentCompetitions.map((competition) => {
+              return {
+                label: `${competition.type} ${
+                  competition.classification
+                } ${new Date(competition.startDate).toLocaleDateString(
+                  "nl-BE",
+                  {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  }
+                )}`,
+                value: competition.competitionID,
+              };
+            })
+          );
+        })
+
         .catch((err) => console.log(err));
     }
   }, []);
@@ -270,14 +324,6 @@ const Clubs: NextPage = () => {
               speeldagen worden gegenereerd.
             </p>
           )}
-
-          <DefaultInput
-            name="amountteams"
-            value={formValues.amountteams}
-            onChange={handleChange}
-            label={"Aantal teams"}
-            type="number"
-          />
 
           <div className="flex flex-col">
             <DefaultSelect
@@ -339,6 +385,40 @@ const Clubs: NextPage = () => {
         data={competitions}
         pagination
       />
+
+      <div className="flex flex-row gap-3">
+        <DefaultSelect
+          name="activeCompetitions"
+          id="activeCompetitions"
+          label="Actieve competities"
+          multiple
+          search
+          value={activeCompetitions}
+          onSelectChange={(selectedOptions, action) => {
+            setActiveCompetitions(selectedOptions);
+          }}
+          options={competitions.map((competition) => {
+            return {
+              value: competition.competitionID,
+              label: `${competition.type} ${
+                competition.classification
+              } ${new Date(competition.startDate).toLocaleDateString("nl-BE", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}`,
+            };
+          })}
+        />
+
+        <button
+          type="submit"
+          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
+          onClick={handleActiveCompetitionsSubmit}
+        >
+          Aanmaken
+        </button>
+      </div>
     </div>
   );
 };

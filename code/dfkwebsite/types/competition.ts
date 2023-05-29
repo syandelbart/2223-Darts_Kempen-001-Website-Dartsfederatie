@@ -1,3 +1,4 @@
+import { TableData } from "../pages/competitie/beheer/playdays";
 import { Team } from "./team";
 
 export enum CLASSIFICATION {
@@ -19,7 +20,7 @@ export type Competition = {
   classification: CLASSIFICATION;
   startDate: number;
   endDate: number;
-  playDaysTable?: { team1: number; team2: number }[][];
+  playdays?: TableData[][];
   teamsID?: Array<string>;
   deleted?: boolean;
 };
