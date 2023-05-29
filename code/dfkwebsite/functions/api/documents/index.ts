@@ -95,11 +95,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
         await env.DOCUMENTS.get(document.name)
       );
 
-      const data: Document = changeData(
+      const data: Document = (await changeData(
         documentRegexPatterns,
         documentData,
         formData
-      ) as Document;
+      )) as Document;
 
       // Update the document data in the KV store
       await env.DOCUMENTS.put(document.name, JSON.stringify(data));

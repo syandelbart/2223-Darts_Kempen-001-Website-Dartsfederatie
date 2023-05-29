@@ -91,11 +91,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = matches.keys.map(async (match) => {
       const matchData: Match = JSON.parse(await env.MATCHES.get(match.name));
 
-      const data: Match = changeData(
+      const data: Match = (await changeData(
         matchRegexPatterns,
         matchData,
         formData
-      ) as Match;
+      )) as Match;
 
       // Update the match data in the KV store
       await env.MATCHES.put(match.name, JSON.stringify(data));

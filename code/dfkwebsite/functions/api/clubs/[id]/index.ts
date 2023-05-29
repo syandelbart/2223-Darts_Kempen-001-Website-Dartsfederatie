@@ -38,11 +38,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const clubData: Club = JSON.parse(club);
 
-    const data: Club = changeData(
+    const data: Club = (await changeData(
       clubRegexPatterns,
       clubData,
       formData
-    ) as Club;
+    )) as Club;
 
     // Update the club data in the KV store
     await env.CLUBS.put(clubId, JSON.stringify(data));

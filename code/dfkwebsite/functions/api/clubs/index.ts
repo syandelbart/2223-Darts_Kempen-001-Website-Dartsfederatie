@@ -49,7 +49,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     const clubIdKey = `id:${Date.now()}`;
 
-    let data: Club = changeData(
+    let data: Club = await changeData(
       clubRegexPatterns,
       { clubID: clubIdKey },
       formData
@@ -90,11 +90,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = clubs.keys.map(async (club) => {
       const clubData: Club = JSON.parse(await env.CLUBS.get(club.name));
 
-      const data: Club = changeData(
+      const data: Club = (await changeData(
         clubRegexPatterns,
         clubData,
         formData
-      ) as Club;
+      )) as Club;
 
       // Update the club data in the KV store
       await env.CLUBS.put(club.name, JSON.stringify(data));

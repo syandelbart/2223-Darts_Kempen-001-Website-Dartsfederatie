@@ -109,11 +109,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
         await env.COMPETITION.get(competition.name)
       );
 
-      const data: Competition = changeData(
+      const data: Competition = (await changeData(
         clubRegexPatterns,
         competitionData,
         formData
-      ) as Competition;
+      )) as Competition;
 
       // Update the competition data in the KV store
       await env.COMPETITION.put(competition.name, JSON.stringify(data));
