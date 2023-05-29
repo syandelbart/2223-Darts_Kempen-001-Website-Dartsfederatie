@@ -97,12 +97,14 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
           placeholder="Telefoonnummer"
           value={formValues.phone}
           onChange={handleChange}
+          notRequired={true}
         />
         <div className="mt-5 mb-2">
           <DefaultCheckbox
             label="Speelgerechtigd"
             name="allowed"
             onChange={handleChange}
+            notRequired={true}
           />
         </div>
         <SubmitButton handleSubmit={handleSubmit} />

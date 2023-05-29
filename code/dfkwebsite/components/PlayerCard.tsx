@@ -30,9 +30,11 @@ const PlayerCard: FunctionComponent<playerDataInterface> = ({
         </CardButton>
         <CardButton bg={"bg-edit-button"}>Edit</CardButton>
       </CardButtonRow>
-      <div className="my-3">
-        <CardIcon icon={"ph:phone"}>{playerData.phone}</CardIcon>
-      </div>
+      {playerData.phone !== "" && (
+        <div className="my-3">
+          <CardIcon icon={"ph:phone"}>{playerData.phone}</CardIcon>
+        </div>
+      )}
     </div>
   );
 };
