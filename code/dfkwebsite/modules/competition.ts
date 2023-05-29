@@ -7,7 +7,7 @@ export enum CompetitionSubmission {
   STARTDATE = "startdate",
   ENDDATE = "enddate",
   AMOUNT_TEAMS = "amountteams",
-  TEAMS = "teams",
+  TEAMS = "teamsID",
   PLAYDAYS = "playdays",
 }
 
@@ -26,6 +26,11 @@ export const competitionRegexPatterns: { [key: string]: fieldInformation } = {
     required: true,
   },
   [CompetitionSubmission.TEAMS]: {
-    regex: /^((id:(\d+)),)*(id:(\d+))$/,
+    required: false,
+    castFunction: JSON.parse,
+  },
+  [CompetitionSubmission.PLAYDAYS]: {
+    required: false,
+    castFunction: JSON.parse,
   },
 };
