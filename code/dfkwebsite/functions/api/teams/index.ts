@@ -48,13 +48,6 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     checkFields(formData, teamRegexPatterns);
 
-    console.log("checkfields complete");
-    console.log(formData.get(TeamSubmission.CAPTAINID));
-    console.log(formData.get(TeamSubmission.CLUBID));
-    console.log(formData.get(TeamSubmission.PLAYERSID));
-    console.log(JSON.parse(formData.get(TeamSubmission.PLAYERSID)));
-    console.log("Done")
-
     const name = formData.get(TeamSubmission.NAME);
 
     const teamIdKey = `id:${Date.now()}`;
@@ -66,8 +59,12 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       classification: formData.get(
         TeamSubmission.CLASSIFICATION
       ) as CLASSIFICATION,
-      clubID: formData.get(TeamSubmission.CLUBID),
-      playersID: JSON.parse(formData.get(TeamSubmission.PLAYERSID)), // ["id:123", "id:456"]
+      // ...(formData.has(TeamSubmission.CLUBID) && {
+      //   clubID: formData.get(TeamSubmission.CLUBID),
+      // }),
+      // ...(formData.has(TeamSubmission.PLAYERSID) && {
+      //   playersID: JSON.parse(formData.get(TeamSubmission.PLAYERSID)),
+      // }),
     };
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
