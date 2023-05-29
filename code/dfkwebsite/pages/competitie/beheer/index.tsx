@@ -179,7 +179,7 @@ const Clubs: NextPage = () => {
     },
     {
       name: "Aantal teams",
-      selector: (row) => row.playDaysTable?.[0]?.length || 0,
+      selector: (row) => row?.teamsID?.length || 0,
       sortable: true,
       filterable: true,
       grow: 2,
