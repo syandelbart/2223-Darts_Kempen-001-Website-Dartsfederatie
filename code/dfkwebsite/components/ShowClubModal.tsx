@@ -9,7 +9,7 @@ import * as dummyData from "../data";
 import { Club, ClubFront } from "../types/club";
 import { SelectOption } from "../modules/general";
 import { getTeams } from "../modules/team";
-import { getSpelers } from "../modules/player";
+import { getPlayers } from "../modules/player";
 import SubmitButton from "./SubmitButton";
 
 type AddClubModalData = {
@@ -92,7 +92,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
       .then((teams) => setTeams(teams))
       .catch((err) => console.log(err));
 
-    getSpelers()
+    getPlayers()
       .then((players) => setPlayers(players))
       .catch((err) => console.log(err));
   }, []);
