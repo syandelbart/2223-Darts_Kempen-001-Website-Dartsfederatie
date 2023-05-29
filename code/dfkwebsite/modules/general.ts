@@ -7,6 +7,8 @@ const availableParams = [
   { name: "cursor", regex: /^[a-zA-Z]*$/ },
   // Competition
   { name: "competitionID" },
+  { name: "playdayNumber", regex: /^[0-9]+$/, castFunction: Number },
+  { name: "matchNumber", regex: /^[0-9]+$/, castFunction: Number },
   { name: "startDate" },
   { name: "endDate" },
   { name: "amountTeams", regex: /^[0-9]+$/, castFunction: Number },
@@ -19,6 +21,8 @@ type urlParamsType = {
   prefix: string;
   // Competition
   competitionID?: string;
+  playdayNumber?: number;
+  matchNumber?: number;
   amountTeams?: number;
   startDate: string;
   endDate: string;
