@@ -1,4 +1,7 @@
 import * as dummyData from "../data";
+import { Club } from "../types/club";
+import { CLASSIFICATION } from "../types/competition";
+import { Player } from "../types/player";
 import { fieldInformation } from "./fieldsCheck";
 import lodash from "lodash";
 
@@ -134,9 +137,13 @@ export const changeData = (
 
     // If value has a casting function, execute it first, otherwise add the raw (string) value
     try {
-      lodash.set(data, field.replace(/_/g, "."), fieldInformation.castFunction
-        ? fieldInformation.castFunction(newValue)
-        : newValue)
+      lodash.set(
+        data,
+        field.replace(/_/g, "."),
+        fieldInformation.castFunction
+          ? fieldInformation.castFunction(newValue)
+          : newValue
+      );
     } catch (e: any) {
       throw new Error(
         `The value ${newValue} could not be casted using the function ${fieldInformation.castFunction}`
@@ -197,4 +204,126 @@ export const parseData = async (data: string | string[], namespace: any) => {
       return JSON.parse(await namespace.get(dataKey));
     })
   );
+};
+
+export const populateKV = async () => {
+  //check if KV is populated
+  const isPopulated = (await fetch("/api/players", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json())) as Player[];
+
+  console.log(isPopulated);
+
+  if (isPopulated.length > 0) return;
+
+  // populate /api/players
+  let player1 = new FormData();
+  player1.append("firstname", "John");
+  player1.append("lastname", "Doe");
+  player1.append("phone", "123456789");
+  player1.append("allowed", "1");
+
+  let player2 = new FormData();
+  player2.append("firstname", "Jane");
+  player2.append("lastname", "Doe");
+  player2.append("phone", "987654321");
+  player2.append("allowed", "1");
+
+  let player3 = new FormData();
+  player3.append("firstname", "John");
+  player3.append("lastname", "Smith");
+  player3.append("phone", "123456789");
+  player3.append("allowed", "1");
+
+  let player4 = new FormData();
+  player4.append("firstname", "Jane");
+  player4.append("lastname", "Smith");
+  player4.append("phone", "987654321");
+  player4.append("allowed", "1");
+
+  let players = [player1, player2, player3, player4];
+  let playerIDs: string[] = [];
+
+  for (const player of players) {
+    const response = await fetch("/api/players", {
+      method: "POST",
+      body: player,
+    });
+    if (!response.ok) {
+      console.log("Error populating KV");
+      return;
+    } else {
+      const data = (await response.json()) as Player;
+      playerIDs.push(data.playerID);
+    }
+  }
+
+  // populate /api/clubs using ClubSubmission as reference
+  let club1 = new FormData();
+  club1.append("name", "Club 1");
+  club1.append("address_street", "Street 1");
+  club1.append("address_housenumber", "1");
+  club1.append("address_city", "City 1");
+  club1.append("address_postal", "1000");
+  club1.append("contactpersonid", playerIDs[0]);
+
+  let club2 = new FormData();
+  club2.append("name", "Club 2");
+  club2.append("address_street", "Street 2");
+  club2.append("address_housenumber", "2");
+  club2.append("address_city", "City 2");
+  club2.append("address_postal", "2000");
+  club2.append("contactpersonid", playerIDs[1]);
+
+  let clubs = [club1, club2];
+  let clubIDs: string[] = [];
+
+  for (const club of clubs) {
+    const response = await fetch("/api/clubs", {
+      method: "POST",
+      body: club,
+    });
+    if (!response.ok) {
+      console.log("Error populating KV");
+      return;
+    } else {
+      const data = (await response.json()) as Club;
+      clubIDs.push(data.clubID);
+    }
+  }
+
+  // populate /api/teams using TeamSubmission as reference
+  let team1 = new FormData();
+  team1.append("name", "Team 1");
+  team1.append("playersid", JSON.stringify([playerIDs[0], playerIDs[1]]));
+  team1.append("classification", CLASSIFICATION.PROVINCIAAL);
+  team1.append("clubid", clubIDs[0]);
+  team1.append("captainid", playerIDs[0]);
+
+  let team2 = new FormData();
+  team2.append("name", "Team 2");
+  team2.append("playersid", JSON.stringify([playerIDs[2], playerIDs[3]]));
+  team2.append("classification", CLASSIFICATION.GEWEST_1);
+  team2.append("clubid", clubIDs[1]);
+  team2.append("captainid", playerIDs[2]);
+
+  let teams = [team1, team2];
+  // let teamIDs = [];
+
+  for (const team of teams) {
+    const response = await fetch("/api/teams", {
+      method: "POST",
+      body: team,
+    });
+    if (!response.ok) {
+      console.log("Error populating KV");
+      return;
+    } else {
+      // const data = (await response.json()) as Team;
+      // teamIDs.push(data.teamID);
+    }
+  }
 };
