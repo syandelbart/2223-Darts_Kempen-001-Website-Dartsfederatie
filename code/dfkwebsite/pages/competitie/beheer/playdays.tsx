@@ -95,30 +95,60 @@ const GeneratePlaydays: NextPage = () => {
     if (!tableFilled()) return;
 
     let data = new FormData();
-    data.append("playDaysTable", JSON.stringify(tableData));
+    data.append("playdays", JSON.stringify(tableData));
+    data.append(
+      "teamsID",
+      JSON.stringify(competitionTeams.map((teamSelect) => teamSelect.value))
+    );
     await fetch(`/api/competition/${params.competitionID}`, {
       method: "PUT",
-      body: JSON.stringify({ playDaysTable: tableData }),
-      headers: { "Content-Type": "application/json" },
+      body: data,
     });
   };
 
   useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_NO_API) {
-      fetch(`/api/competition/${params.competitionID}`)
-        .then((competition) => competition.json())
-        .then((parsedCompetition: Competition) => {
-          setCompetitionInfo(parsedCompetition);
-          if (parsedCompetition.playDaysTable)
-            setTableData(parsedCompetition.playDaysTable);
-          handleAmountTeamsChange(parsedCompetition);
-          return parsedCompetition;
-        })
-        .catch((err) => console.log(err));
-    }
-
     getTeams()
-      .then((teams) => setTeams(teams))
+      .then(async (teams) => {
+        setTeams(teams);
+
+        let currentCompetition = await fetch(
+          `/api/competition/${params.competitionID}`
+        )
+          .then((competition) => competition.json())
+          .then((parsedCompetition: Competition) => {
+            setCompetitionInfo(parsedCompetition);
+            if (parsedCompetition.playdays)
+              setTableData(parsedCompetition.playdays);
+            handleAmountTeamsChange(parsedCompetition);
+            return parsedCompetition;
+          })
+          .catch((err) => {
+            console.log(err);
+            return null;
+          });
+
+        if (!currentCompetition) {
+          console.log("No competition by this ID found");
+          return;
+        }
+
+        if (currentCompetition?.teamsID) {
+          setCompetitionTeams(
+            teams.filter((team) =>
+              currentCompetition?.teamsID
+                ? currentCompetition.teamsID.includes(team.value)
+                : false
+            )
+          );
+          setAmountTeams(currentCompetition?.teamsID.length);
+        }
+
+        handleAmountTeamsChange(
+          currentCompetition,
+          currentCompetition?.teamsID?.length
+        );
+        console.log("copetition teams", competitionTeams);
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -132,6 +162,7 @@ const GeneratePlaydays: NextPage = () => {
         options={teams}
         multiple
         search
+        value={competitionTeams}
         onSelectChange={(selectedOptions, action) => {
           setCompetitionTeams(selectedOptions);
           setAmountTeams(selectedOptions.length);
@@ -149,7 +180,9 @@ const GeneratePlaydays: NextPage = () => {
       <div
         className="grid children:py-4 gap-2 children:border-b  text-white border-t"
         style={{
-          gridTemplateRows: `repeat(${amountTeams + 1}, minmax(0, 1fr))`,
+          gridTemplateRows: `repeat(${
+            competitionTeams.length + 1
+          }, minmax(0, 1fr))`,
         }}
       >
         {tableData.map((rowData, rowIndex) => (
@@ -157,7 +190,9 @@ const GeneratePlaydays: NextPage = () => {
             key={rowIndex}
             className="border-b grid"
             style={{
-              gridTemplateColumns: `repeat(${amountTeams + 1}, minmax(0, 1fr))`,
+              gridTemplateColumns: `repeat(${
+                competitionTeams.length + 1
+              }, minmax(0, 1fr))`,
             }}
           >
             <div>
@@ -165,10 +200,10 @@ const GeneratePlaydays: NextPage = () => {
               <p>
                 {new Date(
                   getNextFriday(
-                    new Date(competitionInfo?.startDate || 0)
+                    new Date(competitionInfo?.startDate ?? 0)
                   ).setDate(
                     getNextFriday(
-                      new Date(competitionInfo?.endDate || 0)
+                      new Date(competitionInfo?.endDate ?? 0)
                     ).getDate() +
                       7 * rowIndex
                   )
@@ -188,6 +223,10 @@ const GeneratePlaydays: NextPage = () => {
                     labelEnabled={false}
                     options={competitionTeams}
                     search
+                    value={{
+                      label: tableData[rowIndex][columnIndex].team1,
+                      value: tableData[rowIndex][columnIndex].team1,
+                    }}
                     onSelectChange={(
                       selectedOption: SelectOption,
                       action: { action: string; name: string }
