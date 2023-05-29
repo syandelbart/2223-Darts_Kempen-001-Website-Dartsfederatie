@@ -59,20 +59,11 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     const teamIdKey = `id:${Date.now()}`;
 
-    let data: Team = {
-      teamID: teamIdKey,
-      name: name,
-      captainID: formData.get(TeamSubmission.CAPTAINID),
-      classification: formData.get(
-        TeamSubmission.CLASSIFICATION
-      ) as CLASSIFICATION,
-      // ...(formData.has(TeamSubmission.CLUBID) && {
-      //   clubID: formData.get(TeamSubmission.CLUBID),
-      // }),
-      // ...(formData.has(TeamSubmission.PLAYERSID) && {
-      //   playersID: JSON.parse(formData.get(TeamSubmission.PLAYERSID)),
-      // }),
-    };
+    let data: Team = changeData(
+      teamRegexPatterns,
+      { teamID: teamIdKey },
+      formData
+    );
 
     await env.TEAMS.put(teamIdKey, JSON.stringify(data));
     await searchKeyChecker(env.TEAMS, teamIdKey, `name:${name}`);
