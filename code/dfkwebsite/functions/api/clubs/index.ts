@@ -54,10 +54,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     await env.CLUBS.put(clubIdKey, JSON.stringify(data));
     await searchKeyChecker(env.CLUBS, clubIdKey, `name:${name}`);
 
-    return new Response(
-      JSON.stringify({ message: "Club added successfully." }),
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
@@ -94,17 +94,14 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
       // Update the club data in the KV store
       await env.CLUBS.put(club.name, JSON.stringify(data));
+
+      return data;
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "Clubs updated successfully.",
-      status: 200,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {

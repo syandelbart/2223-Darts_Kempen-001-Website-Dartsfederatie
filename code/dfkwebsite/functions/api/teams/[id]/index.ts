@@ -11,7 +11,9 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const teamId = params.id.toString();
-    const team : Team = JSON.parse(await getRecordByIdOrError(teamId, env.TEAMS));
+    const team: Team = JSON.parse(
+      await getRecordByIdOrError(teamId, env.TEAMS)
+    );
 
     return new Response(JSON.stringify(team), {
       headers: {
@@ -54,10 +56,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     // Update the team data in the KV store
     await env.TEAMS.put(teamId, JSON.stringify(data));
 
-    const responseBody = {
-      message: "Team updated successfully.",
-      status: 200,
-    };
+    const responseBody = data;
 
     return new Response(JSON.stringify(responseBody), {
       headers: { "Content-Type": "application/json" },

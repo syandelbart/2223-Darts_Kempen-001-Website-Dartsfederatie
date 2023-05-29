@@ -55,10 +55,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     // Update the player data in the KV store
     await env.PLAYERS.put(playerId, JSON.stringify(data));
 
-    const responseBody = {
-      message: "Player updated successfully.",
-      status: 200,
-    };
+    const responseBody = data;
 
     return new Response(JSON.stringify(responseBody), {
       headers: { "Content-Type": "application/json" },
