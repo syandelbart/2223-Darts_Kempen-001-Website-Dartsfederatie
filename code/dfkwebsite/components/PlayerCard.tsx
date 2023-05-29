@@ -5,13 +5,13 @@ import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 import { Player } from "../types/player";
 
-interface playerDataInterface {
+interface PlayerDataInterface {
   playerData: Player;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setCurrentPlayer: Dispatch<SetStateAction<Player | null>>;
 }
 
-const PlayerCard: FunctionComponent<playerDataInterface> = ({
+const PlayerCard: FunctionComponent<PlayerDataInterface> = ({
   playerData,
   setIsOpen,
   setCurrentPlayer,
