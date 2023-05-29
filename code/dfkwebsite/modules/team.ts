@@ -13,7 +13,7 @@ export const teamRegexPatterns: { [key: string]: fieldInformation } = {
   [TeamSubmission.NAME]: { regex: /^[a-zA-Z ]+$/, required: true },
   [TeamSubmission.CAPTAINID]: {
     regex:
-      /^(id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12},)*(id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12})$/,
+      /^(id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12})$/,
     required: false,
   },
   [TeamSubmission.CLASSIFICATION]: { required: true },
