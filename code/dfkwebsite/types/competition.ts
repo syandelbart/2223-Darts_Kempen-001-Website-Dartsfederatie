@@ -20,7 +20,7 @@ export type Competition = {
   classification: CLASSIFICATION;
   startDate: number;
   endDate: number;
-  playDaysTable?: TableData[][];
+  playdays?: TableData[][];
   teamsID?: Array<string>;
   deleted?: boolean;
 };
