@@ -46,11 +46,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const playerData: Player = JSON.parse(player);
 
-    const data: Player = changeData(
+    const data: Player = (await changeData(
       playerRegexPatterns,
       playerData,
       formData
-    ) as Player;
+    )) as Player;
 
     // Update the player data in the KV store
     await env.PLAYERS.put(playerId, JSON.stringify(data));

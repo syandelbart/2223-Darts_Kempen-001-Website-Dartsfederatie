@@ -46,11 +46,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const documentsData: Document = JSON.parse(documents);
 
-    const data: Document = changeData(
+    const data: Document = (await changeData(
       documentRegexPatterns,
       documentsData,
       formData
-    ) as Document;
+    )) as Document;
 
     // Update the club data in the KV store
     await env.DOCUMENTS.put(documentsId, JSON.stringify(data));

@@ -90,11 +90,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = users.keys.map(async (user) => {
       const userData: User = JSON.parse(await env.USERS.get(user.name));
 
-      const data: User = changeData(
+      const data: User = (await changeData(
         userRegexPatterns,
         userData,
         formData
-      ) as User;
+      )) as User;
 
       // Update the user data in the KV store
       await env.USERS.put(user.name, JSON.stringify(data));

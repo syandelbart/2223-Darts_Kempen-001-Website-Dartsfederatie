@@ -56,7 +56,7 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
 
     const teamIdKey = `id:${Date.now()}`;
 
-    let data: Team = changeData(
+    let data: Team = await changeData(
       teamRegexPatterns,
       { teamID: teamIdKey },
       formData
@@ -97,11 +97,11 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = teams.keys.map(async (team) => {
       const teamData: Team = JSON.parse(await env.TEAMS.get(team.name));
 
-      const data: Team = changeData(
+      const data: Team = (await changeData(
         teamRegexPatterns,
         teamData,
         formData
-      ) as Team;
+      )) as Team;
 
       // Update the team data in the KV store
       await env.TEAMS.put(team.name, JSON.stringify(data));
