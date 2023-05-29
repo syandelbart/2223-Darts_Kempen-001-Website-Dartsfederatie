@@ -1,7 +1,6 @@
 import { checkFields } from "../../../../modules/fieldsCheck";
 import { changeData, getRecordByIdOrError } from "../../../../modules/general";
-import { TeamSubmission, teamRegexPatterns } from "../../../../modules/team";
-import { CLASSIFICATION } from "../../../../types/competition";
+import { teamRegexPatterns } from "../../../../modules/team";
 import { Team } from "../../../../types/team";
 import { PagesEnv } from "../../env";
 
@@ -12,7 +11,7 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const teamId = params.id.toString();
-    const team = JSON.parse(await getRecordByIdOrError(teamId, env.TEAMS));
+    const team : Team = JSON.parse(await getRecordByIdOrError(teamId, env.TEAMS));
 
     return new Response(JSON.stringify(team), {
       headers: {

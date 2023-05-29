@@ -1,4 +1,4 @@
-import { ClubSubmission, clubRegexPatterns } from "../../../../modules/club";
+import { clubRegexPatterns } from "../../../../modules/club";
 import { checkFields } from "../../../../modules/fieldsCheck";
 import { changeData, getRecordByIdOrError } from "../../../../modules/general";
 import { Club } from "../../../../types/club";
