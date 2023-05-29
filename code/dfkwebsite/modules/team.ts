@@ -28,6 +28,7 @@ export const teamRegexPatterns: { [key: string]: fieldInformation } = {
     regex:
       /^\[("id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}",)*("id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}")\]$/,
     required: false,
+    castFunction: JSON.parse,
   },
 };
 

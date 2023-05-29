@@ -33,6 +33,7 @@ export const clubRegexPatterns: { [key: string]: fieldInformation } = {
   [ClubSubmission.TEAMIDS]: {
     regex: /^\[(['"]id:\d+['"],)*(['"]id:\d+['"])\]$/,
     required: false,
+    castFunction: JSON.parse,
   },
 };
 
