@@ -27,7 +27,7 @@ export const clubRegexPatterns: { [key: string]: fieldInformation } = {
     regex: /^[a-zA-Z0-9 ]+$/,
     required: true,
   },
-  [ClubSubmission.CONTACTPERSONID]: { regex: /^[0-9]+$/, required: false },
+  [ClubSubmission.CONTACTPERSONID]: { regex: /^(id:[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12})+$/, required: false },
   [ClubSubmission.TEAMIDS]: {
     regex: /^\[(['"]id:\d+['"],)*(['"]id:\d+['"])\]$/,
     required: false,
