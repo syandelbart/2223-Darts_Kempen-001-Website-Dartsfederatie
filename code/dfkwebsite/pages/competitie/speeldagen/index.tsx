@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { Competition } from "../../../types/competition";
+import Link from "next/link";
 
 const Speeldagen: NextPage = () => {
   const [activeCompetition, setActiveCompetition] = useState<Competition[]>([]);
@@ -30,10 +31,17 @@ const Speeldagen: NextPage = () => {
               <div key={i}>
                 <h2>Speeldag {i + 1}</h2>
                 <ul>
-                  {playday.map((match) => {
+                  {playday.map((match, j) => {
                     return (
                       <li key={match.team1 + match.team2}>
                         {match.team1} vs {match.team2}
+                        <Link
+                          href={`/competitie/beheer/wedstrijdblad?competitionID=${
+                            competition.competitionID
+                          }&playdayNumber=${i + 1}&matchNumber=${j + 1}`}
+                        >
+                          Scores ingeven
+                        </Link>
                       </li>
                     );
                   })}
