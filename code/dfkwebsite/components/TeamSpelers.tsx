@@ -14,6 +14,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
   handleDeletePlayerFromTeam,
   handleMakePlayerCaptain,
 }) => {
+  console.log(team)
   const [players, setPlayers] = useState<Player[]>([]);
 
   useEffect(() => {
