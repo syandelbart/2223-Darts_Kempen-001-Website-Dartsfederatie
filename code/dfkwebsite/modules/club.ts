@@ -7,8 +7,8 @@ export enum ClubSubmission {
   ADDRESS_HOUSENUMBER = "address_housenumber",
   ADDRESS_CITY = "address_city",
   ADDRESS_POSTAL = "address_postal",
-  CONTACTPERSONID = "contactpersonid",
-  TEAMIDS = "teamids",
+  CONTACTPERSONID = "contactpersonID",
+  TEAMIDS = "teamIDs",
 }
 
 export const clubRegexPatterns: { [key: string]: fieldInformation } = {

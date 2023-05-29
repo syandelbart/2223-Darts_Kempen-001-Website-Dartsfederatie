@@ -3,10 +3,10 @@ import { getAllSelectOptionsByName } from "./general";
 
 export enum TeamSubmission {
   NAME = "name",
-  CAPTAINID = "captainid",
-  CLUBID = "clubid",
+  CAPTAINID = "captainID",
+  CLUBID = "clubID",
   CLASSIFICATION = "classification",
-  PLAYERSID = "playersid",
+  PLAYERIDS = "playerIDs",
 }
 
 export const teamRegexPatterns: { [key: string]: fieldInformation } = {
@@ -22,7 +22,7 @@ export const teamRegexPatterns: { [key: string]: fieldInformation } = {
     required: false,
   },
 
-  [TeamSubmission.PLAYERSID]: {
+  [TeamSubmission.PLAYERIDS]: {
     // This regex matches the following pattern:
     // id:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx,id:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     regex:

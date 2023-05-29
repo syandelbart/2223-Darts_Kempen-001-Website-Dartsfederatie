@@ -29,8 +29,8 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     address_street: "",
     address_housenumber: "",
     address_postal: "",
-    contactpersonid: "",
-    teamids: "",
+    contactPersonID: "",
+    teamIDs: "",
   });
 
   const handleChange = (event: any) => {
@@ -41,7 +41,6 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     value: { value: string; label: string }[],
     action: { action: string; name: string }
   ) => {
-    console.log(props.currentClub);
     formHandler.handleChangeSelect(value, action, setFormValues, formValues);
   };
 
@@ -185,8 +184,8 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
         </div>
 
         <DefaultSelect
-          name="contactpersonid"
-          id="contactpersonid"
+          name="contactPersonID"
+          id="contactPersonID"
           label="Contactpersoon"
           options={players}
           defaultValue={
@@ -208,8 +207,8 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
         />
 
         <DefaultSelect
-          name="teamids"
-          id="teamids"
+          name="teamIDs"
+          id="teamIDs"
           label="Teams toevoegen"
           options={teams}
           onSelectChange={handleSelectChange}

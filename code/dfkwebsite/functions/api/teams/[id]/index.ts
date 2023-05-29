@@ -52,10 +52,10 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
       teamData,
       formData
     ) as Team;
-    data.playersID =
-      typeof data.playersID === "object"
-        ? data.playersID
-        : (data.playersID as string).split(",");
+    data.playerIDs =
+      typeof data.playerIDs === "object"
+        ? data.playerIDs
+        : (data.playerIDs as string).split(",");
 
     // Update the team data in the KV store
     await env.TEAMS.put(teamId, JSON.stringify(data));

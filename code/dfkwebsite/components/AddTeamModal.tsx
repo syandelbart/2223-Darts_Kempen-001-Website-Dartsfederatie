@@ -30,10 +30,10 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
 ) => {
   const [formValues, setFormValues] = useState<{ [key: string]: string }>({
     name: "",
-    captainid: "",
+    captainID: "",
     classification: "",
-    clubid: "",
-    playersid: "",
+    clubID: "",
+    playerIDs: "",
   });
 
   const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
@@ -145,6 +145,7 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           name="name"
           label="Teamnaam"
           placeholder="Teamnaam"
+          value={formValues.name}
           onChange={handleChange}
         />
 
@@ -165,8 +166,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         />
 
         <DefaultSelect
-          name="captainid"
-          id="captainid"
+          name="captainID"
+          id="captainID"
           label="Kapitein"
           options={players.map((player) => {
             return {
@@ -181,8 +182,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
         
         <div className="flex gap-5">
           <DefaultSelect
-            name="clubid"
-            id="clubid"
+            name="clubID"
+            id="clubID"
             label="Club"
             options={
               props.currentClub
@@ -200,8 +201,8 @@ const AddTeamModal: FunctionComponent<AddTeamModalData> = (
           />
 
           <DefaultSelect
-            name="playersid"
-            id="playersid"
+            name="playerIDs"
+            id="playerIDs"
             label="Spelers"
             options={
               props.currentPlayer
