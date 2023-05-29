@@ -268,7 +268,7 @@ export const populateKV = async () => {
   club1.append("address_housenumber", "1");
   club1.append("address_city", "City 1");
   club1.append("address_postal", "1000");
-  club1.append("contactpersonid", playerIDs[0]);
+  club1.append("contactpersonID", playerIDs[0]);
 
   let club2 = new FormData();
   club2.append("name", "Club 2");
@@ -276,7 +276,7 @@ export const populateKV = async () => {
   club2.append("address_housenumber", "2");
   club2.append("address_city", "City 2");
   club2.append("address_postal", "2000");
-  club2.append("contactpersonid", playerIDs[1]);
+  club2.append("contactpersonID", playerIDs[1]);
 
   let clubs = [club1, club2];
   let clubIDs: string[] = [];
@@ -298,17 +298,17 @@ export const populateKV = async () => {
   // populate /api/teams using TeamSubmission as reference
   let team1 = new FormData();
   team1.append("name", "Team 1");
-  team1.append("playersid", JSON.stringify([playerIDs[0], playerIDs[1]]));
+  team1.append("playerIDs", JSON.stringify([playerIDs[0], playerIDs[1]]));
   team1.append("classification", CLASSIFICATION.PROVINCIAAL);
-  team1.append("clubid", clubIDs[0]);
-  team1.append("captainid", playerIDs[0]);
+  team1.append("clubID", clubIDs[0]);
+  team1.append("captainID", playerIDs[0]);
 
   let team2 = new FormData();
   team2.append("name", "Team 2");
-  team2.append("playersid", JSON.stringify([playerIDs[2], playerIDs[3]]));
+  team2.append("playerIDs", JSON.stringify([playerIDs[2], playerIDs[3]]));
   team2.append("classification", CLASSIFICATION.GEWEST_1);
-  team2.append("clubid", clubIDs[1]);
-  team2.append("captainid", playerIDs[2]);
+  team2.append("clubID", clubIDs[1]);
+  team2.append("captainID", playerIDs[2]);
 
   let teams = [team1, team2];
   // let teamIDs = [];
