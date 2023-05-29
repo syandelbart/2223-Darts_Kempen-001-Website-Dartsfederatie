@@ -72,6 +72,7 @@ const AddClubModal: FunctionComponent<AddClubModalData> = (
     });
     setTimeout(() => {
       props.setAddModalOpen(false);
+      setInformationBoxMessage("")
     }, 5000);
   };
 
