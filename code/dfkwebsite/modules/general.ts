@@ -230,6 +230,20 @@ export const mutateOtherSide: { [key: string]: mutateField } = {
     mutateField: "teamIDs",
     method: METHODS.APPEND,
   },
+  playerIDs: {
+    sourceAPI: "/api/teams",
+    mutateAPI: "/api/players",
+    fieldToGet: "teamID",
+    mutateField: "teamIDs",
+    method: METHODS.APPEND,
+  },
+  teamIDs: {
+    sourceAPI: "/api/players",
+    mutateAPI: "/api/teams",
+    fieldToGet: "playerID",
+    mutateField: "playerIDs",
+    method: METHODS.APPEND,
+  },
 };
 
 export type SelectOption = {

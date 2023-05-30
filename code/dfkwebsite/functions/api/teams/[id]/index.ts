@@ -50,12 +50,16 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   try {
     const formData = await request.formData();
 
-    checkFields(formData, teamRegexPatterns, true);
-
     const teamId = params.id.toString();
     const team = await getRecordByIdOrError(teamId, env.TEAMS);
 
     const teamData: Team = JSON.parse(team);
+
+    formData.get("playerIDs") &&
+      formData.set(
+        "playerIDs",
+        JSON.stringify(formData.get("playerIDs").split(","))
+      );
 
     const data: Team = (await changeData(
       teamRegexPatterns,
@@ -66,6 +70,7 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
       typeof data.playerIDs === "object"
         ? data.playerIDs
         : (data.playerIDs as string).split(",");
+
 
     // Update the team data in the KV store
     await env.TEAMS.put(teamId, JSON.stringify(data));
