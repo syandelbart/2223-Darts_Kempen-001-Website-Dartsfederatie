@@ -176,7 +176,11 @@ const WedstrijdbladBeheer: NextPage = () => {
 
   const getRow = (series: number, index: number, reversed: boolean) => {
     return (
-      <div className={`grid col-span-6 grid-cols-6 ${reversed ? "" : ""}`}>
+      <div
+        className={`grid col-span-6 grid-cols-6 children:px-3 ${
+          reversed ? "" : ""
+        }`}
+      >
         <DefaultInput
           name="180"
           placeholder="180"
