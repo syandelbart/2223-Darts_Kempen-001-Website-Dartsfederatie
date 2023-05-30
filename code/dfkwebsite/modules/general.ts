@@ -111,10 +111,12 @@ export const changeData = async (
   newData: FormData
 ) => {
   const data = JSON.parse(JSON.stringify(currentData));
+  console.log("initial data", data);
 
   // Can I use a foreach here?
 
-  for (const field of Object.keys(fieldsInformation)) {
+  // for (const field of Object.keys(fieldsInformation)) {
+  Object.keys(fieldsInformation).forEach((field) => {
     if (!newData.has(field)) return;
     let newValue = newData.get(field);
 
@@ -147,6 +149,8 @@ export const changeData = async (
           : newValue
       );
 
+      console.log("dataNow", data);
+
       //field = clubID
 
       // mutate other side
@@ -155,7 +159,7 @@ export const changeData = async (
         `The value ${newValue} could not be casted using the function ${fieldInformation.castFunction}`
       );
     }
-  }
+  });
 
   for (const field of Object.keys(fieldsInformation)) {
     if (mutateOtherSide[field]) {
@@ -163,36 +167,41 @@ export const changeData = async (
 
       let newValue = data[mutateField.fieldToGet];
       let currentValue = await fetch(
-        `${mutateField.mutateAPI}/${data[field]}`,
+        `http://localhost:8788${mutateField.mutateAPI}/${data[field]}`,
         { method: "GET" }
       )
         .then((res) => res.json())
         .catch((e) => {
           throw new Error(e);
         });
+
+      let valueToChange =
+        (currentValue[mutateField.mutateField] as Array<any>) || [];
+
       if (mutateField.method == METHODS.APPEND) {
-        (currentValue[mutateField.mutateField] as Array<any>).push(newValue);
+        valueToChange.push(newValue);
 
         // fetch first
       } else if (mutateField.method == METHODS.REMOVE) {
-        currentValue = (
-          currentValue[mutateField.mutateField] as Array<any>
-        ).filter((value) => value != newValue);
+        valueToChange = valueToChange.filter((value) => value != newValue);
         //fetch first
       } else if (mutateField.method == METHODS.REPLACE) {
-        currentValue[mutateField.mutateField] = newValue;
+        valueToChange = newValue;
       }
 
-      let dataToSend = new FormData();
-      dataToSend.append(
-        mutateField.mutateField,
-        currentValue[mutateField.mutateField]
-      );
+      console.log("valueTochange", valueToChange);
 
-      await fetch(`${mutateField.mutateAPI}/${data[field]}`, {
-        method: "PUT",
-        body: JSON.stringify(dataToSend),
-      }).catch((e) => console.log(e));
+      let dataToSend = new FormData();
+      dataToSend.append(mutateField.mutateField, JSON.stringify(valueToChange));
+      console.log(dataToSend);
+
+      await fetch(
+        `http://localhost:8788${mutateField.mutateAPI}/${data[field]}`,
+        {
+          method: "PUT",
+          body: dataToSend,
+        }
+      ).catch((e) => console.log(e));
     }
   }
 
@@ -200,6 +209,7 @@ export const changeData = async (
 };
 
 type mutateField = {
+  sourceAPI: string;
   mutateAPI: string;
   mutateField: string;
   fieldToGet: string;
@@ -214,6 +224,7 @@ enum METHODS {
 
 export const mutateOtherSide: { [key: string]: mutateField } = {
   clubID: {
+    sourceAPI: "/api/teams",
     mutateAPI: "/api/clubs",
     fieldToGet: "teamID",
     mutateField: "teamIDs",
