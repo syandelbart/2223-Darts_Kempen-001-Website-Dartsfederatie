@@ -280,17 +280,17 @@ const GeneratePlaydays: NextPage = () => {
         ))}
       </div>
 
-      <div>
+      <div className="flex gap-5 items-center text-white mt-10">
         <button
           type="submit"
-          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
+          className="bg-[#0A893D] rounded-lg p-3"
           onClick={handleSubmit}
           disabled={!tableFilled()}
         >
           Genereer speeldagen
         </button>
         {tableFilled() ? null : (
-          <span>De tabel is nog niet volledig ingevuld</span>
+          <p className="">De tabel is nog niet volledig ingevuld</p>
         )}
       </div>
     </div>
