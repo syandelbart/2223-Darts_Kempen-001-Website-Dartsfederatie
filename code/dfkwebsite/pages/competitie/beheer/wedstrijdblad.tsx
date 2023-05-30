@@ -338,23 +338,6 @@ const WedstrijdbladBeheer: NextPage = () => {
         {getRow(0, 2, true)}
         {getRow(0, 3, false)}
 
-        {scores.map((score, index) => {
-          return (
-            <>
-              <p>5</p>
-              <p className="col-span-2">Naam Voornaam</p>
-              <p>0</p>
-              <p>0</p>
-              <p>0</p>
-              <p>0</p>
-              <p>0</p>
-              <p>0</p>
-              <p className="col-span-2">Naam Voornaam</p>
-              <p>1</p>
-            </>
-          );
-        })}
-
         <p className="text-lg">180</p>
         <p className="text-lg col-span-2">DUBBELS</p>
         <p className="text-lg">KLEG</p>
