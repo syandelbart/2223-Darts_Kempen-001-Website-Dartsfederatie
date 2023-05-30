@@ -22,16 +22,23 @@ const Speeldagen: NextPage = () => {
       </h1>
       {activeCompetition?.length > 0 ? (
         activeCompetition.map((competition) => (
-          <div className="flex flex-col text-white" key={competition.competitionID}>
-            <p key={competition.competitionID} className="">
-              {competition.competitionID} {competition.classification}
-            </p>
+          <div
+            className="flex flex-col text-white"
+            key={competition.competitionID}
+          >
+            <h2 key={competition.competitionID} className="text-3xl">
+              Competitie
+              <span className="text-base">
+                ({competition.classification.toLowerCase()}{" "}
+                {new Date(competition.startDate).getFullYear()})
+              </span>
+            </h2>
 
             {competition?.playdays ? (
               competition.playdays?.map((playday, i) => {
                 return (
                   <div key={i}>
-                    <h2 className="text-2xl my-3">Speeldag {i + 1}</h2>
+                    <h3 className="text-xl my-3">Speeldag {i + 1}</h3>
                     <ul>
                       {playday.map((match, j) => {
                         return (
