@@ -14,9 +14,19 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
     const team: Team = JSON.parse(
       await getRecordByIdOrError(teamId, env.TEAMS)
     );
+
     const teamFront: TeamFront = {
       ...team,
-      captain: JSON.parse(await env.PLAYERS.get(team.captainID)),
+      ...(team.captainID && {
+        captain: JSON.parse(await env.PLAYERS.get(team.captainID)),
+      }),
+      ...(team.playerIDs && {
+        players: await Promise.all(
+          team.playerIDs.map(async (playerID) => {
+            return JSON.parse(await env.PLAYERS.get(playerID));
+          })
+        ),
+      }),
     };
 
     return new Response(JSON.stringify(teamFront), {
