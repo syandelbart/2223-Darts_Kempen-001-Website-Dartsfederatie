@@ -29,7 +29,9 @@ const SearchableCardGrid: FunctionComponent<SearchableCardGridData> = ({
           Geen items gevonden
         </h1>
       ) : (
-        filteredItems.map((item) => (
+        filteredItems.filter((item) => {
+          if (!item.deleted) return item;
+        }).map((item) => (
           <Card key={item.name}>{children(item)}</Card>
         ))
       )}
