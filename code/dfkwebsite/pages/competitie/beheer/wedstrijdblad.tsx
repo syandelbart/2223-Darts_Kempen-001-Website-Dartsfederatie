@@ -176,49 +176,107 @@ const WedstrijdbladBeheer: NextPage = () => {
 
   const getRow = (series: number, index: number, reversed: boolean) => {
     return (
-      <div
-        className={`grid col-span-6 grid-cols-6 children:px-3 ${
-          reversed ? "" : ""
-        }`}
-      >
-        <DefaultInput
-          name="180"
-          placeholder="180"
-          onChange={(e) =>
-            handleChange(e.target.value, series, index, "oneEighty")
-          }
-        />
+      <div className="grid col-span-6 grid-cols-6 children:px-3">
+        {reversed ? (
+          <>
+            <DefaultInput
+              id={`${series}-${index}-180`}
+              name="180"
+              placeholder="180"
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "oneEighty")
+              }
+            />
 
-        <p className="col-span-2">
-          <DefaultSelect
-            labelEnabled={false}
-            options={teamHomeSelects ?? []}
-            name="player"
-            search
-            onSelectChange={(value: SelectOption, action: any) => {
-              handleChange(value.value, series, index, "playerID");
-              console.log("test");
-              console.log(value.value);
-            }}
-          />
-        </p>
-        <DefaultInput
-          name="kleg"
-          placeholder="kleg"
-          onChange={(e) => handleChange(e.target.value, series, index, "kleg")}
-        />
-        <DefaultInput
-          name="hu"
-          placeholder="hu"
-          onChange={(e) => handleChange(e.target.value, series, index, "hu")}
-        />
-        <DefaultInput
-          name="score"
-          placeholder="score"
-          onChange={(e) =>
-            handleChange(e.target.value, series, index, "bestOf")
-          }
-        />
+            <p className="col-span-2">
+              <DefaultSelect
+                id={`${series}-${index}-player`}
+                labelEnabled={false}
+                options={teamHomeSelects ?? []}
+                name="player"
+                search
+                onSelectChange={(value: SelectOption, action: any) => {
+                  handleChange(value.value, series, index, "playerID");
+                  console.log("test");
+                  console.log(value.value);
+                }}
+              />
+            </p>
+            <DefaultInput
+              id={`${series}-${index}-kleg`}
+              name="kleg"
+              placeholder="kleg"
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "kleg")
+              }
+            />
+            <DefaultInput
+              id={`${series}-${index}-hu`}
+              name="hu"
+              placeholder="hu"
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "hu")
+              }
+            />
+            <DefaultInput
+              id={`${series}-${index}-score`}
+              name="score"
+              placeholder="score"
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "bestOf")
+              }
+            />
+          </>
+        ) : (
+          <>
+            <DefaultInput
+              id={`${series}-${index}-score`}
+              name="score"
+              placeholder="score"
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "bestOf")
+              }
+            />
+            <DefaultInput
+              id={`${series}-${index}-hu`}
+              name="hu"
+              placeholder="hu"
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "hu")
+              }
+            />
+            <DefaultInput
+              id={`${series}-${index}-kleg`}
+              name="kleg"
+              placeholder="kleg"
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "kleg")
+              }
+            />
+            <p className="col-span-2">
+              <DefaultSelect
+                id={`${series}-${index}-player`}
+                labelEnabled={false}
+                options={teamHomeSelects ?? []}
+                name="player"
+                search
+                onSelectChange={(value: SelectOption, action: any) => {
+                  handleChange(value.value, series, index, "playerID");
+                  console.log("test");
+                  console.log(value.value);
+                }}
+              />
+            </p>
+            <DefaultInput
+              id={`${series}-${index}-180`}
+              name="180"
+              placeholder="180"
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "oneEighty")
+              }
+            />
+          </>
+        )}
       </div>
     );
   };
@@ -226,9 +284,13 @@ const WedstrijdbladBeheer: NextPage = () => {
   return (
     <div className="text-white">
       <div className="grid grid-cols-2 bg-nav-background children:border children:pl-5 children:py-2">
-        <p className="col-span-2 text-center font-semibold text-3xl pl-0">
-          Reeks: Competitie 2022 - 2023 - Provinciaal Speeldag: Speeldag 01
+        {/* <p className="col-span-2 text-center font-semibold text-3xl pl-0">
+        Reeks: Competitie 2022 - 2023 - Provinciaal Speeldag: Speeldag 01
           Datum: 30-09-2022
+        </p> */}
+        <p className="col-span-2 text-center font-semibold text-3xl pl-0">
+          Reeks: / - {competition?.startDate} - {competition?.classification}{" "}
+          Speeldag: / - Datum: /
         </p>
         <p className="text-lg font-semibold">THUISSPELERS: {teamHome?.name}</p>
         <p className="text-lg font-semibold">BEZOEKERS: {teamAway?.name}</p>
