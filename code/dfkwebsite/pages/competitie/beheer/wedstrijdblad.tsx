@@ -160,8 +160,8 @@ const WedstrijdbladBeheer: NextPage = () => {
 
   const getRow = (series: number, index: number, reversed: boolean) => {
     return (
-      <div className="grid col-span-6 grid-cols-6 grid-flow-row-dense">
-        <p>5</p>
+      <div className={`grid col-span-6 grid-cols-6 ${reversed ? "" : ""}`}>
+        <DefaultInput name="180" placeholder="180" />
         <p className="col-span-2">
           <DefaultSelect
             labelEnabled={false}
@@ -169,9 +169,9 @@ const WedstrijdbladBeheer: NextPage = () => {
             name="player"
           />
         </p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
+        <DefaultInput name="kleg" placeholder="kleg" />
+        <DefaultInput name="hu" placeholder="hu" />
+        <DefaultInput name="score" placeholder="score" />
       </div>
     );
   };
@@ -224,7 +224,10 @@ const WedstrijdbladBeheer: NextPage = () => {
         <p className="text-lg">180</p>
 
         {getRow(0, 0, true)}
+        {getRow(0, 0, false)}
+
         {getRow(0, 0, true)}
+        {getRow(0, 0, false)}
 
         {scores.map((score, index) => {
           return (
@@ -243,17 +246,6 @@ const WedstrijdbladBeheer: NextPage = () => {
           );
         })}
 
-        <p>5</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>1</p>
-
         <p className="text-lg">180</p>
         <p className="text-lg col-span-2">DUBBELS</p>
         <p className="text-lg">KLEG</p>
@@ -264,45 +256,19 @@ const WedstrijdbladBeheer: NextPage = () => {
         <p className="text-lg col-span-2">DUBBELS</p>
         <p className="text-lg">180</p>
 
-        <p>1</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="row-span-2">0</p>
-        <p className="row-span-2">0</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>1</p>
+        {getRow(0, 0, true)}
+        {getRow(0, 0, false)}
 
-        <p>1</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>1</p>
+        {getRow(0, 0, true)}
+        {getRow(0, 0, false)}
 
-        <p>1</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="row-span-2">0</p>
-        <p className="row-span-2">0</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>1</p>
+        {getRow(0, 0, true)}
+        {getRow(0, 0, false)}
+        {getRow(0, 0, true)}
+        {getRow(0, 0, false)}
 
-        <p>1</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>1</p>
+        {getRow(0, 0, true)}
+        {getRow(0, 0, false)}
 
         <p className="text-lg">180</p>
         <p className="text-lg col-span-2">ENKELSPELEN</p>
@@ -314,27 +280,11 @@ const WedstrijdbladBeheer: NextPage = () => {
         <p className="text-lg col-span-2">ENKELSPELEN</p>
         <p className="text-lg">180</p>
 
-        <p>1</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>1</p>
+        {getRow(0, 0, true)}
+        {getRow(0, 0, false)}
 
-        <p>1</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>1</p>
+        {getRow(0, 0, true)}
+        {getRow(0, 0, false)}
 
         <p className="text-lg col-span-5 border-b-0">Notities</p>
         <p className="text-lg col-span-2">EINDUITSLAG</p>
