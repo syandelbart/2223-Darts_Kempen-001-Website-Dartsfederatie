@@ -6,7 +6,6 @@ export enum CompetitionSubmission {
   CLASSIFICATION = "classification",
   STARTDATE = "startdate",
   ENDDATE = "enddate",
-  AMOUNT_TEAMS = "amountteams",
   TEAMS = "teamsID",
   PLAYDAYS = "playdays",
 }

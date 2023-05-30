@@ -1,15 +1,35 @@
 import { NextPage } from "next";
 import DefaultCheckbox from "../../../components/DefaultCheckbox";
 import { useEffect, useState } from "react";
-import { getParams } from "../../../modules/general";
+import { SelectOption, getParams } from "../../../modules/general";
 import { useRouter } from "next/router";
-import { Competition, Playday } from "../../../types/competition";
+import {
+  Competition,
+  Playday,
+  SCORETYPE,
+  Score,
+} from "../../../types/competition";
 import { TableData } from "./playdays";
+import { TeamFront } from "../../../types/team";
+import DefaultInput from "../../../components/DefaultInput";
+import DefaultSelect from "../../../components/DefaultSelect";
 
 const WedstrijdbladBeheer: NextPage = () => {
   const [competition, setCompetition] = useState<Competition | null>(null);
   const [playday, setPlayday] = useState<TableData[]>([]);
-  const [match, setMatch] = useState<TableData | null>(null);
+  const [teamHome, setHome] = useState<TeamFront | null>(null);
+  const [teamHomeSelects, setTeamHomeSelects] = useState<SelectOption[] | null>(
+    null
+  );
+  const [teamAway, setAway] = useState<TeamFront | null>(null);
+  const [teamAwaySelects, setTeamAwaySelects] = useState<SelectOption[] | null>(
+    null
+  );
+
+  const [matchTeams, setMatchTeams] = useState<{
+    team1: TeamFront | null;
+    team2: TeamFront | null;
+  }>({ team1: null, team2: null });
 
   const router = useRouter();
   useEffect(() => {
@@ -70,18 +90,50 @@ const WedstrijdbladBeheer: NextPage = () => {
           return;
         }
 
-        setMatch(
+        let match =
           parsedCompetition.playdays[params.playdayNumber - 1][
             params.matchNumber - 1
-          ]
-        );
+          ];
 
-        console.log(
-          params.matchNumber,
-          parsedCompetition.playdays[params.playdayNumber - 1][
-            params.matchNumber - 1
-          ]
-        );
+        console.log(params.matchNumber, match);
+
+        fetch(`/api/teams/${match?.team1}`)
+          .then((res) => res.json())
+          .then((parsedTeams: TeamFront) => {
+            setHome(parsedTeams);
+            setTeamHomeSelects(
+              parsedTeams?.players?.map((player) => {
+                return {
+                  label: `${player.firstName} ${player.lastName}`,
+                  value: player.playerID,
+                };
+              }) ?? []
+            );
+          })
+          .catch((err) => {
+            console.log("Error while fetching team");
+            console.log(err);
+          });
+
+        fetch(`/api/teams/${match?.team2}`)
+          .then((res) => res.json())
+          .then((parsedTeams: TeamFront) => {
+            setAway(parsedTeams);
+            setTeamAwaySelects(
+              parsedTeams?.players?.map((player) => {
+                return {
+                  label: `${player.firstName} ${player.lastName}`,
+                  value: player.playerID,
+                };
+              }) ?? []
+            );
+          })
+          .catch((err) => {
+            console.log("Error while fetching team");
+            console.log(err);
+          });
+
+        console.log(matchTeams);
 
         return parsedCompetition;
       })
@@ -92,6 +144,38 @@ const WedstrijdbladBeheer: NextPage = () => {
       });
   }, []);
 
+  const [scores, setScores] = useState<Score[][]>([]);
+
+  const handleChange = (
+    e: any,
+    series: number,
+    index: number,
+    type: SCORETYPE
+  ) => {
+    let newScores: Score[][] = JSON.parse(JSON.stringify(scores));
+
+    setScores(newScores);
+    console.log(newScores);
+  };
+
+  const getRow = (series: number, index: number, reversed: boolean) => {
+    return (
+      <div className="grid col-span-6 grid-cols-6 grid-flow-row-dense">
+        <p>5</p>
+        <p className="col-span-2">
+          <DefaultSelect
+            labelEnabled={false}
+            options={teamHomeSelects ?? []}
+            name="player"
+          />
+        </p>
+        <p>0</p>
+        <p>0</p>
+        <p>0</p>
+      </div>
+    );
+  };
+
   return (
     <div className="text-white">
       <div className="grid grid-cols-2 bg-nav-background children:border children:pl-5 children:py-2">
@@ -99,20 +183,31 @@ const WedstrijdbladBeheer: NextPage = () => {
           Reeks: Competitie 2022 - 2023 - Provinciaal Speeldag: Speeldag 01
           Datum: 30-09-2022
         </p>
-        <p className="text-lg font-semibold">THUISSPELERS: {match?.team1}</p>
-        <p className="text-lg font-semibold">BEZOEKERS: DFK 2</p>
+        <p className="text-lg font-semibold">THUISSPELERS: {teamHome?.name}</p>
+        <p className="text-lg font-semibold">BEZOEKERS: {teamAway?.name}</p>
         <p className="text-xl bg-background">NAAM EN VOORNAAM</p>
         <p className="text-xl bg-background">NAAM EN VOORNAAM</p>
-        {[...Array(12)].map((e, i) => {
-          return (
-            <>
-              <p>{i + 1}. Naam Voornaam</p>
-              <p>{i + 1}. Naam Voornaam</p>
-            </>
-          );
-        })}
-      </div>
 
+        <div>
+          {teamHome?.players?.map((player) => {
+            return (
+              <p key={player.playerID}>
+                {player.firstName} {player.lastName}
+              </p>
+            );
+          })}
+        </div>
+
+        <div>
+          {teamAway?.players?.map((player) => {
+            return (
+              <p key={player.playerID}>
+                {player.firstName} {player.lastName}
+              </p>
+            );
+          })}
+        </div>
+      </div>
       <div className="grid grid-cols-12 bg-nav-background children:border children:py-2 children:text-center">
         <p className="text-xl col-span-5 bg-background">NAAM EN VOORNAAM</p>
         <p className="text-xl col-span-2 bg-background">UITSLAG</p>
@@ -128,18 +223,27 @@ const WedstrijdbladBeheer: NextPage = () => {
         <p className="text-lg col-span-2">ENKELSPELEN</p>
         <p className="text-lg">180</p>
 
-        <p>1</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p>0</p>
-        <p className="col-span-2">Naam Voornaam</p>
-        <p>1</p>
+        {getRow(0, 0, true)}
+        {getRow(0, 0, true)}
 
-        <p>1</p>
+        {scores.map((score, index) => {
+          return (
+            <>
+              <p>5</p>
+              <p className="col-span-2">Naam Voornaam</p>
+              <p>0</p>
+              <p>0</p>
+              <p>0</p>
+              <p>0</p>
+              <p>0</p>
+              <p>0</p>
+              <p className="col-span-2">Naam Voornaam</p>
+              <p>1</p>
+            </>
+          );
+        })}
+
+        <p>5</p>
         <p className="col-span-2">Naam Voornaam</p>
         <p>0</p>
         <p>0</p>

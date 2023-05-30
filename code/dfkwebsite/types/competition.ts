@@ -35,12 +35,12 @@ export type Playday = {
   competitionID: string;
 };
 
-enum SCORETYPE {
+export enum SCORETYPE {
   ENKELSPELEN = 0,
   DUBBELS = 1,
 }
 
-type Score = {
+export type Score = {
   playerID: string;
   oneEighty: number;
   bestOf: number;
@@ -51,9 +51,9 @@ type Score = {
 
 export type Game = {
   gameID: string;
-  playdayID: number;
-  teamHome?: string;
-  teamAway?: string;
+  playdayNumber: number;
+  teamHomeID?: string;
+  teamAwayID?: string;
 
   notes: string;
   filledDate: number;
@@ -63,3 +63,8 @@ export type Game = {
   dateLastModified: number;
   scores: Score[][];
 };
+
+export interface GameFront extends Game {
+  teamHome: Team;
+  teamAway: Team;
+}

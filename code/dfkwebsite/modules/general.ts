@@ -297,8 +297,6 @@ export const populateKV = async () => {
     },
   }).then((res) => res.json())) as Player[];
 
-  console.log(isPopulated);
-
   if (isPopulated.length > 0) return;
 
   // populate /api/players

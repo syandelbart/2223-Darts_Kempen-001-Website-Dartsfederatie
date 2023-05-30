@@ -52,7 +52,10 @@ const GeneratePlaydays: NextPage = () => {
     for (let i = 0; i < maxRows; i++) {
       const row: TableData[] = [];
       for (let j = 0; j < teamCount; j++) {
-        row.push({ team1: "", team2: "" });
+        row.push({
+          team1: competitionInfo?.playdays?.[i][j].team1 ?? "",
+          team2: competitionInfo?.playdays?.[i][j].team2 ?? "",
+        });
       }
       newData.push(row);
     }
@@ -224,7 +227,11 @@ const GeneratePlaydays: NextPage = () => {
                     options={competitionTeams}
                     search
                     value={{
-                      label: tableData[rowIndex][columnIndex].team1,
+                      label: competitionTeams.find(
+                        (competitionTeam) =>
+                          competitionTeam.value ===
+                          tableData[rowIndex][columnIndex].team1
+                      )?.label,
                       value: tableData[rowIndex][columnIndex].team1,
                     }}
                     onSelectChange={(
@@ -246,6 +253,14 @@ const GeneratePlaydays: NextPage = () => {
                     options={competitionTeams}
                     labelEnabled={false}
                     search
+                    value={{
+                      label: competitionTeams.find(
+                        (competitionTeam) =>
+                          competitionTeam.value ===
+                          tableData[rowIndex][columnIndex].team2
+                      )?.label,
+                      value: tableData[rowIndex][columnIndex].team2,
+                    }}
                     onSelectChange={(
                       selectedOption: SelectOption,
                       action: { action: string; name: string }
