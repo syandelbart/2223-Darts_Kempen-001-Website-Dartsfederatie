@@ -34,18 +34,21 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
 
   return (
     <div className="flex flex-col">
-      <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
-        {label ?? name}
-        {regex && (
-          <span
-            className="text-sm"
-            style={{ color: isValidRegex() ? "greenyellow" : "red" }}
-          >
-            {isValidRegex() ? "Geldig" : "Ongeldig"}
-          </span>
-        )}
-        {!notRequired && <span className="text-sm align-top">*</span>}
-      </label>
+      {label && (
+        <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
+          {label ?? name}
+          {regex && (
+            <span
+              className="text-sm"
+              style={{ color: isValidRegex() ? "greenyellow" : "red" }}
+            >
+              {isValidRegex() ? "Geldig" : "Ongeldig"}
+            </span>
+          )}
+          {!notRequired && <span className="text-sm align-top">*</span>}
+        </label>
+      )}
+
       {!textArea ? (
         <input
           type={type}
