@@ -1,6 +1,6 @@
 import { clubRegexPatterns } from "../../../../modules/club";
 import { changeData, getRecordByIdOrError } from "../../../../modules/general";
-import { Club } from "../../../../types/club";
+import { Club, ClubFront } from "../../../../types/club";
 import { PagesEnv } from "../../env";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
@@ -10,9 +10,25 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const clubId = params.id.toString();
-    const club = JSON.parse(await getRecordByIdOrError(clubId, env.CLUBS));
+    const club: Club = JSON.parse(
+      await getRecordByIdOrError(clubId, env.CLUBS)
+    );
 
-    return new Response(JSON.stringify(club), {
+    const clubFront: ClubFront = {
+      ...club,
+      ...(club.contactPersonID && {
+        contactPerson: JSON.parse(await env.PLAYERS.get(club.contactPersonID)),
+      }),
+      ...(club.teamIDs && {
+        teams: await Promise.all(
+          club.teamIDs.map(async (teamID) => {
+            return JSON.parse(await env.TEAMS.get(teamID));
+          })
+        ),
+      }),
+    };
+
+    return new Response(JSON.stringify(clubFront), {
       headers: {
         "content-type": "application/json",
       },
