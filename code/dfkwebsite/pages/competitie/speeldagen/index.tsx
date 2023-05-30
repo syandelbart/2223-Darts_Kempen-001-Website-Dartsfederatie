@@ -22,8 +22,8 @@ const Speeldagen: NextPage = () => {
       </h1>
       {activeCompetition?.length > 0 ? (
         activeCompetition.map((competition) => (
-          <div className="flex flex-col" key={competition.competitionID}>
-            <p key={competition.competitionID}>
+          <div className="flex flex-col text-white" key={competition.competitionID}>
+            <p key={competition.competitionID} className="">
               {competition.competitionID} {competition.classification}
             </p>
 
@@ -31,16 +31,17 @@ const Speeldagen: NextPage = () => {
               competition.playdays?.map((playday, i) => {
                 return (
                   <div key={i}>
-                    <h2>Speeldag {i + 1}</h2>
+                    <h2 className="text-2xl my-3">Speeldag {i + 1}</h2>
                     <ul>
                       {playday.map((match, j) => {
                         return (
-                          <li key={match.team1 + match.team2}>
+                          <li key={match.team1 + match.team2} className="my-5">
                             {match.team1} vs {match.team2}
                             <Link
                               href={`/competitie/beheer/wedstrijdblad?competitionID=${
                                 competition.competitionID
                               }&playdayNumber=${i + 1}&matchNumber=${j + 1}`}
+                              className="ml-3 bg-blue-500 hover:bg-blue-600 font-bold py-2 px-4 rounded"
                             >
                               Scores ingeven
                             </Link>
