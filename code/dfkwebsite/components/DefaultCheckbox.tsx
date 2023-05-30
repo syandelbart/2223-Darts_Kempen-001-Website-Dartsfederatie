@@ -45,7 +45,7 @@ const DefaultCheckbox: FunctionComponent<DefaultCheckboxData> = ({
         type="checkbox"
         name={name}
         value={value}
-        id={name}
+        id={id ? id : name}
         onChange={onChange}
         className="bg-gray-200 p-2 text-black"
       />
