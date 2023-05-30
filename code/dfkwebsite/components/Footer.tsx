@@ -34,18 +34,17 @@ const Footer: FunctionComponent = () => {
           </ul>
         </div>
       </div>
-
       <div className="flex flex-col md:flex-row items-center justify-between text-1xl mt-16  text-center">
         <p className="font-medium">
           Darts Federatie Kempen &copy; {new Date().getFullYear()}
         </p>
         <p className="pt-8">
           Gemaakt door{" "}
-          <Link href={"/"} className="hover:text-accent">
+          <Link href={"https://bryandeckers.com"} target="_blank"  className="hover:text-accent">
             Bryan Deckers
           </Link>{" "}
           en{" "}
-          <Link href={"/"} className="hover:text-accent">
+          <Link href={"https://syandelbart.com"} target="_blank" className="hover:text-accent">
             Syan Delbart
           </Link>
         </p>

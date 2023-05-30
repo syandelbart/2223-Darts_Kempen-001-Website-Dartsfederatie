@@ -1,89 +1,116 @@
-import { Icon } from "@iconify/react";
-import { FunctionComponent } from "react";
+import { Dispatch, FunctionComponent, useState } from "react";
+import { playerRegexPatterns } from "../modules/player";
+import * as formHandler from "../modules/formHandler";
+import Modal from "./Modal";
+import DefaultInput from "./DefaultInput";
+import DefaultCheckbox from "./DefaultCheckbox";
+import InformationBox from "./InformationBox";
+import { Player, PlayerFront } from "../types/player";
+import * as dummyData from "../data";
+import SubmitButton from "./SubmitButton";
 
 type AddSpelerModalData = {
   addModalOpen: boolean;
   setAddModalOpen: any;
+  players: Player[];
+  setPlayers: Dispatch<React.SetStateAction<PlayerFront[]>>;
 };
 
 const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
   props: AddSpelerModalData
 ) => {
+  const [formValues, setFormValues] = useState<{ [key: string]: string }>({
+    firstname: "",
+    lastname: "",
+    phone: "",
+    allowed: "",
+  });
+
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
+    boolean | null
+  >(false);
+  const [informationBoxMessage, setInformationBoxMessage] = useState("");
+
+  const handleChange = (event: any) => {
+    formHandler.handleChange(event, setFormValues, formValues);
+  };
+
+  const handleSubmit = async (event: any) => {
+    let player: Player | null = await formHandler.handleSubmit(
+      event,
+      formValues,
+      playerRegexPatterns,
+      "/api/players",
+      setInformationBoxMessage,
+      setHandleSubmitSuccess,
+      dummyData.players[0],
+      process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
+    );
+
+    if (!player) return;
+
+    setInformationBoxMessage(
+      "Speler succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
+    );
+    props.setPlayers((players) => {
+      if (!player) return players;
+      // The new Player will be of type Player, but we want it to be of type PlayerFront
+      return [...players, player as PlayerFront];
+    });
+    setTimeout(() => {
+      props.setAddModalOpen(false);
+      setInformationBoxMessage("")
+    }, 5000);
+  };
+
   return (
-    <div className={`${props.addModalOpen ? "" : "hidden"}`}>
-      <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50"></div>
-      <div className="fixed top-0 left-0 w-full h-full z-50 flex justify-center items-center">
-        <div className="bg-background w-1/4 rounded-2xl p-10">
-          <div className="flex justify-between items-center text-white">
-            <h1 className="text-4xl font-semibold">Speler toevoegen</h1>
-            <Icon
-              icon="mdi:close"
-              className="text-3xl hover:text-red-500 hover:cursor-pointer"
-              onClick={() => props.setAddModalOpen(!props.addModalOpen)}
-            />
-          </div>
-          <form
-            className="flex flex-col"
-            action="/api/player/add"
-            method="POST"
-            target="_self"
-            encType="multipart/form-data"
-          >
-            <label
-              htmlFor="firstname"
-              className="text-xl text-white mt-16 mb-2"
-            >
-              Voornaam
-            </label>
-            <input
-              type="text"
-              name="firstname"
-              id="firstname"
-              placeholder="Voornaam"
-              className="bg-gray-200 p-2"
-            />
-            <label htmlFor="lastname" className="text-xl text-white mt-5 mb-2">
-              Achternaam
-            </label>
-            <input
-              type="text"
-              name="lastname"
-              id="lastname"
-              placeholder="Achternaam"
-              className="bg-gray-200 p-2"
-            />
-            <label htmlFor="phone" className="text-xl text-white mt-5 mb-2">
-              Telefoonnummer
-            </label>
-            <input
-              type="text"
-              name="phone"
-              id="phone"
-              placeholder="Telefoonnummer"
-              className="bg-gray-200 p-2"
-            />
-            <div className="mt-5 mb-2">
-              <label htmlFor="allowed" className="text-xl text-white mr-3">
-                Speelgerechtigd
-              </label>
-              <input
-                type="checkbox"
-                name="allowed"
-                id="allowed"
-                placeholder="Speelgerechtigd"
-                className="bg-gray-200 p-2"
-              />
-            </div>
-            <button
-              type="submit"
-              className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-            >
-              Aanmaken
-            </button>
-          </form>
+    <Modal
+      title="Speler toevoegen"
+      modalOpen={props.addModalOpen}
+      setModalOpen={props.setAddModalOpen}
+    >
+      <div className="flex flex-col">
+        <InformationBox
+          success={handleSubmitSuccess}
+          show={informationBoxMessage !== ""}
+          onClose={() => setInformationBoxMessage("")}
+        >
+          {informationBoxMessage}
+        </InformationBox>
+        <DefaultInput
+          name="firstname"
+          label="Voornaam"
+          placeholder="Voornaam"
+          value={formValues.firstname}
+          onChange={handleChange}
+        />
+
+        <DefaultInput
+          name="lastname"
+          label="Achternaam"
+          placeholder="Achternaam"
+          value={formValues.lastname}
+          onChange={handleChange}
+        />
+        <DefaultInput
+          name="phone"
+          label="Telefoonnummer"
+          placeholder="Telefoonnummer"
+          value={formValues.phone}
+          onChange={handleChange}
+          notRequired={true}
+        />
+        <div className="mt-5 mb-2">
+          <DefaultCheckbox
+            label="Speelgerechtigd"
+            name="allowed"
+            onChange={handleChange}
+            notRequired={true}
+          />
         </div>
+        <SubmitButton handleSubmit={handleSubmit} />
       </div>
-    </div>
+    </Modal>
   );
 };
 

@@ -1,11 +1,16 @@
 export interface PagesEnv {
     NEWS: KVNamespace;
-    PLAYER: KVNamespace;
+    PLAYERS: KVNamespace;
     CLUBS: KVNamespace;
     ADDRESS: KVNamespace;
     COMPETITION: KVNamespace;
     COMPETITION_SEASON: KVNamespace;
     FINE: KVNamespace;
-    TEAM: KVNamespace;
+    TEAMS: KVNamespace;
     GAME: KVNamespace;
+    POSTS: KVNamespace;
+    MATCHES: KVNamespace;
+    DOCUMENTS: KVNamespace;
+    USERS: KVNamespace;
+    FINES: KVNamespace;
 }

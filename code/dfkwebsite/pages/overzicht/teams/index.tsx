@@ -1,50 +1,79 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NextPage } from "next";
-import Team from "../../../components/Team";
-import TeamModal from "../../../components/TeamModal";
-import Card from "../../../components/Card";
-import CardGrid from "../../../components/CardGrid";
-
-import teams from "../../../data";
+import * as dummyData from "../../../data";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
 import AddTeamModal from "../../../components/AddTeamModal";
+import TeamCard from "../../../components/TeamCard";
+import TeamSpelers from "../../../components/TeamSpelers";
+import { TeamFront } from "../../../types/team";
+import {
+  handleDeletePlayerFromTeam,
+  handleMakePlayerCaptain,
+} from "../../../modules/overzicht";
+import SearchableCardGrid from "../../../components/SearchableCardGrid";
+import CurrentModal from "../../../components/CurrentModal";
+import Head from "next/head";
 
 const Teams: NextPage = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
-  let results = 0;
+  const [teams, setTeams] = useState<TeamFront[]>(dummyData.teams);
+  const [currentTeam, setCurrentTeam] = useState<TeamFront | null>(null);
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_NO_API) {
+      fetch(`/api/teams`)
+        .then((teams) => teams.json())
+        .then((parsedTeams) => setTeams(parsedTeams))
+        .catch((err) => console.log(err));
+    }
+  }, []);
   return (
     <div>
-      <AddTeamModal addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
-      <OverzichtTopBar titleName="Teams" search={search} setSearch={setSearch} addButtonName="team" addModalOpen={addModalOpen} setAddModalOpen={setAddModalOpen} />
-      <TeamModal isOpen={isOpen} setIsOpen={setIsOpen} />
-      <CardGrid>
-        {teams.length === 0 ? (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen teams gevonden
-          </h1>
-        ) : (
-          teams
-            .filter((team) => {
-              if(search == "" || team.teamnaam.toLowerCase().includes(search.toLowerCase())) return team;
-              results++;
-            })
-            .map((team) => (
-              <Card>
-                <Team
-                  teamData={team}
-                  setIsOpen={setIsOpen}
-                />
-              </Card>
-            ))
-        )}
-        {results === teams.length && (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen teams gevonden
-          </h1>
-        )}
-      </CardGrid>
+      <Head>
+        <title>DFK | Teams</title>
+        <meta name="description" content="DFK teams" />
+      </Head>
+      {/* Add Team Modal */}
+      <AddTeamModal
+        addModalOpen={addModalOpen}
+        setAddModalOpen={setAddModalOpen}
+        teams={teams}
+        setTeams={setTeams}
+      />
+
+      {/* Page title, add team button and search field */}
+      <OverzichtTopBar
+        titleName="Teams"
+        setSearch={setSearch}
+        addButtonName="Team toevoegen"
+        addModalOpen={addModalOpen}
+        setAddModalOpen={setAddModalOpen}
+      />
+
+      {/* Modal for team details when you press team button */}
+      {currentTeam && (
+        <CurrentModal
+          currentObject={currentTeam}
+          title={currentTeam?.name}
+          currentModalOpen={isOpen}
+          setCurrentModal={setIsOpen}
+        />
+      )}
+
+      {/* Grid with all teams */}
+      <SearchableCardGrid items={teams} search={search}>
+        {(team: TeamFront) => {
+          return (
+            <TeamCard
+              teamData={team}
+              setCurrentTeam={setCurrentTeam}
+              setIsOpen={setIsOpen}
+            />
+          );
+        }}
+      </SearchableCardGrid>
     </div>
   );
 };
