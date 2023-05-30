@@ -22,16 +22,17 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
       await env.COMPETITION.get("activeCompetition")
     );
 
-    console.log(activeCompetitions);
-    console.log(typeof activeCompetitions);
-
-    let parsedCompetitions = await Promise.all(
-      activeCompetitions.map(async (competitionId) => {
-        let competition = await env.COMPETITION.get(competitionId);
-        if (competition) return JSON.parse(competition) as Competition;
-        return competition ? (JSON.parse(competition) as Competition) : null;
-      })
-    );
+    let parsedCompetitions = activeCompetitions
+      ? await Promise.all(
+          activeCompetitions.map(async (competitionId) => {
+            let competition = await env.COMPETITION.get(competitionId);
+            if (competition) return JSON.parse(competition) as Competition;
+            return competition
+              ? (JSON.parse(competition) as Competition)
+              : null;
+          })
+        )
+      : [];
 
     parsedCompetitions = parsedCompetitions.filter(
       (competition) => competition !== null

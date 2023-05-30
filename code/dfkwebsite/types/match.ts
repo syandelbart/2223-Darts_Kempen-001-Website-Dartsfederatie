@@ -1,3 +1,8 @@
-export type Match = {};
+import { Score } from "./competition";
 
-export interface MatchFront extends Match {}
+export type Match = {
+  scores: Score[][];
+  deleted?: boolean;
+};
+
+// export interface MatchFront extends Match {}

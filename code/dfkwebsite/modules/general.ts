@@ -2,6 +2,8 @@ import * as dummyData from "../data";
 import { Club } from "../types/club";
 import { CLASSIFICATION, COMPETITION_TYPE } from "../types/competition";
 import { Player } from "../types/player";
+import { Team } from "../types/team";
+import { CompetitionSubmission } from "./competition";
 import { fieldInformation } from "./fieldsCheck";
 import lodash from "lodash";
 
@@ -11,6 +13,8 @@ const availableParams = [
   { name: "cursor", regex: /^[a-zA-Z]*$/ },
   // Competition
   { name: "competitionID" },
+  { name: "playdayNumber", regex: /^[0-9]+$/, castFunction: Number },
+  { name: "matchNumber", regex: /^[0-9]+$/, castFunction: Number },
   { name: "startDate" },
   { name: "endDate" },
   { name: "amountTeams", regex: /^[0-9]+$/, castFunction: Number },
@@ -23,6 +27,8 @@ type urlParamsType = {
   prefix: string;
   // Competition
   competitionID?: string;
+  playdayNumber?: number;
+  matchNumber?: number;
   amountTeams?: number;
   startDate: string;
   endDate: string;
@@ -309,8 +315,6 @@ export const populateKV = async () => {
     },
   }).then((res) => res.json())) as Player[];
 
-  console.log(isPopulated);
-
   if (isPopulated.length > 0) return;
 
   // populate /api/players
@@ -405,7 +409,7 @@ export const populateKV = async () => {
   team2.append("captainID", playerIDs[2]);
 
   let teams = [team1, team2];
-  // let teamIDs = [];
+  let teamIDs = [];
 
   for (const team of teams) {
     const response = await fetch("/api/teams", {
@@ -416,16 +420,51 @@ export const populateKV = async () => {
       console.log("Error populating KV");
       return;
     } else {
-      // const data = (await response.json()) as Team;
-      // teamIDs.push(data.teamID);
+      const data = (await response.json()) as Team;
+      teamIDs.push(data.teamID);
     }
   }
 
   // populate /api/competition using CompetitionSubmission as reference
   let competition1 = new FormData();
-  competition1.append("name", "Competition 1");
   competition1.append("type", COMPETITION_TYPE.COMPETITION);
   competition1.append("classification", CLASSIFICATION.PROVINCIAAL);
   competition1.append("startdate", "2021-01-01");
-  competition1.append("enddate", "2021-12-31");
+  competition1.append("enddate", "2021-01-31");
+
+  competition1.append("teamIDs", JSON.stringify([teamIDs[0], teamIDs[1]]));
+  competition1.append(
+    "playdays",
+    JSON.stringify([
+      [
+        { team1: teamIDs[0], team2: teamIDs[1] },
+        { team1: teamIDs[0], team2: teamIDs[1] },
+      ],
+      [
+        { team1: teamIDs[0], team2: teamIDs[1] },
+        { team1: teamIDs[0], team2: teamIDs[1] },
+      ],
+      [
+        { team1: teamIDs[1], team2: teamIDs[0] },
+        { team1: teamIDs[1], team2: teamIDs[0] },
+      ],
+      [
+        { team1: teamIDs[1], team2: teamIDs[0] },
+        { team1: teamIDs[1], team2: teamIDs[0] },
+      ],
+    ])
+  );
+
+  let competitions = [competition1];
+
+  for (const competition of competitions) {
+    const response = await fetch("/api/competition", {
+      method: "POST",
+      body: competition,
+    });
+    if (!response.ok) {
+      console.log("Error populating KV");
+      return;
+    }
+  }
 };

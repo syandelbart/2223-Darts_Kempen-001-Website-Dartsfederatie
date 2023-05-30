@@ -6,7 +6,6 @@ export enum CompetitionSubmission {
   CLASSIFICATION = "classification",
   STARTDATE = "startdate",
   ENDDATE = "enddate",
-  AMOUNT_TEAMS = "amountteams",
   TEAMS = "teamsID",
   PLAYDAYS = "playdays",
 }
@@ -30,6 +29,17 @@ export const competitionRegexPatterns: { [key: string]: fieldInformation } = {
     castFunction: JSON.parse,
   },
   [CompetitionSubmission.PLAYDAYS]: {
+    required: false,
+    castFunction: JSON.parse,
+  },
+};
+
+export enum MATCH_SUBMISSION {
+  SCORES = "scores",
+}
+
+export const matchRegexPatterns: { [key: string]: fieldInformation } = {
+  [MATCH_SUBMISSION.SCORES]: {
     required: false,
     castFunction: JSON.parse,
   },

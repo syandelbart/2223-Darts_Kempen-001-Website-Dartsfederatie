@@ -24,14 +24,15 @@ const SearchableCardGrid: FunctionComponent<SearchableCardGridData> = ({
 
   return (
     <CardGrid>
-      {filteredItems.length === 0 ? (
+      {filteredItems.filter((filteredItem) => !filteredItem.deleted).length ===
+      0 ? (
         <h1 className="text-4xl font-extrabold text-white">
           Geen items gevonden
         </h1>
       ) : (
-        filteredItems.map((item) => (
-          <Card key={item.name}>{children(item)}</Card>
-        ))
+        filteredItems
+          .filter((filteredItem) => !filteredItem.deleted)
+          .map((item) => <Card key={item.name}>{children(item)}</Card>)
       )}
     </CardGrid>
   );

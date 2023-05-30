@@ -52,7 +52,10 @@ const GeneratePlaydays: NextPage = () => {
     for (let i = 0; i < maxRows; i++) {
       const row: TableData[] = [];
       for (let j = 0; j < teamCount; j++) {
-        row.push({ team1: "", team2: "" });
+        row.push({
+          team1: competitionInfo?.playdays?.[i][j].team1 ?? "",
+          team2: competitionInfo?.playdays?.[i][j].team2 ?? "",
+        });
       }
       newData.push(row);
     }
@@ -224,7 +227,11 @@ const GeneratePlaydays: NextPage = () => {
                     options={competitionTeams}
                     search
                     value={{
-                      label: tableData[rowIndex][columnIndex].team1,
+                      label: competitionTeams.find(
+                        (competitionTeam) =>
+                          competitionTeam.value ===
+                          tableData[rowIndex][columnIndex].team1
+                      )?.label,
                       value: tableData[rowIndex][columnIndex].team1,
                     }}
                     onSelectChange={(
@@ -246,6 +253,14 @@ const GeneratePlaydays: NextPage = () => {
                     options={competitionTeams}
                     labelEnabled={false}
                     search
+                    value={{
+                      label: competitionTeams.find(
+                        (competitionTeam) =>
+                          competitionTeam.value ===
+                          tableData[rowIndex][columnIndex].team2
+                      )?.label,
+                      value: tableData[rowIndex][columnIndex].team2,
+                    }}
                     onSelectChange={(
                       selectedOption: SelectOption,
                       action: { action: string; name: string }
@@ -265,17 +280,17 @@ const GeneratePlaydays: NextPage = () => {
         ))}
       </div>
 
-      <div>
+      <div className="flex gap-5 items-center text-white mt-10">
         <button
           type="submit"
-          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
+          className="bg-[#0A893D] rounded-lg p-3"
           onClick={handleSubmit}
           disabled={!tableFilled()}
         >
           Genereer speeldagen
         </button>
         {tableFilled() ? null : (
-          <span>De tabel is nog niet volledig ingevuld</span>
+          <p className="">De tabel is nog niet volledig ingevuld</p>
         )}
       </div>
     </div>

@@ -1,16 +1,11 @@
-import { changeData, getRecordByIdOrError } from "../../../../modules/general";
+import { matchRegexPatterns } from "../../../../../../../modules/competition";
 import {
-  CompetitionSubmission,
-  competitionRegexPatterns,
-} from "../../../../modules/competition";
-import {
-  CLASSIFICATION,
-  COMPETITION_TYPE,
-  Competition,
-  CompetitionFront,
-} from "../../../../types/competition";
-import { PagesEnv } from "../../env";
-import { checkFields } from "../../../../modules/fieldsCheck";
+  getRecordByIdOrError,
+  changeData,
+} from "../../../../../../../modules/general";
+import { Competition } from "../../../../../../../types/competition";
+import { Match } from "../../../../../../../types/match";
+import { PagesEnv } from "../../../../../env";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
   request,
@@ -19,22 +14,16 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const competitionId = params.id.toString();
-    const competition: Competition = JSON.parse(
-      await getRecordByIdOrError(competitionId, env.COMPETITION)
-    );
+    const playdayNum = params.playday.toString();
+    const matchNum = params.match.toString();
 
-    const competitionFront: CompetitionFront = {
-      ...competition,
-      ...(competition.teamsID && {
-        teams: await Promise.all(
-          competition.teamsID.map(async (teamID) => {
-            return JSON.parse(await env.TEAMS.get(teamID));
-          })
-        ),
-      }),
-    };
+    let id = `match:${competitionId}:${playdayNum}:${matchNum}`;
 
-    return new Response(JSON.stringify(competitionFront), {
+    const match = JSON.parse(await getRecordByIdOrError(id, env.COMPETITION));
+
+    console.log(match);
+
+    return new Response(JSON.stringify(match), {
       headers: {
         "content-type": "application/json",
       },
@@ -53,26 +42,38 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
   params,
 }) => {
   try {
-    const formData = await request.formData();
-
-    checkFields(formData, competitionRegexPatterns, true);
+    console.log("onRequestPut");
 
     const competitionId = params.id.toString();
-    const competition = await getRecordByIdOrError(
-      competitionId,
-      env.COMPETITION
-    );
+    const playdayNum = params.playday.toString();
+    const matchNum = params.match.toString();
 
-    const competitionData: Competition = JSON.parse(competition);
+    let id = `match:${competitionId}:${playdayNum}:${matchNum}`;
+
+    console.log("This happened");
+
+    const formData = await request.formData();
+
+    console.log("formData", formData);
+
+    // checkFields(formData, matchRegexPatterns, true);
+
+    const match = await env.COMPETITION.get(id);
+
+    const matchData: Match = match ? JSON.parse(match) : {};
+
+    console.log("matchData", matchData);
 
     const data: Competition = (await changeData(
-      competitionRegexPatterns,
-      competitionData,
+      matchRegexPatterns,
+      matchData,
       formData
     )) as Competition;
 
+    console.log(data);
+
     // Update the competition data in the KV store
-    await env.COMPETITION.put(competitionId, JSON.stringify(data));
+    await env.COMPETITION.put(id, JSON.stringify(data));
 
     const responseBody = data;
 
@@ -98,23 +99,29 @@ export const onRequestDelete: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const competitionId = params.id.toString();
-    const competition = await getRecordByIdOrError(
-      competitionId,
-      env.COMPETITION
-    );
+    const playdayNum = params.playday.toString();
+    const matchNum = params.match.toString();
 
-    const competitionData: Competition = JSON.parse(competition);
+    let id = `match:${competitionId}:${playdayNum}:${matchNum}`;
 
-    const data: Competition = {
-      ...competitionData,
+    const match = await env.COMPETITION.get(id);
+
+    if (!match) {
+      throw new Error("Match not found.");
+    }
+
+    const matchData: Match = JSON.parse(match);
+
+    const data: Match = {
+      ...matchData,
       deleted: true,
     };
 
     // Update the competition data in the KV store
-    await env.COMPETITION.put(competitionId, JSON.stringify(data));
+    await env.COMPETITION.put(id, JSON.stringify(data));
 
     const responseBody = {
-      message: "Competition deleted successfully.",
+      message: "Match deleted successfully.",
       status: 200,
     };
 

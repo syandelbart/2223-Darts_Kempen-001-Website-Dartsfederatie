@@ -11,6 +11,7 @@ type DefaultInputData = {
   regex?: RegExp;
   textArea?: boolean;
   notRequired?: boolean;
+  style?: any;
 };
 
 const DefaultInput: FunctionComponent<DefaultInputData> = ({
@@ -24,6 +25,7 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
   regex,
   textArea,
   notRequired,
+  style,
 }) => {
   const isValidRegex = () => {
     if (regex) {
@@ -33,25 +35,28 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
   };
 
   return (
-    <div className="flex flex-col">
-      <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
-        {label ?? name}
-        {regex && (
-          <span
-            className="text-sm"
-            style={{ color: isValidRegex() ? "greenyellow" : "red" }}
-          >
-            {isValidRegex() ? "Geldig" : "Ongeldig"}
-          </span>
-        )}
-        {!notRequired && <span className="text-sm align-top">*</span>}
-      </label>
+    <div className="flex flex-col" style={style}>
+      {label && (
+        <label htmlFor={name} className="text-xl text-white mt-5 mb-2">
+          {label ?? name}
+          {regex && (
+            <span
+              className="text-sm"
+              style={{ color: isValidRegex() ? "greenyellow" : "red" }}
+            >
+              {isValidRegex() ? "Geldig" : "Ongeldig"}
+            </span>
+          )}
+          {!notRequired && <span className="text-sm align-top">*</span>}
+        </label>
+      )}
+
       {!textArea ? (
         <input
           type={type}
           name={name}
           value={value}
-          id={name}
+          id={id ? id : name}
           onChange={onChange}
           placeholder={placeholder}
           className="bg-gray-200 p-2 text-black"
@@ -60,7 +65,7 @@ const DefaultInput: FunctionComponent<DefaultInputData> = ({
         <textarea
           name={name}
           value={value}
-          id={name}
+          id={id ? id : name}
           onChange={onChange}
           placeholder={placeholder}
           cols={30}
