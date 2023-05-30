@@ -14,6 +14,9 @@ import { TeamFront } from "../../../types/team";
 import DefaultInput from "../../../components/DefaultInput";
 import DefaultSelect from "../../../components/DefaultSelect";
 import { ActionMeta } from "react-select";
+import { Match } from "../../../types/match";
+import { PlayerFront } from "../../../types/player";
+import { getPlayers } from "../../../modules/player";
 
 const WedstrijdbladBeheer: NextPage = () => {
   const [competition, setCompetition] = useState<Competition | null>(null);
@@ -32,7 +35,26 @@ const WedstrijdbladBeheer: NextPage = () => {
     team2: TeamFront | null;
   }>({ team1: null, team2: null });
 
+  const handleSubmit = async () => {
+    let params = getParams(router.asPath);
+
+    let data = new FormData();
+    data.append("scores", JSON.stringify(scores));
+
+    console.log(
+      `/api/competition/${params.competitionID}/playdays/${params.playdayNumber}/match/${params.matchNumber}`
+    );
+
+    fetch(
+      `/api/competition/${params.competitionID}/playdays/${params.playdayNumber}/match/${params.matchNumber}`,
+      { method: "PUT", body: data }
+    ).catch((err) => console.log(err));
+  };
+
   const router = useRouter();
+
+  const [spelers, setSpelers] = useState<SelectOption[]>([]);
+
   useEffect(() => {
     console.log("WedstrijdbladBeheer");
     let params = getParams(router.asPath);
@@ -136,13 +158,29 @@ const WedstrijdbladBeheer: NextPage = () => {
 
         console.log(matchTeams);
 
-        setScores(
-          Array.from({ length: 3 }, () =>
-            Array.from({ length: 3 }).map(() => {
-              return {} as Score;
-            })
-          )
-        );
+        fetch(
+          `/api/competition/${params.competitionID}/playdays/${params.playdayNumber}/match/${params.matchNumber}`
+        )
+          .then((res) => res.json())
+          .then((parsedScores: Match) => {
+            if (parsedScores.scores) {
+              setScores(parsedScores.scores);
+              console.log("scores", parsedScores.scores);
+            } else {
+              setScores(
+                Array.from({ length: 3 }, () =>
+                  Array.from({ length: 10 }).map(() => {
+                    return {} as Score;
+                  })
+                )
+              );
+            }
+          })
+          .catch((err) => console.log(err));
+
+        getPlayers()
+          .then((players) => setSpelers(players))
+          .catch((err) => console.log(err));
 
         return parsedCompetition;
       })
@@ -184,6 +222,7 @@ const WedstrijdbladBeheer: NextPage = () => {
         <DefaultInput
           name="180"
           placeholder="180"
+          value={scores?.[series]?.[index]?.oneEighty}
           onChange={(e) =>
             handleChange(e.target.value, series, index, "oneEighty")
           }
@@ -195,6 +234,9 @@ const WedstrijdbladBeheer: NextPage = () => {
             options={teamHomeSelects ?? []}
             name="player"
             search
+            value={spelers.find(
+              (speler) => scores?.[series]?.[index]?.playerID === speler.value
+            )}
             onSelectChange={(value: SelectOption, action: any) => {
               handleChange(value.value, series, index, "playerID");
               console.log("test");
@@ -205,16 +247,19 @@ const WedstrijdbladBeheer: NextPage = () => {
         <DefaultInput
           name="kleg"
           placeholder="kleg"
+          value={scores?.[series]?.[index]?.kleg}
           onChange={(e) => handleChange(e.target.value, series, index, "kleg")}
         />
         <DefaultInput
           name="hu"
           placeholder="hu"
+          value={scores?.[series]?.[index]?.hu}
           onChange={(e) => handleChange(e.target.value, series, index, "hu")}
         />
         <DefaultInput
           name="score"
           placeholder="score"
+          value={scores?.[series]?.[index]?.bestOf}
           onChange={(e) =>
             handleChange(e.target.value, series, index, "bestOf")
           }
@@ -345,9 +390,9 @@ const WedstrijdbladBeheer: NextPage = () => {
         <div className="col-span-12 flex justify-center items-center">
           <DefaultCheckbox label="Definitief opslaan" name="save_permanent" />
         </div>
-        <a href="" className="text-lg col-span-12">
+        <button className="text-lg col-span-12" onClick={() => handleSubmit()}>
           Opslaan
-        </a>
+        </button>
       </div>
     </div>
   );
