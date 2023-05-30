@@ -214,56 +214,124 @@ const WedstrijdbladBeheer: NextPage = () => {
 
   const getRow = (series: number, index: number, reversed: boolean) => {
     return (
-      <div
-        className={`grid col-span-6 grid-cols-6 children:px-3 ${
-          reversed ? "" : ""
-        }`}
-      >
-        <DefaultInput
-          name="180"
-          placeholder="180"
-          value={scores?.[series]?.[index]?.oneEighty}
-          onChange={(e) =>
-            handleChange(e.target.value, series, index, "oneEighty")
-          }
-        />
+      <div className="grid col-span-6 grid-cols-6 children:px-3">
+        {!reversed ? (
+          <>
+            <DefaultInput
+              key={`${series}-${index}-180`}
+              name="180"
+              placeholder="180"
+              value={scores?.[series]?.[index]?.oneEighty}
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "oneEighty")
+              }
+            />
 
-        <p className="col-span-2">
-          <DefaultSelect
-            labelEnabled={false}
-            options={teamHomeSelects ?? []}
-            name="player"
-            search
-            value={spelers.find(
-              (speler) => scores?.[series]?.[index]?.playerID === speler.value
-            )}
-            onSelectChange={(value: SelectOption, action: any) => {
-              handleChange(value.value, series, index, "playerID");
-              console.log("test");
-              console.log(value.value);
-            }}
-          />
-        </p>
-        <DefaultInput
-          name="kleg"
-          placeholder="kleg"
-          value={scores?.[series]?.[index]?.kleg}
-          onChange={(e) => handleChange(e.target.value, series, index, "kleg")}
-        />
-        <DefaultInput
-          name="hu"
-          placeholder="hu"
-          value={scores?.[series]?.[index]?.hu}
-          onChange={(e) => handleChange(e.target.value, series, index, "hu")}
-        />
-        <DefaultInput
-          name="score"
-          placeholder="score"
-          value={scores?.[series]?.[index]?.bestOf}
-          onChange={(e) =>
-            handleChange(e.target.value, series, index, "bestOf")
-          }
-        />
+            <p className="col-span-2">
+              <DefaultSelect
+                key={`${series}-${index}-player`}
+                labelEnabled={false}
+                options={teamHomeSelects ?? []}
+                name="player"
+                search
+                value={spelers.find(
+                  (speler) =>
+                    scores?.[series]?.[index]?.playerID === speler.value
+                )}
+                onSelectChange={(value: SelectOption, action: any) => {
+                  handleChange(value.value, series, index, "playerID");
+                  console.log("test");
+                  console.log(value.value);
+                }}
+              />
+            </p>
+            <DefaultInput
+              key={`${series}-${index}-kleg`}
+              name="kleg"
+              placeholder="kleg"
+              value={scores?.[series]?.[index]?.kleg}
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "kleg")
+              }
+            />
+            <DefaultInput
+              key={`${series}-${index}-hu`}
+              name="hu"
+              placeholder="hu"
+              value={scores?.[series]?.[index]?.hu}
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "hu")
+              }
+            />
+            <DefaultInput
+              key={`${series}-${index}-bestof`}
+              name="score"
+              placeholder="score"
+              value={scores?.[series]?.[index]?.bestOf}
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "bestOf")
+              }
+            />
+          </>
+        ) : (
+          <>
+            <DefaultInput
+              key={`${series}-${index}-bestof`}
+              name="score"
+              placeholder="score"
+              value={scores?.[series]?.[index]?.bestOf}
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "bestOf")
+              }
+            />
+            <DefaultInput
+              key={`${series}-${index}-hu`}
+              name="hu"
+              placeholder="hu"
+              value={scores?.[series]?.[index]?.hu}
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "hu")
+              }
+            />
+            <DefaultInput
+              key={`${series}-${index}-kleg`}
+              name="kleg"
+              placeholder="kleg"
+              value={scores?.[series]?.[index]?.kleg}
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "kleg")
+              }
+            />
+
+            <p className="col-span-2">
+              <DefaultSelect
+                key={`${series}-${index}-player`}
+                labelEnabled={false}
+                options={teamHomeSelects ?? []}
+                name="player"
+                search
+                value={spelers.find(
+                  (speler) =>
+                    scores?.[series]?.[index]?.playerID === speler.value
+                )}
+                onSelectChange={(value: SelectOption, action: any) => {
+                  handleChange(value.value, series, index, "playerID");
+                  console.log("test");
+                  console.log(value.value);
+                }}
+              />
+            </p>
+            <DefaultInput
+              key={`${series}-${index}-180`}
+              name="180"
+              placeholder="180"
+              value={scores?.[series]?.[index]?.oneEighty}
+              onChange={(e) =>
+                handleChange(e.target.value, series, index, "oneEighty")
+              }
+            />
+          </>
+        )}
       </div>
     );
   };
@@ -271,9 +339,13 @@ const WedstrijdbladBeheer: NextPage = () => {
   return (
     <div className="text-white">
       <div className="grid grid-cols-2 bg-nav-background children:border children:pl-5 children:py-2">
-        <p className="col-span-2 text-center font-semibold text-3xl pl-0">
-          Reeks: Competitie 2022 - 2023 - Provinciaal Speeldag: Speeldag 01
+        {/* <p className="col-span-2 text-center font-semibold text-3xl pl-0">
+        Reeks: Competitie 2022 - 2023 - Provinciaal Speeldag: Speeldag 01
           Datum: 30-09-2022
+        </p> */}
+        <p className="col-span-2 text-center font-semibold text-3xl pl-0">
+          Reeks: / - {competition?.startDate} - {competition?.classification}{" "}
+          Speeldag: / - Datum: /
         </p>
         <p className="text-lg font-semibold">THUISSPELERS: {teamHome?.name}</p>
         <p className="text-lg font-semibold">BEZOEKERS: {teamAway?.name}</p>
@@ -320,23 +392,6 @@ const WedstrijdbladBeheer: NextPage = () => {
 
         {getRow(0, 2, true)}
         {getRow(0, 3, false)}
-
-        {scores.map((score, index) => {
-          return (
-            <>
-              <p>5</p>
-              <p className="col-span-2">Naam Voornaam</p>
-              <p>0</p>
-              <p>0</p>
-              <p>0</p>
-              <p>0</p>
-              <p>0</p>
-              <p>0</p>
-              <p className="col-span-2">Naam Voornaam</p>
-              <p>1</p>
-            </>
-          );
-        })}
 
         <p className="text-lg">180</p>
         <p className="text-lg col-span-2">DUBBELS</p>

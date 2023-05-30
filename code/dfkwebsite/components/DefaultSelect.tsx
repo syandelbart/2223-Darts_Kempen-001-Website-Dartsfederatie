@@ -73,7 +73,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
         <Select
           name={name}
           value={value}
-          id={name}
+          id={id ? id : name}
           onChange={onSelectChange}
           placeholder={placeholder}
           className="bg-gray-200 p-2 text-black"
@@ -85,7 +85,7 @@ const DefaultSelect: FunctionComponent<DefaultSelectData> = ({
         <select
           name={name}
           value={value}
-          id={name}
+          id={id ? id : name}
           onChange={onChange}
           placeholder={placeholder}
           className="bg-gray-200 p-2 text-black"

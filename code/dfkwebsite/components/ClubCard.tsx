@@ -21,7 +21,7 @@ const ClubCard: FunctionComponent<ClubDataInterface> = ({
 }) => {
   return (
     <div>
-      <CardTitle title={clubData.name} />
+      <CardTitle title={clubData.name} id={clubData.clubID} />
 
       <CardButtonRow>
         <CardButton
