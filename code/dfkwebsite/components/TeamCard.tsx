@@ -5,20 +5,20 @@ import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 import { TeamFront } from "../types/team";
 
-interface teamDataInterface {
+interface TeamDataInterface {
   teamData: TeamFront;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setCurrentTeam: Dispatch<SetStateAction<TeamFront | null>>;
 }
 
-const TeamCard: FunctionComponent<teamDataInterface> = ({
+const TeamCard: FunctionComponent<TeamDataInterface> = ({
   teamData,
   setIsOpen,
   setCurrentTeam,
 }) => {
   return (
     <>
-      <CardTitle>{teamData.name}</CardTitle>
+      <CardTitle title={teamData.name} />
       <CardButtonRow>
         <CardButton
           onClick={() => {
@@ -30,14 +30,16 @@ const TeamCard: FunctionComponent<teamDataInterface> = ({
         </CardButton>
         <CardButton bg={"bg-[#95A4F3]"}>Edit</CardButton>
       </CardButtonRow>
-      <div className="my-3">
-        <CardIcon icon={"game-icons:captain-hat-profile"}>
-          {teamData.captain?.firstName + " " + teamData.captain?.lastName}
-        </CardIcon>
-        {teamData.captain?.phone ? (
-          <CardIcon icon={"ph:phone"}>{teamData.captain.phone}</CardIcon>
-        ) : null}
-      </div>
+      {teamData.captain ? (
+        <div className="my-3">
+          <CardIcon icon={"game-icons:captain-hat-profile"}>
+            {teamData.captain?.firstName + " " + teamData.captain?.lastName}
+          </CardIcon>
+          {teamData.captain?.phone ? (
+            <CardIcon icon={"ph:phone"}>{teamData.captain.phone}</CardIcon>
+          ) : null}
+        </div>
+      ) : null}
     </>
   );
 };

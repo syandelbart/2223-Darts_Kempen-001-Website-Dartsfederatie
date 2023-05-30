@@ -58,10 +58,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     await env.POSTS.put(postIdKey, JSON.stringify(data));
     await searchKeyChecker(env.POSTS, postIdKey, `name:${name}`);
 
-    return new Response(
-      JSON.stringify({ message: "Post added successfully." }),
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
@@ -90,25 +90,20 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = posts.keys.map(async (post) => {
       const postData: Post = JSON.parse(await env.POSTS.get(post.name));
 
-      const data: Post = changeData(
+      const data: Post = (await changeData(
         postRegexPatterns,
         postData,
         formData
-      ) as Post;
+      )) as Post;
 
       // Update the team data in the KV store
       await env.POSTS.put(post.name, JSON.stringify(data));
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "POsts updated successfully.",
-      status: 200,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {

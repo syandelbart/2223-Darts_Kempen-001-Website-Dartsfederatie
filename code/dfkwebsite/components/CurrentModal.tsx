@@ -1,4 +1,10 @@
-import { Dispatch, FunctionComponent, SetStateAction } from "react";
+import {
+  Dispatch,
+  FunctionComponent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import Modal from "./Modal";
 import AddButton from "./AddButton";
 import { TeamFront } from "../types/team";
@@ -29,6 +35,23 @@ const CurrentModal: FunctionComponent<CurrentModalData> = ({
   addTeamModalOpen,
   setAddTeamModalOpen,
 }) => {
+  const [teams, setTeams] = useState<TeamFront[]>([]);
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_NO_API) {
+      currentObject &&
+        currentObject.teamIDs.map((team: TeamFront) => {
+          fetch(`/api/teams/${team.teamID}`)
+            .then((team) => team.json())
+            .then((parsedTeam) => {
+              setTeams((teams) => [...teams, parsedTeam]);
+              console.log(teams);
+            })
+            .catch((err) => console.log(err));
+        });
+    }
+  }, []);
+
   return (
     currentObject && (
       <Modal
@@ -46,8 +69,8 @@ const CurrentModal: FunctionComponent<CurrentModalData> = ({
             />
           </div>
         )}
-        {currentObject.teams && currentObject.teams.length !== 0 ? (
-          currentObject.teams.map((team: TeamFront) => (
+        {teams && teams.length !== 0 ? (
+          teams.map((team: TeamFront) => (
             <TeamSpelers
               team={team}
               key={team.teamID}

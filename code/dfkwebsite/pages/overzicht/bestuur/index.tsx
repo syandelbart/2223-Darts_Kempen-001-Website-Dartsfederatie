@@ -1,13 +1,11 @@
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import AddBestuurModal from "../../../components/AddBestuurModal";
-import Card from "../../../components/Card";
-import CardGrid from "../../../components/CardGrid";
 import OverzichtTopBar from "../../../components/OverzichtTopBar";
-
 import * as dummyData from "../../../data";
 import ManagementCard from "../../../components/ManagementCard";
 import Head from "next/head";
+import SearchableCardGrid from "../../../components/SearchableCardGrid";
 
 const Bestuur: NextPage = () => {
   const [search, setSearch] = useState("");
@@ -22,7 +20,6 @@ const Bestuur: NextPage = () => {
     }
   }, []);
 
-  let results = 0;
   return (
     <div>
       <Head>
@@ -35,44 +32,22 @@ const Bestuur: NextPage = () => {
       />
       <OverzichtTopBar
         titleName="Bestuur"
-        search={search}
         setSearch={setSearch}
         addButtonName="Bestuur toevoegen"
         addModalOpen={addModalOpen}
         setAddModalOpen={setAddModalOpen}
       />
-      <CardGrid>
-        {dummyData.bestuur.length === 0 ? (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen bestuurslid gevonden
-          </h1>
-        ) : (
-          dummyData.bestuur
-            .filter((bestuurslid) => {
-              if (
-                search == "" ||
-                bestuurslid.naam.toLowerCase().includes(search.toLowerCase())
-              )
-                return bestuurslid;
-              results++;
-            })
-            .map((bestuurslid) => (
-              <Card key={bestuurslid}>
-                <ManagementCard
-                  naam={bestuurslid.naam}
-                  functie={bestuurslid.functie}
-                  mail={bestuurslid.mail}
-                  telefoonnummer={bestuurslid.telefoonnummer}
-                />
-              </Card>
-            ))
+      <SearchableCardGrid items={bestuur} search={search} filterName="naam">
+        {(bestuur) => (
+          <ManagementCard
+            key={bestuur.bestuurID}
+            naam={bestuur.naam}
+            mail={bestuur.mail}
+            telefoonnummer={bestuur.telefoonnummer}
+            functie={bestuur.functie}
+          />
         )}
-        {results === bestuur.length && (
-          <h1 className="text-4xl font-extrabold text-white">
-            Geen bestuurslid gevonden
-          </h1>
-        )}
-      </CardGrid>
+      </SearchableCardGrid>
     </div>
   );
 };

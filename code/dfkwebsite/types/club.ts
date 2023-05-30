@@ -16,5 +16,5 @@ export type Club = {
 export interface ClubFront extends Club {
   teams?: TeamFront[];
   fines?: FineFront[];
-  contactPerson: Player;
+  contactPerson?: Player;
 }

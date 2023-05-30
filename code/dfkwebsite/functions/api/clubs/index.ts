@@ -45,33 +45,25 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
   try {
     let formData = await request.formData();
 
-    checkFields(formData, clubRegexPatterns);
-
     const name = formData.get(ClubSubmission.NAME);
 
     const clubIdKey = `id:${Date.now()}`;
 
-    let data: Club = {
-      clubID: clubIdKey,
-      name: name,
-      address: {
-        street: formData.get(ClubSubmission.ADDRESS_STREET),
-        city: formData.get(ClubSubmission.ADDRESS_CITY),
-        postalCode: formData.get(ClubSubmission.ADDRESS_POSTAL),
-        houseNumber: formData.get(ClubSubmission.ADDRESS_HOUSENUMBER),
-      },
-      ...(formData.has(ClubSubmission.CONTACTPERSONID) && {
-        contactPersonID: formData.get(ClubSubmission.CONTACTPERSONID),
-      }),
-    };
+    let data: Club = await changeData(
+      clubRegexPatterns,
+      { clubID: clubIdKey },
+      formData
+    );
+
+    console.log(data);
 
     await env.CLUBS.put(clubIdKey, JSON.stringify(data));
     await searchKeyChecker(env.CLUBS, clubIdKey, `name:${name}`);
 
-    return new Response(
-      JSON.stringify({ message: "Club added successfully." }),
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
@@ -100,25 +92,22 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = clubs.keys.map(async (club) => {
       const clubData: Club = JSON.parse(await env.CLUBS.get(club.name));
 
-      const data: Club = changeData(
+      const data: Club = (await changeData(
         clubRegexPatterns,
         clubData,
         formData
-      ) as Club;
+      )) as Club;
 
       // Update the club data in the KV store
       await env.CLUBS.put(club.name, JSON.stringify(data));
+
+      return data;
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "Clubs updated successfully.",
-      status: 200,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {

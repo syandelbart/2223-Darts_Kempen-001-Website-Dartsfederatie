@@ -59,10 +59,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     await env.MATCHES.put(matchIdKey, JSON.stringify(data));
     await searchKeyChecker(env.MATCHES, matchIdKey, `name:${name}`);
 
-    return new Response(
-      JSON.stringify({ message: "Match added successfully." }),
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
@@ -91,25 +91,20 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = matches.keys.map(async (match) => {
       const matchData: Match = JSON.parse(await env.MATCHES.get(match.name));
 
-      const data: Match = changeData(
+      const data: Match = (await changeData(
         matchRegexPatterns,
         matchData,
         formData
-      ) as Match;
+      )) as Match;
 
       // Update the match data in the KV store
       await env.MATCHES.put(match.name, JSON.stringify(data));
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "Matches updated successfully.",
-      status: 200,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {

@@ -58,10 +58,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     await env.USERS.put(userIdKey, JSON.stringify(data));
     await searchKeyChecker(env.USERS, userIdKey, `name:${name}`);
 
-    return new Response(
-      JSON.stringify({ message: "User added successfully." }),
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
@@ -90,25 +90,22 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = users.keys.map(async (user) => {
       const userData: User = JSON.parse(await env.USERS.get(user.name));
 
-      const data: User = changeData(
+      const data: User = (await changeData(
         userRegexPatterns,
         userData,
         formData
-      ) as User;
+      )) as User;
 
       // Update the user data in the KV store
       await env.USERS.put(user.name, JSON.stringify(data));
+
+      return data;
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "Users updated successfully.",
-      status: 200,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {

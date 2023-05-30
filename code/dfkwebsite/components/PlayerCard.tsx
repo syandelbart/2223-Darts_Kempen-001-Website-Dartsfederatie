@@ -5,20 +5,20 @@ import CardIcon from "./CardIcon";
 import CardTitle from "./CardTitle";
 import { Player } from "../types/player";
 
-interface playerDataInterface {
+interface PlayerDataInterface {
   playerData: Player;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setCurrentPlayer: Dispatch<SetStateAction<Player | null>>;
 }
 
-const PlayerCard: FunctionComponent<playerDataInterface> = ({
+const PlayerCard: FunctionComponent<PlayerDataInterface> = ({
   playerData,
   setIsOpen,
   setCurrentPlayer,
 }) => {
   return (
     <div>
-      <CardTitle>{playerData.firstName + " " + playerData.lastName}</CardTitle>
+      <CardTitle title={playerData.firstName + " " + playerData.lastName} />
       <CardButtonRow>
         <CardButton
           onClick={() => {
@@ -30,9 +30,11 @@ const PlayerCard: FunctionComponent<playerDataInterface> = ({
         </CardButton>
         <CardButton bg={"bg-edit-button"}>Edit</CardButton>
       </CardButtonRow>
-      <div className="my-3">
-        <CardIcon icon={"ph:phone"}>{playerData.phone}</CardIcon>
-      </div>
+      {playerData.phone !== "" && (
+        <div className="my-3">
+          <CardIcon icon={"ph:phone"}>{playerData.phone}</CardIcon>
+        </div>
+      )}
     </div>
   );
 };

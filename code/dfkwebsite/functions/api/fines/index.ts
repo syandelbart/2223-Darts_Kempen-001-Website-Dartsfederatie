@@ -58,10 +58,10 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
     await env.FINES.put(fineIdKey, JSON.stringify(data));
     await searchKeyChecker(env.FINES, fineIdKey, `name:${name}`);
 
-    return new Response(
-      JSON.stringify({ message: "Fine added successfully." }),
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
   } catch (e) {
     return new Response(JSON.stringify({ error: e.message }), {
       status: 500,
@@ -90,25 +90,22 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
     const updates = fines.keys.map(async (fine) => {
       const fineData: Fine = JSON.parse(await env.FINES.get(fine.name));
 
-      const data: Fine = changeData(
+      const data: Fine = (await changeData(
         fineRegexPatterns,
         fineData,
         formData
-      ) as Fine;
+      )) as Fine;
 
       // Update the fine data in the KV store
       await env.FINES.put(fine.name, JSON.stringify(data));
+
+      return data;
     });
 
     // Wait for all updates to complete
-    await Promise.all(updates);
+    let result = await Promise.all(updates);
 
-    const responseBody = {
-      message: "Fines updated successfully.",
-      status: 200,
-    };
-
-    return new Response(JSON.stringify(responseBody), {
+    return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (e) {

@@ -22,8 +22,10 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20221111.1",
     "@iconify/react": "^4.1.0",
+    "@types/lodash": "^4.14.195",
     "autoprefixer": "^10.4.13",
     "concurrently": "^7.5.0",
+    "lodash": "^4.17.21",
     "postcss": "^8.4.18",
     "react-data-table-component": "^7.5.3",
     "tailwind-children": "^0.5.0",

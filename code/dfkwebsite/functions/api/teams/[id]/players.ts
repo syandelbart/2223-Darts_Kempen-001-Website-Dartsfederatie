@@ -1,4 +1,5 @@
 import { getRecordByIdOrError } from "../../../../modules/general";
+import { PlayerFront } from "../../../../types/player";
 import { Team } from "../../../../types/team";
 import { PagesEnv } from "../../env";
 
@@ -13,16 +14,18 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
       await getRecordByIdOrError(teamId, env.TEAMS)
     );
 
-    if (!team?.playersID)
+    if (!team.playerIDs)
       return new Response(JSON.stringify([]), {
         headers: {
           "content-type": "application/json",
         },
       });
 
-    const playersMapped = team.playersID.map(async (playerID) => {
-      return JSON.parse(await env.PLAYERS.get(playerID));
-    });
+    const playersMapped = await Promise.all(
+      team.playerIDs.map(async (playerID) => {
+        return JSON.parse(await env.PLAYERS.get(playerID)) as PlayerFront;
+      })
+    );
 
     return new Response(JSON.stringify(playersMapped), {
       headers: {

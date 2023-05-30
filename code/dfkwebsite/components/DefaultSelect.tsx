@@ -18,7 +18,7 @@ type DefaultSelectData = {
   defaultOptionValue?: string;
   labelEnabled?: boolean;
   search?: boolean;
-  defaultValue?: SelectOption;
+  defaultValue?: SelectOption[];
   notRequired?: boolean;
   multiple?: boolean;
   onSelectChange?: (value: any, action: any) => void;

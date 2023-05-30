@@ -7,6 +7,7 @@ import DefaultCheckbox from "./DefaultCheckbox";
 import InformationBox from "./InformationBox";
 import { Player, PlayerFront } from "../types/player";
 import * as dummyData from "../data";
+import SubmitButton from "./SubmitButton";
 
 type AddSpelerModalData = {
   addModalOpen: boolean;
@@ -46,7 +47,7 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
       process.env.NEXT_PUBLIC_NO_API == "1" ? true : false
     );
 
-    if (!player || !handleSubmitSuccess) return;
+    if (!player) return;
 
     setInformationBoxMessage(
       "Speler succesvol aangemaakt, je wordt binnen 5 seconden terug gestuurd naar het algemeen overzicht."
@@ -58,6 +59,7 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
     });
     setTimeout(() => {
       props.setAddModalOpen(false);
+      setInformationBoxMessage("")
     }, 5000);
   };
 
@@ -96,21 +98,17 @@ const AddSpelerModal: FunctionComponent<AddSpelerModalData> = (
           placeholder="Telefoonnummer"
           value={formValues.phone}
           onChange={handleChange}
+          notRequired={true}
         />
         <div className="mt-5 mb-2">
           <DefaultCheckbox
             label="Speelgerechtigd"
             name="allowed"
             onChange={handleChange}
+            notRequired={true}
           />
         </div>
-        <button
-          type="submit"
-          className="bg-[#0A893D] text-white rounded-lg p-3 mt-10"
-          onClick={handleSubmit}
-        >
-          Aanmaken
-        </button>
+        <SubmitButton handleSubmit={handleSubmit} />
       </div>
     </Modal>
   );

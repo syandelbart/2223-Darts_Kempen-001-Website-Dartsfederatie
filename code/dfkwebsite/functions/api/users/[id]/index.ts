@@ -41,19 +41,16 @@ export const onRequestPut: PagesFunction<PagesEnv> = async ({
 
     const userData: User = JSON.parse(user);
 
-    const data: User = changeData(
+    const data: User = (await changeData(
       userRegexPatterns,
       userData,
       formData
-    ) as User;
+    )) as User;
 
     // Update the user data in the KV store
     await env.USERS.put(userId, JSON.stringify(data));
 
-    const responseBody = {
-      message: "User updated successfully.",
-      status: 200,
-    };
+    const responseBody = data;
 
     return new Response(JSON.stringify(responseBody), {
       headers: { "Content-Type": "application/json" },

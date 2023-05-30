@@ -54,6 +54,7 @@ const AddBestuurModal: FunctionComponent<AddBestuurModalData> = (
         <DefaultSelect
           name="function"
           label="Functie"
+          search={true}
           options={[
             { value: "voorzitter", label: "Voorzitter" },
             { value: "secretaris", label: "Secretaris" },

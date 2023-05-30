@@ -59,14 +59,15 @@ export const handleSubmit = async (
   informationOutputState?: Dispatch<SetStateAction<string>>,
   setSubmitSuccess?: Dispatch<SetStateAction<boolean | null>>,
   dummy?: any,
-  noAPI?: boolean
+  noAPI?: boolean,
+  isEditRequest?: boolean
 ) => {
   if (informationOutputState) informationOutputState("");
   if (setSubmitSuccess) setSubmitSuccess(null);
   try {
     // Do something with formValues, such as send it to a server
     if (!value) throw new Error("No value was provided");
-    if (!apiLink || apiLink[0] != "/")
+    if (!apiLink || !apiLink.startsWith("/"))
       throw new Error("Incorrect api path was provided");
 
     const data = new FormData();
@@ -83,7 +84,7 @@ export const handleSubmit = async (
 
     return await fetch(apiLink, {
       body: data,
-      method: "POST",
+      method: isEditRequest ? "PUT" : "POST",
     })
       .then((response) => response.json())
       .then(async (response) => {

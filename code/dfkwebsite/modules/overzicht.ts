@@ -20,17 +20,17 @@ export const handleDeletePlayerFromTeam = async (
   if (!teamData) throw new Error("No team data was found");
 
   // If the player is not in the team, skip the change and return the teamData
-  if (teamData.playersID && !teamData.playersID.includes(playerID))
+  if (teamData.playerIDs && !teamData.playerIDs.includes(playerID))
     return teamData;
 
   // If there are no players in the team, skip the change and return the teamData
-  if (!teamData.playersID || teamData.playersID.length == 0) return teamData;
+  if (!teamData.playerIDs || teamData.playerIDs.length == 0) return teamData;
 
   try {
     const data = new FormData();
     data.append(
       "playerIDs",
-      teamData.playersID.filter((id) => id != playerID).join(",")
+      teamData.playerIDs.filter((id) => id != playerID).join(",")
     );
     return await fetch(`/api/teams/${teamID}/`, {
       method: "PUT",
