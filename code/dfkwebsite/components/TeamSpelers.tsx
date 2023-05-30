@@ -30,9 +30,7 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
 
   return (
     <div className="mt-10 text-white">
-      {players ? (
-        <p className="text-3xl font-semibold mb-5">{team.name}</p>
-      ) : null}
+      <p className="text-3xl font-semibold mb-5">{team.name}</p>
 
       <div>
         <div className="flex flex-col gap-2">
