@@ -161,7 +161,9 @@ export const changeData = async (
     }
   });
 
-  for (const field of Object.keys(fieldsInformation)) {
+  for (const field of Object.keys(fieldsInformation).filter((field) =>
+    newData.has(field)
+  )) {
     if (mutateOtherSide[field]) {
       const mutateField = mutateOtherSide[field];
 
