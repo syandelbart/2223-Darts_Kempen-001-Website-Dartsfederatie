@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import DefaultCheckbox from "../../../components/DefaultCheckbox";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { SelectOption, getParams } from "../../../modules/general";
 import { useRouter } from "next/router";
 import {
@@ -13,6 +13,7 @@ import { TableData } from "./playdays";
 import { TeamFront } from "../../../types/team";
 import DefaultInput from "../../../components/DefaultInput";
 import DefaultSelect from "../../../components/DefaultSelect";
+import { ActionMeta } from "react-select";
 
 const WedstrijdbladBeheer: NextPage = () => {
   const [competition, setCompetition] = useState<Competition | null>(null);
@@ -135,6 +136,14 @@ const WedstrijdbladBeheer: NextPage = () => {
 
         console.log(matchTeams);
 
+        setScores(
+          Array.from({ length: 3 }, () =>
+            Array.from({ length: 3 }).map(() => {
+              return {} as Score;
+            })
+          )
+        );
+
         return parsedCompetition;
       })
       .catch((err) => {
@@ -145,33 +154,67 @@ const WedstrijdbladBeheer: NextPage = () => {
   }, []);
 
   const [scores, setScores] = useState<Score[][]>([]);
+  type ScoreType = keyof Score;
 
   const handleChange = (
-    e: any,
+    value: string,
     series: number,
     index: number,
-    type: SCORETYPE
+    type: string
   ) => {
     let newScores: Score[][] = JSON.parse(JSON.stringify(scores));
+    // @ts-ignore
+    newScores[series][index][type as ScoreType] = value;
+
+    console.log(series, index);
+
+    console.log(newScores[series][index]);
+    console.log(newScores);
 
     setScores(newScores);
-    console.log(newScores);
   };
 
   const getRow = (series: number, index: number, reversed: boolean) => {
     return (
       <div className={`grid col-span-6 grid-cols-6 ${reversed ? "" : ""}`}>
-        <DefaultInput name="180" placeholder="180" />
+        <DefaultInput
+          name="180"
+          placeholder="180"
+          onChange={(e) =>
+            handleChange(e.target.value, series, index, "oneEighty")
+          }
+        />
+
         <p className="col-span-2">
           <DefaultSelect
             labelEnabled={false}
             options={teamHomeSelects ?? []}
             name="player"
+            search
+            onSelectChange={(value: SelectOption, action: any) => {
+              handleChange(value.value, series, index, "playerID");
+              console.log("test");
+              console.log(value.value);
+            }}
           />
         </p>
-        <DefaultInput name="kleg" placeholder="kleg" />
-        <DefaultInput name="hu" placeholder="hu" />
-        <DefaultInput name="score" placeholder="score" />
+        <DefaultInput
+          name="kleg"
+          placeholder="kleg"
+          onChange={(e) => handleChange(e.target.value, series, index, "kleg")}
+        />
+        <DefaultInput
+          name="hu"
+          placeholder="hu"
+          onChange={(e) => handleChange(e.target.value, series, index, "hu")}
+        />
+        <DefaultInput
+          name="score"
+          placeholder="score"
+          onChange={(e) =>
+            handleChange(e.target.value, series, index, "bestOf")
+          }
+        />
       </div>
     );
   };
@@ -224,10 +267,10 @@ const WedstrijdbladBeheer: NextPage = () => {
         <p className="text-lg">180</p>
 
         {getRow(0, 0, true)}
-        {getRow(0, 0, false)}
+        {getRow(0, 1, false)}
 
-        {getRow(0, 0, true)}
-        {getRow(0, 0, false)}
+        {getRow(0, 2, true)}
+        {getRow(0, 3, false)}
 
         {scores.map((score, index) => {
           return (
@@ -256,19 +299,19 @@ const WedstrijdbladBeheer: NextPage = () => {
         <p className="text-lg col-span-2">DUBBELS</p>
         <p className="text-lg">180</p>
 
-        {getRow(0, 0, true)}
-        {getRow(0, 0, false)}
+        {getRow(1, 0, true)}
+        {getRow(1, 1, false)}
 
-        {getRow(0, 0, true)}
-        {getRow(0, 0, false)}
+        {getRow(1, 2, true)}
+        {getRow(1, 3, false)}
 
-        {getRow(0, 0, true)}
-        {getRow(0, 0, false)}
-        {getRow(0, 0, true)}
-        {getRow(0, 0, false)}
+        {getRow(1, 4, true)}
+        {getRow(1, 5, false)}
+        {getRow(1, 6, true)}
+        {getRow(1, 7, false)}
 
-        {getRow(0, 0, true)}
-        {getRow(0, 0, false)}
+        {getRow(1, 8, true)}
+        {getRow(1, 9, false)}
 
         <p className="text-lg">180</p>
         <p className="text-lg col-span-2">ENKELSPELEN</p>
@@ -280,11 +323,11 @@ const WedstrijdbladBeheer: NextPage = () => {
         <p className="text-lg col-span-2">ENKELSPELEN</p>
         <p className="text-lg">180</p>
 
-        {getRow(0, 0, true)}
-        {getRow(0, 0, false)}
+        {getRow(2, 0, true)}
+        {getRow(2, 1, false)}
 
-        {getRow(0, 0, true)}
-        {getRow(0, 0, false)}
+        {getRow(2, 2, true)}
+        {getRow(2, 3, false)}
 
         <p className="text-lg col-span-5 border-b-0">Notities</p>
         <p className="text-lg col-span-2">EINDUITSLAG</p>

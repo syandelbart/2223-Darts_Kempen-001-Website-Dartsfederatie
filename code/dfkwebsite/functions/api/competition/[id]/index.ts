@@ -7,6 +7,7 @@ import {
   CLASSIFICATION,
   COMPETITION_TYPE,
   Competition,
+  CompetitionFront,
 } from "../../../../types/competition";
 import { PagesEnv } from "../../env";
 import { checkFields } from "../../../../modules/fieldsCheck";
@@ -18,11 +19,22 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const competitionId = params.id.toString();
-    const competition = JSON.parse(
+    const competition: Competition = JSON.parse(
       await getRecordByIdOrError(competitionId, env.COMPETITION)
     );
 
-    return new Response(JSON.stringify(competition), {
+    const competitionFront: CompetitionFront = {
+      ...competition,
+      ...(competition.teamsID && {
+        teams: await Promise.all(
+          competition.teamsID.map(async (teamID) => {
+            return JSON.parse(await env.TEAMS.get(teamID));
+          })
+        ),
+      }),
+    };
+
+    return new Response(JSON.stringify(competitionFront), {
       headers: {
         "content-type": "application/json",
       },
