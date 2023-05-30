@@ -51,15 +51,17 @@ const Spelers: NextPage = () => {
       />
 
       {/* Modal for player details when you press team button */}
-      <CurrentModal
-        currentObject={currentPlayer}
-        title={currentPlayer?.firstName + " " + currentPlayer?.lastName}
-        currentModalOpen={isOpen}
-        setCurrentModal={setIsOpen}
-        addTeams={true}
-        addTeamModalOpen={addTeamModalOpen}
-        setAddTeamModalOpen={setAddTeamModalOpen}
-      />
+      {currentPlayer && (
+        <CurrentModal
+          currentObject={currentPlayer}
+          title={currentPlayer?.firstName + " " + currentPlayer?.lastName}
+          currentModalOpen={isOpen}
+          setCurrentModal={setIsOpen}
+          addTeams={true}
+          addTeamModalOpen={addTeamModalOpen}
+          setAddTeamModalOpen={setAddTeamModalOpen}
+        />
+      )}
 
       {/* This is for inside the current modal when adding a team to the player */}
       <AddTeamModal

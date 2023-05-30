@@ -14,23 +14,23 @@ const TeamSpelers: FunctionComponent<teamSpelersData> = ({
   handleDeletePlayerFromTeam,
   handleMakePlayerCaptain,
 }) => {
-  console.log(team)
   const [players, setPlayers] = useState<Player[]>([]);
 
   useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_NO_API) {
-      fetch(`/api/teams/${team.teamID}/players`)
-        .then((players) => players.json())
-        .then((parsedPlayers) => setPlayers(parsedPlayers))
+    if (team.playerIDs) {
+      setPlayers([]);
+      fetch(`/api/teams/${team.teamID}`)
+        .then((response) => response.json())
+        .then((parsedTeam) => {
+          setPlayers(parsedTeam.players);
+        })
         .catch((err) => console.log(err));
     }
-    console.log(players);
-  }, []);
+  }, [team]);
+
   return (
     <div className="mt-10 text-white">
-      {players ? (
-        <p className="text-3xl font-semibold mb-5">{team.name}</p>
-      ) : null}
+      <p className="text-3xl font-semibold mb-5">{team.name}</p>
 
       <div>
         <div className="flex flex-col gap-2">

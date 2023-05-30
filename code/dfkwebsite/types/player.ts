@@ -8,10 +8,13 @@ export type Player = {
   lastName: string;
   phone?: string;
   allowedToPlay?: boolean;
-  teams?: Team[];
+  teamIDs?: string[];
   account?: Account;
-  fines?: Fine[];
+  fineIDs?: string[];
   deleted?: boolean;
 };
 
-export interface PlayerFront extends Player {}
+export interface PlayerFront extends Player {
+  teams?: Team[];
+  fines?: Fine[];
+}

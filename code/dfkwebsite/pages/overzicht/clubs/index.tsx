@@ -18,11 +18,14 @@ const Clubs: NextPage = () => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [addTeamModalOpen, setAddTeamModalOpen] = useState(false);
 
+  console.log(currentClub);
+
   useEffect(() => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/clubs`)
         .then((clubs) => clubs.json())
-        .then((parsedClubs) => setClubs(parsedClubs)).catch((err) => console.log(err));
+        .then((parsedClubs) => setClubs(parsedClubs))
+        .catch((err) => console.log(err));
     }
   }, []);
   return (
@@ -50,15 +53,17 @@ const Clubs: NextPage = () => {
       />
 
       {/* Modal for club details when you press teams button */}
-      <CurrentModal
-        currentObject={currentClub}
-        title={currentClub?.name}
-        currentModalOpen={isOpen}
-        setCurrentModal={setIsOpen}
-        addTeams={true}
-        addTeamModalOpen={addTeamModalOpen}
-        setAddTeamModalOpen={setAddTeamModalOpen}
-      />
+      {currentClub && (
+        <CurrentModal
+          currentObject={currentClub}
+          title={currentClub?.name}
+          currentModalOpen={isOpen}
+          setCurrentModal={setIsOpen}
+          addTeams={true}
+          addTeamModalOpen={addTeamModalOpen}
+          setAddTeamModalOpen={setAddTeamModalOpen}
+        />
+      )}
 
       {/* This is for inside the current modal when adding a team to the club */}
       <AddTeamModal

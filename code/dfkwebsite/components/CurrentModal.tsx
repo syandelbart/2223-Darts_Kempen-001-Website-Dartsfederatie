@@ -13,6 +13,9 @@ import {
   handleDeletePlayerFromTeam,
   handleMakePlayerCaptain,
 } from "../modules/overzicht";
+import { PlayerFront } from "../types/player";
+import { ClubFront } from "../types/club";
+import { set } from "lodash";
 
 type CurrentModalData = {
   currentObject: any;
@@ -38,19 +41,35 @@ const CurrentModal: FunctionComponent<CurrentModalData> = ({
   const [teams, setTeams] = useState<TeamFront[]>([]);
 
   useEffect(() => {
-    if (!process.env.NEXT_PUBLIC_NO_API) {
-      currentObject &&
-        currentObject.teamIDs.map((team: TeamFront) => {
-          fetch(`/api/teams/${team.teamID}`)
-            .then((team) => team.json())
-            .then((parsedTeam) => {
-              setTeams((teams) => [...teams, parsedTeam]);
-              console.log(teams);
-            })
-            .catch((err) => console.log(err));
-        });
+    if (!process.env.NEXT_PUBLIC_NO_API && currentObject) {
+      let localTeams: TeamFront[] = [];
+      setTeams([]);
+      if (currentObject.teamID) {
+        localTeams.push(currentObject);
+        setTeams(localTeams);
+      } else if (currentObject.clubID) {
+        fetch(`/api/clubs/${currentObject.clubID}`)
+          .then((response) => response.json())
+          .then((parsedTeam) => parsedTeam.teams)
+          .catch((err) => console.log(err))
+
+          .then((teams) => {
+            localTeams = teams.flat();
+            setTeams(localTeams);
+          });
+      } else if (currentObject.playerID) {
+        fetch(`/api/players/${currentObject.playerID}`)
+          .then((response) => response.json())
+          .then((parsedTeam) => parsedTeam.teams)
+          .catch((err) => console.log(err))
+
+          .then((teams) => {
+            localTeams = teams.flat();
+            setTeams(localTeams);
+          });
+      }
     }
-  }, []);
+  }, [currentObject]);
 
   return (
     currentObject && (
@@ -69,15 +88,17 @@ const CurrentModal: FunctionComponent<CurrentModalData> = ({
             />
           </div>
         )}
-        {teams && teams.length !== 0 ? (
-          teams.map((team: TeamFront) => (
-            <TeamSpelers
-              team={team}
-              key={team.teamID}
-              handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
-              handleMakePlayerCaptain={handleMakePlayerCaptain}
-            />
-          ))
+        {teams.length > 0 ? (
+          teams.map((team) => {
+            return (
+              <TeamSpelers
+                team={team}
+                key={team.teamID}
+                handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
+                handleMakePlayerCaptain={handleMakePlayerCaptain}
+              />
+            );
+          })
         ) : (
           <p className="text-xl mt-10">{addTeams && "Geen teams gevonden."}</p>
         )}

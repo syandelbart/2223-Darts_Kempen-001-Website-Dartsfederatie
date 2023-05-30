@@ -4,7 +4,7 @@ import {
   PlayerSubmission,
   playerRegexPatterns,
 } from "../../../../modules/player";
-import { Player } from "../../../../types/player";
+import { Player, PlayerFront } from "../../../../types/player";
 import { PagesEnv } from "../../env";
 
 export const onRequestGet: PagesFunction<PagesEnv> = async ({
@@ -14,11 +14,29 @@ export const onRequestGet: PagesFunction<PagesEnv> = async ({
 }) => {
   try {
     const playerId = params.id.toString();
-    const player = JSON.parse(
+    const player: Player = JSON.parse(
       await getRecordByIdOrError(playerId, env.PLAYERS)
     );
 
-    return new Response(JSON.stringify(player), {
+    const playerFront: PlayerFront = {
+      ...player,
+      ...(player.teamIDs && {
+        teams: await Promise.all(
+          player.teamIDs.map(async (teamID) => {
+            return JSON.parse(await env.TEAMS.get(teamID));
+          })
+        ),
+      }),
+      ...(player.fineIDs && {
+        fines: await Promise.all(
+          player.fineIDs.map(async (fineID) => {
+            return JSON.parse(await env.FINES.get(fineID));
+          })
+        ),
+      }),
+    };
+
+    return new Response(JSON.stringify(playerFront), {
       headers: {
         "content-type": "application/json",
       },

@@ -161,7 +161,9 @@ export const changeData = async (
     }
   });
 
-  for (const field of Object.keys(fieldsInformation)) {
+  for (const field of Object.keys(fieldsInformation).filter((field) =>
+    newData.has(field)
+  )) {
     if (mutateOtherSide[field]) {
       const mutateField = mutateOtherSide[field];
 
@@ -228,6 +230,20 @@ export const mutateOtherSide: { [key: string]: mutateField } = {
     mutateAPI: "/api/clubs",
     fieldToGet: "teamID",
     mutateField: "teamIDs",
+    method: METHODS.APPEND,
+  },
+  playerIDs: {
+    sourceAPI: "/api/teams",
+    mutateAPI: "/api/players",
+    fieldToGet: "teamID",
+    mutateField: "teamIDs",
+    method: METHODS.APPEND,
+  },
+  teamIDs: {
+    sourceAPI: "/api/players",
+    mutateAPI: "/api/teams",
+    fieldToGet: "playerID",
+    mutateField: "playerIDs",
     method: METHODS.APPEND,
   },
 };

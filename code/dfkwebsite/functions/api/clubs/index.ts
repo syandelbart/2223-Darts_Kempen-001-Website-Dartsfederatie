@@ -55,8 +55,6 @@ export const onRequestPost: PagesFunction<PagesEnv> = async ({
       formData
     );
 
-    console.log(data);
-
     await env.CLUBS.put(clubIdKey, JSON.stringify(data));
     await searchKeyChecker(env.CLUBS, clubIdKey, `name:${name}`);
 

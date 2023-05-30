@@ -25,7 +25,8 @@ const Teams: NextPage = () => {
     if (!process.env.NEXT_PUBLIC_NO_API) {
       fetch(`/api/teams`)
         .then((teams) => teams.json())
-        .then((parsedTeams) => setTeams(parsedTeams)).catch((err) => console.log(err));
+        .then((parsedTeams) => setTeams(parsedTeams))
+        .catch((err) => console.log(err));
     }
   }, []);
   return (
@@ -52,24 +53,14 @@ const Teams: NextPage = () => {
       />
 
       {/* Modal for team details when you press team button */}
-      <CurrentModal
-        currentObject={currentTeam}
-        title={currentTeam?.name}
-        currentModalOpen={isOpen}
-        setCurrentModal={setIsOpen}
-      >
-        {(team) => {
-          return (
-            <div>
-              <TeamSpelers
-                team={team}
-                handleDeletePlayerFromTeam={handleDeletePlayerFromTeam}
-                handleMakePlayerCaptain={handleMakePlayerCaptain}
-              />
-            </div>
-          );
-        }}
-      </CurrentModal>
+      {currentTeam && (
+        <CurrentModal
+          currentObject={currentTeam}
+          title={currentTeam?.name}
+          currentModalOpen={isOpen}
+          setCurrentModal={setIsOpen}
+        />
+      )}
 
       {/* Grid with all teams */}
       <SearchableCardGrid items={teams} search={search}>
